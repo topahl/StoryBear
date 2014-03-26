@@ -136,7 +136,7 @@ public class WebServer extends Server {
      *      the WebServer.  "-?" will cause the command line arguments
      *      help to be printed to the standard output
      */
-    public static Server main(String[] args) {
+    public static void main(String[] args) {
 
         HsqlProperties argProps = null;
 
@@ -149,7 +149,7 @@ public class WebServer extends Server {
             System.out.println("no value for argument:" + errors[0]);
             printHelp("webserver.help");
 
-            return null;
+            return;
         }
 
         String propsPath = argProps.getProperty(ServerProperties.sc_key_props);
@@ -188,7 +188,7 @@ public class WebServer extends Server {
             server.printError("Failed to set properties");
             server.printStackTrace(e);
 
-            return null;
+            return;
         }
 
         // now messages go to the channel specified in properties
@@ -203,7 +203,6 @@ public class WebServer extends Server {
         }
 
         server.start();
-        return server;
     }
 
     /**
