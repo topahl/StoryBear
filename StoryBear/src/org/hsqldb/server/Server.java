@@ -2455,7 +2455,7 @@ public class Server implements HsqlSocketRequestHandler, Notified {
      *
      * @param args the command line arguments for the Server instance
      */
-    public static Server main(String[] args) {
+    public static Server start(String[] args) {
 
         HsqlProperties argProps = null;
 
@@ -2525,5 +2525,75 @@ public class Server implements HsqlSocketRequestHandler, Notified {
 
         server.start();
         return server;
+    }
+    public static void main(String[] args) {
+
+        HsqlProperties argProps = null;
+
+        argProps = HsqlProperties.argArrayToProps(args,
+                ServerProperties.sc_key_prefix);
+
+        String[] errors = argProps.getErrorKeys();
+
+        if (errors.length != 0) {
+            System.out.println("no value for argument:" + errors[0]);
+            printHelp("server.help");
+
+            return;
+        }
+
+        String propsPath = argProps.getProperty(ServerProperties.sc_key_props);
+        String propsExtension = "";
+
+        if (propsPath == null) {
+            propsPath      = "server";
+            propsExtension = ".properties";
+        } else {
+            argProps.removeProperty(ServerProperties.sc_key_props);
+        }
+
+        propsPath = FileUtil.getFileUtil().canonicalOrAbsolutePath(propsPath);
+
+        ServerProperties fileProps = ServerConfiguration.getPropertiesFromFile(
+            ServerConstants.SC_PROTOCOL_HSQL, propsPath, propsExtension);
+        ServerProperties props =
+            fileProps == null
+            ? new ServerProperties(ServerConstants.SC_PROTOCOL_HSQL)
+            : fileProps;
+
+        props.addProperties(argProps);
+        ServerConfiguration.translateDefaultDatabaseProperty(props);
+
+        // Standard behaviour when started from the command line
+        // is to halt the VM when the server shuts down.  This may, of
+        // course, be overridden by whatever, if any, security policy
+        // is in place.
+        ServerConfiguration.translateDefaultNoSystemExitProperty(props);
+        ServerConfiguration.translateAddressProperty(props);
+
+        // finished setting up properties;
+        Server server = new Server();
+
+        try {
+            server.setProperties(props);
+        } catch (Exception e) {
+            server.printError("Failed to set properties");
+            server.printStackTrace(e);
+
+            return;
+        }
+
+        // now messages go to the channel specified in properties
+        server.print("Startup sequence initiated from main() method");
+
+        if (fileProps != null) {
+            server.print("Loaded properties from [" + propsPath
+                         + propsExtension + "]");
+        } else {
+            server.print("Could not load properties from file");
+            server.print("Using cli/default properties only");
+        }
+
+        server.start();
     }
 }

@@ -32,7 +32,7 @@ public class Database {
 	 */
 	public Database() {
 		if(DBinstance == null){
-			DBinstance = Server.main(new String[0]);
+			DBinstance = Server.start(new String[0]);
 		}
 		if(conn == null){
 			try {
