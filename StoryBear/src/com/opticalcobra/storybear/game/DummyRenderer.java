@@ -14,7 +14,7 @@ public class DummyRenderer {
 	private Imagelib il = Imagelib.getInstance();
 	private int lastTile = 0;
 	public BufferedImage getNextMapElement(){
-		return il.loadLandscapeTile("images\\Landschaft_Rasterslice.png", (int)((Math.random()) * 29));
+		return il.loadLandscapeTile("images\\slice_ls_front.png", (int)((Math.random()) * 29));
 	}
 	
 	public JLayeredPane getNextWindow(){
