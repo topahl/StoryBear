@@ -1,6 +1,7 @@
 package com.opticalcobra.storybear.game;
 
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 
 import com.opticalcobra.storybear.res.Ressources;
 
@@ -14,6 +15,11 @@ public class GameCharacter {
 	private int positionY;
 	private int currentLevel;	//shows in which height the character has to return after a jump
 	
+	private int jumpCounter = 0;
+	
+	private JLabel characterLabel = new JLabel();
+	private JLayeredPane baseLayer;
+	
 	/**
 	 * @author Miriam
 	 */
@@ -25,6 +31,69 @@ public class GameCharacter {
 		this.setPositionX(Ressources.CHARACTERSPAWNPOSITIONX);
 		this.setPositionY(Ressources.CHARACTERSPAWNPOSITIONY);
 		this.setCurrentLevel(Ressources.CHARACTERSPAWNPOSITIONY);
+	}
+	
+	public GameCharacter(JLayeredPane baseLayer){
+		this.setHeight(Ressources.CHARACTERHEIGHT);
+		this.setWidth(Ressources.CHARACTERWIDTH);
+		this.setPositionX(Ressources.CHARACTERSPAWNPOSITIONX);
+		this.setPositionY(Ressources.CHARACTERSPAWNPOSITIONY);
+		this.setCurrentLevel(Ressources.CHARACTERSPAWNPOSITIONY);
+		
+		this.baseLayer = baseLayer;
+		this.characterSpawns();
+	}
+	
+	/**
+	 * @author Miriam
+	 * the game character spawns in the game
+	 */
+	private void characterSpawns(){
+		//Dummy
+		this.characterLabel.setText("Jump");
+		this.characterLabel.setBounds(this.positionX,this.positionY,this.height,this.width);
+		baseLayer.add(this.characterLabel);	
+	}
+	
+	/**
+	 * @author Miriam
+	 * TODO: überprüfen, ob auch eine rechts oder links Taste gedrückt ist, damit dann auch in die Richtung gesprungen wird
+	 */
+	public void jump(){
+		int newPositionX;
+		float newPositionY;
+		float time = this.jumpCounter / ((float) Ressources.GAMESPEED);
+		
+		//calculate the height of the current jump position
+		newPositionY = 40 * time * time - 40 * time + 5;
+		newPositionY = this.currentLevel + newPositionY * Ressources.GAMESPEED;
+		this.positionY = ((int) (newPositionY));
+		
+		//Rangecheck --> don't run out of window
+		if (this.positionY < 0)
+			this.positionY = 0;
+		else if (this.positionY > (Ressources.SCREEN.height - this.height))
+			this.positionY = Ressources.SCREEN.height - this.height;
+		
+		//calculate the X value of the jump 
+		//TODO: Tastendruck (rechts/links) abfangen
+		//if(rechts gedrückt)
+		this.positionX += 8;
+		//else
+		//	this.positionX -= 8;
+		
+		//Rangecheck --> don't run out of window
+		if (this.positionX < 0)
+			this.positionX = 0;
+		else if (this.positionX > (Ressources.SCREEN.width - this.width))
+			this.positionX = Ressources.SCREEN.width - this.width;
+		
+		this.characterLabel.setBounds(this.positionX,this.positionY,this.height,this.width);
+		
+		if(this.jumpCounter == 10)
+			this.jumpCounter = 0;
+		else
+			this.jumpCounter++;
 	}
 
 	public int getHeight() {

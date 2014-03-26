@@ -18,10 +18,7 @@ public class Window extends JFrame {
 	private int stepcounter = 0;
 	private GameCharacter character;
 	
-	private int jumpCounter = 0;
-	
 	JLabel label = new JLabel();
-	JLabel characterLabel = new JLabel();
 	
 	public Window(){
 		
@@ -45,8 +42,7 @@ public class Window extends JFrame {
 		//Dummy Code end
 		
 		//Dummycode von Miri
-		this.character = new GameCharacter();
-		this.characterSpawns();
+		this.character = new GameCharacter(this.baseLayer);
 		//Ende Dummy von Miri
 		
 
@@ -76,42 +72,6 @@ public class Window extends JFrame {
 		this.pack();
 	}
 	
-	/**
-	 * @author Miriam
-	 */
-	private void characterSpawns(){
-		//Dummy
-		this.characterLabel.setText("Jump");
-		this.characterLabel.setBounds(this.character.getPositionX(),
-				this.character.getPositionY(),
-				this.character.getHeight(),
-				this.character.getWidth());
-		baseLayer.add(this.characterLabel);	
-	}
-	
-	/**
-	 * @author Miriam
-	 */
-	private void jump(){
-		int newPositionX;
-		float newPositionY;
-		float time = this.jumpCounter / ((float) Ressources.GAMESPEED);
-		
-		newPositionY = 20 * time * time - 20 * time + 5;
-		newPositionY = this.character.getCurrentLevel() + newPositionY * Ressources.GAMESPEED;
-		
-		this.character.setPositionY((int) (newPositionY));
-		this.characterLabel.setBounds(this.character.getPositionX(),
-				this.character.getPositionY(),
-				this.character.getHeight(),
-				this.character.getWidth());
-		
-		if(this.jumpCounter == 10)
-			this.jumpCounter = 0;
-		else
-			this.jumpCounter++;
-	}
-	
 	
 	/**
 	 * 
@@ -120,8 +80,8 @@ public class Window extends JFrame {
 		frameCounter=(frameCounter+1) %Ressources.SCREEN.width;
 		label.setLocation(frameCounter, 0);
 		
-		if(this.stepcounter % 10 == 0)
-			this.jump();
+		if(this.stepcounter % 8 == 0)
+			this.character.jump();	//TODO: auf JUMP-Taste überprüfen und nur dann alle mod10 Schritte jump() aufrufen
 		
 		this.stepcounter++;
 	}
