@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 public class Ressources {
 	public static final Dimension SCREEN;
 	public static final int GAMESPEED = 10;
+	public static final String RESPATH = "res\\";
+	public static final int LANDSCAPETILEWIDTH=120;
 	
 	
 	//Game Character

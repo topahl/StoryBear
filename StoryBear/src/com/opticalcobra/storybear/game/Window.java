@@ -18,7 +18,9 @@ public class Window extends JFrame {
 	private int stepcounter = 0;
 	private GameCharacter character;
 	
-	JLabel label = new JLabel();
+	JLayeredPane pane1;
+	JLayeredPane pane2;
+	DummyRenderer renderer = new DummyRenderer();
 	
 	public Window(){
 		
@@ -36,9 +38,9 @@ public class Window extends JFrame {
 		//TODO Remove Dummy code
 		//Dummy Code 
 		
-		label.setText("Hallo Welt");
-		label.setBounds(0,0,100,100);
-		baseLayer.add(label);
+		pane1 = renderer.getNextWindow();
+		pane1.setLocation(0, 0);
+		baseLayer.add(pane1);
 		//Dummy Code end
 		
 		//Dummycode von Miri
@@ -77,8 +79,7 @@ public class Window extends JFrame {
 	 * 
 	 */
 	public void step(){
-		frameCounter=(frameCounter+1) %Ressources.SCREEN.width;
-		label.setLocation(frameCounter, 0);
+		frameCounter=(frameCounter+1) %Ressources.SCREEN.width;		
 		
 		if(this.stepcounter % 8 == 0)
 			this.character.jump();	//TODO: auf JUMP-Taste überprüfen und nur dann alle mod10 Schritte jump() aufrufen

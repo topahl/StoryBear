@@ -57,7 +57,7 @@ public class Database {
         conn.close();
 	}
 	
-	public synchronized void query(String expression) throws SQLException {
+	private synchronized ResultSet query(String expression) throws SQLException {
 
         Statement st = null;
         ResultSet rs = null;
@@ -65,9 +65,8 @@ public class Database {
         st = conn.createStatement(); 
 
         rs = st.executeQuery(expression);
-
-        dump(rs);
         st.close();
+        return rs;
 	}
 	
 	/**
@@ -144,6 +143,32 @@ public class Database {
         return result;
 	}
 	
+	/**
+	 * Returns all information about an Image stored in the DB
+	 * @param query
+	 * @return 
+	 * @throws SQLException
+	 */
+	public ImageResult queryImagedata(String query) throws SQLException{
+				ResultSet rs = query(query);
+				ResultSetMetaData meta = rs.getMetaData();
+				int x;
+				int y;
+				int width;
+				int height;
+				String url;
+				rs.next();
+				url =(String) rs.getObject(2);
+				x =(Integer) rs.getObject(3);
+				y =(Integer) rs.getObject(4);
+				height =(Integer) rs.getObject(5);
+				width =(Integer) rs.getObject(6);
+
+				rs.close();
+				return new ImageResult(x, y, height, width, url);
+				
+		
+	}
 	public void dump(ResultSet rs) throws SQLException {
 //        ResultSetMetaData meta   = rs.getMetaData(); // TODO print metadata
 //        int colmax = meta.getColumnCount();
