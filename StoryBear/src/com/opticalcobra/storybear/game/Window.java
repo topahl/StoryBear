@@ -40,14 +40,14 @@ public class Window extends JFrame {
 		
 		pane1 = renderer.getNextWindow();
 		pane1.setLocation(0, 0);
-		baseLayer.add(pane1);
+
 		//Dummy Code end
 		
 		//Dummycode von Miri
 		this.character = new GameCharacter(this.baseLayer);
 		//Ende Dummy von Miri
 		
-
+		baseLayer.add(pane1);
 		this.setVisible(true);
 		this.timer.start();
 	}
