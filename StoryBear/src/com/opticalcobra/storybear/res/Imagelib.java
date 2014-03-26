@@ -53,9 +53,9 @@ public class Imagelib {
 		}
 		
 		try {
-			ImageResult ir = db.queryImagedata("SELECT * FROM "+Constants.IMAGETABLE+" WHERE URL = '"+landscape + "' AND X = "+(type*Ressources.LANDSCAPETILEWIDTH));
+			ImageResult ir = db.queryImagedata("SELECT * FROM "+Constants.IMAGETABLE+" WHERE URL = '"+landscape + "' AND X = "+(type*Ressources.RASTERSIZEORG));
 			full=loadRessourcesImage(landscape);
-			result=full.getSubimage(ir.getX(), ir.getY(), ir.getWidth(), ir.getHeight());
+			result=full.getSubimage((int)(ir.getX()/Ressources.SCALE),(int) (ir.getY()/Ressources.SCALE),(int) (ir.getWidth()/Ressources.SCALE),(int) (ir.getHeight()/Ressources.SCALE));
 			images.put("map-"+landscape+"#"+type, result);
 			return result;
 		} catch (SQLException e) {
@@ -71,7 +71,9 @@ public class Imagelib {
 		}
 		
 		try {
-			result = ImageIO.read(new File(Ressources.RESPATH+graphicName));
+			BufferedImage temp = ImageIO.read(new File(Ressources.RESPATH+graphicName));
+			result = new BufferedImage((int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),BufferedImage.TYPE_INT_ARGB);
+			result.getGraphics().drawImage(temp, 0, 0, (int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),null);
 			images.put("img-"+graphicName, result);
 			return result;
 		} catch (IOException e) {
