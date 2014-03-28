@@ -118,7 +118,7 @@ public class Window extends JFrame {
 		}
 		
 		//Navigation of the game character via the right, left, up and down keys
-		if(this.stepcounter % 10 == 0){
+		if(this.stepcounter % 8 == 0){
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump == true))
 				this.inAJump = this.character.jump(this.controle.getRunDirection());
 			else if(this.controle.getRunDirection() != 'n')

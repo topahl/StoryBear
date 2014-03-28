@@ -48,9 +48,21 @@ public class Controle implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void keyTyped(KeyEvent e) {
+		switch (e.getKeyCode()){
+		case KeyEvent.VK_RIGHT:
+			this.setRunDirection('r');
+			break;
+		case KeyEvent.VK_LEFT:
+			this.setRunDirection('l');
+			break;
+		case KeyEvent.VK_UP:
+			this.setJumpDirection('u');
+			break;	
+		case KeyEvent.VK_DOWN:
+			this.setJumpDirection('d');
+			break;
+	}
 	}
 
 	public char getRunDirection() {
