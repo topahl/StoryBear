@@ -44,16 +44,29 @@ public class GameCharacter extends JLabel{
 	
 	/**
 	 * @author Miriam
+	 */
+	public void run(char direction){
+		double runConstant = Ressources.RUNCONTANT / Ressources.SCALE;
+		if(direction == 'l' && this.positionX > 0)
+			this.positionX -= (int) runConstant;
+		else if(direction == 'r' && this.positionX < (Ressources.WINDOW.width - this.width))
+			this.positionX += (int) runConstant;	
+		
+		this.setBounds(this.positionX, this.positionY, this.height,this.width);
+	}
+	
+	/**
+	 * @author Miriam
 	 * TODO: überprüfen, ob auch eine rechts oder links Taste gedrückt ist, damit dann auch in die Richtung gesprungen wird
 	 */
-	public void jump(){
-		int newPositionX;
+	public boolean jump(char jumpDirectionX){
 		double newPositionY;
-		double jumpconstant = Ressources.JUMPCONSTANT / Ressources.SCALE;
+		double jumpConstantX = Ressources.JUMPCONSTANTX / Ressources.SCALE;
+		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
 		float time = this.jumpCounter / ((float) Ressources.GAMESPEED);
 		
 		//calculate the height of the current jump position
-		newPositionY = jumpconstant * time * time - jumpconstant * time;
+		newPositionY = jumpConstantY * time * time - jumpConstantY * time;
 		newPositionY = this.currentLevel + newPositionY * Ressources.GAMESPEED;
 		this.positionY = ((int) (newPositionY));
 		
@@ -64,11 +77,10 @@ public class GameCharacter extends JLabel{
 			this.positionY = Ressources.WINDOW.height - this.height;
 		
 		//calculate the X value of the jump 
-		//TODO: Tastendruck (rechts/links) abfangen
-		//if(rechts gedrückt)
-		this.positionX += 8;
-		//else
-		//	this.positionX -= 8;
+		if(jumpDirectionX == 'r')
+			this.positionX += jumpConstantX;
+		else if(jumpDirectionX == 'l')
+			this.positionX -= jumpConstantX;
 		
 		//Rangecheck --> don't run out of window
 		if (this.positionX < 0)
@@ -78,10 +90,14 @@ public class GameCharacter extends JLabel{
 		
 		this.setBounds(this.positionX,this.positionY,this.height,this.width);
 		
-		if(this.jumpCounter == 10)
+		if(this.jumpCounter == 10){
 			this.jumpCounter = 0;
-		else
+			return false;
+		}
+		else{
 			this.jumpCounter++;
+			return true;
+		}
 	}
 
 	public int getHeight() {

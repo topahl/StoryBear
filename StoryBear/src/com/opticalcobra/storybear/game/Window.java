@@ -17,6 +17,9 @@ public class Window extends JFrame {
 	private int frameCounter[];
 	private int stepcounter = 0;
 	private GameCharacter character;
+	private Controle controle;
+	
+	private boolean inAJump = false; //shows that jump is executed currently
 	
 	JLayeredPane pane1;
 	JLayeredPane pane2;
@@ -47,10 +50,13 @@ public class Window extends JFrame {
 
 		//Dummy Code end
 		
-		//Dummycode von Miri
+		// initialize Game Character
 		this.character = new GameCharacter();
 		this.baseLayer.add(this.character);
-		//Ende Dummy von Miri
+		
+		// initialize Controle 
+		this.controle = new Controle();
+		this.addKeyListener(this.controle);
 		
 		baseLayer.add(pane1);
 		baseLayer.add(pane2);
@@ -111,8 +117,13 @@ public class Window extends JFrame {
 			renderer.getNextWindow(pane2);
 		}
 		
-		if(this.stepcounter % 8 == 0)
-			this.character.jump();	//TODO: auf JUMP-Taste überprüfen und nur dann alle mod10 Schritte jump() aufrufen
+		//Navigation of the game character via the right, left, up and down keys
+		if(this.stepcounter % 10 == 0){
+			if((this.controle.getJumpDirection() == 'u') || (this.inAJump == true))
+				this.inAJump = this.character.jump(this.controle.getRunDirection());
+			else if(this.controle.getRunDirection() != 'n')
+				this.character.run(this.controle.getRunDirection());
+		}
 		
 		this.stepcounter++;
 	}
