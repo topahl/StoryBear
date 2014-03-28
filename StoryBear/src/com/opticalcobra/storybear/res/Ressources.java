@@ -18,7 +18,7 @@ public class Ressources {
 	//Game Character
 	//TODO: Dummywerte überarbeiten
 	public static final int CHARACTERHEIGHT = 70;
-	public static final int CHARACTERWIDTH = 30;
+	public static final int CHARACTERWIDTH = 40;
 	public static final int CHARACTERSPAWNPOSITIONX = 0;
 	public static final int CHARACTERSPAWNPOSITIONY = 400;
 	

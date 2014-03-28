@@ -48,7 +48,8 @@ public class Window extends JFrame {
 		//Dummy Code end
 		
 		//Dummycode von Miri
-		this.character = new GameCharacter(this.baseLayer);
+		this.character = new GameCharacter();
+		this.baseLayer.add(this.character);
 		//Ende Dummy von Miri
 		
 		baseLayer.add(pane1);
