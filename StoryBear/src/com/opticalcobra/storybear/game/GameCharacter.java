@@ -6,7 +6,7 @@ import javax.swing.JLayeredPane;
 import com.opticalcobra.storybear.res.Ressources;
 
 
-public class GameCharacter {
+public class GameCharacter extends JLabel{
 	private int height;
 	private int width;
 	//private int spawnPositionX;
@@ -17,8 +17,8 @@ public class GameCharacter {
 	
 	private int jumpCounter = 0;
 	
-	private JLabel characterLabel = new JLabel();
-	private JLayeredPane baseLayer;
+	//private JLabel characterLabel = new JLabel();
+	//private JLayeredPane baseLayer;
 	
 	/**
 	 * @author Miriam
@@ -26,21 +26,10 @@ public class GameCharacter {
 	public GameCharacter(){
 		this.setHeight(Ressources.CHARACTERHEIGHT);
 		this.setWidth(Ressources.CHARACTERWIDTH);
-		//this.spawnPositionX = Ressources.CHARACTERSPAWNPOSITIONX;
-		//this.spawnPositionY = Ressources.CHARACTERSPAWNPOSITIONY;
-		this.setPositionX(Ressources.CHARACTERSPAWNPOSITIONX);
-		this.setPositionY(Ressources.CHARACTERSPAWNPOSITIONY);
-		this.setCurrentLevel(Ressources.CHARACTERSPAWNPOSITIONY);
-	}
-	
-	public GameCharacter(JLayeredPane baseLayer){
-		this.setHeight(Ressources.CHARACTERHEIGHT);
-		this.setWidth(Ressources.CHARACTERWIDTH);
 		this.setPositionX(Ressources.CHARACTERSPAWNPOSITIONX);
 		this.setPositionY(Ressources.CHARACTERSPAWNPOSITIONY);
 		this.setCurrentLevel(Ressources.CHARACTERSPAWNPOSITIONY);
 		
-		this.baseLayer = baseLayer;
 		this.characterSpawns();
 	}
 	
@@ -49,10 +38,8 @@ public class GameCharacter {
 	 * the game character spawns in the game
 	 */
 	private void characterSpawns(){
-		//Dummy
-		this.characterLabel.setText("Jump");
-		this.characterLabel.setBounds(this.positionX,this.positionY,this.height,this.width);
-		baseLayer.add(this.characterLabel);	
+		this.setText("Jump");
+		this.setBounds(this.positionX,this.positionY,this.height,this.width);
 	}
 	
 	/**
@@ -61,19 +48,20 @@ public class GameCharacter {
 	 */
 	public void jump(){
 		int newPositionX;
-		float newPositionY;
+		double newPositionY;
+		double jumpconstant = Ressources.JUMPCONSTANT / Ressources.SCALE;
 		float time = this.jumpCounter / ((float) Ressources.GAMESPEED);
 		
 		//calculate the height of the current jump position
-		newPositionY = 40 * time * time - 40 * time + 5;
+		newPositionY = jumpconstant * time * time - jumpconstant * time;
 		newPositionY = this.currentLevel + newPositionY * Ressources.GAMESPEED;
 		this.positionY = ((int) (newPositionY));
 		
 		//Rangecheck --> don't run out of window
 		if (this.positionY < 0)
 			this.positionY = 0;
-		else if (this.positionY > (Ressources.SCREEN.height - this.height))
-			this.positionY = Ressources.SCREEN.height - this.height;
+		else if (this.positionY > (Ressources.WINDOW.height - this.height))
+			this.positionY = Ressources.WINDOW.height - this.height;
 		
 		//calculate the X value of the jump 
 		//TODO: Tastendruck (rechts/links) abfangen
@@ -85,10 +73,10 @@ public class GameCharacter {
 		//Rangecheck --> don't run out of window
 		if (this.positionX < 0)
 			this.positionX = 0;
-		else if (this.positionX > (Ressources.SCREEN.width - this.width))
-			this.positionX = Ressources.SCREEN.width - this.width;
+		else if (this.positionX > (Ressources.WINDOW.width - this.width))
+			this.positionX = Ressources.WINDOW.width - this.width;
 		
-		this.characterLabel.setBounds(this.positionX,this.positionY,this.height,this.width);
+		this.setBounds(this.positionX,this.positionY,this.height,this.width);
 		
 		if(this.jumpCounter == 10)
 			this.jumpCounter = 0;

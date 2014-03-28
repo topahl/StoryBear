@@ -18,14 +18,14 @@ public class Ressources {
 	//Game Character
 	//TODO: Dummywerte überarbeiten
 	public static final int CHARACTERHEIGHT = 70;
-	public static final int CHARACTERWIDTH = 30;
+	public static final int CHARACTERWIDTH = 40;
 	public static final int CHARACTERSPAWNPOSITIONX = 0;
 	public static final int CHARACTERSPAWNPOSITIONY = 400;
 	
 	
 	//Dynamics of the Game
 	//TODO: Dummywerte überarbeiten
-	public static final int JUMPCONSTANT = 320; //ned for calculation of jump formula
+	public static final int JUMPCONSTANT = 40; //ned for calculation of jump formula
 	
 	
 	static {
