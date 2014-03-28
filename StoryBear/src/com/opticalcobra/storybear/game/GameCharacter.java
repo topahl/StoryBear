@@ -48,11 +48,12 @@ public class GameCharacter extends JLabel{
 	 */
 	public void jump(){
 		int newPositionX;
-		float newPositionY;
+		double newPositionY;
+		double jumpconstant = Ressources.JUMPCONSTANT / Ressources.SCALE;
 		float time = this.jumpCounter / ((float) Ressources.GAMESPEED);
 		
 		//calculate the height of the current jump position
-		newPositionY = 40 * time * time - 40 * time + 5;
+		newPositionY = jumpconstant * time * time - jumpconstant * time;
 		newPositionY = this.currentLevel + newPositionY * Ressources.GAMESPEED;
 		this.positionY = ((int) (newPositionY));
 		
