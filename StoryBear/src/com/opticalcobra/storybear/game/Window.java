@@ -20,6 +20,7 @@ public class Window extends JFrame {
 	private Controle controle;
 	
 	private boolean inAJump = false; //shows that jump is executed currently
+	private boolean inADoubleJump = false;
 	
 	JLayeredPane pane1;
 	JLayeredPane pane2;
@@ -119,8 +120,15 @@ public class Window extends JFrame {
 		
 		//Navigation of the game character via the right, left, up and down keys
 		if(this.stepcounter % 8 == 0){
-			if((this.controle.getJumpDirection() == 'u') || (this.inAJump == true))
-				this.inAJump = this.character.jump(this.controle.getRunDirection());
+			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){
+				//this.inAJump = this.character.jump(this.controle.getRunDirection());
+				this.inAJump = this.character.letCharacterJump(this.controle.getDoubleJump(),this.controle.getRunDirection());
+				if(!this.character.inADoubleJump()){
+					this.controle.setDoubleJump(false);
+				}
+				if(!this.inAJump)
+					this.controle.jumpStatus = 'n';
+			}
 			else if(this.controle.getRunDirection() != 'n')
 				this.character.run(this.controle.getRunDirection());
 		}
