@@ -69,7 +69,7 @@ public class Controle implements KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		switch (e.getKeyCode()){
+		/*switch (e.getKeyCode()){
 		case KeyEvent.VK_RIGHT:
 			this.setRunDirection('r');
 			break;
@@ -82,7 +82,7 @@ public class Controle implements KeyListener {
 		case KeyEvent.VK_DOWN:
 			this.setJumpDirection('d');
 			break;
-		}
+		}*/
 	}
 
 	public char getRunDirection() {
