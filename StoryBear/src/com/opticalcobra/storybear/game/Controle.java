@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class Controle implements KeyListener {
 	private char runDirection = 'n'; 	//n=not running, l=left, r=right
 	private char jumpDirection = 'n';	//n=not, u=jump up, d=duck down
-	private boolean doubleJump = false;		//0=no jump, 1=one jump, 2=double jump
+	private boolean doubleJump = false;	
 	public char jumpStatus = 'n';				//n=no, y=yes, m=maybe
 	
 	public Controle(){
