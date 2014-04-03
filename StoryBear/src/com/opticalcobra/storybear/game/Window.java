@@ -16,7 +16,7 @@ public class Window extends JFrame {
 	private Timer timer;
 	private int frameCounter[];
 	private int stepcounter = 0;
-	private GameCharacter character;
+	private Hero hero;
 	private Controle controle;
 	
 	private boolean inAJump = false; //shows that jump is executed currently
@@ -52,8 +52,8 @@ public class Window extends JFrame {
 		//Dummy Code end
 		
 		// initialize Game Character
-		this.character = new GameCharacter();
-		this.baseLayer.add(this.character);
+		this.hero = new Hero();
+		this.baseLayer.add(this.hero);
 		
 		// initialize Controle 
 		this.controle = new Controle();
@@ -118,19 +118,19 @@ public class Window extends JFrame {
 			renderer.getNextWindow(pane2);
 		}
 		
-		//Navigation of the game character via the right, left, up and down keys
+		//Navigation of the hero via the right, left, up and down keys
 		if(this.stepcounter % 8 == 0){
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){
 				//this.inAJump = this.character.jump(this.controle.getRunDirection());
-				this.inAJump = this.character.letCharacterJump(this.controle.getDoubleJump(),this.controle.getRunDirection());
-				if(!this.character.inADoubleJump()){
+				this.inAJump = this.hero.letHeroJump(this.controle.getDoubleJump(),this.controle.getRunDirection());
+				if(!this.hero.inADoubleJump()){
 					this.controle.setDoubleJump(false);
 				}
 				if(!this.inAJump)
 					this.controle.jumpStatus = 'n';
 			}
 			else if(this.controle.getRunDirection() != 'n')
-				this.character.run(this.controle.getRunDirection());
+				this.hero.run(this.controle.getRunDirection());
 		}
 		
 		this.stepcounter++;

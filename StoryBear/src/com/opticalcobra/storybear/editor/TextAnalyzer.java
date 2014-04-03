@@ -10,39 +10,42 @@ public class TextAnalyzer {
 		
 	}
 	
-	
-	public StoryInfo analyzeText(String storyText, String title){
+	//TODO: Methode vervollständigen
+	/**
+	 * @author Miriam
+	 */
+	public StoryInfo analyzeText(Story story){
 		StoryInfo storyInfo = new StoryInfo();
-		String textWithoutUnneededWords = this.killUnneededWords(storyText);
-		String textWithoutFlexions = this.replaceFlexions(textWithoutUnneededWords);
+		String[] words;
+		int objectType = 0;
 		
-		storyInfo.getStory().setTitle(title);
-		storyInfo.getStory().setText(storyText);
+		storyInfo.setStory(story);
 		
-		storyInfo.setElements(this.getElements(textWithoutFlexions));
+		words = story.getText().split(" ");
+		//analyze Text
+		//--> check if word of the story is in our db
+		//if word in db then return type of word, e.g. collectable, character, ...
+		//else return null
+		for(String word : words){
+			//objectType = checkWordInDB(word);
+			/*if(objectType != 0){		//0 means null --> no match found
+				switch (objectType){
+				case 1:
+					
+					break;
+				case 2:
+					
+					break;
+				
+				}
+			}*/
+		}
+		
+		//storyInfo.setElements(this.getElements(textWithoutFlexions));
 		
 		return storyInfo;
 	}
 	
-	
-	//TODO Methode schreiben
-	private ArrayList<ILevelAppearance> getElements(String text){
-		ArrayList<ILevelAppearance> elements = new ArrayList();;
-		
-		return elements;
-	}
-	
-	//TODO Methode schreiben
-	private String replaceFlexions(String text){
-		
-		return text;
-	}
-	
-	//TODO Methode schreiben
-	private String killUnneededWords(String text){
-	
-		return text;
-	}
 	
 	//TODO Methode schreiben
 	/*public File generateLevelFile(){

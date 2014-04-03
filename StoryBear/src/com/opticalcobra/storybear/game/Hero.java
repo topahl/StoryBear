@@ -6,7 +6,7 @@ import javax.swing.JLayeredPane;
 import com.opticalcobra.storybear.res.Ressources;
 
 
-public class GameCharacter extends JLabel{
+public class Hero extends JLabel{
 	private int height;
 	private int width;
 	//private int spawnPositionX;
@@ -27,21 +27,21 @@ public class GameCharacter extends JLabel{
 	/**
 	 * @author Miriam
 	 */
-	public GameCharacter(){
+	public Hero(){
 		this.setHeight(Ressources.CHARACTERHEIGHT);
 		this.setWidth(Ressources.CHARACTERWIDTH);
 		this.setPositionX(Ressources.CHARACTERSPAWNPOSITIONX);
 		this.setPositionY(Ressources.CHARACTERSPAWNPOSITIONY);
 		this.setCurrentLevel(Ressources.CHARACTERSPAWNPOSITIONY);
 		
-		this.characterSpawns();
+		this.heroSpawns();
 	}
 	
 	/**
 	 * @author Miriam
 	 * the game character spawns in the game
 	 */
-	private void characterSpawns(){
+	private void heroSpawns(){
 		this.setText("Forrest");
 		this.setBounds(this.positionX,this.positionY,this.height,this.width);
 	}
@@ -63,7 +63,7 @@ public class GameCharacter extends JLabel{
 	 * @author Miriam
 	 * this method decides which kind of jump is executed: a normal jump or a double jump
 	 */
-	public boolean letCharacterJump(boolean doubleJump, char jumpDirectionX){
+	public boolean letHeroJump(boolean doubleJump, char jumpDirectionX){
 		//before anything happend I save the level where I have to come back in the end
 		if(this.jumpCntForFirstJump == 0)
 			this.levelForFirstJump = this.currentLevel;

@@ -21,7 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
-import com.opticalcobra.storybear.game.GameCharacter;
+import com.opticalcobra.storybear.game.Hero;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
