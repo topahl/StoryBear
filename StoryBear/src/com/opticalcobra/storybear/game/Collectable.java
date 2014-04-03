@@ -4,20 +4,20 @@ import com.opticalcobra.storybear.main.ILevelAppearance;
 
 public class Collectable implements ILevelAppearance {
 	
-	public Collectable(){
-		
+	private int block;
+	
+	public Collectable(int block){
+		this.block = block;
 	}
 
 	@Override
 	public int getBlock() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.block;
 	}
 
 	@Override
 	public void setBlock(int block) {
-		// TODO Auto-generated method stub
-
+		this.block = block;
 	}
 
 }
