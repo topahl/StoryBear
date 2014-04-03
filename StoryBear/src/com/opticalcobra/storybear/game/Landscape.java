@@ -3,6 +3,10 @@ package com.opticalcobra.storybear.game;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 
 public class Landscape implements ILevelAppearance {
+	
+	public Landscape(){
+		
+	}
 
 	@Override
 	public int getBlock() {

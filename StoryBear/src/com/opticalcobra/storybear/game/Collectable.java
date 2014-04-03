@@ -3,6 +3,10 @@ package com.opticalcobra.storybear.game;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 
 public class Collectable implements ILevelAppearance {
+	
+	public Collectable(){
+		
+	}
 
 	@Override
 	public int getBlock() {
