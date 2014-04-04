@@ -6,6 +6,7 @@ import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
 import com.opticalcobra.storybear.game.Landscape;
+import com.opticalcobra.storybear.game.Word;
 
 public class TextAnalyzer {
 
@@ -23,7 +24,7 @@ public class TextAnalyzer {
 		String[] words;
 		int objectType = 0;
 		ArrayList<ILevelAppearance> elements = new ArrayList();
-		int block = 0;			//how many block are ned for a word
+		int numberOfBlocks = 0;			//how many block are ned for a word
 		int blockPosition = 0; 	//block number, where a word begins in the level
 		int stringLength = 0;	//how many pixels are ned
 		
@@ -40,24 +41,25 @@ public class TextAnalyzer {
 			//TODO: Länge ermitteln, wie lang das Wort später im Level sein wird
 			//get the length of the word --> on which block will it begin?
 			stringLength = this.numberOfPixelsOfString(word);
-			block = (int) Math.ceil(stringLength / Ressources.RASTERSIZEORG);
+			numberOfBlocks = (int) Math.ceil(stringLength / Ressources.RASTERSIZEORG);
 			
 			//TODO: überarbeiten, aktuell nur Dummywerte
-			if(objectType != 0){		//0 means null --> no match found
-				switch (objectType){
-				case 1:
-					elements.add(new Character(blockPosition));
-					break;
-				case 2:
-					elements.add(new Collectable(blockPosition));
-					break;
-				case 3:
-					elements.add(new Landscape(blockPosition));
-					break;
-				}
+			switch (objectType){
+			case 0:					//0 means null --> no match found --> save the original word
+				elements.add(new Word(blockPosition));
+				break;
+			case 1:
+				elements.add(new Character(blockPosition));
+				break;
+			case 2:
+				elements.add(new Collectable(blockPosition));
+				break;
+			case 3:
+				elements.add(new Landscape(blockPosition));
+				break;
 			}
 			
-			blockPosition += block;	//calculates the beginning of each new words
+			blockPosition += numberOfBlocks;	//calculates the beginning of each new words
 		}
 		
 		storyInfo.setNumberOfBlocks(blockPosition);
