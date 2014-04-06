@@ -1,5 +1,7 @@
 package com.opticalcobra.storybear.game;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -11,7 +13,7 @@ import javax.swing.JLayeredPane;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
-public class DummyRenderer {
+public class DummyRenderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
 	private int lastTile = 0;
 	private ArrayList<int[]>dependencies;
@@ -49,17 +51,21 @@ public class DummyRenderer {
 		dependencies.add(new int[]{0});
 	}
 	
-	public BufferedImage getNextMapElement(){
+	private BufferedImage getNextMapElement(){
 		int next =dependencies.get(lastTile)[((int)((Math.random()) * dependencies.get(lastTile).length))];
 		lastTile = next;
 		return il.loadLandscapeTile("images\\slice_ls_front.png", next);
 		
 	}
+
 	
-	public void getNextWindow(JLayeredPane pane){
+	@Override
+	public void getNextViewPart(JLabel pane) {
+		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = (Graphics2D) image.getGraphics();
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
-			JLabel tile = (JLabel) pane.getComponent(i);
-			tile.setIcon(new ImageIcon(getNextMapElement()));
+			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE,0,null);
 		}
+		pane.setIcon(new ImageIcon(image));
 	}
 }

@@ -14,7 +14,7 @@ public class Window extends JFrame {
 	
 	private JLayeredPane baseLayer; // base Layer on witch all other displaying is done
 	private Timer timer;
-	private int frameCounter[];
+	private GameLayer vg2;
 	private int stepcounter = 0;
 	private Hero hero;
 	private Control controle;
@@ -22,15 +22,12 @@ public class Window extends JFrame {
 	private boolean inAJump = false; //shows that jump is executed currently
 	private boolean inADoubleJump = false;
 	
-	JLayeredPane pane1;
-	JLayeredPane pane2;
+
 	DummyRenderer renderer = new DummyRenderer();
 	
 	public Window(){
 		
-		this.timer = new Timer(Ressources.GAMESPEED,new OSTimer(this));
-		frameCounter = new int[]{0,Ressources.WINDOW.width};
-		
+		this.timer = new Timer(Ressources.GAMESPEED,new OSTimer(this));	
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -41,14 +38,10 @@ public class Window extends JFrame {
 		
 		//TODO Remove Dummy code
 		//Dummy Code 
-
-		pane1.setSize(Ressources.WINDOW.width, Ressources.WINDOW.width);
-		renderer.getNextWindow(pane1);
-		pane1.setLocation(0, 0);
-		pane2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.width);
-		renderer.getNextWindow(pane2);
-		pane2.setLocation(Ressources.WINDOW.width, 0);
-
+		vg2=new GameLayer(renderer);
+		vg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.width);
+		vg2.setLocation(0, 0);
+		baseLayer.add(vg2);
 		//Dummy Code end
 		
 		// initialize Game Character
@@ -59,8 +52,6 @@ public class Window extends JFrame {
 		this.controle = new Control();
 		this.addKeyListener(this.controle);
 		
-		baseLayer.add(pane1);
-		baseLayer.add(pane2);
 		this.setVisible(true);
 		this.timer.start();
 	}
@@ -70,17 +61,7 @@ public class Window extends JFrame {
 	 * @author Tobias
 	 */
 	private void initComponents(){
-		//GrafikFrames erstellen
-		pane1=new JLayeredPane();
-		pane2=new JLayeredPane();
-		for(int i=0;i<Ressources.WINDOW.width;i+=Ressources.RASTERSIZE){
-			JLabel label=new JLabel();
-			label.setBounds(i, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
-			pane1.add(label);
-			label=new JLabel();
-			label.setBounds(i, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
-			pane2.add(label);
-		}
+
 		
 		
 		//Letzte Einstellungen zum Fenster
@@ -104,20 +85,7 @@ public class Window extends JFrame {
 	 * 
 	 */
 	public void step(){
-		frameCounter[0]=(frameCounter[0]-1);
-		frameCounter[1]=(frameCounter[1]-1);
-		pane1.setLocation(frameCounter[0], 0);
-		pane2.setLocation(frameCounter[1],0);
-		if(frameCounter[0]==-Ressources.WINDOW.width){
-			frameCounter[0]=Ressources.WINDOW.width;
-			renderer.getNextWindow(pane1);
-			
-		}
-		if(frameCounter[1]==-Ressources.WINDOW.width){
-			frameCounter[1]=Ressources.WINDOW.width;
-			renderer.getNextWindow(pane2);
-		}
-		
+		vg2.step();
 		//Navigation of the hero via the right, left, up and down keys
 		if(this.stepcounter % 4 == 0){
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){
