@@ -3,13 +3,13 @@ package com.opticalcobra.storybear.game;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Controle implements KeyListener {
+public class Control implements KeyListener {
 	private char runDirection = 'n'; 	//n=not running, l=left, r=right
 	private char jumpDirection = 'n';	//n=not, u=jump up, d=duck down
 	private boolean doubleJump = false;	
 	public char jumpStatus = 'n';				//n=no, y=yes, m=maybe
 	
-	public Controle(){
+	public Control(){
 		
 	}
 

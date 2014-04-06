@@ -17,7 +17,7 @@ public class Window extends JFrame {
 	private int frameCounter[];
 	private int stepcounter = 0;
 	private Hero hero;
-	private Controle controle;
+	private Control controle;
 	
 	private boolean inAJump = false; //shows that jump is executed currently
 	private boolean inADoubleJump = false;
@@ -56,7 +56,7 @@ public class Window extends JFrame {
 		this.baseLayer.add(this.hero);
 		
 		// initialize Controle 
-		this.controle = new Controle();
+		this.controle = new Control();
 		this.addKeyListener(this.controle);
 		
 		baseLayer.add(pane1);
