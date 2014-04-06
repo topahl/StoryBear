@@ -24,9 +24,9 @@ public class TextAnalyzer {
 		String[] words;
 		int objectType = 0;
 		ArrayList<ILevelAppearance> elements = new ArrayList();
-		int numberOfBlocks = 0;			//how many block are ned for a word
-		int blockPosition = 0; 	//block number, where a word begins in the level
-		int stringLength = 0;	//how many pixels are ned
+		int numberOfBlocks = 0;			//how many blocks are needed for a word
+		int blockPosition = 0; 	//block number, where a word starts in the level
+		int stringLength = 0;	//how many pixels are needed
 		
 		storyInfo.setStory(story);
 		
