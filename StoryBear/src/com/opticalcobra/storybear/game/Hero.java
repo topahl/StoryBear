@@ -50,7 +50,7 @@ public class Hero extends JLabel{
 	 * @author Miriam
 	 */
 	public void run(char direction){
-		double runConstant = Ressources.RUNCONTANT / Ressources.SCALE;
+		double runConstant = Ressources.RUNCONSTANT / Ressources.SCALE;
 		if(direction == 'l' && this.positionX > 0)
 			this.positionX -= (int) runConstant;
 		else if(direction == 'r' && this.positionX < (Ressources.WINDOW.width - this.width))

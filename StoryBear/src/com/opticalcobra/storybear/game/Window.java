@@ -119,7 +119,7 @@ public class Window extends JFrame {
 		}
 		
 		//Navigation of the hero via the right, left, up and down keys
-		if(this.stepcounter % 8 == 0){
+		if(this.stepcounter % 4 == 0){
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){
 				//this.inAJump = this.character.jump(this.controle.getRunDirection());
 				this.inAJump = this.hero.letHeroJump(this.controle.getDoubleJump(),this.controle.getRunDirection());
