@@ -47,8 +47,7 @@ public class TextAnalyzer {
 		for(String word : words){
 			objectType = checkWordInDB(word);
 			
-			//TODO: Länge ermitteln, wie lang das Wort später im Level sein wird
-			//get the length of the word --> on which block will it begin?
+			//get the length of the word in pixels
 			stringLength = this.numberOfPixelsOfString(word);
 			
 			//Math.ceil rundet immer auf: 0.1 wird zu 1.0
