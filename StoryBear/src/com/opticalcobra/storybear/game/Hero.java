@@ -242,6 +242,4 @@ public class Hero extends JLabel{
 		this.currentLevel = currentLevel;
 	}
 	
-	
-	
 }
