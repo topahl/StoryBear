@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 /**
+ * is Singleton
  * handles and caches all uses Fonts
  * @author Nicolas
  */

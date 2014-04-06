@@ -1,7 +1,15 @@
 package com.opticalcobra.storybear.editor;
 
 import java.util.ArrayList;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import javafx.geometry.Rectangle2D;
+
 import com.opticalcobra.storybear.main.ILevelAppearance;
+import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
@@ -10,6 +18,7 @@ import com.opticalcobra.storybear.game.Word;
 
 public class TextAnalyzer {
 
+	private Font storyTextFont = FontCache.getInstance().getFont("Standard", ((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)));
 	
 	public TextAnalyzer(){
 		
@@ -36,18 +45,17 @@ public class TextAnalyzer {
 		//if word in db then return type of word, e.g. collectable, character, ...
 		//else return null
 		for(String word : words){
-			//objectType = checkWordInDB(word); //TODO: Methode schreiben und reinkommentieren
+			objectType = checkWordInDB(word);
 			
 			//TODO: Länge ermitteln, wie lang das Wort später im Level sein wird
 			//get the length of the word --> on which block will it begin?
 			stringLength = this.numberOfPixelsOfString(word);
+			
+			//Math.ceil rundet immer auf: 0.1 wird zu 1.0
 			numberOfBlocks = (int) Math.ceil(stringLength / Ressources.RASTERSIZEORG);
 			
 			//TODO: überarbeiten, aktuell nur Dummywerte
 			switch (objectType){
-			case 0:					//0 means null --> no match found --> save the original word
-				elements.add(new Word(blockPosition));
-				break;
 			case 1:
 				elements.add(new Character(blockPosition));
 				break;
@@ -58,6 +66,8 @@ public class TextAnalyzer {
 				elements.add(new Landscape(blockPosition));
 				break;
 			}
+			//es wird für alles ein Word angelegt
+			elements.add(new Word(blockPosition));
 			
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new words
 		}
@@ -68,10 +78,22 @@ public class TextAnalyzer {
 		return storyInfo;
 	}
 	
-	//TODO Methode schreiben
-	//tatsächliche Länge des Strings in Pixeln
-	private int numberOfPixelsOfString(String word){
+	private int checkWordInDB(String word) {
+		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/**
+	 * @author Martika
+	 * @param word
+	 * @return width in pixel
+	 */
+	public int numberOfPixelsOfString(String word){
+		Graphics2D g = (Graphics2D) new BufferedImage(1,1,1).getGraphics();
+		g.setFont(storyTextFont);
+		FontMetrics fm = g.getFontMetrics();
+		java.awt.geom.Rectangle2D rect = fm.getStringBounds(word, g);
+		return (int)Math.ceil((rect.getWidth()));
 	}
 	
 	

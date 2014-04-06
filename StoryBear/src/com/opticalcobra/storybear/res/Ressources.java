@@ -13,7 +13,7 @@ public class Ressources {
 	public static final String RESPATH = "res\\";
 	public static final int RASTERSIZEORG=120;
 	public static final int RASTERSIZE;
-	
+	public static final int STORYTEXTSIZE=20;
 	
 	//Game Character
 	//TODO: Dummywerte überarbeiten
