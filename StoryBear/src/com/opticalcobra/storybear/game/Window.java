@@ -15,6 +15,7 @@ public class Window extends JFrame {
 	private JLayeredPane baseLayer; // base Layer on witch all other displaying is done
 	private Timer timer;
 	private GameLayer vg2;
+	private GameLayer mg;
 	private int stepcounter = 0;
 	private Hero hero;
 	private Control controle;
@@ -24,6 +25,7 @@ public class Window extends JFrame {
 	
 
 	DummyRenderer renderer = new DummyRenderer();
+	DummyRendererMG rendererMG = new DummyRendererMG();
 	
 	public Window(){
 		
@@ -39,9 +41,14 @@ public class Window extends JFrame {
 		//TODO Remove Dummy code
 		//Dummy Code 
 		vg2=new GameLayer(renderer);
-		vg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.width);
+		vg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		vg2.setLocation(0, 0);
 		baseLayer.add(vg2);
+		
+		mg=new GameLayer(rendererMG);
+		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		mg.setLocation(0, -100); //TODO: -100 entfernen
+		baseLayer.add(mg);
 		//Dummy Code end
 		
 		// initialize Game Character
@@ -86,6 +93,8 @@ public class Window extends JFrame {
 	 */
 	public void step(){
 		vg2.step();
+		if(this.stepcounter % 2 == 0)
+			mg.step();
 		//Navigation of the hero via the right, left, up and down keys
 		if(this.stepcounter % 4 == 0){
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){

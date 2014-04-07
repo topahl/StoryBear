@@ -54,7 +54,7 @@ public class DummyRenderer implements IRenderer{
 	private BufferedImage getNextMapElement(){
 		int next =dependencies.get(lastTile)[((int)((Math.random()) * dependencies.get(lastTile).length))];
 		lastTile = next;
-		return il.loadLandscapeTile("images\\slice_ls_front.png", next);
+		return il.loadLandscapeTile("images\\layer_slice_vg1.png", next);
 		
 	}
 
