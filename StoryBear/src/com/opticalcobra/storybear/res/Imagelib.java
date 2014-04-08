@@ -83,6 +83,27 @@ public class Imagelib {
 		}
 	}
 	
+	
+	public BufferedImage loadBackgroundTile(String landscape, int type) throws ImageNotFoundException{
+		BufferedImage result;
+		BufferedImage full;
+		
+		result = images.get("map-"+landscape+"#"+type);
+		if(result != null){
+			return result;
+		}
+		
+		try {
+			ImageResult ir = db.queryImagedata("SELECT * FROM "+Constants.IMAGETABLE+" WHERE URL = '"+landscape + "' AND X = "+(type*Ressources.RASTERSIZEORG*4));
+			full=loadRessourcesImage(landscape);
+			result=full.getSubimage((int)(ir.getX()/Ressources.SCALE),(int) (ir.getY()/Ressources.SCALE),(int) (ir.getWidth()/Ressources.SCALE),(int) (ir.getHeight()/Ressources.SCALE));
+			images.put("map-"+landscape+"#"+type, result);
+			return result;
+		} catch (SQLException e) {
+			throw new ImageNotFoundException("Could not find an Image for:'"+landscape+"' and type: "+type+" in the database", e);
+		}
+	}
+	
 	private BufferedImage loadRessourcesImage(String graphicName) throws ImageNotFoundException{
 		BufferedImage result;
 		result = images.get("img-"+graphicName);
