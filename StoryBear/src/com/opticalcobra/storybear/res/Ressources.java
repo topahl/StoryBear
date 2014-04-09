@@ -5,11 +5,13 @@ import java.awt.Toolkit;
 
 public class Ressources {
 	
+	public static final boolean DEBUG = true;
+	
 	public static final Dimension FULLHD;
 	public static final Dimension SCREEN;
 	public static final Dimension WINDOW;
 	public static final double SCALE;
-	public static final int GAMESPEED = 10;
+	public static final int GAMESPEED = 5;
 	public static final String RESPATH = "res\\";
 	public static final int RASTERSIZEORG=120;
 	public static final int RASTERSIZE;

@@ -9,6 +9,7 @@ import javax.swing.Timer;
 
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.TestMemory;
 
 public class Window extends JFrame {
 	
@@ -34,6 +35,7 @@ public class Window extends JFrame {
 	public Window(){
 		
 		this.timer = new Timer(Ressources.GAMESPEED,new OSTimer(this));	
+		timer.setCoalesce(false);
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -79,9 +81,8 @@ public class Window extends JFrame {
 	 * @author Tobias
 	 */
 	private void initComponents(){
-
-		
-		
+		baseLayer.setBackground(new Color(158, 234, 252, 255));
+		getContentPane().setBackground(Color.BLACK);
 		//Letzte Einstellungen zum Fenster
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this.getContentPane());
 		this.getContentPane().setLayout(layout);
@@ -93,8 +94,8 @@ public class Window extends JFrame {
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
 				this.baseLayer, javax.swing.GroupLayout.DEFAULT_SIZE,
 				Ressources.SCREEN.height, Short.MAX_VALUE));
-
-		this.setBackground(Color.black);
+		baseLayer.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height); // TODO : Fenster mittig anzeigen
+		add(baseLayer);
 		this.pack();
 	}
 	
@@ -121,6 +122,9 @@ public class Window extends JFrame {
 			else if(this.controle.getRunDirection() != 'n')
 				this.hero.run(this.controle.getRunDirection());
 		}
+		
+		if(this.stepcounter % 1000 == 0)
+			TestMemory.print();
 		
 		this.stepcounter++;
 	}
