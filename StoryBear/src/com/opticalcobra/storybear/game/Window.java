@@ -87,8 +87,8 @@ public class Window extends JFrame {
 	/**
 	 * @author Tobias
 	 */
-	private void initComponents(){
-		baseLayer.setBackground(new Color(158, 234, 252, 255));
+	private void initComponents() {
+		baseLayer.setBackground(Ressources.SKYCOLOR);
 		getContentPane().setBackground(Color.BLACK);
 		//Letzte Einstellungen zum Fenster
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this.getContentPane());

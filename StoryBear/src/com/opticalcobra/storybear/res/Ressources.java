@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.res;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -13,9 +14,12 @@ public class Ressources {
 	public static final double SCALE;
 	public static final int GAMESPEED = 5;
 	public static final String RESPATH = "res\\";
-	public static final int RASTERSIZEORG=120;
+	public static final int RASTERSIZEORG = 120;
 	public static final int RASTERSIZE;
-	public static final int STORYTEXTSIZE=20;
+	public static final int STORYTEXTSIZE = 20;
+	
+	//Colors
+	public static final Color SKYCOLOR = new Color(111, 213, 239, 255); //Standard: 158, 234, 252, 255
 	
 	//Game Character
 	//TODO: Dummywerte überarbeiten
