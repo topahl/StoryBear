@@ -18,6 +18,7 @@ public class Window extends JFrame {
 	private GameLayer vg2;
 	private GameLayer mg;
 	private GameLayer bg;
+	private GameLayer clouds;
 	
 	
 	private int stepcounter = 0;
@@ -31,6 +32,7 @@ public class Window extends JFrame {
 	DummyRenderer renderer = new DummyRenderer();
 	DummyRendererMG rendererMG = new DummyRendererMG();
 	BackgroundRenderer rendererBG = new BackgroundRenderer();
+	CloudRenderer rendererCloud = new CloudRenderer();
 	
 	public Window(){
 		
@@ -64,6 +66,11 @@ public class Window extends JFrame {
 		bg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		bg.setLocation(0, 0); //TODO: -100 entfernen
 		baseLayer.add(bg);
+		
+		clouds=new GameLayer(rendererCloud);
+		clouds.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		clouds.setLocation(0, 0); //TODO: -100 entfernen
+		baseLayer.add(clouds);
 		//Dummy Code end
 		
 		
@@ -107,6 +114,9 @@ public class Window extends JFrame {
 		vg2.step();
 		if(this.stepcounter % 2 == 0)
 			mg.step();
+		
+		if(this.stepcounter % 3 == 0)
+			clouds.step();
 		//Navigation of the hero via the right, left, up and down keys
 		if(this.stepcounter % 4 == 0){
 			bg.step();
