@@ -110,7 +110,7 @@ public class Window extends JFrame {
 	/**
 	 * 
 	 */
-	public void step(){
+	public synchronized void step(){
 		vg2.step();
 		if(this.stepcounter % 2 == 0)
 			mg.step();
@@ -137,5 +137,6 @@ public class Window extends JFrame {
 			TestMemory.print();
 		
 		this.stepcounter++;
+		this.repaint();
 	}
 }
