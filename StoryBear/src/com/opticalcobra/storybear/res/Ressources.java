@@ -53,4 +53,5 @@ public class Ressources {
 		RASTERSIZE=(int) (RASTERSIZEORG/SCALE);
 		
 	}
+	
 }

@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 
+import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.TestMemory;
@@ -104,6 +105,11 @@ public class Window extends JFrame {
 		baseLayer.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height); // TODO : Fenster mittig anzeigen
 		add(baseLayer);
 		this.pack();
+		
+		if(Ressources.DEBUG){
+			Debugger.main(null);
+			Debugger.setTimer(timer);
+		}
 	}
 	
 	
@@ -132,9 +138,6 @@ public class Window extends JFrame {
 			else if(this.controle.getRunDirection() != 'n')
 				this.hero.run(this.controle.getRunDirection());
 		}
-		
-		if(this.stepcounter % 1000 == 0)
-			TestMemory.print();
 		
 		this.stepcounter++;
 		this.repaint();

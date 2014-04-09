@@ -12,14 +12,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
+import com.opticalcobra.storybear.debug.DebugSettings;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.sun.javafx.tk.FontLoader;
 
-public class DummyRenderer implements IRenderer{
+public class DummyRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
-	private FontCache fc= FontCache.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
 	private ArrayList<int[]>dependencies;
@@ -72,14 +72,15 @@ public class DummyRenderer implements IRenderer{
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
 			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE,0,null);
+			if(DebugSettings.vg1panelnum)
+				renderText(g,25, lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
+			if(DebugSettings.vg1panelborder)
+				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 		}
+		if(DebugSettings.vg1tilenum)
+			renderText(g,50, panelnum+"", 20, 40);
 		
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		Map desktopHints = (Map)(tk.getDesktopProperty("awt.font.desktophints"));
-		g.setColor(Color.BLACK);
-		g.setFont(fc.getFont("Standard", 50));
-		g.addRenderingHints(desktopHints);
-		g.drawString(panelnum+"", 150, 150);
+		
 		
 		
 		pane.setIcon(new ImageIcon(image));
