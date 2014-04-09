@@ -24,7 +24,7 @@ public class DummyRendererMG implements IRenderer {
 		dependencies.add(new int[]{5});
 		dependencies.add(new int[]{5,6});
 		dependencies.add(new int[]{0});
-		dependencies.add(new int[]{8,10});
+		dependencies.add(new int[]{8});
 		dependencies.add(new int[]{9,12});
 		dependencies.add(new int[]{10});
 		dependencies.add(new int[]{10,11});
