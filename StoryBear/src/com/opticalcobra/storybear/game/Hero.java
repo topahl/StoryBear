@@ -95,12 +95,10 @@ public class Hero extends JLabel{
 				this.jumpCntForSecondJump = 0;
 				
 				//change the jumpCntForFirstJump, because otherwise it can happen that the character jumps up again
-				if(this.jumpCntForFirstJump < 1)
-					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump;
-				else if(this.jumpCntForFirstJump == 1)
-					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump + 1;
-				else if(this.jumpCntForFirstJump < (Math.floor((Ressources.GAMESPEED * Ressources.SPEEDCONSTANT / 2)+1)))
+				if(this.jumpCntForFirstJump < (Math.floor((Ressources.GAMESPEED * Ressources.SPEEDCONSTANT / 2)-1)))
 					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump + 2;
+				else if(this.jumpCntForFirstJump == (Math.floor((Ressources.GAMESPEED * Ressources.SPEEDCONSTANT / 2)-1)))
+					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump + 3;
 			}
 			else
 				this.jumpCntForSecondJump++;
