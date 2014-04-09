@@ -72,12 +72,12 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
 			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE,0,null);
-			if(DebugSettings.vg1panelnum)
+			if(DebugSettings.vg1tilenum)
 				renderText(g,25, lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
 			if(DebugSettings.vg1panelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 		}
-		if(DebugSettings.vg1tilenum)
+		if(DebugSettings.vg1panelnum)
 			renderText(g,50, panelnum+"", 20, 40);
 		
 		

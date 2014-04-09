@@ -40,9 +40,25 @@ public class Debugger extends javax.swing.JFrame {
         jCheckBox3 = new javax.swing.JCheckBox();
         jCheckBox4 = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox7 = new javax.swing.JCheckBox();
+        jCheckBox8 = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
+        jCheckBox9 = new javax.swing.JCheckBox();
+        jCheckBox10 = new javax.swing.JCheckBox();
+        jCheckBox11 = new javax.swing.JCheckBox();
+        jCheckBox12 = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
+        jCheckBox13 = new javax.swing.JCheckBox();
+        jCheckBox14 = new javax.swing.JCheckBox();
+        jCheckBox15 = new javax.swing.JCheckBox();
+        jCheckBox16 = new javax.swing.JCheckBox();
         jPanel7 = new javax.swing.JPanel();
+        jCheckBox17 = new javax.swing.JCheckBox();
+        jCheckBox18 = new javax.swing.JCheckBox();
+        jCheckBox19 = new javax.swing.JCheckBox();
+        jCheckBox20 = new javax.swing.JCheckBox();
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -176,54 +192,230 @@ public class Debugger extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("VG1", jPanel2);
 
+        jCheckBox5.setText("Panelnummer einblenden");
+        jCheckBox5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox5MouseClicked(evt);
+            }
+        });
+
+        jCheckBox6.setText("Panelborder einblenden");
+        jCheckBox6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox6MouseClicked(evt);
+            }
+        });
+
+        jCheckBox7.setText("Kachelnummer einblenden");
+        jCheckBox7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox7MouseClicked(evt);
+            }
+        });
+
+        jCheckBox8.setText("Kachelborder einblenden");
+        jCheckBox8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox8MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox5)
+                    .addComponent(jCheckBox6)
+                    .addComponent(jCheckBox7)
+                    .addComponent(jCheckBox8))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox8)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("VG2", jPanel3);
+
+        jCheckBox9.setText("Panelnummer einblenden");
+        jCheckBox9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox9MouseClicked(evt);
+            }
+        });
+
+        jCheckBox10.setText("Panelborder einblenden");
+        jCheckBox10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox10MouseClicked(evt);
+            }
+        });
+
+        jCheckBox11.setText("Kachelnummer einblenden");
+        jCheckBox11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox11MouseClicked(evt);
+            }
+        });
+
+        jCheckBox12.setText("Kachelborder einblenden");
+        jCheckBox12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox12MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox9)
+                    .addComponent(jCheckBox10)
+                    .addComponent(jCheckBox11)
+                    .addComponent(jCheckBox12))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox12)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("MG", jPanel4);
+
+        jCheckBox13.setText("Panelnummer einblenden");
+        jCheckBox13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox13MouseClicked(evt);
+            }
+        });
+
+        jCheckBox14.setText("Panelborder einblenden");
+        jCheckBox14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox14MouseClicked(evt);
+            }
+        });
+
+        jCheckBox15.setText("Kachelnummer einblenden");
+        jCheckBox15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox15MouseClicked(evt);
+            }
+        });
+
+        jCheckBox16.setText("Kachelborder einblenden");
+        jCheckBox16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox16MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox13)
+                    .addComponent(jCheckBox14)
+                    .addComponent(jCheckBox15)
+                    .addComponent(jCheckBox16))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox16)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("BG", jPanel5);
+
+        jCheckBox17.setText("Panelnummer einblenden");
+        jCheckBox17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox17MouseClicked(evt);
+            }
+        });
+
+        jCheckBox18.setText("Panelborder einblenden");
+        jCheckBox18.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox18MouseClicked(evt);
+            }
+        });
+
+        jCheckBox19.setText("Kachelnummer einblenden");
+        jCheckBox19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox19MouseClicked(evt);
+            }
+        });
+
+        jCheckBox20.setText("Kachelborder einblenden");
+        jCheckBox20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCheckBox20MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox17)
+                    .addComponent(jCheckBox18)
+                    .addComponent(jCheckBox19)
+                    .addComponent(jCheckBox20))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jCheckBox17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox20)
+                .addContainerGap(148, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Clouds", jPanel7);
@@ -276,6 +468,70 @@ public class Debugger extends javax.swing.JFrame {
         DebugSettings.vg1tileborder = jCheckBox4.isSelected();
     }                                       
 
+    private void jCheckBox5MouseClicked(java.awt.event.MouseEvent evt) {                                        
+        
+    }                                       
+
+    private void jCheckBox6MouseClicked(java.awt.event.MouseEvent evt) {                                        
+        
+    }                                       
+
+    private void jCheckBox7MouseClicked(java.awt.event.MouseEvent evt) {                                        
+        
+    }                                       
+
+    private void jCheckBox8MouseClicked(java.awt.event.MouseEvent evt) {                                        
+        
+    }                                       
+
+    private void jCheckBox9MouseClicked(java.awt.event.MouseEvent evt) {                                        
+        DebugSettings.mgpanelnum = jCheckBox9.isSelected();
+    }                                       
+
+    private void jCheckBox10MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.mgpanelborder= jCheckBox10.isSelected();
+    }                                        
+
+    private void jCheckBox11MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.mgtilenum= jCheckBox11.isSelected();
+    }                                        
+
+    private void jCheckBox12MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.mgtileborder= jCheckBox12.isSelected();
+    }                                        
+
+    private void jCheckBox13MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.bgpanelnum= jCheckBox13.isSelected();
+    }                                        
+
+    private void jCheckBox14MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.bgpanelborder= jCheckBox14.isSelected();
+    }                                        
+
+    private void jCheckBox15MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.bgtilenum= jCheckBox15.isSelected();
+    }                                        
+
+    private void jCheckBox16MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.bgtileborder= jCheckBox16.isSelected();
+    }                                        
+
+    private void jCheckBox17MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.cloudpanelnum= jCheckBox17.isSelected();
+    }                                        
+
+    private void jCheckBox18MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.cloudpanelborder= jCheckBox18.isSelected();
+    }                                        
+
+    private void jCheckBox19MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.cloudtilenum= jCheckBox19.isSelected();
+    }                                        
+
+    private void jCheckBox20MouseClicked(java.awt.event.MouseEvent evt) {                                         
+        DebugSettings.cloudtileborder= jCheckBox20.isSelected();
+    }                                        
+
     /**
      * @param args the command line arguments
      */
@@ -326,9 +582,25 @@ public class Debugger extends javax.swing.JFrame {
     private javax.swing.JLabel cores;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox10;
+    private javax.swing.JCheckBox jCheckBox11;
+    private javax.swing.JCheckBox jCheckBox12;
+    private javax.swing.JCheckBox jCheckBox13;
+    private javax.swing.JCheckBox jCheckBox14;
+    private javax.swing.JCheckBox jCheckBox15;
+    private javax.swing.JCheckBox jCheckBox16;
+    private javax.swing.JCheckBox jCheckBox17;
+    private javax.swing.JCheckBox jCheckBox18;
+    private javax.swing.JCheckBox jCheckBox19;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox20;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
+    private javax.swing.JCheckBox jCheckBox8;
+    private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
