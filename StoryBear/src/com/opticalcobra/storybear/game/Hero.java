@@ -68,12 +68,13 @@ public class Hero extends JLabel{
 		if(this.jumpCntForFirstJump == 0)
 			this.levelForFirstJump = this.currentLevel;
 		
+		
 		//decide if it's a double jump or a normal jump
 		if(!doubleJump){
 			this.jump(this.jumpCntForFirstJump,jumpDirectionX,this.levelForFirstJump);
 			
 			//check if jump is finished
-			if(this.jumpCntForFirstJump == 10){
+			if(this.jumpCntForFirstJump == Ressources.GAMESPEED * Ressources.SPEEDCONSTANT){
 				this.jumpCntForFirstJump = 0;
 				return false;
 			}
@@ -90,16 +91,16 @@ public class Hero extends JLabel{
 			this.jump(this.jumpCntForSecondJump,jumpDirectionX,this.levelForSecondJump);
 			
 			//check if jump is finished
-			if(this.jumpCntForSecondJump == 10){
+			if(this.jumpCntForSecondJump == Ressources.GAMESPEED * Ressources.SPEEDCONSTANT){
 				this.jumpCntForSecondJump = 0;
 				
 				//change the jumpCntForFirstJump, because otherwise it can happen that the character jumps up again
 				if(this.jumpCntForFirstJump < 1)
-					this.jumpCntForFirstJump = 10 - this.jumpCntForFirstJump;
+					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump;
 				else if(this.jumpCntForFirstJump == 1)
-					this.jumpCntForFirstJump = 10 - this.jumpCntForFirstJump + 1;
-				else if(this.jumpCntForFirstJump < 6)
-					this.jumpCntForFirstJump = 10 - this.jumpCntForFirstJump + 2;
+					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump + 1;
+				else if(this.jumpCntForFirstJump < (Math.floor((Ressources.GAMESPEED * Ressources.SPEEDCONSTANT / 2)+1)))
+					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump + 2;
 			}
 			else
 				this.jumpCntForSecondJump++;
@@ -111,66 +112,18 @@ public class Hero extends JLabel{
 	/**
 	 * @author Miriam
 	 * execution of the jump
-	 * TODO: wird vermutlich nicht mehr gebraucht werden --> irgendwann löschen
-	 */
-	public boolean jump(char jumpDirectionX){
-		double newPositionY;
-		double jumpConstantX = Ressources.JUMPCONSTANTX / Ressources.SCALE;
-		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
-		double speedConstantY = Ressources.SPEEDCONSTANTY / Ressources.SCALE;
-		float time = (this.jumpCounter / ((float) Ressources.GAMESPEED * 10000));
-		
-		//calculate the height of the current jump position
-		//newPositionY = jumpConstantY * time * time - jumpConstantY * time;
-		newPositionY = jumpConstantY * time * time - speedConstantY * time;
-		newPositionY = this.currentLevel + newPositionY * Ressources.GAMESPEED;
-		this.positionY = ((int) (newPositionY));
-		
-		//Rangecheck --> don't run out of window
-		if (this.positionY < 0)
-			this.positionY = 0;
-		else if (this.positionY > (Ressources.WINDOW.height - this.height))
-			this.positionY = Ressources.WINDOW.height - this.height;
-		
-		//calculate the X value of the jump 
-		if(jumpDirectionX == 'r')
-			this.positionX += jumpConstantX;
-		else if(jumpDirectionX == 'l')
-			this.positionX -= jumpConstantX;
-		
-		//Rangecheck --> don't run out of window
-		if (this.positionX < 0)
-			this.positionX = 0;
-		else if (this.positionX > (Ressources.WINDOW.width - this.width))
-			this.positionX = Ressources.WINDOW.width - this.width;
-		
-		this.setBounds(this.positionX,this.positionY,this.height,this.width);
-		
-		if(this.jumpCounter == 10){
-			this.jumpCounter = 0;
-			return false;
-		}
-		else{
-			this.jumpCounter++;
-			return true;
-		}
-	}
-	
-	/**
-	 * @author Miriam
-	 * execution of the jump
 	 */
 	private void jump(int jumpCounter, char jumpDirectionX, int zeroLevel){
 		double newPositionY;
 		double jumpConstantX = Ressources.JUMPCONSTANTX / Ressources.SCALE;
 		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
-		double speedConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
-		float time = jumpCounter / ((float) Ressources.GAMESPEED);
+		//double speedConstantY = Ressources.SPEEDCONSTANTY / Ressources.SCALE;
+		float time = jumpCounter / ((float) Ressources.GAMESPEED * Ressources.SPEEDCONSTANT);
 		
 		//calculate the height of the current jump position
-		//newPositionY = jumpConstantY * time * time - jumpConstantY * time;
-		newPositionY = jumpConstantY * time * time - speedConstantY * time;
-		newPositionY = zeroLevel + newPositionY * Ressources.GAMESPEED;
+		newPositionY = jumpConstantY * time * time - jumpConstantY * time;
+		//newPositionY = jumpConstantY * time * time - speedConstantY * time;
+		newPositionY = zeroLevel + newPositionY * Ressources.GAMESPEED * Ressources.SPEEDCONSTANT;
 		this.positionY = ((int) (newPositionY));
 		
 		//Rangecheck --> don't run out of window
