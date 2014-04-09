@@ -117,10 +117,12 @@ public class Hero extends JLabel{
 		double newPositionY;
 		double jumpConstantX = Ressources.JUMPCONSTANTX / Ressources.SCALE;
 		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
-		float time = this.jumpCounter / ((float) Ressources.GAMESPEED);
+		double speedConstantY = Ressources.SPEEDCONSTANTY / Ressources.SCALE;
+		float time = (this.jumpCounter / ((float) Ressources.GAMESPEED * 10000));
 		
 		//calculate the height of the current jump position
-		newPositionY = jumpConstantY * time * time - jumpConstantY * time;
+		//newPositionY = jumpConstantY * time * time - jumpConstantY * time;
+		newPositionY = jumpConstantY * time * time - speedConstantY * time;
 		newPositionY = this.currentLevel + newPositionY * Ressources.GAMESPEED;
 		this.positionY = ((int) (newPositionY));
 		
@@ -162,10 +164,12 @@ public class Hero extends JLabel{
 		double newPositionY;
 		double jumpConstantX = Ressources.JUMPCONSTANTX / Ressources.SCALE;
 		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
+		double speedConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
 		float time = jumpCounter / ((float) Ressources.GAMESPEED);
 		
 		//calculate the height of the current jump position
-		newPositionY = jumpConstantY * time * time - jumpConstantY * time;
+		//newPositionY = jumpConstantY * time * time - jumpConstantY * time;
+		newPositionY = jumpConstantY * time * time - speedConstantY * time;
 		newPositionY = zeroLevel + newPositionY * Ressources.GAMESPEED;
 		this.positionY = ((int) (newPositionY));
 		

@@ -42,6 +42,10 @@ public class Window extends JFrame {
 		
 		initComponents();
 		
+		// initialize Game Character
+		this.hero = new Hero();
+		this.baseLayer.add(this.hero);
+		
 		//TODO Remove Dummy code
 		//Dummy Code 
 		vg2=new GameLayer(renderer);
@@ -60,9 +64,7 @@ public class Window extends JFrame {
 		baseLayer.add(bg);
 		//Dummy Code end
 		
-		// initialize Game Character
-		this.hero = new Hero();
-		this.baseLayer.add(this.hero);
+		
 		
 		// initialize Controle 
 		this.controle = new Control();

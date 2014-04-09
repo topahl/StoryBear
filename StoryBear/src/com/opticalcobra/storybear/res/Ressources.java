@@ -25,9 +25,10 @@ public class Ressources {
 	
 	//Dynamics of the Game
 	//TODO: Dummywerte überarbeiten
-	public static final int JUMPCONSTANTY = 50; //need for calculation of jump formula
-	public static final int JUMPCONSTANTX = 10;
-	public static final int RUNCONSTANT = 7;
+	public static final int JUMPCONSTANTY = 70; //need for calculation of jump formula
+	public static final int JUMPCONSTANTX = 15;
+	public static final int SPEEDCONSTANTY = 60;
+	public static final int RUNCONSTANT = 10;
 	
 	
 	static {
