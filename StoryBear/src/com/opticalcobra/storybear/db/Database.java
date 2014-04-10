@@ -22,7 +22,7 @@ import org.hsqldb.types.Types;
 public class Database {
 	private static Server DBinstance;
 	private static Connection conn;
-	
+	public static int requestnum;
 	/**
 	 * @author Tobias
 	 */
@@ -54,7 +54,7 @@ public class Database {
 	}
 	
 	private synchronized ResultSet query(String expression) throws SQLException {
-
+		requestnum++;
         Statement st = null;
         ResultSet rs = null;
 
@@ -145,26 +145,34 @@ public class Database {
 	 * @return 
 	 * @throws SQLException
 	 */
-	public ImageResult queryImagedata(String query) throws SQLException{		
-		
+	public ImageResult queryImagedata(int id) throws SQLException{		
+		String query = "SELECT * FROM IMAGES WHERE ID = "+id;
 		ResultSet rs = query(query);
-				ResultSetMetaData meta = rs.getMetaData();
-				int x;
-				int y;
-				int width;
-				int height;
-				String url;
-				rs.next();
-				url =(String) rs.getObject(2);
-				x =(Integer) rs.getObject(3);
-				y =(Integer) rs.getObject(4);
-				height =(Integer) rs.getObject(5);
-				width =(Integer) rs.getObject(6);
+		int x;
+		int y;
+		int width;
+		int height;
+		String url;
+		rs.next();
+		url =(String) rs.getObject("URL");
+		x =(Integer) rs.getObject("X");
+		y =(Integer) rs.getObject("Y");
+		height =(Integer) rs.getObject("HEIGHT");
+		width =(Integer) rs.getObject("WIDTH");
 
-				rs.close();
-				return new ImageResult(x, y, height, width, url);
-				
-		
+		rs.close();
+		return new ImageResult(id, x, y, height, width, url);
+	}
+	
+	public Integer[] queryNumberResultOnly(String query) throws SQLException{
+		ResultSet rs = query(query);
+		ResultSetMetaData meta = rs.getMetaData();
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		while(rs.next()){
+			result.add((int) rs.getObject(1));
+		}
+		rs.close();
+		return (Integer[])result.toArray(new Integer[0]);
 	}
 	
 	

@@ -15,21 +15,9 @@ public class BackgroundRenderer extends Renderer implements IRenderer {
 	private Imagelib il = Imagelib.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
-	private ArrayList<int[]>dependencies;
 	
 	public BackgroundRenderer(){
-		dependencies = new ArrayList<int[]>();
-		dependencies.add(new int[]{0,1,4,7});	//0
-		dependencies.add(new int[]{2});						
-		dependencies.add(new int[]{2,3});
-		dependencies.add(new int[]{0,7});
-		dependencies.add(new int[]{5});
-		dependencies.add(new int[]{5,6,9});
-		dependencies.add(new int[]{0,7});
-		dependencies.add(new int[]{8,10});
-		dependencies.add(new int[]{5,9});
-		dependencies.add(new int[]{10});
-		dependencies.add(new int[]{0,7});
+		
 	}
 	
 	
@@ -51,9 +39,10 @@ public class BackgroundRenderer extends Renderer implements IRenderer {
 	}
 	
 	private BufferedImage getNextMapElement(){
-		int next =dependencies.get(lastTile)[((int)((Math.random()) * dependencies.get(lastTile).length))];
+		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_BACKGROUND);
+		int next = following[(int)(Math.random()*following.length)];
 		lastTile = next;
-		return il.loadBackgroundTile("images\\layer_slice_bg.png", next);
+		return il.loadLandscapeTile(next , Imagelib.QUERY_BACKGROUND);
 		
 	}
 
