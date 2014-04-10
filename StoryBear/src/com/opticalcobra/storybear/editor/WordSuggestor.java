@@ -3,37 +3,47 @@ package com.opticalcobra.storybear.editor;
 import java.awt.Color;
 
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+
+import javax.swing.SwingConstants;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
-public class WordSuggestor extends JLayeredPane {
+public class WordSuggestor extends JPanel {
 	private JLabel image;
 	private JLabel text;
-	private JLabel buttonLeft;
-	private JLabel buttonRight;
 	
 	public WordSuggestor() {
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO: load from database
+				text.setText("X");
+				image.setIcon(null);
+			}
+		});
+		
 		text = new JLabel();
+		text.setHorizontalAlignment(SwingConstants.CENTER);
+		text.setBounds(48, 335, 250, 38);
+		
 		image = new JLabel();
-		buttonLeft = new JLabel();
-		buttonRight = new JLabel();
+		image.setBackground(Color.BLACK);
+		image.setBounds(23, 25, 300, 300);
 		
-		text.setText("Haus");
+		// Dummy TODO: delete
+		text.setText("Dummy");
 		image.setText("Dummy");
-		buttonLeft.setText("Links");
-		buttonRight.setText("Rechts");
 		
-		text.setVisible(true);
-		image.setVisible(true);
-		buttonLeft.setVisible(true);
-		buttonRight.setVisible(true);
 		
-		text.setForeground(Color.WHITE);
-		text.setBounds(0, 0, 100, 15);
+		text.setForeground(Color.BLACK);
+		setLayout(null);
 		
 		add(image);
 		add(text);
-		add(buttonLeft);
-		add(buttonRight);
 	}
+	
+	
 }

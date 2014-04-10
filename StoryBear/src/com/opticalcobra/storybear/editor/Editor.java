@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -25,13 +26,17 @@ import com.opticalcobra.storybear.game.Hero;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.Button;
+
+import java.awt.event.MouseMotionListener;
+import java.awt.BorderLayout;
 
 /**
  * 
  * @author Nicolas
  *
  */
-public class EditorFrame extends JFrame {
+public class Editor extends JFrame {
 	private JLayeredPane baseLayer;
 	
 	private StoryEditor editor;
@@ -42,27 +47,22 @@ public class EditorFrame extends JFrame {
 	public static final String EMPTY_TITLE = "<Titel steht hier>";
 	public static final String EMPTY_STORY = "<Hier Geschichte schreiben>";
 	
-	public EditorFrame(){
+	public Editor(){
 		// Background
-		try {
-			background = new JLabel();
-			background.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
-			background.setIcon(new ImageIcon(ImageIO.read(new File(Ressources.RESPATH+"/images/editor_bg.png")))); // TODO load from database
-			background.setVisible(true);
-		} catch (IOException e) {
-		}
+		background = new JLabel();
+		background.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
+		background.setIcon(null);
+		background.setVisible(true);
 		
 		// WordSuggestor
 		wordSugg = new WordSuggestor();
-		wordSugg.setBounds(235, 255, 455, 517);
+		wordSugg.setBounds(98, 67, 455, 479);
 		wordSugg.setBorder(BorderFactory.createLineBorder(Color.blue));
 		wordSugg.setVisible(true);
 		
-		
-		
 		// Headline
 		headline = new JTextField();
-		headline.setBounds(925, 70, 630, 80);
+		headline.setBounds(902, 11, 630, 80);
 		headline.setFont(FontCache.getInstance().getFont("Standard", 60));
 		headline.setBorder(null);
 		headline.setVisible(true);
@@ -70,14 +70,29 @@ public class EditorFrame extends JFrame {
 		
 		// Editor
 		editor = new StoryEditor();
-		editor.setBounds(925, 170, 630, 800);
-		editor.setFont(FontCache.getInstance().getFont("Standard", 25));
+		editor.setBounds(902, 102, 630, 800);
+		editor.setFont(FontCache.getInstance().getFont("Fontin_R", 25));
 		editor.setVisible(true);
 		editor.addFocusListener(new EmptyTextFieldListener(EMPTY_STORY, Color.GRAY, Color.BLACK).initializeCallerTextComponent(editor));
 		
 		// BaseLayer
 		baseLayer = new JLayeredPane();
 		baseLayer.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		
+		Button start = new Button(0, 0, (String) null, 0, 0, (MouseMotionListener) null);
+		start.setText("Spiel starten");
+		start.setBounds(732, 323, 141, 46);
+		baseLayer.add(start);
+		
+		Button export = new Button(0, 0, (String) null, 0, 0, (MouseMotionListener) null);
+		export.setBounds(641, 222, 232, 80);
+		baseLayer.add(export);
+		export.setText("Exportieren");
+		
+		Button save = new Button(0, 0, (String) null, 0, 0, (MouseMotionListener) null);
+		save.setText("Speichern");
+		save.setBounds(732, 399, 141, 46);
+		baseLayer.add(save);
 		baseLayer.add(headline);
 		baseLayer.add(editor);
 		baseLayer.add(wordSugg);
@@ -90,10 +105,33 @@ public class EditorFrame extends JFrame {
 		setResizable(false);
 		setUndecorated(true);
 		setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
-		add(baseLayer);
+		getContentPane().add(baseLayer);
 		setVisible(true);
 	}
 	
+	/**
+	 * load Story in Editor
+	 * @param story
+	 */
+	public void loadStory(Story story) {
+		editor.setText(story.getText());
+		headline.setText(story.getTitle());
+		editor.setForeground(Color.black);
+		headline.setForeground(Color.black);
+	}
+	
+	/**
+	 * save Story to DB
+	 */
+	public void save() {
+		Story newStory = new Story();
+		newStory.setText(editor.getText());
+		newStory.setText(headline.getText());
+		newStory.setChangeDate(new Date());
+		//newStory.setAuthor();
+		
+		//TODO: save to DB
+	}
 	
 	/**
 	 * Testing purposes
@@ -101,6 +139,11 @@ public class EditorFrame extends JFrame {
 	 * @param args -
 	 */
 	public static void main(String args[]) {
-		new EditorFrame();
+		Story s = new Story();
+		s.setText("Test");
+		s.setTitle("meine Geschichte");
+		
+		Editor e = new Editor();
+		e.loadStory(s);
 	}
 }
