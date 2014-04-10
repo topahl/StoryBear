@@ -2,7 +2,6 @@ package com.opticalcobra.storybear.game;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -15,27 +14,8 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 	private Imagelib il = Imagelib.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
-	private ArrayList<int[]>dependencies;
 	
 	public DummyRendererMG(){
-		dependencies = new ArrayList<int[]>();
-		dependencies.add(new int[]{0,1,4,7,14});	//0
-		dependencies.add(new int[]{2});						
-		dependencies.add(new int[]{2,3});
-		dependencies.add(new int[]{0});
-		dependencies.add(new int[]{5});
-		dependencies.add(new int[]{5,6});
-		dependencies.add(new int[]{0});
-		dependencies.add(new int[]{8});
-		dependencies.add(new int[]{9,12});
-		dependencies.add(new int[]{10});
-		dependencies.add(new int[]{10,11});
-		dependencies.add(new int[]{12,9});
-		dependencies.add(new int[]{8,13});
-		dependencies.add(new int[]{0});
-		dependencies.add(new int[]{15});
-		dependencies.add(new int[]{15,16});
-		dependencies.add(new int[]{0});
 	}
 	
 	
@@ -57,9 +37,10 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 	}
 	
 	private BufferedImage getNextMapElement(){
-		int next =dependencies.get(lastTile)[((int)((Math.random()) * dependencies.get(lastTile).length))];
+		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_MIDDLEGROUND);
+		int next = following[(int)(Math.random()*following.length)];
 		lastTile = next;
-		return il.loadMiddlegroundTile("images\\layer_slice_mg.png", next);
+		return il.loadLandscapeTile(next , Imagelib.QUERY_MIDDLEGROUND);
 		
 	}
 

@@ -13,5 +13,6 @@ public class DBConstants {
 	public static final int WORD_OBJECT_TYPE_COLLECTABLE = 1;
 	public static final int WORD_OBJECT_TYPE_MIDDLEGROUND = 2;
 	public static final int WORD_OBJECT_TYPE_NO_IMAGE = -1;
+	
 
 }

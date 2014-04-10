@@ -12,7 +12,6 @@ import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
 public class CloudRenderer extends Renderer implements IRenderer{
-	private static final int CLOUDNUMBER = 8;
 	private Imagelib il = Imagelib.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
@@ -40,10 +39,7 @@ public class CloudRenderer extends Renderer implements IRenderer{
 	
 	
 	private BufferedImage getNextMapElement(){
-		int next =(int)((Math.random())*CLOUDNUMBER);
-		lastTile = next;
-		return il.loadCloudTile("images\\layer_slice_clouds.png", next);
-		
+		return il.loadLandscapeTile(0 , Imagelib.QUERY_CLOUDS);
 	}
 
 }
