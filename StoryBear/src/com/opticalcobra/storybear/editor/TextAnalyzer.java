@@ -76,7 +76,7 @@ public class TextAnalyzer {
 				e.printStackTrace();
 			}
 			
-			elements.add(new Word(blockPosition));
+			elements.add(new Word(word,blockPosition));
 			
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new words
 		}

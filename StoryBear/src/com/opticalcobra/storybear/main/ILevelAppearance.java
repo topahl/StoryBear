@@ -1,10 +1,13 @@
 package com.opticalcobra.storybear.main;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+
 public interface ILevelAppearance {
 	
-	public int block = 0;
-	
 	public int getBlock();
+
+	public void render(Graphics2D g);
 	
-	public void setBlock(int block);
 }

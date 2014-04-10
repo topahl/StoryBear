@@ -23,7 +23,10 @@ public class FontCache {
 	 */
 	private FontCache(){
 		fonts = new HashMap<String, Font>();
+		//TODO: replace with database entries
 		fonts.put("Standard", loadFont("Kingthings.ttf"));
+		fonts.put("Fontin_R", loadFont("Fontin_Sans_R.otf"));
+		fonts.put("Fontin_SC", loadFont("Fontin_Sans_SC.otf"));
 	}
 	
 	/**
