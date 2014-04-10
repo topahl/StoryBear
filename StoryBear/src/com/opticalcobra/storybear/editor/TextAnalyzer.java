@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.editor;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -11,6 +12,8 @@ import javafx.geometry.Rectangle2D;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.db.DBConstants;
+import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
 import com.opticalcobra.storybear.game.Landscape;
@@ -19,6 +22,8 @@ import com.opticalcobra.storybear.game.Word;
 public class TextAnalyzer {
 
 	private Font storyTextFont = FontCache.getInstance().getFont("Standard", ((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)));
+	private Database db= new Database();
+	
 	
 	public TextAnalyzer(){
 		
@@ -54,19 +59,24 @@ public class TextAnalyzer {
 			numberOfBlocks = (int) Math.ceil(stringLength / Ressources.RASTERSIZEORG);
 			
 			//TODO: überarbeiten, aktuell nur Dummywerte
-			switch (objectType){
-			case 1:
-				elements.add(new Character(blockPosition));
-				break;
-			case 2:
-				elements.add(new Collectable(blockPosition));
-				break;
-			case 3:
-				elements.add(new Landscape(blockPosition));
-				break;
+			try {
+				switch (db.queryWordType(word)){
+				case DBConstants.WORD_OBJECT_TYPE_CHARACTER:
+					elements.add(new Character(blockPosition));
+					break;
+				case DBConstants.WORD_OBJECT_TYPE_COLLECTABLE:
+					elements.add(new Collectable(blockPosition));
+					break;
+				case DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND:
+					elements.add(new Landscape(blockPosition));
+					break;
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			//es wird für alles ein Word angelegt
-			elements.add(new Word(blockPosition));
+			
+			elements.add(new Word(word,blockPosition));
 			
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new words
 		}

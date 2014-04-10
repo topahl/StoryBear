@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.opticalcobra.storybear.debug.DebugSettings;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
-public class BackgroundRenderer implements IRenderer {
+public class BackgroundRenderer extends Renderer implements IRenderer {
 	private Imagelib il = Imagelib.getInstance();
 	private int lastTile = 0;
+	private int panelnum = 0;
 	private ArrayList<int[]>dependencies;
 	
 	public BackgroundRenderer(){
@@ -33,12 +35,19 @@ public class BackgroundRenderer implements IRenderer {
 	
 	@Override
 	public void getNextViewPart(JLabel pane) {
+		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		for(int i=0;i*Ressources.RASTERSIZE*4<Ressources.WINDOW.width;i++){
 			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE*4,0,null);
+			if(DebugSettings.bgtilenum)
+				renderText(g,25, lastTile+"", (i*4*Ressources.RASTERSIZE)+20,100);
+			if(DebugSettings.bgpanelborder)
+				g.drawRect(i*4*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE*4, Ressources.WINDOW.height);
 		}
 		pane.setIcon(new ImageIcon(image));
+		if(DebugSettings.bgtilenum)
+			renderText(g,50, panelnum+"", 20, 40);
 	}
 	
 	private BufferedImage getNextMapElement(){

@@ -1,5 +1,9 @@
 package com.opticalcobra.storybear.game;
 
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+
 import com.opticalcobra.storybear.main.ILevelAppearance;
 
 public class Landscape implements ILevelAppearance {
@@ -16,8 +20,11 @@ public class Landscape implements ILevelAppearance {
 	}
 
 	@Override
-	public void setBlock(int block) {
-		this.block = block;
+	public void render(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
 	}
+
+
 
 }
