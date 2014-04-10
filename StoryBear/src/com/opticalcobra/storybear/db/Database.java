@@ -169,6 +169,38 @@ public class Database {
 				
 		
 	}
+	
+	
+	/**
+	 * Returns all information about a Word
+	 * @param query
+	 * @return 
+	 * @throws SQLException
+	 */
+	public int queryWordType(String word) throws SQLException{
+		int typeId=0;
+		
+		ResultSet rs = query("SELECT DISTINCT t2.word, tl.short_level_name,"
+				+ "c.category_name, t2.word_grammar_id FROM term t"
+				+ "LEFT JOIN synset s ON t.synset_id =s.id"
+				+ "LEFT JOIN term t2 ON t2.synset_id = s.id"
+				+ "LEFT JOIN category_link cl ON t2.synset_id = cl.synset_id"
+				+ "LEFT JOIN category c ON c.id = cl.category_id"
+				+ "LEFT JOIN term_level tl ON t2.level_id = tl.id"
+				+ "WHERE t.word in (SELECT basic FROM morph where reflexive= " +word+ ") "
+				+ "OR t.word like " +word+ "OR t.normalized_word like " +word+ ""
+				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= " +word+ ");");
+		
+		ResultSetMetaData meta = rs.getMetaData();
+		
+		rs.next();
+		typeId =(int) rs.getObject(3);
+
+		rs.close();
+		return typeId;
+	}
+	
+	
 	public void dump(ResultSet rs) throws SQLException {
 //        ResultSetMetaData meta   = rs.getMetaData(); // TODO print metadata
 //        int colmax = meta.getColumnCount();
