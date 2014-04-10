@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.hsqldb.server.Server;
 import org.hsqldb.types.Types;
@@ -217,6 +219,36 @@ public class Database {
 
 		rsFexione.close();
 		return typeId;
+	}
+	
+	
+	public void queryInsertStoryToDatabaye(String title, String text, int version, String author) throws SQLException{
+		ResultSet rs;
+		//Timestamp currentTime = new Timestamp(new Date().getTime()); 
+		//currentTime timestamp = new Timestamp ();
+		
+		//String query = "INSERT INTO STORYS (TEXT, AUTHOR, VERSION, DATE, TITLE) VALUES ('"+ text +"','"+ author +"',"+ version +","+ null +",'"+ title +"');" ;
+		//System.out.println(query);
+		
+		rs = query("INSERT INTO STORYS (TEXT, AUTHOR, VERSION, DATE, TITLE) VALUES ('"+ text +"','"+ author +"',"+ version +","+ null +",'"+ title +"');") ;
+		
+		rs.close();
+	}
+	
+	public String queryGetStoryFromDatabaye(int id) throws SQLException{
+		String text = "";
+		
+		ResultSet rs;
+		
+		//aktuell nur der Titel, CLOB to STRING noch problematisch
+		rs = query("SELECT title from storys where id = '" + id + "';") ;
+		rs.next();
+		
+		text = (String) rs.getObject(1);
+		
+		rs.close();
+		
+		return text;
 	}
 	
 	
