@@ -222,7 +222,7 @@ public class Database {
 	}
 	
 	
-	public void queryInsertStoryToDatabaye(String title, String text, int version, String author) throws SQLException{
+	public void queryInsertStoryToDatabase(String title, String text, int version, String author) throws SQLException{
 		ResultSet rs;
 		//Timestamp currentTime = new Timestamp(new Date().getTime()); 
 		//currentTime timestamp = new Timestamp ();
