@@ -1,23 +1,15 @@
 package com.opticalcobra.storybear.db;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import javax.swing.DefaultBoundedRangeModel;
-
 import org.hsqldb.server.Server;
-import org.hsqldb.server.ServerConstants;
-import org.hsqldb.server.ServerProperties;
 import org.hsqldb.types.Types;
-import org.hsqldb.jdbcDriver;
-
-import com.sun.prism.impl.Disposer.Record;
 
 
 
@@ -200,7 +192,6 @@ public class Database {
 				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= '" +word+ "' );");
 
 		while (rsFexione.next()){ 
-			System.out.println(rsFexione.getObject(1));
 			rsCollectable = query("SELECT * FROM Collectable_Object WHERE word = '"+rsFexione.getObject(1)+"';");
 			rsCharacter = query("SELECT * FROM Character_Object WHERE word = '"+rsFexione.getObject(1)+"';");
 			rsMiddleground= query("SELECT * FROM Middleground_Object WHERE word = '"+rsFexione.getObject(1)+"';");
