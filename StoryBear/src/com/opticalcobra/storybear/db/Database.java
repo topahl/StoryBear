@@ -9,11 +9,15 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javax.swing.DefaultBoundedRangeModel;
+
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerConstants;
 import org.hsqldb.server.ServerProperties;
 import org.hsqldb.types.Types;
 import org.hsqldb.jdbcDriver;
+
+import com.sun.prism.impl.Disposer.Record;
 
 
 
@@ -149,8 +153,9 @@ public class Database {
 	 * @return 
 	 * @throws SQLException
 	 */
-	public ImageResult queryImagedata(String query) throws SQLException{
-				ResultSet rs = query(query);
+	public ImageResult queryImagedata(String query) throws SQLException{		
+		
+		ResultSet rs = query(query);
 				ResultSetMetaData meta = rs.getMetaData();
 				int x;
 				int y;
@@ -178,25 +183,40 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public int queryWordType(String word) throws SQLException{
-		int typeId=0;
+		int typeId = DBConstants.WORD_OBJECT_TYPE_NO_IMAGE;
+		ResultSet rsFexione;
+		ResultSet rsCollectable;
+		ResultSet rsCharacter;
+		ResultSet rsMiddleground;
 		
-		ResultSet rs = query("SELECT DISTINCT t2.word, tl.short_level_name,"
-				+ "c.category_name, t2.word_grammar_id FROM term t"
-				+ "LEFT JOIN synset s ON t.synset_id =s.id"
-				+ "LEFT JOIN term t2 ON t2.synset_id = s.id"
-				+ "LEFT JOIN category_link cl ON t2.synset_id = cl.synset_id"
-				+ "LEFT JOIN category c ON c.id = cl.category_id"
-				+ "LEFT JOIN term_level tl ON t2.level_id = tl.id"
-				+ "WHERE t.word in (SELECT basic FROM morph where reflexive= " +word+ ") "
-				+ "OR t.word like " +word+ "OR t.normalized_word like " +word+ ""
-				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= " +word+ ");");
-		
-		ResultSetMetaData meta = rs.getMetaData();
-		
-		rs.next();
-		typeId =(int) rs.getObject(3);
+		rsFexione = query("SELECT DISTINCT t2.word FROM term t "
+				+ "LEFT JOIN synset s ON t.synset_id =s.id "
+				+ "LEFT JOIN term t2 ON t2.synset_id = s.id "
+				+ "LEFT JOIN category_link cl ON t2.synset_id = cl.synset_id "
+				+ "LEFT JOIN category c ON c.id = cl.category_id "
+				+ "LEFT JOIN term_level tl ON t2.level_id = tl.id "
+				+ "WHERE t.word in (SELECT basic FROM morph where reflexive= '" +word+ "' ) "
+				+ "OR t.word like '" +word+ "' OR t.normalized_word like '" +word+ "' "
+				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= '" +word+ "' );");
 
-		rs.close();
+		while (rsFexione.next()){ 
+			System.out.println(rsFexione.getObject(1));
+			rsCollectable = query("SELECT * FROM Collectable_Object WHERE word = '"+rsFexione.getObject(1)+"';");
+			rsCharacter = query("SELECT * FROM Character_Object WHERE word = '"+rsFexione.getObject(1)+"';");
+			rsMiddleground= query("SELECT * FROM Middleground_Object WHERE word = '"+rsFexione.getObject(1)+"';");
+			
+			if (rsCharacter.next()){
+				typeId = DBConstants.WORD_OBJECT_TYPE_CHARACTER;
+			}
+			else if (rsCollectable.next()){
+				typeId = DBConstants.WORD_OBJECT_TYPE_COLLECTABLE;
+			}
+			else if (rsMiddleground.next()){
+				typeId = DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND;
+			}
+		}
+
+		rsFexione.close();
 		return typeId;
 	}
 	
