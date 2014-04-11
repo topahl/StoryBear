@@ -12,6 +12,7 @@ public class Story implements Serializable{
 	private String text;
 	private User author;		
 	private Date changeDate;	
+	private int version;
 	
 	
 	public Story(){
@@ -56,6 +57,16 @@ public class Story implements Serializable{
 
 	public void setChangeDate(Date changeDate) {
 		this.changeDate = changeDate;
+	}
+
+
+	public int getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 }

@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import org.hsqldb.server.Server;
 import org.hsqldb.types.Types;
 
+import com.opticalcobra.storybear.editor.Story;
+import com.opticalcobra.storybear.editor.StoryInfo;
+
 
 
 
@@ -55,21 +58,100 @@ public class Database {
         conn.close();
 	}
 	
-	public void insertLevelBLOB(byte[] ba) throws SQLException{
+	
+	/**
+	 * @author Tobias & Martika
+	 * @param ba
+	 * @param tableName
+	 * @throws SQLException
+	 */
+	private void insertBlob(byte[] ba, String tableName) throws SQLException{
 		java.sql.Blob obj = conn.createBlob();
 		obj.setBytes(1, ba);
-		PreparedStatement pstmt = conn.prepareStatement("INSERT INTO LEVELS (OBJECT, LENGTH) VALUES(?,"+ba.length+")");
+		PreparedStatement pstmt = conn.prepareStatement("INSERT INTO " + tableName + " (OBJECT, LENGTH) VALUES(?,"+ba.length+")");
 		pstmt.setBlob(1, obj);
 		pstmt.execute();
 	}
 	
-	public byte[] getLevelBlob(int id) throws SQLException{
-		ResultSet rs = query("SELECT OBJECT, LENGTH FROM LEVELS WHERE ID = "+id+";");
+	/**
+	 * @author Tobias & Martika
+	 * @param id
+	 * @param tableName
+	 * @return
+	 * @throws SQLException
+	 */
+	private byte[] getBlob(int id, String tableName) throws SQLException{
+		ResultSet rs = query("SELECT OBJECT, LENGTH FROM " + tableName + " WHERE ID = "+id+";");
 		rs.next();
 		java.sql.Blob obj = rs.getBlob("OBJECT");
 		return obj.getBytes(1, rs.getInt("LENGTH"));
 	}
 	
+	
+	/**
+	 * @Martika
+	 * @param currentStory
+	 */
+	public void insertStoryToDatabase(Story currentStory){
+		byte[] ba = Blob.create(currentStory);
+		
+		try {
+			insertBlob(ba, "STORY");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Story getStoryFromDatabase(int id){
+		byte[] currentBlob = null;
+		try {
+			currentBlob = getBlob(id, "STORY");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ((Story)Blob.read(currentBlob));
+	}
+	
+	
+	/**
+	 * @Martika
+	 * @param currentStory
+	 */
+	public void insertStoryInfoToDatabase(StoryInfo currentStoryInfo){
+		byte[] ba = Blob.create(currentStoryInfo);
+		
+		try {
+			insertBlob(ba, "LEVELS");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public StoryInfo getStoryInfoFromDatabase(int id){
+		byte[] currentBlob = null;
+		try {
+			currentBlob = getBlob(id, "LEVELS");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ((StoryInfo)Blob.read(currentBlob));
+	}
+	
+
 	private synchronized ResultSet query(String expression) throws SQLException {
 		requestnum++;
         Statement st = null;
@@ -238,93 +320,8 @@ public class Database {
 		rsFexione.close();
 		return typeId;
 	}
-	
-	/**
-	 * Inserts a story in the Databasetable "Storys"
-	 * 
-	 * @author Martika
-	 * 
-	 * @param title - title of the story
-	 * @param text - The story itself
-	 * @param version - Are there other Versions of this Story? Then give an int. Otherwise "null" for Version 1
-	 * @param author - the author of the story - normally the current username
-	 * @throws SQLException
-	 */
-	public void queryInsertStoryToDatabase(String title, String text, int version, String author) throws SQLException{
-		ResultSet rs;
-		
-		//Timestamp currentTime = new Timestamp(new Date().getTime()); 
-		//currentTime timestamp = new Timestamp ();
-		
-		//String query = "INSERT INTO STORYS (TEXT, AUTHOR, VERSION, DATE, TITLE) VALUES ('"+ text +"','"+ author +"',"+ version +","+ null +",'"+ title +"');" ;
-		//System.out.println(query);
-		
-		rs = query("INSERT INTO STORYS (TEXT, AUTHOR, VERSION, DATE, TITLE) VALUES ('"+ text +"','"+ author +"',"+ version +","+ null +",'"+ title +"');") ;
-		
-		rs.close();
-	}
-	
-	
-	/**
-	 * 
-	 * Gets the Story from the Database
-	 * 
-	 * @author Martika
-	 * 
-	 * @param id - the ID of the Story in the Databasetable Storys
-	 * @return String -> the hole Story
-	 * @throws SQLException
-	 */
-	public String queryGetStoryFromDatabaye(int id) throws SQLException{
-		String text = "";
-		
-		ResultSet rs;
-		
-		//aktuell nur der Titel, CLOB to STRING noch problematisch
-		rs = query("SELECT text from storys where id = '" + id + "';") ;
-		rs.next();
-		
-		//Alternative, die auch nicht funktioniert...
-//		InputStreamReader st = new InputStreamReader(rs.getClob("TEXT").getAsciiStream(),Charset.forName("iso-8859-1"));
-//        while (true) {
-//            int i = 0;
-//			try {
-//				i = (int) st.read();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//            if (i != -1) {
-//                System.out.print((char)i);
-//                }
-//            else
-//                break;
-//        }
-		
-		
-		java.io.InputStream ip = rs.getAsciiStream(1);
-        int c = 0;
-		try {
-			c = ip.read();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        while (c > 0) {
-        	 text = text + ((char)c);
-            try {
-				c = ip.read();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
-		
-			
-			rs.close();
-		return text;
-	}
-	
+
+
 	
 	public void dump(ResultSet rs) throws SQLException {
 //        ResultSetMetaData meta   = rs.getMetaData(); // TODO print metadata
