@@ -9,7 +9,8 @@ import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.res.Ressources;
 
 public class Word extends Renderer implements ILevelAppearance {
-	
+
+	private static final long serialVersionUID = 5483759707356825209L;
 	private int block;
 	private String text;
 	

@@ -1,19 +1,14 @@
 package com.opticalcobra.storybear.db;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.hsqldb.server.Server;
 import org.hsqldb.types.Types;
@@ -58,6 +53,21 @@ public class Database {
         Statement st = conn.createStatement();
         st.execute("SHUTDOWN");
         conn.close();
+	}
+	
+	public void insertLevelBLOB(byte[] ba) throws SQLException{
+		java.sql.Blob obj = conn.createBlob();
+		obj.setBytes(1, ba);
+		PreparedStatement pstmt = conn.prepareStatement("INSERT INTO LEVELS (OBJECT, LENGTH) VALUES(?,"+ba.length+")");
+		pstmt.setBlob(1, obj);
+		pstmt.execute();
+	}
+	
+	public byte[] getLevelBlob(int id) throws SQLException{
+		ResultSet rs = query("SELECT OBJECT, LENGTH FROM LEVELS WHERE ID = "+id+";");
+		rs.next();
+		java.sql.Blob obj = rs.getBlob("OBJECT");
+		return obj.getBytes(1, rs.getInt("LENGTH"));
 	}
 	
 	private synchronized ResultSet query(String expression) throws SQLException {

@@ -1,9 +1,21 @@
 package com.opticalcobra.storybear.editor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+
 import com.opticalcobra.storybear.main.ILevelAppearance;
 
-public class StoryInfo {
+/**
+ * This class contains all information to render a level. This file can be exchanged to share a level.
+ * @author Tobias
+ *
+ */
+public class StoryInfo implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8932783666533175430L;
 	
 	private int numberOfBlocks = 0;
 	private Story story;
@@ -41,11 +53,6 @@ public class StoryInfo {
 	}
 
 
-	public void setHash(int hash) {
-		this.hash = hash;
-	}
-
-
 	public ArrayList<ILevelAppearance> getElements() {
 		return elements;
 	}
@@ -54,5 +61,6 @@ public class StoryInfo {
 	public void setElements(ArrayList<ILevelAppearance> elements) {
 		this.elements = elements;
 	}
+
 
 }
