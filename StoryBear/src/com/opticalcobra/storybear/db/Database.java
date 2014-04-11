@@ -179,9 +179,12 @@ public class Database {
 	
 	
 	/**
-	 * Returns all information about a Word
-	 * @param query
-	 * @return 
+	 * Returns an 0,1,2 or -1 weather we'ye got an image for the word as a collectable, character or landscape
+	 *
+	 * @author Martika
+	 * 
+	 * @param word 
+	 * @return int 0,1,2 or -1 as Constants 
 	 * @throws SQLException
 	 */
 	public int queryWordType(String word) throws SQLException{
@@ -221,9 +224,24 @@ public class Database {
 		return typeId;
 	}
 	
-	
+	/**
+	 * Inserts a story in the Databasetable "Storys"
+	 * 
+	 * @author Martika
+	 * 
+	 * @param title - title of the story
+	 * @param text - The story itself
+	 * @param version - Are there other Versions of this Story? Then give an int. Otherwise "null" for Version 1
+	 * @param author - the author of the story - normally the current username
+	 * @throws SQLException
+	 */
 	public void queryInsertStoryToDatabase(String title, String text, int version, String author) throws SQLException{
 		ResultSet rs;
+		
+		if (version == (Integer) null){
+			version = 1;
+		}
+		
 		//Timestamp currentTime = new Timestamp(new Date().getTime()); 
 		//currentTime timestamp = new Timestamp ();
 		
@@ -235,6 +253,17 @@ public class Database {
 		rs.close();
 	}
 	
+	
+	/**
+	 * 
+	 * Gets the Story from the Database
+	 * 
+	 * @author Martika
+	 * 
+	 * @param id - the ID of the Story in the Databasetable Storys
+	 * @return String -> the hole Story
+	 * @throws SQLException
+	 */
 	public String queryGetStoryFromDatabaye(int id) throws SQLException{
 		String text = "";
 		
