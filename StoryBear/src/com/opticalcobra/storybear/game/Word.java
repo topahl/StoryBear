@@ -32,7 +32,7 @@ public class Word extends Renderer implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g) {
 		g.setColor(Color.BLACK);
-		renderText(g,25, this.text, (this.block*Ressources.RASTERSIZE)+20,Ressources.WINDOW.height-30);
+		renderText(g,30, text, ((block*Ressources.RASTERSIZE)+20)% Ressources.WINDOW.width,Ressources.WINDOW.height-30);
 	}
 
 

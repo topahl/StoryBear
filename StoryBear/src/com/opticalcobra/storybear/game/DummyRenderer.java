@@ -32,7 +32,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		elements.add(new Word("neun",9));
 		elements.add(new Word("zehn",10));
 		elements.add(new Word("vierzehn",14));
-		elements.add(new Word("siebzehn",17));
+		elements.add(new Word("Donaudampfschiff bla bla bla",16));
 		elements.add(new Word("zwanzig",20));
 		elements.add(new Word("dreiundzwanzig",23));
 		elements.add(new Word("fünfundzwanzig",25));
@@ -66,7 +66,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			if(DebugSettings.vg1panelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 	
-			if((elementPointer < this.storyInfo.getElements().size()) && (((Word)elements.get(elementPointer)).getBlock() == (i + (panelnum-1)*17))){
+			if(elementPointer < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
 				((Word)elements.get(elementPointer)).render(g);
 				elementPointer++;
 			}
