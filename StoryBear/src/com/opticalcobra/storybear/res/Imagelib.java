@@ -28,6 +28,7 @@ public class Imagelib {
 	 */
 	private HashMap<String,BufferedImage> images;  
 	private Database db;
+	private StoryBearRandom rand = StoryBearRandom.getInstance();
 	
 	//Constants
 	public static final char QUERY_FOREGROUND = 'f';
@@ -235,7 +236,7 @@ public class Imagelib {
 				ids = db.queryNumberResultOnly("SELECT id from images where url = 'images\\layer_slice_clouds.png'");
 			}
 				
-			return db.queryImagedata(ids[(int)(Math.random()*ids.length)]);
+			return db.queryImagedata(ids[rand.nextInt(ids.length)]);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null; //TODO richtiges fehlerhandlich einbauen

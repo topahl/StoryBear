@@ -12,9 +12,11 @@ import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.StoryBearRandom;
 
 public class DummyRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
+	private StoryBearRandom rand = StoryBearRandom.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
 	private StoryInfo storyInfo;
@@ -43,7 +45,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	
 	private BufferedImage getNextMapElement(){
 		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_FOREGROUND);
-		int next = following[(int)(Math.random()*following.length)];
+		int next = following[rand.nextInt(following.length)];
 		lastTile = next;
 		return il.loadLandscapeTile(next , Imagelib.QUERY_FOREGROUND);
 	}

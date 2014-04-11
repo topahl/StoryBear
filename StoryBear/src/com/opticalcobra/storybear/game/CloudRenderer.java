@@ -10,9 +10,11 @@ import javax.swing.JLabel;
 import com.opticalcobra.storybear.debug.DebugSettings;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.StoryBearRandom;
 
 public class CloudRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
+	private StoryBearRandom rand = StoryBearRandom.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
 	
@@ -25,7 +27,7 @@ public class CloudRenderer extends Renderer implements IRenderer{
 		g.fillRect(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
 		
 		for(int i=0;i*Ressources.RASTERSIZE*4<Ressources.WINDOW.width;i++){
-			if((int)(Math.random()*4)==1)
+			if(rand.nextInt(4)==1)
 				g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE*4,60,null);
 			if(DebugSettings.cloudtilenum)
 				renderText(g,25, lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
