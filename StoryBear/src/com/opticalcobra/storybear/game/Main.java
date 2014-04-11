@@ -12,7 +12,7 @@ public class Main {
 //		Database db = new Database();
 //		
 //		try {
-//			System.out.print(db.queryGetStoryFromDatabaye(0));
+//			System.out.print(db.queryGetStoryFromDatabaye(1));
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();

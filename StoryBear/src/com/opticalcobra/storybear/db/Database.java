@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.db;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -270,10 +271,28 @@ public class Database {
 		ResultSet rs;
 		
 		//aktuell nur der Titel, CLOB to STRING noch problematisch
-		rs = query("SELECT title from storys where id = '" + id + "';") ;
+		rs = query("SELECT text from storys where id = '" + id + "';") ;
 		rs.next();
 		
-		text = (String) rs.getObject(1);
+		java.sql.Clob aclob = rs.getClob(1);
+		java.io.InputStream ip = rs.getAsciiStream(1);
+        int c = 0;
+		try {
+			c = ip.read();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        while (c > 0) {
+        	 text = text + ((char)c);
+            try {
+				c = ip.read();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+		
 		
 		rs.close();
 		
