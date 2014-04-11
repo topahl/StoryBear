@@ -239,10 +239,6 @@ public class Database {
 	public void queryInsertStoryToDatabase(String title, String text, int version, String author) throws SQLException{
 		ResultSet rs;
 		
-		if (version == (Integer) null){
-			version = 1;
-		}
-		
 		//Timestamp currentTime = new Timestamp(new Date().getTime()); 
 		//currentTime timestamp = new Timestamp ();
 		

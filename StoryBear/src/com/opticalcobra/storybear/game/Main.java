@@ -12,7 +12,8 @@ public class Main {
 //		Database db = new Database();
 //		
 //		try {
-//			System.out.print(db.queryGetStoryFromDatabaye(1));
+//			//db.queryInsertStoryToDatabase("Testm/ärchen", "M/ärchen zum testen", 1, "Tiki");
+//			System.out.print(db.queryGetStoryFromDatabaye(3));
 //		} catch (SQLException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
