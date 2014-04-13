@@ -13,30 +13,20 @@ public class Hero extends JLabel{
 	//private int spawnPositionY;
 	private int positionX;
 	private int positionY;
-	private int currentLevel;	//shows in which height the character has to return after a jump
-	
-	//private int jumpCntForFirstJump = 0;
+
 	private int jumpCntForSecondJump = 0;
-	//private int levelForFirstJump = 0;
-	//private int levelForSecondJump = 0;
-	//private int jumpCounter = 0;
 	private int jumpSpeed = 0;
 	private char doubleJumpInitiator = '0';
-	
-	//private JLabel characterLabel = new JLabel();
-	//private JLayeredPane baseLayer;
+
 	
 	/**
 	 * @author Miriam
 	 */
 	public Hero(){
-		this.setHeight(Ressources.CHARACTERHEIGHT);
-		this.setWidth(Ressources.CHARACTERWIDTH);
-		this.setPositionX(Ressources.CHARACTERSPAWNPOSITIONX);
-		//this.setPositionY(Ressources.CHARACTERSPAWNPOSITIONY);
-		this.setPositionY(Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT);
-		//this.setCurrentLevel(Ressources.CHARACTERSPAWNPOSITIONY);
-		this.setCurrentLevel(Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT);
+		this.height = Ressources.CHARACTERHEIGHT;
+		this.width = Ressources.CHARACTERWIDTH;
+		this.positionX = Ressources.CHARACTERSPAWNPOSITIONX;
+		this.positionY = Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT;
 		
 		this.heroSpawns();
 	}
@@ -85,48 +75,6 @@ public class Hero extends JLabel{
 		}
 		else
 			return true;
-
-		
-		/*//before anything happend I save the level where I have to come back in the end
-		if(this.jumpCntForFirstJump == 0)
-			this.levelForFirstJump = this.currentLevel;
-		
-		
-		//decide if it's a double jump or a normal jump
-		if(!doubleJump){
-			this.jump(this.jumpCntForFirstJump,jumpDirectionX,this.levelForFirstJump);
-			
-			//check if jump is finished
-			if(this.jumpCntForFirstJump == Ressources.GAMESPEED * Ressources.SPEEDCONSTANT){
-				this.jumpCntForFirstJump = 0;
-				return false;
-			}
-			else{
-				this.jumpCntForFirstJump++;
-				return true;
-			}		
-		}
-		else{			
-			//if a second jump starts we have to change the "zerolevel" of the character
-			if(this.jumpCntForSecondJump == 0)
-				this.levelForSecondJump = this.positionY;
-			
-			this.jump(this.jumpCntForSecondJump,jumpDirectionX,this.levelForSecondJump);
-			
-			//check if jump is finished
-			if(this.jumpCntForSecondJump == Ressources.GAMESPEED * Ressources.SPEEDCONSTANT){
-				this.jumpCntForSecondJump = 0;
-				
-				//change the jumpCntForFirstJump, because otherwise it can happen that the character jumps up again
-				if(this.jumpCntForFirstJump < (Math.floor((Ressources.GAMESPEED * Ressources.SPEEDCONSTANT / 2)-1)))
-					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump + 2;
-				else if(this.jumpCntForFirstJump == (Math.floor((Ressources.GAMESPEED * Ressources.SPEEDCONSTANT / 2)-1)))
-					this.jumpCntForFirstJump = Ressources.GAMESPEED * Ressources.SPEEDCONSTANT - this.jumpCntForFirstJump + 3;
-			}
-			else
-				this.jumpCntForSecondJump++;
-			return true;
-		}*/
 			
 	}
 	
@@ -166,44 +114,6 @@ public class Hero extends JLabel{
 	}
 	
 	
-//	/**
-//	 * @author Miriam
-//	 * execution of the jump
-//	 */
-//	private void jump(int jumpCounter, char jumpDirectionX, int zeroLevel){
-//		double newPositionY;
-//		double jumpConstantX = Ressources.JUMPCONSTANTX / Ressources.SCALE;
-//		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
-//		//double speedConstantY = Ressources.SPEEDCONSTANTY / Ressources.SCALE;
-//		float time = jumpCounter / ((float) Ressources.GAMESPEED * Ressources.SPEEDCONSTANT);
-//		
-//		//calculate the height of the current jump position
-//		newPositionY = jumpConstantY * time * time - jumpConstantY * time;
-//		//newPositionY = jumpConstantY * time * time - speedConstantY * time;
-//		newPositionY = zeroLevel + newPositionY * Ressources.GAMESPEED * Ressources.SPEEDCONSTANT;
-//		this.positionY = ((int) (newPositionY));
-//		
-//		//Rangecheck --> don't run out of window
-//		if (this.positionY < 0)
-//			this.positionY = 0;
-//		else if (this.positionY > (Ressources.WINDOW.height - this.height))
-//			this.positionY = Ressources.WINDOW.height - this.height;
-//		
-//		//calculate the X value of the jump 
-//		if(jumpDirectionX == 'r')
-//			this.positionX += jumpConstantX;
-//		else if(jumpDirectionX == 'l')
-//			this.positionX -= jumpConstantX;
-//		
-//		//Rangecheck --> don't run out of window
-//		if (this.positionX < 0)
-//			this.positionX = 0;
-//		else if (this.positionX > (Ressources.WINDOW.width - this.width))
-//			this.positionX = Ressources.WINDOW.width - this.width;
-//		
-//		this.setBounds(this.positionX,this.positionY,this.height,this.width);
-//	}
-	
 	/**
 	 * @author Miriam
 	 * checks if Character is in a double jump currently
@@ -215,45 +125,5 @@ public class Hero extends JLabel{
 			return true;
 	}
 	
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getPositionX() {
-		return positionX;
-	}
-
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
-	}
-
-	public int getPositionY() {
-		return positionY;
-	}
-
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
-	}
-
-	public int getCurrentLevel() {
-		return currentLevel;
-	}
-
-	public void setCurrentLevel(int currentLevel) {
-		this.currentLevel = currentLevel;
-	}
 	
 }
