@@ -1,7 +1,9 @@
 package com.opticalcobra.storybear.db;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -10,6 +12,9 @@ import java.util.ArrayList;
 
 import org.hsqldb.server.Server;
 import org.hsqldb.types.Types;
+
+import com.opticalcobra.storybear.editor.Story;
+import com.opticalcobra.storybear.editor.StoryInfo;
 
 
 
@@ -53,6 +58,100 @@ public class Database {
         conn.close();
 	}
 	
+	
+	/**
+	 * @author Tobias & Martika
+	 * @param ba
+	 * @param tableName
+	 * @throws SQLException
+	 */
+	private void insertBlob(byte[] ba, String tableName) throws SQLException{
+		java.sql.Blob obj = conn.createBlob();
+		obj.setBytes(1, ba);
+		PreparedStatement pstmt = conn.prepareStatement("INSERT INTO " + tableName + " (OBJECT, LENGTH) VALUES(?,"+ba.length+")");
+		pstmt.setBlob(1, obj);
+		pstmt.execute();
+	}
+	
+	/**
+	 * @author Tobias & Martika
+	 * @param id
+	 * @param tableName
+	 * @return
+	 * @throws SQLException
+	 */
+	private byte[] getBlob(int id, String tableName) throws SQLException{
+		ResultSet rs = query("SELECT OBJECT, LENGTH FROM " + tableName + " WHERE ID = "+id+";");
+		rs.next();
+		java.sql.Blob obj = rs.getBlob("OBJECT");
+		return obj.getBytes(1, rs.getInt("LENGTH"));
+	}
+	
+	
+	/**
+	 * @Martika
+	 * @param currentStory
+	 */
+	public void insertStoryToDatabase(Story currentStory){
+		byte[] ba = Blob.create(currentStory);
+		
+		try {
+			insertBlob(ba, "STORY");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Story getStoryFromDatabase(int id){
+		byte[] currentBlob = null;
+		try {
+			currentBlob = getBlob(id, "STORY");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ((Story)Blob.read(currentBlob));
+	}
+	
+	
+	/**
+	 * @Martika
+	 * @param currentStory
+	 */
+	public void insertStoryInfoToDatabase(StoryInfo currentStoryInfo){
+		byte[] ba = Blob.create(currentStoryInfo);
+		
+		try {
+			insertBlob(ba, "LEVELS");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public StoryInfo getStoryInfoFromDatabase(int id){
+		byte[] currentBlob = null;
+		try {
+			currentBlob = getBlob(id, "LEVELS");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ((StoryInfo)Blob.read(currentBlob));
+	}
+	
+
 	private synchronized ResultSet query(String expression) throws SQLException {
 		requestnum++;
         Statement st = null;
@@ -177,9 +276,12 @@ public class Database {
 	
 	
 	/**
-	 * Returns all information about a Word
-	 * @param query
-	 * @return 
+	 * Returns an 0,1,2 or -1 weather we'ye got an image for the word as a collectable, character or landscape
+	 *
+	 * @author Martika
+	 * 
+	 * @param word 
+	 * @return int 0,1,2 or -1 as Constants 
 	 * @throws SQLException
 	 */
 	public int queryWordType(String word) throws SQLException{
@@ -218,7 +320,8 @@ public class Database {
 		rsFexione.close();
 		return typeId;
 	}
-	
+
+
 	
 	public void dump(ResultSet rs) throws SQLException {
 //        ResultSetMetaData meta   = rs.getMetaData(); // TODO print metadata

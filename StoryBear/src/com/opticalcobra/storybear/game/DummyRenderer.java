@@ -12,9 +12,11 @@ import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.StoryBearRandom;
 
 public class DummyRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
+	private StoryBearRandom rand = StoryBearRandom.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
 	private StoryInfo storyInfo;
@@ -30,7 +32,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		elements.add(new Word("neun",9));
 		elements.add(new Word("zehn",10));
 		elements.add(new Word("vierzehn",14));
-		elements.add(new Word("siebzehn",17));
+		elements.add(new Word("Donaudampfschiff bla bla bla",16));
 		elements.add(new Word("zwanzig",20));
 		elements.add(new Word("dreiundzwanzig",23));
 		elements.add(new Word("fünfundzwanzig",25));
@@ -43,7 +45,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	
 	private BufferedImage getNextMapElement(){
 		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_FOREGROUND);
-		int next = following[(int)(Math.random()*following.length)];
+		int next = following[rand.nextInt(following.length)];
 		lastTile = next;
 		return il.loadLandscapeTile(next , Imagelib.QUERY_FOREGROUND);
 	}
@@ -64,7 +66,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			if(DebugSettings.vg1panelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 	
-			if((elementPointer < this.storyInfo.getElements().size()) && (((Word)elements.get(elementPointer)).getBlock() == (i + (panelnum-1)*17))){
+			if(elementPointer < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
 				((Word)elements.get(elementPointer)).render(g);
 				elementPointer++;
 			}

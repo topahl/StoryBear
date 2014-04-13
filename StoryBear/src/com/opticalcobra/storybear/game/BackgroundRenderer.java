@@ -10,9 +10,11 @@ import javax.swing.JLabel;
 import com.opticalcobra.storybear.debug.DebugSettings;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.StoryBearRandom;
 
 public class BackgroundRenderer extends Renderer implements IRenderer {
 	private Imagelib il = Imagelib.getInstance();
+	private StoryBearRandom rand = StoryBearRandom.getInstance();
 	private int lastTile = 0;
 	private int panelnum = 0;
 	
@@ -40,7 +42,7 @@ public class BackgroundRenderer extends Renderer implements IRenderer {
 	
 	private BufferedImage getNextMapElement(){
 		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_BACKGROUND);
-		int next = following[(int)(Math.random()*following.length)];
+		int next = following[rand.nextInt(following.length)];
 		lastTile = next;
 		return il.loadLandscapeTile(next , Imagelib.QUERY_BACKGROUND);
 		
