@@ -18,7 +18,6 @@ import com.opticalcobra.storybear.editor.StoryInfo;
 
 
 
-
 /**
  * 
  * @author Tobias
@@ -290,6 +289,12 @@ public class Database {
 		ResultSet rsCollectable;
 		ResultSet rsCharacter;
 		ResultSet rsMiddleground;
+		String flexinom = "";
+		
+		
+		String q1 = "";
+		String q2 = "";
+		String q3 = "";
 		
 		rsFexione = query("SELECT DISTINCT t2.word FROM term t "
 				+ "LEFT JOIN synset s ON t.synset_id =s.id "
@@ -302,9 +307,15 @@ public class Database {
 				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= '" +word+ "' );");
 
 		while (rsFexione.next()){ 
-			rsCollectable = query("SELECT * FROM Collectable_Object WHERE word = '"+rsFexione.getObject(1)+"';");
-			rsCharacter = query("SELECT * FROM Character_Object WHERE word = '"+rsFexione.getObject(1)+"';");
-			rsMiddleground= query("SELECT * FROM Middleground_Object WHERE word = '"+rsFexione.getObject(1)+"';");
+
+			flexinom= (String) rsFexione.getObject(1);
+			flexinom.replace("'", "");
+			
+			q1 = "SELECT * FROM Collectable_Object WHERE word = '"+flexinom+"';" ;
+			System.out.println(q1);
+			rsCollectable = query(q1);
+			rsCharacter = query("SELECT * FROM Character_Object WHERE word = '"+flexinom+"';");
+			rsMiddleground= query("SELECT * FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
 			if (rsCharacter.next()){
 				typeId = DBConstants.WORD_OBJECT_TYPE_CHARACTER;

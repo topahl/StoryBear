@@ -36,7 +36,6 @@ public class TextAnalyzer {
 	public StoryInfo analyzeText(Story story){
 		StoryInfo storyInfo = new StoryInfo();
 		String[] words;
-		int objectType = 0;
 		ArrayList<ILevelAppearance> elements = new ArrayList();
 		int numberOfBlocks = 0;			//how many blocks are needed for a word
 		int blockPosition = 0; 	//block number, where a word starts in the level
@@ -50,7 +49,6 @@ public class TextAnalyzer {
 		//if word in db then return type of word, e.g. collectable, character, ...
 		//else return null
 		for(String word : words){
-			objectType = checkWordInDB(word);
 			
 			//get the length of the word in pixels
 			stringLength = this.numberOfPixelsOfString(word);
@@ -74,6 +72,7 @@ public class TextAnalyzer {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				System.out.println(word);
 			}
 			
 			elements.add(new Word(word,blockPosition));
@@ -87,10 +86,6 @@ public class TextAnalyzer {
 		return storyInfo;
 	}
 	
-	private int checkWordInDB(String word) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	/**
 	 * @author Martika

@@ -41,6 +41,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		elements.add(new Word("hallo",39));
 		elements.add(new Word("hallo",42));
 		this.storyInfo.setElements(elements);
+//		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(2));
 	}
 	
 	private BufferedImage getNextMapElement(){
