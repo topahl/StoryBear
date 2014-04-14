@@ -1,14 +1,11 @@
 package com.opticalcobra.storybear.game;
 
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 
 import com.opticalcobra.storybear.res.Ressources;
 
 
 public class Hero extends JLabel{
-	private int height;
-	private int width;
 	private int positionX;
 	private int positionY;
 
@@ -20,15 +17,13 @@ public class Hero extends JLabel{
 	 * @author Miriam
 	 */
 	public Hero(){
-		this.height = Ressources.CHARACTERHEIGHT;
-		this.width = Ressources.CHARACTERWIDTH;
 		this.positionX = Ressources.CHARACTERSPAWNPOSITIONX;
 		this.positionY = Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT;
 		
 		this.setText("Forrest");
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
 				Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT,
-				Ressources.CHARACTERHEIGHT,Ressources.CHARACTERWIDTH);
+				Ressources.CHARACTERWIDTH,Ressources.CHARACTERHEIGHT);
 	}
 	
 	
@@ -39,7 +34,7 @@ public class Hero extends JLabel{
 		double runConstant = Ressources.RUNCONSTANT / Ressources.SCALE;
 		if(direction == 'l' && this.positionX > 0)
 			this.positionX -= (int) runConstant;
-		else if(direction == 'r' && this.positionX < (Ressources.WINDOW.width - this.width))
+		else if(direction == 'r' && this.positionX < (Ressources.WINDOW.width - this.getSize().width))
 			this.positionX += (int) runConstant;	
 		
 		this.setLocation(this.positionX, this.positionY);
@@ -51,7 +46,7 @@ public class Hero extends JLabel{
 	 */
 	public boolean letHeroJump(boolean doubleJump, char jumpDirectionX){
 		
-		if(this.positionY >= Ressources.WINDOW.height - this.height){
+		if(this.positionY >= Ressources.WINDOW.height - this.getSize().height){
 			this.jumpSpeed = Ressources.SPEEDCONSTANT;
 		}
 		else if(doubleJump && this.doubleJumpInitiator == '0'){
@@ -61,7 +56,7 @@ public class Hero extends JLabel{
 		
 		this.jump(jumpDirectionX);
 		
-		if(this.positionY >= Ressources.WINDOW.height - this.height){
+		if(this.positionY >= Ressources.WINDOW.height - this.getSize().height){
 			this.doubleJumpInitiator = '0';
 			return false;
 		}
@@ -85,8 +80,8 @@ public class Hero extends JLabel{
 		//Rangecheck --> don't run out of window
 		if (this.positionY < 0)
 			this.positionY = 0;
-		else if (this.positionY > (Ressources.WINDOW.height - this.height))
-			this.positionY = Ressources.WINDOW.height - this.height;
+		else if (this.positionY > (Ressources.WINDOW.height - this.getSize().height))
+			this.positionY = Ressources.WINDOW.height - this.getSize().height;
 		
 		//calculate the X value of the jump 
 		if(jumpDirectionX == 'r')
@@ -97,8 +92,8 @@ public class Hero extends JLabel{
 		//Rangecheck --> don't run out of window
 		if (this.positionX < 0)
 			this.positionX = 0;
-		else if (this.positionX > (Ressources.WINDOW.width - this.width))
-			this.positionX = Ressources.WINDOW.width - this.width;
+		else if (this.positionX > (Ressources.WINDOW.width - this.getSize().width))
+			this.positionX = Ressources.WINDOW.width - this.getSize().width;
 		
 		//TODO: Kollisionskontrolle
 		
