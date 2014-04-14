@@ -12,7 +12,6 @@ public class Hero extends JLabel{
 	private int positionX;
 	private int positionY;
 
-	private int jumpCntForSecondJump = 0;
 	private int jumpSpeed = 0;
 	private char doubleJumpInitiator = '0';
 
@@ -106,17 +105,6 @@ public class Hero extends JLabel{
 		this.setLocation(this.positionX, this.positionY);
 	}
 	
-	
-	/**
-	 * @author Miriam
-	 * checks if Character is in a double jump currently
-	 */
-	public boolean inADoubleJump(){
-		if(this.jumpCntForSecondJump == 0)
-			return false;
-		else
-			return true;
-	}
 	
 	
 }

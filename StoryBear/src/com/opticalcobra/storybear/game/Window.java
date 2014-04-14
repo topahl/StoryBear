@@ -127,11 +127,8 @@ public class Window extends JFrame {
 		if(this.stepcounter % 4 == 0){
 			bg.step();
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){
-				//this.inAJump = this.character.jump(this.controle.getRunDirection());
 				this.inAJump = this.hero.letHeroJump(this.controle.getDoubleJump(),this.controle.getRunDirection());
-				if(!this.hero.inADoubleJump()){
-					this.controle.setDoubleJump(false);
-				}
+				this.controle.setDoubleJump(false);
 				if(!this.inAJump)
 					this.controle.jumpStatus = 'n';
 			}
