@@ -9,8 +9,6 @@ import com.opticalcobra.storybear.res.Ressources;
 public class Hero extends JLabel{
 	private int height;
 	private int width;
-	//private int spawnPositionX;
-	//private int spawnPositionY;
 	private int positionX;
 	private int positionY;
 
@@ -28,17 +26,12 @@ public class Hero extends JLabel{
 		this.positionX = Ressources.CHARACTERSPAWNPOSITIONX;
 		this.positionY = Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT;
 		
-		this.heroSpawns();
+		this.setText("Forrest");
+		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
+				Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT,
+				Ressources.CHARACTERHEIGHT,Ressources.CHARACTERWIDTH);
 	}
 	
-	/**
-	 * @author Miriam
-	 * the game character spawns in the game
-	 */
-	private void heroSpawns(){
-		this.setText("Forrest");
-		this.setBounds(this.positionX,this.positionY,this.height,this.width);
-	}
 	
 	/**
 	 * @author Miriam
@@ -50,7 +43,7 @@ public class Hero extends JLabel{
 		else if(direction == 'r' && this.positionX < (Ressources.WINDOW.width - this.width))
 			this.positionX += (int) runConstant;	
 		
-		this.setBounds(this.positionX, this.positionY, this.height,this.width);
+		this.setLocation(this.positionX, this.positionY);
 	}
 	
 	/**
@@ -110,7 +103,7 @@ public class Hero extends JLabel{
 		
 		//TODO: Kollisionskontrolle
 		
-		this.setBounds(this.positionX,this.positionY,this.height,this.width);
+		this.setLocation(this.positionX, this.positionY);
 	}
 	
 	
