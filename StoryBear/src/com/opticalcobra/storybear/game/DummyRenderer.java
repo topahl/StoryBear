@@ -61,11 +61,15 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			if(DebugSettings.vg1panelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 	
+			
+		}
+		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
 			if(elementPointer < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
 				((Word)elements.get(elementPointer)).render(g);
 				elementPointer++;
 			}
 		}
+		
 		if(DebugSettings.vg1panelnum)
 			renderText(g,50, panelnum+"", 20, 40);
 
