@@ -70,7 +70,6 @@ public class Hero extends JLabel{
 	private void jump(char jumpDirectionX){
 		int posX = this.getLocation().x;
 		int posY = this.getLocation().y;
-		double jumpConstantX = Ressources.JUMPCONSTANTX / Ressources.SCALE;
 		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
 		this.jumpSpeed -= jumpConstantY;
 		double newPositionY = posY - this.jumpSpeed;
@@ -83,18 +82,18 @@ public class Hero extends JLabel{
 		else if (posY > (Ressources.WINDOW.height - this.getSize().height))
 			posY = Ressources.WINDOW.height - this.getSize().height;
 		
-		//calculate the X value of the jump 
-//		if(jumpDirectionX == 'r')
-//			posX += jumpConstantX;
-//		else if(jumpDirectionX == 'l')
-//			posX -= jumpConstantX;
-		
-		//Rangecheck --> don't run out of window
-		if (posX < 0)
-			posX = 0;
-		else if (posX > (Ressources.WINDOW.width - this.getSize().width))
-			posX = Ressources.WINDOW.width - this.getSize().width;
-		
+//		//calculate the X value of the jump 
+////		if(jumpDirectionX == 'r')
+////			posX += jumpConstantX;
+////		else if(jumpDirectionX == 'l')
+////			posX -= jumpConstantX;
+//		
+//		//Rangecheck --> don't run out of window
+//		if (posX < 0)
+//			posX = 0;
+//		else if (posX > (Ressources.WINDOW.width - this.getSize().width))
+//			posX = Ressources.WINDOW.width - this.getSize().width;
+//		
 		//TODO: Kollisionskontrolle
 		
 		this.setLocation(posX, posY);

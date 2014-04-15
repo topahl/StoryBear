@@ -116,8 +116,6 @@ public class Window extends JFrame {
 		vg2.step();
 		if(this.stepcounterLayer % 2 == 0)
 			mg.step();
-		if(this.stepcounterLayer % 3 == 0)
-			clouds.step();
 		if(this.stepcounterLayer % 4 == 0){
 			bg.step();
 		}
@@ -130,6 +128,10 @@ public class Window extends JFrame {
 	 */
 	public synchronized void step(){
 		
+		if(this.stepcounter % 6 == 0){
+			clouds.step();
+		}
+			
 		//Navigation of the hero via the right, left, up and down keys
 		if(this.stepcounter % 4 == 0){
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){
