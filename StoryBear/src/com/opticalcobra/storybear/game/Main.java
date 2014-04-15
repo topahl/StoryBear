@@ -5,12 +5,17 @@ import java.util.Date;
 
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Story;
+import com.opticalcobra.storybear.editor.TextAnalyzer;
 import com.opticalcobra.storybear.main.User;
 
 
 public class Main {
 	public static void main(String args[]){
-		Window gui = new Window();
+	Window gui = new Window();
+		
+		TextAnalyzer ta = new TextAnalyzer();
+		System.out.println(ta.numberOfPixelsOfString("meeeeeeeeeeeegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+		
 		
 //		Database db = new Database();
 //		Story currentStory = new Story();
