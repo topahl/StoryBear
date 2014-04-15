@@ -34,8 +34,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		Database db = new Database();
 		
 		storyInfo = new StoryInfo();
-		//this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(4));
-		storyInfo = db.getStoryInfoFromDatabase(3);
+		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(4));
+		//storyInfo = db.getStoryInfoFromDatabase(4);
 	}
 	
 	private BufferedImage getNextMapElement(){
