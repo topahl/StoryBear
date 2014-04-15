@@ -16,6 +16,11 @@ import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.StoryBearRandom;
 
+/**
+ * 
+ * @author Miriam, Änderung Martika
+ *
+ */
 public class DummyRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
 	private StoryBearRandom rand = StoryBearRandom.getInstance();
@@ -27,25 +32,10 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		TextAnalyzer textAnalyzer = new TextAnalyzer();
 		Database db = new Database();
-		//Dummy Code	--> TODO: delete, dafür storyInfo übergeben lassen
-		this.storyInfo = new StoryInfo();
-//		ArrayList<ILevelAppearance> elements = new ArrayList<ILevelAppearance>();
-//		elements.add(new Word("eins",1));
-//		elements.add(new Word("zwei",2));
-//		elements.add(new Word("fünf",5));
-//		elements.add(new Word("neun",9));
-//		elements.add(new Word("zehn",10));
-//		elements.add(new Word("vierzehn",14));
-//		elements.add(new Word("Donaudampfschiff bla bla bla",16));
-//		elements.add(new Word("zwanzig",20));
-//		elements.add(new Word("dreiundzwanzig",23));
-//		elements.add(new Word("fünfundzwanzig",25));
-//		elements.add(new Word("hallo",33));
-//		elements.add(new Word("hallo",36));
-//		elements.add(new Word("hallo",39));
-//		elements.add(new Word("hallo",42));
-//		this.storyInfo.setElements(elements);
-		this.storyInfo = db.getStoryInfoFromDatabase(1);
+		
+		storyInfo = new StoryInfo();
+		//this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(4));
+		storyInfo = db.getStoryInfoFromDatabase(3);
 	}
 	
 	private BufferedImage getNextMapElement(){

@@ -21,8 +21,8 @@ public class Window extends JFrame {
 	private GameLayer bg;
 	private GameLayer clouds;
 	
-	
-	private int stepcounter = 0;
+	private int stepcounter = 1;
+	private int stepcounterLayer = 1;
 	private Hero hero;
 	private Control controle;
 	
@@ -112,28 +112,39 @@ public class Window extends JFrame {
 		}
 	}
 	
+	private void layerStep(){
+		vg2.step();
+		if(this.stepcounterLayer % 2 == 0)
+			mg.step();
+		if(this.stepcounterLayer % 3 == 0)
+			clouds.step();
+		if(this.stepcounterLayer % 4 == 0){
+			bg.step();
+		}
+		stepcounterLayer++;
+	}
+	
 	
 	/**
 	 * 
 	 */
 	public synchronized void step(){
-		vg2.step();
-		if(this.stepcounter % 2 == 0)
-			mg.step();
 		
-		if(this.stepcounter % 3 == 0)
-			clouds.step();
 		//Navigation of the hero via the right, left, up and down keys
 		if(this.stepcounter % 4 == 0){
-			bg.step();
 			if((this.controle.getJumpDirection() == 'u') || (this.inAJump)){
 				this.inAJump = this.hero.letHeroJump(this.controle.getDoubleJump(),this.controle.getRunDirection());
 				this.controle.setDoubleJump(false);
-				if(!this.inAJump)
+				if(!this.inAJump){
 					this.controle.jumpStatus = 'n';
+				}				
 			}
-			else if(this.controle.getRunDirection() != 'n')
+			if(this.controle.getRunDirection() != 'n'){
 				this.hero.run(this.controle.getRunDirection());
+			}
+		}
+		if(this.controle.getRunDirection() == 'r' && this.hero.getX() > (Ressources.WINDOW.width/7)*2){
+			layerStep();
 		}
 		
 		this.stepcounter++;

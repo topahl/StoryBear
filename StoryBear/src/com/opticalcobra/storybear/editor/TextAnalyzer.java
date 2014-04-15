@@ -82,7 +82,7 @@ public class TextAnalyzer {
 		
 		storyInfo.setNumberOfBlocks(blockPosition);
 		storyInfo.setElements(elements);
-		//db.insertStoryInfoToDatabase(storyInfo);
+		db.insertStoryInfoToDatabase(storyInfo);
 		return storyInfo;
 	}
 	

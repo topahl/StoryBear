@@ -31,7 +31,8 @@ public class Hero extends JLabel{
 		
 		if(direction == 'l' && posX > 0)
 			posX -= (int) runConstant;
-		else if(direction == 'r' && posX < (Ressources.WINDOW.width - this.getSize().width))
+		//Hero darf nur sich nur zwischen 1. und 3. siebtel bewegen
+		else if(direction == 'r' && posX < (Ressources.WINDOW.width/7)*2)
 			posX += (int) runConstant;	
 		
 		this.setLocation(posX, this.getLocation().y);
@@ -83,10 +84,10 @@ public class Hero extends JLabel{
 			posY = Ressources.WINDOW.height - this.getSize().height;
 		
 		//calculate the X value of the jump 
-		if(jumpDirectionX == 'r')
-			posX += jumpConstantX;
-		else if(jumpDirectionX == 'l')
-			posX -= jumpConstantX;
+//		if(jumpDirectionX == 'r')
+//			posX += jumpConstantX;
+//		else if(jumpDirectionX == 'l')
+//			posX -= jumpConstantX;
 		
 		//Rangecheck --> don't run out of window
 		if (posX < 0)
