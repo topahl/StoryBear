@@ -13,9 +13,6 @@ public class Main {
 	public static void main(String args[]){
 	Window gui = new Window();
 		
-		TextAnalyzer ta = new TextAnalyzer();
-		System.out.println(ta.numberOfPixelsOfString("meeeeeeeeeeeegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
-		
 		
 //		Database db = new Database();
 //		Story currentStory = new Story();
