@@ -16,11 +16,7 @@ import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.StoryBearRandom;
 
-/**
- * 
- * @author Miriam, Änderung Martika
- *
- */
+
 public class DummyRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
 	private StoryBearRandom rand = StoryBearRandom.getInstance();
@@ -57,14 +53,34 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
 			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE,0,null);
 			if(DebugSettings.vg1tilenum)
-				renderText(g,25, lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
+				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
 			if(DebugSettings.vg1panelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 	
 			
 		}
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
-			if(elementPointer < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+			if (elementPointer < storyInfo.getElements().size() && 
+							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
+			
+				if (storyInfo.getElements().get(elementPointer) instanceof Word){
+					System.out.println("jetzt brauchen wir einen Übertrag ins nächste Panel" );
+					elementPointer--;
+					//TODO
+					//elementpointer neu rendern! allerdings mit neuen x parametern...
+					
+					((Word)elements.get(elementPointer)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer).getBlock()%16) + 1))*-1);
+					elementPointer++;
+				}	
+			}
+			
+			
+			if(elementPointer < storyInfo.getElements().size() && 
+							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+				
+				
+				
+				
 				((Word)elements.get(elementPointer)).render(g);
 				elementPointer++;
 			}

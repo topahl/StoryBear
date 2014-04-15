@@ -77,16 +77,8 @@ public class TextAnalyzer {
 			}
 			
 			elements.add(new Word(word,blockPosition));
-			
-			blockPosition += numberOfBlocks;	//calculates the beginning of each new words
-			
-			if (stringLength == 0 || numberOfBlocks == 0){
-				stringLength = 1;
-			}
-			
-			stringLength = 0;
-			numberOfBlocks = 0;
-			
+			blockPosition += numberOfBlocks;	//calculates the beginning of each new word
+
 		}
 		
 		storyInfo.setNumberOfBlocks(blockPosition);

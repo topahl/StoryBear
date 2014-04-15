@@ -30,7 +30,7 @@ public class CloudRenderer extends Renderer implements IRenderer{
 			if(rand.nextInt(4)==1)
 				g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE*4,60,null);
 			if(DebugSettings.cloudtilenum)
-				renderText(g,25, lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
+				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
 			if(DebugSettings.cloudpanelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 		}

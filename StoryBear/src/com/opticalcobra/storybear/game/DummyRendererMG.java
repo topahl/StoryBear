@@ -29,7 +29,7 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 		for(int i=0;i*Ressources.RASTERSIZE*4<Ressources.WINDOW.width;i++){
 			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE*4,0,null);
 			if(DebugSettings.mgtilenum)
-				renderText(g,25, lastTile+"", (i*4*Ressources.RASTERSIZE)+20,100);
+				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTile+"", (i*4*Ressources.RASTERSIZE)+20,100);
 			if(DebugSettings.mgpanelborder)
 				g.drawRect(i*4*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE*4, Ressources.WINDOW.height);
 		}
