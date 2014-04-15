@@ -54,7 +54,7 @@ public class TextAnalyzer {
 			stringLength = this.numberOfPixelsOfString(word);
 			
 			//Math.ceil rundet immer auf: 0.1 wird zu 1.0
-			numberOfBlocks = (int) Math.ceil(stringLength / Ressources.RASTERSIZEORG);
+			numberOfBlocks = (int) Math.ceil((double)stringLength / (double)Ressources.RASTERSIZEORG);
 			
 			//TODO: überarbeiten, aktuell nur Dummywerte
 			try {
@@ -82,7 +82,7 @@ public class TextAnalyzer {
 		
 		storyInfo.setNumberOfBlocks(blockPosition);
 		storyInfo.setElements(elements);
-		
+		//db.insertStoryInfoToDatabase(storyInfo);
 		return storyInfo;
 	}
 	

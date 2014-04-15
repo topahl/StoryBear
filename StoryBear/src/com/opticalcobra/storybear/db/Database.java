@@ -311,9 +311,7 @@ public class Database {
 			flexinom= (String) rsFexione.getObject(1);
 			flexinom.replace("'", "");
 			
-			q1 = "SELECT * FROM Collectable_Object WHERE word = '"+flexinom+"';" ;
-			System.out.println(q1);
-			rsCollectable = query(q1);
+			rsCollectable = query("SELECT * FROM Collectable_Object WHERE word = '"+flexinom+"';");		
 			rsCharacter = query("SELECT * FROM Character_Object WHERE word = '"+flexinom+"';");
 			rsMiddleground= query("SELECT * FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
