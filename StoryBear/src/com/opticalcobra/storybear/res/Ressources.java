@@ -16,7 +16,7 @@ public class Ressources {
 	public static final String RESPATH = "res\\";
 	public static final int RASTERSIZEORG = 120;
 	public static final int RASTERSIZE;
-	public static final int STORYTEXTSIZE = 35;
+	public static final int STORYTEXTSIZE = 40;
 	
 	//Colors
 	public static final Color SKYCOLOR = new Color(111, 213, 239, 255); //Standard: 158, 234, 252, 255

@@ -18,6 +18,7 @@ import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
 import com.opticalcobra.storybear.game.Landscape;
 import com.opticalcobra.storybear.game.Word;
+import com.sun.javafx.tk.quantum.PathIteratorHelper.Struct;
 
 public class TextAnalyzer {
 
@@ -54,7 +55,7 @@ public class TextAnalyzer {
 			stringLength = this.numberOfPixelsOfString(word);
 			
 			//Math.ceil rundet immer auf: 0.1 wird zu 1.0
-			numberOfBlocks = (int) Math.ceil((double)stringLength / (double)Ressources.RASTERSIZEORG);
+			numberOfBlocks = (int) Math.ceil((double)stringLength / (double)Ressources.RASTERSIZE);
 			
 			//TODO: überarbeiten, aktuell nur Dummywerte
 			try {
@@ -78,6 +79,14 @@ public class TextAnalyzer {
 			elements.add(new Word(word,blockPosition));
 			
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new words
+			
+			if (stringLength == 0 || numberOfBlocks == 0){
+				stringLength = 1;
+			}
+			
+			stringLength = 0;
+			numberOfBlocks = 0;
+			
 		}
 		
 		storyInfo.setNumberOfBlocks(blockPosition);
@@ -93,11 +102,14 @@ public class TextAnalyzer {
 	 * @return width in pixel
 	 */
 	public int numberOfPixelsOfString(String word){
+		int pixelWidth = 0;
 		Graphics2D g = (Graphics2D) new BufferedImage(1,1,1).getGraphics();
 		g.setFont(storyTextFont);
 		FontMetrics fm = g.getFontMetrics();
 		java.awt.geom.Rectangle2D rect = fm.getStringBounds(word, g);
-		return (int)Math.ceil((rect.getWidth()));
+		pixelWidth = (int)Math.ceil((rect.getWidth()));
+		pixelWidth = (int) (pixelWidth + Math.ceil(3*Ressources.SCALE));
+		return pixelWidth;
 	}
 	
 	
