@@ -67,7 +67,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 					//TODO
 					//elementpointer neu rendern! allerdings mit neuen x parametern...
 					
-					((Word)elements.get(elementPointer)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer).getBlock()%16) + 1))*-1);
+					//((Word)elements.get(elementPointer)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer).getBlock()%16) + 1))*-1);
 					elementPointer++;
 				}	
 			}

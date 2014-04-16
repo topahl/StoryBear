@@ -26,15 +26,16 @@ public class Imagelib {
 	 * 		map-	All map elements
 	 * 		int-	Internal graphics (eg cluster graphics)
 	 */
-	private HashMap<String,BufferedImage> images;  
-	private Database db;
-	private StoryBearRandom rand = StoryBearRandom.getInstance();
+	private HashMap<String,BufferedImage> images;   //Hashmap für alle Bilder
+	private Database db; //Datenbankverbindung
+	private StoryBearRandom rand = StoryBearRandom.getInstance(); //Zufall mit seed
 	
 	//Constants
 	public static final char QUERY_FOREGROUND = 'f';
 	public static final char QUERY_MIDDLEGROUND = 'm';
 	public static final char QUERY_BACKGROUND = 'b';
 	public static final char QUERY_CLOUDS = 'c';
+	
 	
 	private Imagelib(){
 		db = new Database();
@@ -46,7 +47,8 @@ public class Imagelib {
 	 * 
 	 * loads the requested image if necessary and returns it as {@link BufferedImage}
 	 * 
-	 * @param graphicName name of the graphic that should be loaded
+	 * @param queryType dertermines the DB table to select on..represents a layer
+	 * @param type type id for requested tile
 	 * @return the requested image loaded in RAM
 	 * @author Tobias
 	 * @exception ImageNotFoundException will be raised if the image was not found in the database
@@ -63,75 +65,13 @@ public class Imagelib {
 		
 		//Request must be handled via database request
 		
-		//Bild zuschneiden
+		//cut images to fit
 		full=loadRessourcesImage(image.getUrl());
 		result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
 		images.put("map-"+image.getId(), result);
 		return result;
 	}
 	
-	
-	
-//	public BufferedImage loadMiddlegroundTile(String landscape, int type) throws ImageNotFoundException{
-//		BufferedImage result;
-//		BufferedImage full;
-//		
-//		result = images.get("map-"+landscape+"#"+type);
-//		if(result != null){
-//			return result;
-//		}
-//		
-//		try {
-//			ImageResult ir = db.queryImagedata("SELECT * FROM "+Constants.IMAGETABLE+" WHERE URL = '"+landscape + "' AND X = "+(type*Ressources.RASTERSIZEORG*4));
-//			full=loadRessourcesImage(landscape);
-//			result=full.getSubimage((int)(ir.getX()/Ressources.SCALE),(int) (ir.getY()/Ressources.SCALE),(int) (ir.getWidth()/Ressources.SCALE),(int) (ir.getHeight()/Ressources.SCALE));
-//			images.put("map-"+landscape+"#"+type, result);
-//			return result;
-//		} catch (SQLException e) {
-//			throw new ImageNotFoundException("Could not find an Image for:'"+landscape+"' and type: "+type+" in the database", e);
-//		}
-//	}
-//	
-//	
-//	public BufferedImage loadBackgroundTile(String landscape, int type) throws ImageNotFoundException{
-//		BufferedImage result;
-//		BufferedImage full;
-//		
-//		result = images.get("map-"+landscape+"#"+type);
-//		if(result != null){
-//			return result;
-//		}
-//		
-//		try {
-//			ImageResult ir = db.queryImagedata("SELECT * FROM "+Constants.IMAGETABLE+" WHERE URL = '"+landscape + "' AND X = "+(type*Ressources.RASTERSIZEORG*4));
-//			full=loadRessourcesImage(landscape);
-//			result=full.getSubimage((int)(ir.getX()/Ressources.SCALE),(int) (ir.getY()/Ressources.SCALE),(int) (ir.getWidth()/Ressources.SCALE),(int) (ir.getHeight()/Ressources.SCALE));
-//			images.put("map-"+landscape+"#"+type, result);
-//			return result;
-//		} catch (SQLException e) {
-//			throw new ImageNotFoundException("Could not find an Image for:'"+landscape+"' and type: "+type+" in the database", e);
-//		}
-//	}
-//	
-//	public BufferedImage loadCloudTile(String landscape, int type) {
-//		BufferedImage result;
-//		BufferedImage full;
-//		
-//		result = images.get("map-"+landscape+"#"+type);
-//		if(result != null){
-//			return result;
-//		}
-//		
-//		try {
-//			ImageResult ir = db.queryImagedata("SELECT * FROM "+Constants.IMAGETABLE+" WHERE URL = '"+landscape + "' AND X = "+(type*Ressources.RASTERSIZEORG*4));
-//			full=loadRessourcesImage(landscape);
-//			result=full.getSubimage((int)(ir.getX()/Ressources.SCALE),(int) (ir.getY()/Ressources.SCALE),(int) (ir.getWidth()/Ressources.SCALE),(int) (ir.getHeight()/Ressources.SCALE));
-//			images.put("map-"+landscape+"#"+type, result);
-//			return result;
-//		} catch (SQLException e) {
-//			throw new ImageNotFoundException("Could not find an Image for:'"+landscape+"' and type: "+type+" in the database", e);
-//		}
-//	}
 	
 	/**
 	 * Loads a full Sprite Image eather from local cache or from file system
@@ -142,18 +82,21 @@ public class Imagelib {
 	 */
 	private BufferedImage loadRessourcesImage(String graphicName) throws ImageNotFoundException{
 		BufferedImage result;
+		//chech whether image is already cached
 		result = images.get("img-"+graphicName);
 		if(result != null){
 			return result;
 		}
 		
 		try {
+			//load images from file system
 			BufferedImage temp = ImageIO.read(new File(Ressources.RESPATH+graphicName));
 			result = new BufferedImage((int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),BufferedImage.TYPE_INT_ARGB);
 			result.getGraphics().drawImage(temp, 0, 0, (int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),null);
 			images.put("img-"+graphicName, result);
 			return result;
 		} catch (IOException e) {
+			//images nicht gefunden
 			throw new ImageNotFoundException("Could not find an Image for:'"+graphicName+"' on file System", e);
 		}
 	}
@@ -180,7 +123,7 @@ public class Imagelib {
 	public Integer[] getFollowingTiles(int type, char queryType){
 	
 		String query;
-		switch (queryType) {
+		switch (queryType) {// determine which tbles to select on
 		case QUERY_BACKGROUND:
 			query="SELECT DISTINCT f.following_type_id FROM BACKGROUND b JOIN IMAGES i ON i.id = b.images_id JOIN BACKGROUND_FOLLOWING f ON b.type_id = f.type_id WHERE f.type_id = "+type+";";
 			break;
@@ -194,7 +137,7 @@ public class Imagelib {
 			throw new QueryTypeNotFoundException("Your Querytype was not valid. Type: "+queryType);
 		}
 		try {
-			return db.queryNumberResultOnly(query);
+			return db.queryNumberResultOnly(query); // run Query on DB
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -211,7 +154,7 @@ public class Imagelib {
 	 */
 	private ImageResult getRandomID(int type, char queryType){
 		String dbName;
-		switch (queryType) {
+		switch (queryType) {//determine which database to query on
 		case QUERY_BACKGROUND:
 			dbName="BACKGROUND";
 			break;
