@@ -13,7 +13,7 @@ import com.opticalcobra.storybear.res.Ressources;
 
 public class Hero extends JLabel{
 
-	private int jumpSpeed = 0;
+	private int jumpSpeed = Ressources.SPEEDCONSTANT;
 	private char doubleJumpInitiator = '0';
 	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
 	private Imagelib imageLib = Imagelib.getInstance();
@@ -89,10 +89,7 @@ public class Hero extends JLabel{
 	 */
 	public boolean letHeroJump(boolean doubleJump, char jumpDirectionX){
 		
-		if(this.getLocation().y >= Ressources.WINDOW.height - this.getSize().height){
-			this.jumpSpeed = Ressources.SPEEDCONSTANT;
-		}
-		else if(doubleJump && this.doubleJumpInitiator == '0'){
+		if(doubleJump && this.doubleJumpInitiator == '0'){
 			this.jumpSpeed = Ressources.SPEEDCONSTANT;
 			this.doubleJumpInitiator = '1';
 		}
@@ -124,8 +121,10 @@ public class Hero extends JLabel{
 		//Rangecheck --> don't run out of window
 		if (posY < 0)
 			posY = 0;
-		else if (posY > (Ressources.WINDOW.height - this.getSize().height))
+		else if (posY > (Ressources.WINDOW.height - this.getSize().height)){
 			posY = Ressources.WINDOW.height - this.getSize().height;
+			this.jumpSpeed = Ressources.SPEEDCONSTANT;
+		}
 		
 //		//calculate the X value of the jump 
 ////		if(jumpDirectionX == 'r')
