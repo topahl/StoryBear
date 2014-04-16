@@ -119,6 +119,9 @@ public class Window extends JFrame {
 		if(this.stepcounterLayer % 4 == 0){
 			bg.step();
 		}
+		if(this.stepcounterLayer % 6 == 0){
+			clouds.step();
+		}
 		stepcounterLayer++;
 	}
 	
