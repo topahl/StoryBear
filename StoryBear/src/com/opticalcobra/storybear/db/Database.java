@@ -195,7 +195,6 @@ public class Database {
 	  Database DB = new Database();
 	  try {
 		DB.query("SELECT * FROM category;");
-		DB.queryUserList();
 		DB.shutdown();
 	} catch (SQLException e) {
 		System.err.println("SQL Error");
@@ -356,6 +355,26 @@ public class Database {
 		rs.close();
 		
 		return resultList;
+	}
+	
+	/**
+	 * Delete user
+	 * @param id UserId
+	 * @return true if user was deleted successfully
+	 * @throws SQLException
+	 */
+	public boolean deleteUserById(int id) throws SQLException {
+		return conn.createStatement().execute("DELETE FROM user WHERE id=" + id + ";");
+	}
+	
+	/**
+	 * Add new User to DB
+	 * @param user User-Object
+	 * @return true if insert was successful
+	 * @throws SQLException
+	 */
+	public boolean addUser(User user) throws SQLException {
+		return conn.createStatement().execute("INSERT INTO user(name) VALUES ('" + user.getName() + "')");
 	}
 	
 	public void dump(ResultSet rs) throws SQLException {
