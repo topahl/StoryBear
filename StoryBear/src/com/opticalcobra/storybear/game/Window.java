@@ -22,7 +22,7 @@ public class Window extends JFrame {
 	private GameLayer clouds;
 	
 	private int stepcounter = 1;
-	private int stepcounterLayer = 1;
+	private int stepcounterLayer = 0;
 	private Hero hero;
 	private Control controle;
 	
@@ -132,6 +132,9 @@ public class Window extends JFrame {
 		if(this.stepcounterLayer % 6 == 0){
 			clouds.step();
 		}
+		
+		hero.runFreazing(stepcounterLayer);
+		
 		stepcounterLayer++;
 	}
 	
@@ -158,7 +161,7 @@ public class Window extends JFrame {
 				this.hero.run(this.controle.getRunDirection());
 			}
 		}
-		if(this.controle.getRunDirection() == 'r' && this.hero.getX() >= (Ressources.WINDOW.width/7)*2){
+		if(this.controle.getRunDirection() == 'r' && this.hero.getX() >= Ressources.RASTERSIZE*5){
 			layerStep();
 		}
 		

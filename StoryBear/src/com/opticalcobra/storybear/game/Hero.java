@@ -61,7 +61,7 @@ public class Hero extends JLabel{
 			}*/
 		}
 		//Hero darf nur sich nur zwischen 1. und 3. siebtel bewegen
-		else if(direction == 'r' && posX < (Ressources.WINDOW.width/7)*2){
+		else if(direction == 'r' && posX < Ressources.RASTERSIZE*5){
 			posX += (int) runConstant;	
 			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
 			/*try {
@@ -78,10 +78,18 @@ public class Hero extends JLabel{
 		
 		this.setLocation(posX, this.getLocation().y);
 		
-		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0){
+		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5){
 			setLocation(getLocation().x, getLocation().y-5);
 		}
 	}
+	
+	
+	public void runFreazing(int currentCounterStep){
+		if(currentCounterStep % Ressources.RASTERSIZE == 0){
+			setLocation(getLocation().x, getLocation().y-5);
+		}
+	}
+	
 	
 	/**
 	 * @author Miriam
