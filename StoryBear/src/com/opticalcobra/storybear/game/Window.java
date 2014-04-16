@@ -1,11 +1,11 @@
 package com.opticalcobra.storybear.game;
 
 import java.awt.Color;
+import java.util.Timer;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.Timer;
 
 import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.main.OSTimer;
@@ -37,8 +37,8 @@ public class Window extends JFrame {
 	
 	public Window(){
 		
-		this.timer = new Timer(Ressources.GAMESPEED,new OSTimer(this));	
-		timer.setCoalesce(false);
+		this.timer = new Timer();	
+		
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -47,8 +47,12 @@ public class Window extends JFrame {
 		
 		initComponents();
 		
+		
+		// initialize Controle 
+		this.controle = new Control();
+		this.addKeyListener(this.controle);
+		timer.scheduleAtFixedRate(new OSTimer(this),Ressources.GAMESPEED, Ressources.GAMESPEED);
 		this.setVisible(true);
-		this.timer.start();
 	}
 	
 	
@@ -75,7 +79,6 @@ public class Window extends JFrame {
 		
 		if(Ressources.DEBUG){
 			Debugger.main(null);
-			Debugger.setTimer(timer);
 		}
 		
 		// initialize Game Character
