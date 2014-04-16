@@ -101,7 +101,7 @@ public class Database {
 	}
 	
 	/**
-	 * 
+	 * @author Martika
 	 * @param id
 	 * @return
 	 */
@@ -133,7 +133,7 @@ public class Database {
 	}
 	
 	/**
-	 * 
+	 * @author Martika
 	 * @param id
 	 * @return
 	 */
@@ -149,6 +149,10 @@ public class Database {
 	}
 	
 
+	/**
+	 * @author Martika
+	 * @return
+	 */
 	public int getLevelHeight(){
 		
 		return 1;
