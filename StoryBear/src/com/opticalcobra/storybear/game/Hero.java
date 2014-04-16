@@ -78,8 +78,8 @@ public class Hero extends JLabel{
 		
 		this.setLocation(posX, this.getLocation().y);
 		
-		if (getLocation().x % Ressources.RASTERSIZE == 0){
-			
+		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0){
+			setLocation(getLocation().x, getLocation().y-5);
 		}
 	}
 	
