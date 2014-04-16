@@ -24,7 +24,8 @@ public class Imagelib {
 	/*
 	 * Hashmap prefixes:
 	 * 		map-	All map elements
-	 * 		int-	Internal graphics (eg cluster graphics)
+	 * 		img-	Internal graphics (eg cluster graphics)
+	 * 		hero-	Image of a hero
 	 */
 	private HashMap<String,BufferedImage> images;   //Hashmap für alle Bilder
 	private Database db; //Datenbankverbindung
@@ -69,6 +70,34 @@ public class Imagelib {
 		full=loadRessourcesImage(image.getUrl());
 		result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
 		images.put("map-"+image.getId(), result);
+		return result;
+	}
+	
+	
+	/**
+	 * @param rundirection of the hero pic where he is looking at (front, right, left)
+	 * @param type of the hero, e.g. a bear, ...
+	 * @return Loaded Image requested image
+	 * @exception ImageNotFoundException will be raised if the image was not found in the database
+	 * @author Miriam
+	 * @throws SQLException 
+	 */
+	public BufferedImage loadHeroPic(char rundirection, char type) throws ImageNotFoundException, SQLException{
+		BufferedImage result;
+		BufferedImage full;
+		String sql = "SELECT IMAGEID FROM HEROS WHERE RUNDIRECTION = '" + rundirection + "' AND TYPE = '" + type + "'";
+		ImageResult image = db.queryImagedata(db.queryNumberResultOnly(sql)[0]);
+		
+		result = images.get("hero-"+image.getId());
+		if(result != null){
+			return result;
+		}
+		
+		//cut images to fit
+		full=loadRessourcesImage(image.getUrl());
+		result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+		images.put("hero-"+image.getId(), result);
+		
 		return result;
 	}
 	
