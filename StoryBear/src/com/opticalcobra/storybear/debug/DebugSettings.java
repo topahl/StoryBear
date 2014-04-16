@@ -1,10 +1,11 @@
 package com.opticalcobra.storybear.debug;
 
 public class DebugSettings {
-	public static boolean vg1panelnum = false;
-    public static boolean vg1panelborder = false;
-    public static boolean vg1tilenum = false;
-    public static boolean vg1tileborder = false;
+	static boolean vg1 = false;
+	public static boolean vg1panelnum = vg1;
+    public static boolean vg1panelborder = vg1;
+    public static boolean vg1tilenum = vg1;
+    public static boolean vg1tileborder = vg1;
     
     public static boolean mgpanelnum = false;
     public static boolean mgpanelborder = false;
