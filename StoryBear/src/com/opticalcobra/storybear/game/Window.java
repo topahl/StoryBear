@@ -79,7 +79,7 @@ public class Window extends JFrame {
 		}
 		
 		// initialize Game Character
-		this.hero = new Hero();
+		this.hero = new Hero('b');	//TODO: einlesen, welcher hero-Typ vom User ausgewählt wurde
 		this.baseLayer.add(this.hero);
 		
 		

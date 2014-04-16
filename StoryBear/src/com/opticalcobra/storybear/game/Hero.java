@@ -16,17 +16,17 @@ public class Hero extends JLabel{
 	private int jumpSpeed = 0;
 	private char doubleJumpInitiator = '0';
 	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
-
+	private Imagelib imageLib = Imagelib.getInstance();
+	private char type; 		//shows which kind of hero it is, eg. bear, ...
 	
 	/**
 	 * @author Miriam
 	 * @throws SQLException 
 	 * @throws ImageNotFoundException 
 	 */
-	public Hero() {	
-		Imagelib imageLib = Imagelib.getInstance();
+	public Hero(char type) {	
 		try {
-			this.setIcon(new ImageIcon(imageLib.loadHeroPic('n', 'b')));
+			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('n', type)));
 		} catch (ImageNotFoundException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -47,11 +47,33 @@ public class Hero extends JLabel{
 		int posX = this.getLocation().x;
 		double runConstant = Ressources.RUNCONSTANT / Ressources.SCALE;
 		
-		if(direction == 'l' && posX > 0)
+		if(direction == 'l' && posX > 0){
 			posX -= (int) runConstant;
+			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
+			/*try {
+				this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('l', this.type)));
+			} catch (ImageNotFoundException e) {
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}*/
+		}
 		//Hero darf nur sich nur zwischen 1. und 3. siebtel bewegen
-		else if(direction == 'r' && posX < (Ressources.WINDOW.width/7)*2)
+		else if(direction == 'r' && posX < (Ressources.WINDOW.width/7)*2){
 			posX += (int) runConstant;	
+			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
+			/*try {
+				this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('r', this.type)));
+			} catch (ImageNotFoundException e) {
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			} catch (SQLException e) {
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}*/
+		}
 		
 		this.setLocation(posX, this.getLocation().y);
 		
