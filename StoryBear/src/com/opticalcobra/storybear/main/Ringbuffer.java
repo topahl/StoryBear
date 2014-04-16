@@ -24,6 +24,19 @@ public class Ringbuffer<T> {
 		write = write.getNext();
 	}
 	
+	public T top(int pos){
+		Element current = read;
+		for(int i= 1; i<pos ;i++){
+			current = current.getNext();
+		}
+		return current.getValue();
+		
+	}
+	public T top(){
+		return top(1);
+	}
+	
+	
 	private class Element{
 		private Element next;
 		private T value;
