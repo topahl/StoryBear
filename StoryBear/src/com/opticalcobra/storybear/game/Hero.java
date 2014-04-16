@@ -1,7 +1,12 @@
 package com.opticalcobra.storybear.game;
 
+import java.sql.SQLException;
+
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
+import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
 
@@ -13,9 +18,20 @@ public class Hero extends JLabel{
 	
 	/**
 	 * @author Miriam
+	 * @throws SQLException 
+	 * @throws ImageNotFoundException 
 	 */
-	public Hero(){	
-		this.setText("Forrest");
+	public Hero() {	
+		Imagelib imageLib = Imagelib.getInstance();
+		try {
+			this.setIcon(new ImageIcon(imageLib.loadHeroPic('n', 'b')));
+		} catch (ImageNotFoundException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
 				Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT,
 				Ressources.CHARACTERWIDTH,Ressources.CHARACTERHEIGHT);
