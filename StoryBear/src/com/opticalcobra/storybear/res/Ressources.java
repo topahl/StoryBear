@@ -26,7 +26,7 @@ public class Ressources {
 	public static final int CHARACTERHEIGHT = 70;
 	public static final int CHARACTERWIDTH = 50;
 	public static final int CHARACTERSPAWNPOSITIONX = 0;
-	public static final int CHARACTERSPAWNPOSITIONY = 400;
+	//public static final int CHARACTERSPAWNPOSITIONY = 400;
 	
 	
 	//Dynamics of the Game

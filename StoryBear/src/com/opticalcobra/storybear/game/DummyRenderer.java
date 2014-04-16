@@ -26,10 +26,10 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private int elementPointer = 0;
 	public DummyRenderer(){		
 		
-		TextAnalyzer textAnalyzer = new TextAnalyzer();
 		Database db = new Database();
-		
 		storyInfo = new StoryInfo();
+		
+		//TextAnalyzer textAnalyzer = new TextAnalyzer();
 		//this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(3));
 		storyInfo = db.getStoryInfoFromDatabase(33);
 	}
@@ -46,7 +46,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	public void getNextViewPart(JLabel pane) {
 		ArrayList<ILevelAppearance> elements = this.storyInfo.getElements();
 		
-		
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
@@ -56,7 +55,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
 			if(DebugSettings.vg1panelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
-	
 			
 		}
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
@@ -77,10 +75,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
-				
-				
-				
-				
 				((Word)elements.get(elementPointer)).render(g);
 				elementPointer++;
 			}
@@ -89,7 +83,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		if(DebugSettings.vg1panelnum)
 			renderText(g,50, panelnum+"", 20, 40);
 
-		
 		
 		pane.setIcon(new ImageIcon(image));
 	}

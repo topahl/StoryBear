@@ -16,8 +16,6 @@ import org.hsqldb.types.Types;
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.editor.StoryInfo;
 
-
-
 /**
  * 
  * @author Tobias
@@ -151,6 +149,13 @@ public class Database {
 	}
 	
 
+	public int getLevelHeight(){
+		
+		return 1;
+	}
+	
+	
+	
 	private synchronized ResultSet query(String expression) throws SQLException {
 		requestnum++;
         Statement st = null;
