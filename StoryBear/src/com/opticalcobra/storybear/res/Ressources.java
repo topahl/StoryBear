@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import com.opticalcobra.storybear.game.Window;
+
 public class Ressources {
 	
 	public static final boolean DEBUG = false;
@@ -51,6 +53,7 @@ public class Ressources {
 			WINDOW = new Dimension((int)(FULLHD.width/x),(int)(FULLHD.height/x));
 		}
 		RASTERSIZE=(int) (RASTERSIZEORG/SCALE);
+		WINDOW.width = 16* RASTERSIZE;
 		
 	}
 	

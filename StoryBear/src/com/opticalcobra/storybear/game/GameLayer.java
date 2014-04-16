@@ -30,6 +30,10 @@ public class GameLayer extends JLayeredPane {
 			layer[2].setBounds(Ressources.WINDOW.width, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
 		}
 		
+		
+		/**
+		 * Performs a step on the current layer
+		 */
 		public void step(){
 			step--;
 			if(step < 0 ){

@@ -148,7 +148,7 @@ public class Window extends JFrame {
 				this.hero.run(this.controle.getRunDirection());
 			}
 		}
-		if(this.controle.getRunDirection() == 'r' && this.hero.getX() > (Ressources.WINDOW.width/7)*2){
+		if(this.controle.getRunDirection() == 'r' && this.hero.getX() >= (Ressources.WINDOW.width/7)*2){
 			layerStep();
 		}
 		
