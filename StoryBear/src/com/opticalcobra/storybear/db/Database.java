@@ -9,12 +9,14 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hsqldb.server.Server;
 import org.hsqldb.types.Types;
 
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.editor.StoryInfo;
+import com.opticalcobra.storybear.main.User;
 
 /**
  * 
@@ -193,6 +195,7 @@ public class Database {
 	  Database DB = new Database();
 	  try {
 		DB.query("SELECT * FROM category;");
+		DB.queryUserList();
 		DB.shutdown();
 	} catch (SQLException e) {
 		System.err.println("SQL Error");
@@ -338,8 +341,22 @@ public class Database {
 		rsFexione.close();
 		return typeId;
 	}
-
-
+	
+	/**
+	 * Returns list of all users
+	 * @return list of users
+	 * @throws SQLException
+	 */
+	public List<User> queryUserList() throws SQLException {
+		List<User> resultList = new ArrayList<User>();
+		
+		ResultSet rs = query("SELECT * FROM user;");
+		while(rs.next())
+			resultList.add(new User((Integer) rs.getObject("ID"), (String) rs.getObject("NAME")));
+		rs.close();
+		
+		return resultList;
+	}
 	
 	public void dump(ResultSet rs) throws SQLException {
 //        ResultSetMetaData meta   = rs.getMetaData(); // TODO print metadata

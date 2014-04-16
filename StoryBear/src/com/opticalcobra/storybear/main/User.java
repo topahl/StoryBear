@@ -14,6 +14,11 @@ public class User implements Serializable{
 	public User(String name){
 		this.name=name;
 	}
+	
+	public User(int id, String name){
+		this(name);
+		this.id=id;
+	}
 
 	/**
 	 * @return the name
