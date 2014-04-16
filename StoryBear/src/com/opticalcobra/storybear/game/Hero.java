@@ -21,8 +21,6 @@ public class Hero extends JLabel{
 	
 	/**
 	 * @author Miriam
-	 * @throws SQLException 
-	 * @throws ImageNotFoundException 
 	 */
 	public Hero(char type) {	
 		try {
@@ -46,12 +44,14 @@ public class Hero extends JLabel{
 	public void run(char direction){
 		int posX = this.getLocation().x;
 		double runConstant = Ressources.RUNCONSTANT / Ressources.SCALE;
+		ImageIcon image; 
 		
 		if(direction == 'l' && posX > 0){
 			posX -= (int) runConstant;
 			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
 			/*try {
-				this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('l', this.type)));
+				image = new ImageIcon(this.imageLib.loadHeroPic('l', this.type));
+				this.setIcon(image);
 			} catch (ImageNotFoundException e) {
 				System.err.println(e.getMessage());
 				e.printStackTrace();
@@ -65,7 +65,8 @@ public class Hero extends JLabel{
 			posX += (int) runConstant;	
 			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
 			/*try {
-				this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('r', this.type)));
+				image = new ImageIcon(this.imageLib.loadHeroPic('r', this.type));
+				this.setIcon(image);
 			} catch (ImageNotFoundException e) {
 				System.err.println(e.getMessage());
 				e.printStackTrace();
