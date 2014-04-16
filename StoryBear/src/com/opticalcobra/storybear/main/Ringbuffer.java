@@ -10,23 +10,16 @@ public class Ringbuffer<T> {
 			first.add();
 		}
 		read = first;
-		write = first;
-		
+		write = first;	
 	}
 	
 	public T read(){
-		
-		while(read == write)
-			Thread.yield();
 		T result = read.getValue();
 		read = read.getNext();
 		return result;
 	}
 	
-	public  void write(T value){
-		while(write.getNext() == read){
-			Thread.yield();
-		}
+	public void write(T value){
 		write.setValue(value);
 		write = write.getNext();
 	}
@@ -59,9 +52,6 @@ public class Ringbuffer<T> {
 			Element neu = new Element(null);
 			neu.setNext(this.getNext());
 			this.setNext(neu);
-			
 		}
-		
-
 	}
 }

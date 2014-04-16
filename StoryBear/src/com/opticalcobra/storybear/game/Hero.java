@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 
 import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
 import com.opticalcobra.storybear.res.Imagelib;
+import com.opticalcobra.storybear.main.Ringbuffer;
 import com.opticalcobra.storybear.res.Ressources;
 
 
@@ -14,6 +15,7 @@ public class Hero extends JLabel{
 
 	private int jumpSpeed = 0;
 	private char doubleJumpInitiator = '0';
+	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
 
 	
 	/**
@@ -52,6 +54,10 @@ public class Hero extends JLabel{
 			posX += (int) runConstant;	
 		
 		this.setLocation(posX, this.getLocation().y);
+		
+		if (getLocation().x % Ressources.RASTERSIZE == 0){
+			
+		}
 	}
 	
 	/**
@@ -114,7 +120,8 @@ public class Hero extends JLabel{
 		
 		this.setLocation(posX, posY);
 	}
-	
-	
-	
+
+	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
+		this.ringbuffer = ringbuffer;
+	}
 }

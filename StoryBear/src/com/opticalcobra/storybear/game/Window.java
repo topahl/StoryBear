@@ -47,39 +47,6 @@ public class Window extends JFrame {
 		
 		initComponents();
 		
-		// initialize Game Character
-		this.hero = new Hero();
-		this.baseLayer.add(this.hero);
-		
-		//TODO Remove Dummy code
-		//Dummy Code 
-		vg2=new GameLayer(renderer);
-		vg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
-		vg2.setLocation(0, 0);
-		baseLayer.add(vg2);
-		
-		mg=new GameLayer(rendererMG);
-		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
-		mg.setLocation(0, 0); //TODO: -100 entfernen
-		baseLayer.add(mg);
-		
-		bg=new GameLayer(rendererBG);
-		bg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
-		bg.setLocation(0, 0); //TODO: -100 entfernen
-		baseLayer.add(bg);
-		
-		clouds=new GameLayer(rendererCloud);
-		clouds.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
-		clouds.setLocation(0, 0); //TODO: -100 entfernen
-		baseLayer.add(clouds);
-		//Dummy Code end
-		
-		
-		
-		// initialize Controle 
-		this.controle = new Control();
-		this.addKeyListener(this.controle);
-		
 		this.setVisible(true);
 		this.timer.start();
 	}
@@ -110,8 +77,48 @@ public class Window extends JFrame {
 			Debugger.main(null);
 			Debugger.setTimer(timer);
 		}
+		
+		// initialize Game Character
+		this.hero = new Hero();
+		this.baseLayer.add(this.hero);
+		
+		
+		//TODO Remove Dummy code
+		//Dummy Code 
+		vg2=new GameLayer(renderer);
+		vg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		vg2.setLocation(0, 0);
+		baseLayer.add(vg2);
+		
+		mg=new GameLayer(rendererMG);
+		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		mg.setLocation(0, 0); //TODO: -100 entfernen
+		baseLayer.add(mg);
+		
+		bg=new GameLayer(rendererBG);
+		bg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		bg.setLocation(0, 0); //TODO: -100 entfernen
+		baseLayer.add(bg);
+		
+		clouds=new GameLayer(rendererCloud);
+		clouds.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		clouds.setLocation(0, 0); //TODO: -100 entfernen
+		baseLayer.add(clouds);
+		//Dummy Code end
+				
+		this.hero.setRingbuffer(renderer.getRingbuffer());
+		
+		// initialize Controle 
+		this.controle = new Control();
+		this.addKeyListener(this.controle);
 	}
 	
+	
+	/**
+	 * the different layers are moving in different speeds
+	 * 
+	 * @author Martika
+	 */
 	private void layerStep(){
 		vg2.step();
 		if(this.stepcounterLayer % 2 == 0)

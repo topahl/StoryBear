@@ -12,6 +12,7 @@ import com.opticalcobra.storybear.debug.DebugSettings;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.editor.TextAnalyzer;
 import com.opticalcobra.storybear.main.ILevelAppearance;
+import com.opticalcobra.storybear.main.Ringbuffer;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.StoryBearRandom;
@@ -20,10 +21,11 @@ import com.opticalcobra.storybear.res.StoryBearRandom;
 public class DummyRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
 	private StoryBearRandom rand = StoryBearRandom.getInstance();
-	private int lastTile = 0;
+	private int lastTileType = 0;
 	private int panelnum = 0;
 	private StoryInfo storyInfo;
 	private int elementPointer = 0;
+	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17); //TODO soll später 16 sein
 	public DummyRenderer(){		
 		
 		Database db = new Database();
@@ -35,10 +37,13 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	}
 	
 	private BufferedImage getNextMapElement(){
-		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_FOREGROUND);
+		Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 		int next = following[rand.nextInt(following.length)];
-		lastTile = next;
-		return il.loadLandscapeTile(next , Imagelib.QUERY_FOREGROUND);
+		lastTileType = next;
+		
+		ringbuffer.write(lastTileType);
+		
+		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND);
 	}
 
 	
@@ -52,7 +57,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
 			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE,0,null);
 			if(DebugSettings.vg1tilenum)
-				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTile+"", (i*Ressources.RASTERSIZE)+20,100);
+				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTileType+"", (i*Ressources.RASTERSIZE)+20,100);
 			if(DebugSettings.vg1panelborder)
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 			
@@ -85,5 +90,9 @@ public class DummyRenderer extends Renderer implements IRenderer{
 
 		
 		pane.setIcon(new ImageIcon(image));
+	}
+	
+	public Ringbuffer<Integer> getRingbuffer() {
+		return this.ringbuffer;
 	}
 }
