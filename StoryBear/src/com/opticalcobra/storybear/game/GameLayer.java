@@ -15,19 +15,18 @@ public class GameLayer extends JLayeredPane {
 		public GameLayer(IRenderer renderer){
 			super();
 			layer=new JLabel[3];
-			layer[0]=new JLabel();
-			layer[1]=new JLabel();
-			layer[2]=new JLabel();
-			this.add(layer[0]);
-			this.add(layer[1]);
-			this.add(layer[2]);
 			this.renderer=renderer;
-			renderer.getNextViewPart(layer[0]);
-			renderer.getNextViewPart(layer[1]);
-			renderer.getNextViewPart(layer[2]);
-			layer[0].setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
-			layer[1].setBounds(Ressources.WINDOW.width, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
-			layer[2].setBounds(Ressources.WINDOW.width, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
+			
+			for (int i = 0; i<3; i++){
+				layer[i]=new JLabel();
+				this.add(layer[i]);
+				renderer.getNextViewPart(layer[i]);
+				if (i==0){
+					layer[i].setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
+				} else {
+					layer[i].setBounds(Ressources.WINDOW.width, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
+				}
+			}
 		}
 		
 		
