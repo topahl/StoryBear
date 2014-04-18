@@ -7,7 +7,7 @@ public class Control implements KeyListener {
 	private char runDirection = 'n'; 	//n=not running, l=left, r=right
 	private char jumpDirection = 'n';	//n=not, u=jump up, d=duck down
 	private boolean doubleJump = false;	
-	public char jumpStatus = 'n';				//n=no, y=yes, m=maybe
+	public char jumpStatus = 'n';				//n=no, y=yes, m=maybe --> tracks Doublejump
 	
 	public Control(){
 		
@@ -69,20 +69,7 @@ public class Control implements KeyListener {
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
-		/*switch (e.getKeyCode()){
-		case KeyEvent.VK_RIGHT:
-			this.setRunDirection('r');
-			break;
-		case KeyEvent.VK_LEFT:
-			this.setRunDirection('l');
-			break;
-		case KeyEvent.VK_UP:
-			this.setJumpDirection('u');
-			break;	
-		case KeyEvent.VK_DOWN:
-			this.setJumpDirection('d');
-			break;
-		}*/
+
 	}
 
 	public char getRunDirection() {

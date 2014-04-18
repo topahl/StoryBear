@@ -95,7 +95,7 @@ public class Hero extends JLabel{
 	 * @author Miriam
 	 * this method decides which kind of jump is executed: a normal jump or a double jump
 	 */
-	public boolean letHeroJump(boolean doubleJump, char jumpDirectionX){
+	public boolean letHeroJump(boolean doubleJump){
 		
 		if(doubleJump && this.doubleJumpInitiator == '0'){
 			this.jumpSpeed = Ressources.SPEEDCONSTANT;
@@ -109,8 +109,7 @@ public class Hero extends JLabel{
 			return false;
 		}
 		else
-			return true;
-			
+			return true;		
 	}
 	
 	/**
