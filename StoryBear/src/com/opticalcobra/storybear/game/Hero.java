@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.main.Ringbuffer;
