@@ -36,14 +36,13 @@ public class Word extends Renderer implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g) {
 		g.setColor(Color.BLACK);
-		System.out.println(block + text);
 		renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height-30);
 	}
 
-	public void renderPreviousLostWord(Graphics2D g, int tile) {
+	public void renderPreviousLostWord(Graphics2D g, int startTile) {
 		g.setColor(Color.BLACK);
-		//System.out.println(text);
-		renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), text, (tile*Ressources.RASTERSIZE),Ressources.WINDOW.height-30);
+		System.out.println(text);
+		renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, (startTile*Ressources.RASTERSIZE),Ressources.WINDOW.height-30);
 	}
 
 
