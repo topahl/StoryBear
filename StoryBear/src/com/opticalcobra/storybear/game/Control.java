@@ -27,18 +27,10 @@ public class Control implements KeyListener {
 				Hero.getInstance().setRunDirection('l');
 				break;
 			case KeyEvent.VK_UP:
-				System.out.println("Up EVENT" + Hero.getInstance().getJumpStatus() + Hero.getInstance().getJumpDirection() );
-				if(Hero.getInstance().getJumpStatus() == 'm'){
-					Hero.getInstance().setJumpStatus('y');
-					Hero.getInstance().setInADoubleJump(true);
-				}
-				/*if(this.jumpDirection == 'u')
-					this.doubleJump = true;
-				else*/
-					Hero.getInstance().setJumpDirection('u');
+				System.out.println("Ich werde gefangen");
+				Hero.getInstance().startJump();
 				break;	
 			case KeyEvent.VK_DOWN:
-				Hero.getInstance().setJumpDirection('d');
 				break;
 		}
 	}
@@ -53,14 +45,9 @@ public class Control implements KeyListener {
 		case KeyEvent.VK_LEFT:
 			Hero.getInstance().setRunDirection('n');
 			break;
-			
 		case KeyEvent.VK_UP:
-			Hero.getInstance().setJumpDirection('n');
-			if(Hero.getInstance().getJumpStatus() == 'n')
-				Hero.getInstance().setJumpStatus('m');
 			break;	
 		case KeyEvent.VK_DOWN:
-			Hero.getInstance().setJumpDirection('n');
 			break;
 		}
 	}

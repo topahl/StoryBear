@@ -27,13 +27,9 @@ public class Hero extends JLabel{
 	private char type; 		//shows which kind of hero it is, eg. bear, ...
 	
 	//Jump Attributes
-	private boolean inAJump = false;
 	private boolean inADoubleJump = false;
-	private double jumpSpeed = Ressources.SPEEDCONSTANT;
-	private char doubleJumpInitiator = '0';
-	private char jumpDirection = 'n';
-	private char jumpStatus = 'n';
-	
+	private double jumpSpeed = 0;
+
 	//Run attributes
 	private char runDirection = 'n';
 	private int ringbufferCounter = 0;
@@ -118,7 +114,7 @@ public class Hero extends JLabel{
 			if (runDirection == 'l' && ringbufferCounter>0){
 				ringbufferCounter--;
 			}
-			if (!inAJump){
+			if (!isInAJump()){
 				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
 			} 
 		}
@@ -143,75 +139,88 @@ public class Hero extends JLabel{
 			if (runDirection == 'l'){
 				ringbufferCounter--;
 			}
-			if (!inAJump){
+			if (!isInAJump()){
 				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
 			}
 		}
 	}
 	
 	
-	/**
-	 * @author Miriam
-	 * this method decides which kind of jump is executed: a normal jump or a double jump
-	 */
-	public void letHeroJump(){
-		
-		if(inADoubleJump && doubleJumpInitiator == '0'){
+	public void startJump(){
+		if (!inADoubleJump){
+			System.out.print(jumpSpeed);
+			if (isInAJump()){
+				inADoubleJump = true;
+				System.out.print("Doublejump true");
+			}
 			jumpSpeed = Ressources.SPEEDCONSTANT;
-			doubleJumpInitiator = '1';
 		}
 		
-		this.jump();
-		
-//		if(this.getLocation().y >= Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT){
-		if(getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
-			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
-			doubleJumpInitiator = '0';
-			jumpSpeed = Ressources.SPEEDCONSTANT;
-			inAJump =  false;
-			jumpDirection = 'n';
-		}
-		else	
-			inAJump =  true;
 	}
+	
+	public boolean isInAJump(){
+		
+		if(jumpSpeed > 0){
+			//aufsteigendes Springen
+			return true;
+		}
+		if (getLocation().y == db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
+			return false;
+		}
+		else {
+			//Fallen
+			return true;
+		}
+	}
+	
+	
+	
+	public void heroStep(){
+		
+		if (isInAJump()){
+			jump();
+		}
+		if(runDirection != 'n'){
+			run();
+		}
+	}
+	
+
+
 	
 	/**
 	 * @author Miriam
 	 * execution of the jump
 	 */
 	private void jump(){
-		int posX = this.getLocation().x;
-		int posY = this.getLocation().y;
-		double jumpConstantY = Ressources.JUMPCONSTANTY;
-		this.jumpSpeed -= jumpConstantY;
-		double newPositionY = posY - this.jumpSpeed;
+		int posX = getLocation().x;
+		int posY = getLocation().y;
 		
-		posY = (int) (newPositionY);
+		jumpSpeed = jumpSpeed - Ressources.JUMPCONSTANTY;
+		posY = (int) (posY - jumpSpeed);
 		
 		//Rangecheck --> don't run out of window
 		if (posY < 0)
 			posY = 0;
-		else if (posY > (Ressources.WINDOW.height - this.getSize().height)){
-			posY = Ressources.WINDOW.height - this.getSize().height;
-			this.jumpSpeed = Ressources.SPEEDCONSTANT;
+		else if (posY > (Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT)){
+			posY = Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT;
+			jumpSpeed = 0;
+			inADoubleJump = false;
 		}
 		
-		this.setLocation(posX, posY);
+		setLocation(posX, posY);
+		
+		if(getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
+			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
+			jumpSpeed = 0;
+			inADoubleJump = false;
+		}
 	}
 
 	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
 		this.ringbuffer = ringbuffer;
 	}
 
-
-	public boolean isInAJump() {
-		return inAJump;
-	}
-
-
-	public void setInAJump(boolean inAJump) {
-		this.inAJump = inAJump;
-	}
 
 	public char getRunDirection() {
 		return runDirection;
@@ -220,29 +229,4 @@ public class Hero extends JLabel{
 	public void setRunDirection(char runDirection) {
 		this.runDirection = runDirection;
 	}
-
-	public boolean isInADoubleJump() {
-		return inADoubleJump;
-	}
-
-	public void setInADoubleJump(boolean inADoubleJump) {
-		this.inADoubleJump = inADoubleJump;
-	}
-
-	public char getJumpDirection() {
-		return jumpDirection;
-	}
-
-	public void setJumpDirection(char jumpDirection) {
-		this.jumpDirection = jumpDirection;
-	}
-
-	public char getJumpStatus() {
-		return jumpStatus;
-	}
-
-	public void setJumpStatus(char jumpStatus) {
-		this.jumpStatus = jumpStatus;
-	}
-
 }

@@ -146,16 +146,7 @@ public class Window extends JFrame {
 			
 		//Navigation of the hero via the right, left, up and down keys
 		if(stepcounter % 4 == 0){
-			if((Hero.getInstance().getJumpDirection() == 'u') || Hero.getInstance().isInAJump()){
-				Hero.getInstance().letHeroJump();
-				Hero.getInstance().setInADoubleJump(false);
-				if(!Hero.getInstance().isInAJump()){
-					Hero.getInstance().setJumpStatus('n');
-				}				
-			}
-			if(Hero.getInstance().getRunDirection() != 'n'){
-				Hero.getInstance().run();
-			}
+			Hero.getInstance().heroStep();
 		}
 		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() >= Ressources.RASTERSIZE*5){
 			layerStep();
