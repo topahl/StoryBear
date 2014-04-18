@@ -33,7 +33,7 @@ public class Ressources {
 	
 	//Dynamics of the Game
 	//TODO: Dummywerte überarbeiten
-	public static final int JUMPCONSTANTY = 4; //in- and decreases the speed of the jump
+	public static final double JUMPCONSTANTY = 1.5; //in- and decreases the speed of the jump
 	public static final int SPEEDCONSTANT = 30;	//start speed of a jump
 	public static final int RUNCONSTANT = 7;
 	
