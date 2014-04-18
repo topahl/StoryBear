@@ -156,14 +156,16 @@ public class Database {
 	 * @author Martika
 	 * @return
 	 */
-	public int getLevelHeight(int tileType){
+	public TileResult getTileInfo(int tileType){
 		ResultSet rs;
 		int height = 0;
+		boolean walkable = false;
 
 		try {
-			rs = query("SELECT DISTINCT height_level from foreground_type where id = '" + tileType + "';");
+			rs = query("SELECT height_level walkable from foreground_type where id = '" + tileType + "';");
 			rs.next();
-			height = (int) rs.getObject(1);
+			height = (int) rs.getObject("HEIGHT_LEVEL");
+			walkable = rs.getBoolean("WALKABLE");
 			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -195,7 +197,7 @@ public class Database {
 			height = DBConstants.LEVELHEIGHTPLUSTWO;
 			break;
 		}
-		return height;
+		return new TileResult(tileType, height, walkable);
 	}
 	
 	

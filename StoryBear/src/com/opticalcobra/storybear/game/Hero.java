@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.opticalcobra.storybear.db.Database;
+import com.opticalcobra.storybear.db.TileResult;
 import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.main.Ringbuffer;
@@ -20,7 +21,7 @@ public class Hero extends JLabel{
 
 	private static Hero hero = null;
 	
-	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
+	private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*17);
 	private Imagelib imageLib = Imagelib.getInstance();
 	private Database db = new Database();
 	
@@ -56,7 +57,7 @@ public class Hero extends JLabel{
 			e.printStackTrace();
 		}
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
-				db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT,
+				ringbuffer.read().getTileHeight() - Ressources.CHARACTERHEIGHT,
 				Ressources.CHARACTERWIDTH,
 				Ressources.CHARACTERHEIGHT);
 	}
@@ -116,8 +117,8 @@ public class Hero extends JLabel{
 		setLocation(posX, posY);
 		
 		//Reaching the current Levelheight
-		if(getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
-			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
+		if(getLocation().y >= ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT){
+			setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 			jumpSpeed = 0;
 			inADoubleJump = false;
 		}
@@ -179,7 +180,7 @@ public class Hero extends JLabel{
 				ringbufferCounter--;
 			}
 			if (!isInAJump()){
-				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
+				setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 			} 
 		}
 	}
@@ -205,7 +206,7 @@ public class Hero extends JLabel{
 				ringbufferCounter--;
 			}
 			if (!isInAJump()){
-				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
+				setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 			}
 		}
 	}
@@ -223,7 +224,7 @@ public class Hero extends JLabel{
 			//jump up
 			return true;
 		}
-		if (getLocation().y == db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
+		if (getLocation().y == ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT){
 			//current hero position is current level height
 			return false;
 		}
@@ -233,7 +234,7 @@ public class Hero extends JLabel{
 		}
 	}
 	
-	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
+	public void setRingbuffer(Ringbuffer<TileResult> ringbuffer) {
 		this.ringbuffer = ringbuffer;
 	}
 

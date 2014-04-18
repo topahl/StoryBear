@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.opticalcobra.storybear.db.DBConstants;
 import com.opticalcobra.storybear.db.Database;
+import com.opticalcobra.storybear.db.TileResult;
 import com.opticalcobra.storybear.debug.DebugSettings;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.editor.TextAnalyzer;
@@ -25,13 +27,12 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private int panelnum = 0;
 	private StoryInfo storyInfo;
 	private int elementPointer = 0;
-	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17); //TODO soll später 16 sein
-	
-	
+	private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*16); 
+	private Database db;
 	
 	public DummyRenderer(){		
 		
-		Database db = new Database();
+		db = new Database();
 		storyInfo = new StoryInfo();
 		//ringbuffer.write(lastTileType);
 		
@@ -48,7 +49,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		lastTileType = next;
 		
 		
-		ringbuffer.write(lastTileType);
+		ringbuffer.write(db.getTileInfo(lastTileType));
 		
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND);
 	}
@@ -93,7 +94,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		pane.setIcon(new ImageIcon(image));
 	}
 	
-	public Ringbuffer<Integer> getRingbuffer() {
+	public Ringbuffer<TileResult> getRingbuffer() {
 		return this.ringbuffer;
 	}
 }
