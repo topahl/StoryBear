@@ -332,18 +332,14 @@ public class Database {
 	 * @return int 0,1,2 or -1 as Constants 
 	 * @throws SQLException
 	 */
-	public int queryWordType(String word) throws SQLException{
+	public WordResult queryWordType(String word) throws SQLException{
+		WordResult result = null;
 		int typeId = DBConstants.WORD_OBJECT_TYPE_NO_IMAGE;
 		ResultSet rsFexione;
 		ResultSet rsCollectable;
 		ResultSet rsCharacter;
 		ResultSet rsMiddleground;
 		String flexinom = "";
-		
-		
-		String q1 = "";
-		String q2 = "";
-		String q3 = "";
 		
 		rsFexione = query("SELECT DISTINCT t2.word FROM term t "
 				+ "LEFT JOIN synset s ON t.synset_id =s.id "
@@ -360,23 +356,25 @@ public class Database {
 			flexinom= (String) rsFexione.getObject(1);
 			flexinom.replace("'", "");
 			
-			rsCollectable = query("SELECT * FROM Collectable_Object WHERE word = '"+flexinom+"';");		
-			rsCharacter = query("SELECT * FROM Character_Object WHERE word = '"+flexinom+"';");
-			rsMiddleground= query("SELECT * FROM Middleground_Object WHERE word = '"+flexinom+"';");
+			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");		
+			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+flexinom+"';");
+			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
 			if (rsCharacter.next()){
-				typeId = DBConstants.WORD_OBJECT_TYPE_CHARACTER;
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER, rsMiddleground.getInt("IMAGE_ID"));
 			}
 			else if (rsCollectable.next()){
-				typeId = DBConstants.WORD_OBJECT_TYPE_COLLECTABLE;
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsMiddleground.getInt("IMAGE_ID"));
 			}
 			else if (rsMiddleground.next()){
-				typeId = DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND;
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"));
 			}
 		}
-
+		if (result==null) {
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1);
+		}
 		rsFexione.close();
-		return typeId;
+		return result;
 	}
 	
 	/**

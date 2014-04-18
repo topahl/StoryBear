@@ -14,6 +14,7 @@ import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.db.DBConstants;
 import com.opticalcobra.storybear.db.Database;
+import com.opticalcobra.storybear.db.WordResult;
 import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
 import com.opticalcobra.storybear.game.Landscape;
@@ -59,9 +60,10 @@ public class TextAnalyzer {
 			
 			//TODO: überarbeiten, aktuell nur Dummywerte
 			try {
-				switch (db.queryWordType(word)){
+				WordResult wr =db.queryWordType(word); 
+				switch (wr.getType()){
 				case DBConstants.WORD_OBJECT_TYPE_CHARACTER:
-					elements.add(new Character(blockPosition));
+					elements.add(new Character(blockPosition,wr.getImage_id()));
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_COLLECTABLE:
 					elements.add(new Collectable(blockPosition));
@@ -72,7 +74,6 @@ public class TextAnalyzer {
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 				System.out.println(word);
 			}
 			
@@ -83,7 +84,7 @@ public class TextAnalyzer {
 		
 		storyInfo.setNumberOfBlocks(blockPosition);
 		storyInfo.setElements(elements);
-		//db.insertStoryInfoToDatabase(storyInfo);
+		db.insertStoryInfoToDatabase(storyInfo);
 		return storyInfo;
 	}
 	
