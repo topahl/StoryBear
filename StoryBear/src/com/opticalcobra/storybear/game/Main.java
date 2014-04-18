@@ -22,8 +22,8 @@ public class Main {
 //		currentStory.setChangeDate(new Date());
 //		currentStory.setVersion(1);
 //		currentStory.setText("diiiiiiese Geschiiiiiiiiiiiiiiiiiiiichte hat meeeeeeeeeeeegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa lange wööööööööööörteeeeeeeerrrrrrrrrr"
-//				+ "um auch mal deeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen Überlaaaaaaaaaaaaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuf von verscheidenen Laaaaaaaaaaaaaaaayern (wie Tooooooooooooooooooooobi"
-//				+ "sagen wüüüüüüüüüüüüüüüüüüüüüürde \"Lääääääääääääääääääääääääääääääyern\" zu teeeeeeeeeeeeeeeeeeeeeeeeeeesten :)");
+//				+ " um auch mal deeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen Überlaaaaaaaaaaaaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuf von verscheidenen Laaaaaaaaaaaaaaaayern (wie Tooooooooooooooooooooobi"
+//				+ " sagen wüüüüüüüüüüüüüüüüüüüüüürde \"Lääääääääääääääääääääääääääääääyern\" zu teeeeeeeeeeeeeeeeeeeeeeeeeeesten :)");
 //		
 //		db.insertStoryToDatabase(currentStory);
 		//System.out.print(db.queryGetStoryFromDatabaye(3));

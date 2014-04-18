@@ -15,9 +15,12 @@ public class Hero extends JLabel{
 
 	private double jumpSpeed = Ressources.SPEEDCONSTANT;
 	private char doubleJumpInitiator = '0';
+	private boolean inAJump = false;
+//	private boolean inADoubleJump = false;
 	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
 	private Imagelib imageLib = Imagelib.getInstance();
 	private char type; 		//shows which kind of hero it is, eg. bear, ...
+	private Database db = new Database();
 	
 	/**
 	 * @author Miriam
@@ -78,15 +81,15 @@ public class Hero extends JLabel{
 		
 		this.setLocation(posX, this.getLocation().y);
 		
-		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5){
-			setLocation(getLocation().x, getLocation().y-5);
+		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5 ){
+			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - getHeight());
 		}
 	}
 	
 	
 	public void runFreazing(int currentCounterStep){
 		if(currentCounterStep % Ressources.RASTERSIZE == 0){
-			setLocation(getLocation().x, getLocation().y-5);
+			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - getHeight());
 		}
 	}
 	
@@ -95,7 +98,7 @@ public class Hero extends JLabel{
 	 * @author Miriam
 	 * this method decides which kind of jump is executed: a normal jump or a double jump
 	 */
-	public boolean letHeroJump(boolean doubleJump){
+	public void letHeroJump(boolean doubleJump){
 		
 		if(doubleJump && this.doubleJumpInitiator == '0'){
 			this.jumpSpeed = Ressources.SPEEDCONSTANT;
@@ -106,10 +109,10 @@ public class Hero extends JLabel{
 		
 		if(this.getLocation().y >= Ressources.WINDOW.height - this.getSize().height){
 			this.doubleJumpInitiator = '0';
-			return false;
+			inAJump =  false;
 		}
-		else
-			return true;		
+		else	
+			inAJump =  true;
 	}
 	
 	/**
@@ -141,4 +144,24 @@ public class Hero extends JLabel{
 	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
 		this.ringbuffer = ringbuffer;
 	}
+
+
+	public boolean isInAJump() {
+		return inAJump;
+	}
+
+
+	public void setInAJump(boolean inAJump) {
+		this.inAJump = inAJump;
+	}
+
+
+//	public boolean isInADoubleJump() {
+//		return inADoubleJump;
+//	}
+//
+//
+//	public void setInADoubleJump(boolean inADoubleJump) {
+//		this.inADoubleJump = inADoubleJump;
+//	}
 }

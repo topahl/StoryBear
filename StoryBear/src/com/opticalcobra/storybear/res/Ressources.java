@@ -37,7 +37,6 @@ public class Ressources {
 	public static final int RUNCONSTANT;
 	
 	
-	
 	static {
 		
 		SCREEN=Toolkit.getDefaultToolkit().getScreenSize();

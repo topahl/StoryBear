@@ -17,6 +17,7 @@ import org.hsqldb.types.Types;
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.User;
+import com.opticalcobra.storybear.res.Ressources;
 
 /**
  * 
@@ -155,9 +156,44 @@ public class Database {
 	 * @author Martika
 	 * @return
 	 */
-	public int getLevelHeight(){
-		
-		return 1;
+	public int getLevelHeight(int tileType){
+		ResultSet rs;
+		int height = 0;
+
+		try {
+			rs = query("SELECT DISTINCT height_level from foreground_type where id = '" + tileType + "';");
+			rs.next();
+			height = (int) rs.getObject(1);
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		switch (height){
+		case -3:
+			height = DBConstants.LEVELHEIGHTMINUSTHREE;
+			break;
+		case -2:
+			height = DBConstants.LEVELHEIGHTMINUSTWO;
+			break;
+		case -1:
+			height = DBConstants.LEVELHEIGHTMINUSONE;
+			break;
+		case 0:
+			height = DBConstants.LEVELHEIGHTZERO;
+			break;
+		case 1:
+			height = DBConstants.LEVELHEIGHTPLUSONE;
+			break;
+		case 2:
+			height = DBConstants.LEVELHEIGHTPLUSTWO;
+			break;
+		case 3:
+			height = DBConstants.LEVELHEIGHTPLUSTHREE;
+			break;
+		}
+		System.out.println(height);
+		return height;
 	}
 	
 	

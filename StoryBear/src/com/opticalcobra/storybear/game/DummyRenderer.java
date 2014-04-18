@@ -26,10 +26,14 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private StoryInfo storyInfo;
 	private int elementPointer = 0;
 	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17); //TODO soll später 16 sein
+	
+	
+	
 	public DummyRenderer(){		
 		
 		Database db = new Database();
 		storyInfo = new StoryInfo();
+		ringbuffer.write(lastTileType);
 		
 		TextAnalyzer textAnalyzer = new TextAnalyzer();
 		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(4));
@@ -67,7 +71,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
 			
 				if (storyInfo.getElements().get(elementPointer) instanceof Word){
-					System.out.println("jetzt brauchen wir einen Übertrag ins nächste Panel" );
 					((Word)elements.get(elementPointer-1)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer-1).getBlock()%16)))*-1);
 				}	
 			}
