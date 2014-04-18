@@ -26,7 +26,9 @@ public class Imagelib {
 	 * 		map-	All map elements
 	 * 		img-	Internal graphics (eg cluster graphics)
 	 * 		hero-	Image of a hero
+	 * 		cha-	Character Object
 	 */
+	
 	private HashMap<String,BufferedImage> images;   //Hashmap für alle Bilder
 	private Database db; //Datenbankverbindung
 	private StoryBearRandom rand = StoryBearRandom.getInstance(); //Zufall mit seed
@@ -111,7 +113,7 @@ public class Imagelib {
 	 */
 	private BufferedImage loadRessourcesImage(String graphicName) throws ImageNotFoundException{
 		BufferedImage result;
-		//chech whether image is already cached
+		//Check whether image is already cached
 		result = images.get("img-"+graphicName);
 		if(result != null){
 			return result;
@@ -130,7 +132,31 @@ public class Imagelib {
 		}
 	}
 	
-	
+	public BufferedImage loadCharacterObjectPic(String word){
+		BufferedImage result;
+		BufferedImage full;
+		//Check whether image is already cached
+		result = images.get("cha-"+word);
+		if(result != null){
+			return result;
+		}
+		//Request must be handled via database request
+		String sql = "SELECT IMAGEID FROM CHARACTER_OBJECT WHERE WORD = '" + word +";";
+		ImageResult image;
+		try {
+			image = db.queryImagedata(db.queryNumberResultOnly(sql)[0]);
+			full=loadRessourcesImage(image.getUrl());
+			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+			images.put("cha-"+word, result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//cut images to fit
+		return result;
+		
+	}
 	/**
 	 * Singleton implementation
 	 * @return Instance of {@link Imagelib}
