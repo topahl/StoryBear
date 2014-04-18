@@ -82,14 +82,14 @@ public class Hero extends JLabel{
 		
 		this.setLocation(posX, this.getLocation().y);
 		
-		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5 ){
+		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5 && !inAJump){
 			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - getHeight());
 		}
 	}
 	
 	
 	public void runFreazing(int currentCounterStep){
-		if(currentCounterStep % Ressources.RASTERSIZE == 0){
+		if(currentCounterStep % Ressources.RASTERSIZE == 0  && !inAJump){
 			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - getHeight());
 		}
 	}
