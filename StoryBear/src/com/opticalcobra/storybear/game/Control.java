@@ -27,7 +27,6 @@ public class Control implements KeyListener {
 				Hero.getInstance().setRunDirection('l');
 				break;
 			case KeyEvent.VK_UP:
-				System.out.println("Ich werde gefangen");
 				Hero.getInstance().startJump();
 				break;	
 			case KeyEvent.VK_DOWN:

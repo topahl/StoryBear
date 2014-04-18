@@ -61,6 +61,70 @@ public class Hero extends JLabel{
 				Ressources.CHARACTERHEIGHT);
 	}
 	
+	
+	/**
+	 * let hero do, whatever he has to do
+	 * @author Martika & Tobias
+	 */
+	public void heroStep(){
+		
+		if (isInAJump()){
+			jump();
+		}
+		if(runDirection != 'n'){
+			run();
+		}
+	}
+	
+	
+
+	/**
+	 * starts the jump of hero by pressing keys
+	 * @author Martika & Tobias
+	 */
+	public void startJump(){
+		if (!inADoubleJump){
+			if (isInAJump()){
+				inADoubleJump = true;
+			}
+			jumpSpeed = Ressources.SPEEDCONSTANT;
+		}
+	}
+	
+	
+	
+	/**
+	 * @author Miriam
+	 * execution of the jump
+	 */
+	private void jump(){
+		int posX = getLocation().x;
+		int posY = getLocation().y;
+		
+		jumpSpeed = jumpSpeed - Ressources.JUMPCONSTANTY;
+		posY = (int) (posY - jumpSpeed);
+		
+		//Rangecheck --> don't run out of window
+		if (posY < 0)
+			posY = 0;
+		else if (posY > (Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT)){
+			posY = Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT;
+			jumpSpeed = 0;
+			inADoubleJump = false;
+		}
+		
+		setLocation(posX, posY);
+		
+		//Reaching the current Levelheight
+		if(getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
+			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
+			jumpSpeed = 0;
+			inADoubleJump = false;
+		}
+	}
+	
+	
+	
 	/**
 	 * @author Miriam
 	 */
@@ -120,6 +184,7 @@ public class Hero extends JLabel{
 		}
 	}
 	
+	
 	/**
 	 * it looks like hero is running
 	 * @author Martika
@@ -146,81 +211,31 @@ public class Hero extends JLabel{
 	}
 	
 	
-	public void startJump(){
-		if (!inADoubleJump){
-			System.out.print(jumpSpeed);
-			if (isInAJump()){
-				inADoubleJump = true;
-				System.out.print("Doublejump true");
-			}
-			jumpSpeed = Ressources.SPEEDCONSTANT;
-		}
-		
-	}
-	
+
+	/**
+	 * is hero in a jump or not
+	 * @author Martika & Tobias
+	 * @return
+	 */
 	public boolean isInAJump(){
 		
 		if(jumpSpeed > 0){
-			//aufsteigendes Springen
+			//jump up
 			return true;
 		}
 		if (getLocation().y == db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
+			//current hero position is current level height
 			return false;
 		}
 		else {
-			//Fallen
+			//falling down
 			return true;
 		}
 	}
 	
-	
-	
-	public void heroStep(){
-		
-		if (isInAJump()){
-			jump();
-		}
-		if(runDirection != 'n'){
-			run();
-		}
-	}
-	
-
-
-	
-	/**
-	 * @author Miriam
-	 * execution of the jump
-	 */
-	private void jump(){
-		int posX = getLocation().x;
-		int posY = getLocation().y;
-		
-		jumpSpeed = jumpSpeed - Ressources.JUMPCONSTANTY;
-		posY = (int) (posY - jumpSpeed);
-		
-		//Rangecheck --> don't run out of window
-		if (posY < 0)
-			posY = 0;
-		else if (posY > (Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT)){
-			posY = Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT;
-			jumpSpeed = 0;
-			inADoubleJump = false;
-		}
-		
-		setLocation(posX, posY);
-		
-		if(getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
-			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
-			jumpSpeed = 0;
-			inADoubleJump = false;
-		}
-	}
-
 	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
 		this.ringbuffer = ringbuffer;
 	}
-
 
 	public char getRunDirection() {
 		return runDirection;
