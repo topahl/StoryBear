@@ -4,10 +4,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Control implements KeyListener {
-	private char runDirection = 'n'; 	//n=not running, l=left, r=right
-	private char jumpDirection = 'n';	//n=not, u=jump up, d=duck down
-	private boolean doubleJump = false;	
-	public char jumpStatus = 'n';				//n=no, y=yes, m=maybe --> tracks Doublejump
+//	private char runDirection = 'n'; 	//n=not running, l=left, r=right
+//	private char jumpDirection = 'n';	//n=not, u=jump up, d=duck down
+//	private boolean doubleJump = false;	
+//	public char jumpStatus = 'n';				//n=no, y=yes, m=maybe --> tracks Doublejump
+	
 	
 	public Control(){
 		
@@ -20,23 +21,24 @@ public class Control implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()){
 			case KeyEvent.VK_RIGHT:
-				this.setRunDirection('r');
+				Hero.getInstance().setRunDirection('r');
 				break;
 			case KeyEvent.VK_LEFT:
-				this.setRunDirection('l');
+				Hero.getInstance().setRunDirection('l');
 				break;
 			case KeyEvent.VK_UP:
-				if(this.jumpStatus == 'm'){
-					this.jumpStatus = 'y';
-					this.doubleJump = true;
+				System.out.println("Up EVENT" + Hero.getInstance().getJumpStatus() + Hero.getInstance().getJumpDirection() );
+				if(Hero.getInstance().getJumpStatus() == 'm'){
+					Hero.getInstance().setJumpStatus('y');
+					Hero.getInstance().setInADoubleJump(true);
 				}
 				/*if(this.jumpDirection == 'u')
 					this.doubleJump = true;
 				else*/
-					this.setJumpDirection('u');
+					Hero.getInstance().setJumpDirection('u');
 				break;	
 			case KeyEvent.VK_DOWN:
-				this.setJumpDirection('d');
+				Hero.getInstance().setJumpDirection('d');
 				break;
 		}
 	}
@@ -48,18 +50,17 @@ public class Control implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()){
 		case KeyEvent.VK_RIGHT:
-			this.setRunDirection('n');
-			break;
 		case KeyEvent.VK_LEFT:
-			this.setRunDirection('n');
+			Hero.getInstance().setRunDirection('n');
 			break;
+			
 		case KeyEvent.VK_UP:
-			this.setJumpDirection('n');
-			if(this.jumpStatus == 'n')
-				this.jumpStatus = 'm';
+			Hero.getInstance().setJumpDirection('n');
+			if(Hero.getInstance().getJumpStatus() == 'n')
+				Hero.getInstance().setJumpStatus('m');
 			break;	
 		case KeyEvent.VK_DOWN:
-			this.setJumpDirection('n');
+			Hero.getInstance().setJumpDirection('n');
 			break;
 		}
 	}
@@ -72,28 +73,28 @@ public class Control implements KeyListener {
 
 	}
 
-	public char getRunDirection() {
-		return runDirection;
-	}
-
-	public void setRunDirection(char runDirection) {
-		this.runDirection = runDirection;
-	}
-
-	public char getJumpDirection() {
-		return jumpDirection;
-	}
-
-	public void setJumpDirection(char jumpDirection) {
-		this.jumpDirection = jumpDirection;
-	}
-	
-	public boolean getDoubleJump() {
-		return doubleJump;
-	}
-
-	public void setDoubleJump(boolean doubleJump) {
-		this.doubleJump = doubleJump;
-	}
+//	public char getRunDirection() {
+//		return runDirection;
+//	}
+//
+//	public void setRunDirection(char runDirection) {
+//		this.runDirection = runDirection;
+//	}
+//
+//	public char getJumpDirection() {
+//		return jumpDirection;
+//	}
+//
+//	public void setJumpDirection(char jumpDirection) {
+//		this.jumpDirection = jumpDirection;
+//	}
+//	
+//	public boolean getDoubleJump() {
+//		return doubleJump;
+//	}
+//
+//	public void setDoubleJump(boolean doubleJump) {
+//		this.doubleJump = doubleJump;
+//	}
 
 }

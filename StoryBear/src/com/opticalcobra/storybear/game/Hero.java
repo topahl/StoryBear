@@ -11,23 +11,45 @@ import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.main.Ringbuffer;
 import com.opticalcobra.storybear.res.Ressources;
 
-
+/**
+ * 
+ * SINGLETON
+ *
+ */
 public class Hero extends JLabel{
 
-	private double jumpSpeed = Ressources.SPEEDCONSTANT;
-	private char doubleJumpInitiator = '0';
-	private boolean inAJump = false;
-//	private boolean inADoubleJump = false;
+	private static Hero hero = null;
+	
 	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
 	private Imagelib imageLib = Imagelib.getInstance();
-	private char type; 		//shows which kind of hero it is, eg. bear, ...
 	private Database db = new Database();
+	
+	private char type; 		//shows which kind of hero it is, eg. bear, ...
+	
+	//Jump Attributes
+	private boolean inAJump = false;
+	private boolean inADoubleJump = false;
+	private double jumpSpeed = Ressources.SPEEDCONSTANT;
+	private char doubleJumpInitiator = '0';
+	private char jumpDirection = 'n';
+	private char jumpStatus = 'n';
+	
+	//Run attributes
+	private char runDirection = 'n';
 	private int ringbufferCounter = 0;
 	
-	/**
-	 * @author Miriam
-	 */
-	public Hero(char type) {	
+	
+	private Hero(){
+	}
+
+	public static Hero getInstance(){
+		if (hero == null){
+			hero = new Hero();
+		}
+		return hero;
+	}
+	
+	public void initHero(char type){
 		try {
 			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('n', type)));
 		} catch (ImageNotFoundException e) {
@@ -38,20 +60,20 @@ public class Hero extends JLabel{
 			e.printStackTrace();
 		}
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
-				Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT,
-				Ressources.CHARACTERWIDTH,Ressources.CHARACTERHEIGHT);
+				db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT,
+				Ressources.CHARACTERWIDTH,
+				Ressources.CHARACTERHEIGHT);
 	}
-	
 	
 	/**
 	 * @author Miriam
 	 */
-	public void run(char direction){
+	public void run(){
 		int posX = this.getLocation().x;
 		double runConstant = Ressources.RUNCONSTANT;
 		ImageIcon image; 
 		
-		if(direction == 'l' && posX > 0){
+		if(runDirection == 'l' && posX > 0){
 			posX -= (int) runConstant;
 			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
 			/*try {
@@ -66,7 +88,7 @@ public class Hero extends JLabel{
 			}*/
 		}
 		//Hero darf nur sich nur zwischen 1. und 3. siebtel bewegen
-		else if(direction == 'r' && posX < Ressources.RASTERSIZE*5){
+		else if(runDirection == 'r' && posX < Ressources.RASTERSIZE*5){
 			posX += (int) runConstant;	
 			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
 			/*try {
@@ -85,7 +107,7 @@ public class Hero extends JLabel{
 		
 		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && 
 				getLocation().x < Ressources.RASTERSIZE*5 && getLocation().x != 0){
-			if (direction == 'r'){
+			if (runDirection == 'r'){
 				if (ringbufferCounter>5){
 					ringbuffer.read();
 				}
@@ -93,7 +115,7 @@ public class Hero extends JLabel{
 					ringbufferCounter++;
 				}
 			}
-			if (direction == 'l' && ringbufferCounter>0){
+			if (runDirection == 'l' && ringbufferCounter>0){
 				ringbufferCounter--;
 			}
 			if (!inAJump){
@@ -108,18 +130,17 @@ public class Hero extends JLabel{
 	 * @param currentCounterStep
 	 * @param direction 
 	 */
-	public void runFreazing(int currentCounterStep, char direction){
+	public void runFreazing(int currentCounterStep){
 		if(currentCounterStep % Ressources.RASTERSIZE == 0){
-			if (direction == 'r'){
+			if (runDirection == 'r'){
 				if (ringbufferCounter>5){
 					ringbuffer.read();
 				} 
 				else{
 					ringbufferCounter++;
 				}
-				
 			}
-			if (direction == 'l'){
+			if (runDirection == 'l'){
 				ringbufferCounter--;
 			}
 			if (!inAJump){
@@ -133,19 +154,22 @@ public class Hero extends JLabel{
 	 * @author Miriam
 	 * this method decides which kind of jump is executed: a normal jump or a double jump
 	 */
-	public void letHeroJump(boolean doubleJump){
+	public void letHeroJump(){
 		
-		if(doubleJump && this.doubleJumpInitiator == '0'){
-			this.jumpSpeed = Ressources.SPEEDCONSTANT;
-			this.doubleJumpInitiator = '1';
+		if(inADoubleJump && doubleJumpInitiator == '0'){
+			jumpSpeed = Ressources.SPEEDCONSTANT;
+			doubleJumpInitiator = '1';
 		}
 		
 		this.jump();
 		
-		
-		if(this.getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
-			this.doubleJumpInitiator = '0';
+//		if(this.getLocation().y >= Ressources.WINDOW.height - Ressources.CHARACTERHEIGHT){
+		if(getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
+			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
+			doubleJumpInitiator = '0';
+			jumpSpeed = Ressources.SPEEDCONSTANT;
 			inAJump =  false;
+			jumpDirection = 'n';
 		}
 		else	
 			inAJump =  true;
@@ -177,11 +201,6 @@ public class Hero extends JLabel{
 
 	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
 		this.ringbuffer = ringbuffer;
-		
-		//Startposition from Hero changes after ringbuffer -> new y pos
-		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
-				db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT,
-				Ressources.CHARACTERWIDTH,Ressources.CHARACTERHEIGHT);
 	}
 
 
@@ -194,13 +213,36 @@ public class Hero extends JLabel{
 		this.inAJump = inAJump;
 	}
 
+	public char getRunDirection() {
+		return runDirection;
+	}
 
-//	public boolean isInADoubleJump() {
-//		return inADoubleJump;
-//	}
-//
-//
-//	public void setInADoubleJump(boolean inADoubleJump) {
-//		this.inADoubleJump = inADoubleJump;
-//	}
+	public void setRunDirection(char runDirection) {
+		this.runDirection = runDirection;
+	}
+
+	public boolean isInADoubleJump() {
+		return inADoubleJump;
+	}
+
+	public void setInADoubleJump(boolean inADoubleJump) {
+		this.inADoubleJump = inADoubleJump;
+	}
+
+	public char getJumpDirection() {
+		return jumpDirection;
+	}
+
+	public void setJumpDirection(char jumpDirection) {
+		this.jumpDirection = jumpDirection;
+	}
+
+	public char getJumpStatus() {
+		return jumpStatus;
+	}
+
+	public void setJumpStatus(char jumpStatus) {
+		this.jumpStatus = jumpStatus;
+	}
+
 }
