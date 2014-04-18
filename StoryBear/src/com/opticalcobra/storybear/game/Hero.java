@@ -13,7 +13,7 @@ import com.opticalcobra.storybear.res.Ressources;
 
 public class Hero extends JLabel{
 
-	private int jumpSpeed = Ressources.SPEEDCONSTANT;
+	private double jumpSpeed = Ressources.SPEEDCONSTANT / Ressources.SCALE;
 	private char doubleJumpInitiator = '0';
 	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
 	private Imagelib imageLib = Imagelib.getInstance();
@@ -98,7 +98,7 @@ public class Hero extends JLabel{
 	public boolean letHeroJump(boolean doubleJump, char jumpDirectionX){
 		
 		if(doubleJump && this.doubleJumpInitiator == '0'){
-			this.jumpSpeed = Ressources.SPEEDCONSTANT;
+			this.jumpSpeed = Ressources.SPEEDCONSTANT / Ressources.SCALE;
 			this.doubleJumpInitiator = '1';
 		}
 		
@@ -131,21 +131,9 @@ public class Hero extends JLabel{
 			posY = 0;
 		else if (posY > (Ressources.WINDOW.height - this.getSize().height)){
 			posY = Ressources.WINDOW.height - this.getSize().height;
-			this.jumpSpeed = Ressources.SPEEDCONSTANT;
+			this.jumpSpeed = Ressources.SPEEDCONSTANT / Ressources.SCALE;
 		}
-		
-//		//calculate the X value of the jump 
-////		if(jumpDirectionX == 'r')
-////			posX += jumpConstantX;
-////		else if(jumpDirectionX == 'l')
-////			posX -= jumpConstantX;
-//		
-//		//Rangecheck --> don't run out of window
-//		if (posX < 0)
-//			posX = 0;
-//		else if (posX > (Ressources.WINDOW.width - this.getSize().width))
-//			posX = Ressources.WINDOW.width - this.getSize().width;
-//		
+			
 		//TODO: Kollisionskontrolle
 		
 		this.setLocation(posX, posY);
