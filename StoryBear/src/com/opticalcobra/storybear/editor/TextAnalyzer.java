@@ -22,7 +22,7 @@ import com.sun.javafx.tk.quantum.PathIteratorHelper.Struct;
 
 public class TextAnalyzer {
 
-	private Font storyTextFont = FontCache.getInstance().getFont("Standard", ((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)));
+	private Font storyTextFont = FontCache.getInstance().getFont("Standard", ((float) (Ressources.STORYTEXTSIZE)));
 	private Database db= new Database();
 	
 	

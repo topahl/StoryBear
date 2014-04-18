@@ -31,9 +31,9 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		Database db = new Database();
 		storyInfo = new StoryInfo();
 		
-		//TextAnalyzer textAnalyzer = new TextAnalyzer();
-		//this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(3));
-		storyInfo = db.getStoryInfoFromDatabase(33);
+		TextAnalyzer textAnalyzer = new TextAnalyzer();
+		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(4));
+//		storyInfo = db.getStoryInfoFromDatabase(33);
 	}
 	
 	private BufferedImage getNextMapElement(){
@@ -63,8 +63,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			
 		}
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
-			if (elementPointer < storyInfo.getElements().size() && 
-							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
+			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
+							storyInfo.getElements().get(elementPointer).getBlock() % 16 == 0 && i == 0){
 			
 				if (storyInfo.getElements().get(elementPointer) instanceof Word){
 					System.out.println("jetzt brauchen wir einen Übertrag ins nächste Panel" );
