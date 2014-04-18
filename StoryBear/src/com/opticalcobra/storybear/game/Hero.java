@@ -13,7 +13,7 @@ import com.opticalcobra.storybear.res.Ressources;
 
 public class Hero extends JLabel{
 
-	private double jumpSpeed = Ressources.SPEEDCONSTANT / Ressources.SCALE;
+	private double jumpSpeed = Ressources.SPEEDCONSTANT;
 	private char doubleJumpInitiator = '0';
 	private Ringbuffer<Integer> ringbuffer = new Ringbuffer<Integer>(3*17);
 	private Imagelib imageLib = Imagelib.getInstance();
@@ -43,7 +43,7 @@ public class Hero extends JLabel{
 	 */
 	public void run(char direction){
 		int posX = this.getLocation().x;
-		double runConstant = Ressources.RUNCONSTANT / Ressources.SCALE;
+		double runConstant = Ressources.RUNCONSTANT;
 		ImageIcon image; 
 		
 		if(direction == 'l' && posX > 0){
@@ -98,11 +98,11 @@ public class Hero extends JLabel{
 	public boolean letHeroJump(boolean doubleJump, char jumpDirectionX){
 		
 		if(doubleJump && this.doubleJumpInitiator == '0'){
-			this.jumpSpeed = Ressources.SPEEDCONSTANT / Ressources.SCALE;
+			this.jumpSpeed = Ressources.SPEEDCONSTANT;
 			this.doubleJumpInitiator = '1';
 		}
 		
-		this.jump(jumpDirectionX);
+		this.jump();
 		
 		if(this.getLocation().y >= Ressources.WINDOW.height - this.getSize().height){
 			this.doubleJumpInitiator = '0';
@@ -117,10 +117,10 @@ public class Hero extends JLabel{
 	 * @author Miriam
 	 * execution of the jump
 	 */
-	private void jump(char jumpDirectionX){
+	private void jump(){
 		int posX = this.getLocation().x;
 		int posY = this.getLocation().y;
-		double jumpConstantY = Ressources.JUMPCONSTANTY / Ressources.SCALE;
+		double jumpConstantY = Ressources.JUMPCONSTANTY;
 		this.jumpSpeed -= jumpConstantY;
 		double newPositionY = posY - this.jumpSpeed;
 		
@@ -131,7 +131,7 @@ public class Hero extends JLabel{
 			posY = 0;
 		else if (posY > (Ressources.WINDOW.height - this.getSize().height)){
 			posY = Ressources.WINDOW.height - this.getSize().height;
-			this.jumpSpeed = Ressources.SPEEDCONSTANT / Ressources.SCALE;
+			this.jumpSpeed = Ressources.SPEEDCONSTANT;
 		}
 			
 		//TODO: Kollisionskontrolle

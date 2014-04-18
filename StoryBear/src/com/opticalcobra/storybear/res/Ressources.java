@@ -32,9 +32,9 @@ public class Ressources {
 	
 	//Dynamics of the Game
 	//TODO: Dummywerte überarbeiten
-	public static final double JUMPCONSTANTY = 2; //in- and decreases the speed of the jump
-	public static final int SPEEDCONSTANT = 36;	//start speed of a jump
-	public static final int RUNCONSTANT = 7;
+	public static final double JUMPCONSTANTY; //in- and decreases the speed of the jump
+	public static final int SPEEDCONSTANT;	//start speed of a jump
+	public static final int RUNCONSTANT;
 	
 	
 	
@@ -55,6 +55,10 @@ public class Ressources {
 		WINDOW.width = 16* RASTERSIZE;
 		CHARACTERHEIGHT=(int)(82/SCALE);
 		CHARACTERWIDTH=(int)(45/SCALE);
+		
+		JUMPCONSTANTY = 2 / SCALE;
+		SPEEDCONSTANT = (int) (36 / SCALE);
+		RUNCONSTANT = (int) (7 / SCALE);
 		
 	}
 	
