@@ -33,7 +33,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		Database db = new Database();
 		storyInfo = new StoryInfo();
-		ringbuffer.write(lastTileType);
+		//ringbuffer.write(lastTileType);
 		
 //		TextAnalyzer textAnalyzer = new TextAnalyzer();
 //		Database.requestnum = 0;
@@ -46,6 +46,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 		int next = following[rand.nextInt(following.length)];
 		lastTileType = next;
+		
 		
 		ringbuffer.write(lastTileType);
 		

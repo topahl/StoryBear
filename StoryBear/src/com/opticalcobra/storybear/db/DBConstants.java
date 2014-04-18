@@ -17,13 +17,15 @@ public class DBConstants {
 	public static final int WORD_OBJECT_TYPE_NO_IMAGE = -1;
 	
 	//Constans for level heights
-	public static final int LEVELHEIGHTZERO 		= (int) (719/Ressources.SCALE);
-	public static final int LEVELHEIGHTMINUSONE 	= (int) (779/Ressources.SCALE);
-	public static final int LEVELHEIGHTMINUSTWO 	= (int) (839/Ressources.SCALE);
-	public static final int LEVELHEIGHTMINUSTHREE 	= (int) (1061/Ressources.SCALE);
-	public static final int LEVELHEIGHTPLUSONE 		= (int) (599/Ressources.SCALE);
-	public static final int LEVELHEIGHTPLUSTWO 		= (int) (599/Ressources.SCALE);
-	public static final int LEVELHEIGHTPLUSTHREE 	= (int) (599/Ressources.SCALE);
+	public static final int LEVELHEIGHTZERO 		= (int) (720/Ressources.SCALE);
+	public static final int LEVELHEIGHTMINUSONE 	= (int) (780/Ressources.SCALE);
+	public static final int LEVELHEIGHTMINUSTWO 	= (int) (840/Ressources.SCALE);
+	public static final int LEVELHEIGHTMINUSTHREE 	= (int) (910/Ressources.SCALE);
+	public static final int LEVELHEIGHTMINUSFORE 	= (int) (990/Ressources.SCALE);
+	public static final int LEVELHEIGHTMINUSFIVE 	= (int) (1061/Ressources.SCALE);
+	public static final int LEVELHEIGHTPLUSONE 		= (int) (655/Ressources.SCALE);
+	public static final int LEVELHEIGHTPLUSTWO 		= (int) (601/Ressources.SCALE);
+	//public static final int LEVELHEIGHTPLUSTHREE 	= (int) (599/Ressources.SCALE);
 	//public static final int LEVELHEIGHTZERO 		= (int) (719/Ressources.SCALE);
 	
 		

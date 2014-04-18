@@ -82,15 +82,25 @@ public class Hero extends JLabel{
 		
 		this.setLocation(posX, this.getLocation().y);
 		
-		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5 && !inAJump){
-			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - getHeight());
+		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5){
+			if (!inAJump){
+				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT);
+			} 
+			else {
+				ringbuffer.read();
+			}
 		}
 	}
 	
 	
 	public void runFreazing(int currentCounterStep){
-		if(currentCounterStep % Ressources.RASTERSIZE == 0  && !inAJump){
-			setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - getHeight());
+		if(currentCounterStep % Ressources.RASTERSIZE == 0){
+			if (!inAJump){
+				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT);
+			}
+			else {
+				ringbuffer.read();
+			}
 		}
 	}
 	
@@ -144,6 +154,9 @@ public class Hero extends JLabel{
 
 	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
 		this.ringbuffer = ringbuffer;
+		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
+				db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT,
+				Ressources.CHARACTERWIDTH,Ressources.CHARACTERHEIGHT);
 	}
 
 

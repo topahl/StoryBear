@@ -170,6 +170,12 @@ public class Database {
 			e.printStackTrace();
 		}
 		switch (height){
+		case -5:
+			height = DBConstants.LEVELHEIGHTMINUSFIVE;
+			break;
+		case -4:
+			height = DBConstants.LEVELHEIGHTMINUSFORE;
+			break;
 		case -3:
 			height = DBConstants.LEVELHEIGHTMINUSTHREE;
 			break;
@@ -187,9 +193,6 @@ public class Database {
 			break;
 		case 2:
 			height = DBConstants.LEVELHEIGHTPLUSTWO;
-			break;
-		case 3:
-			height = DBConstants.LEVELHEIGHTPLUSTHREE;
 			break;
 		}
 		System.out.println(height);
