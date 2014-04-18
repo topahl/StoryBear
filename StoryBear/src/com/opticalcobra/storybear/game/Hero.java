@@ -142,7 +142,8 @@ public class Hero extends JLabel{
 		
 		this.jump();
 		
-		if(this.getLocation().y >= Ressources.WINDOW.height - this.getSize().height){
+		
+		if(this.getLocation().y >= db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT){
 			this.doubleJumpInitiator = '0';
 			inAJump =  false;
 		}
@@ -170,8 +171,6 @@ public class Hero extends JLabel{
 			posY = Ressources.WINDOW.height - this.getSize().height;
 			this.jumpSpeed = Ressources.SPEEDCONSTANT;
 		}
-			
-		//TODO: Kollisionskontrolle
 		
 		this.setLocation(posX, posY);
 	}
