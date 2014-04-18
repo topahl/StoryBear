@@ -24,9 +24,8 @@ public class Ressources {
 	public static final Color SKYCOLOR = new Color(111, 213, 239, 255); //Standard: 158, 234, 252, 255
 	
 	//Game Character
-	//TODO: Dummywerte überarbeiten
-	public static final int CHARACTERHEIGHT = 70;
-	public static final int CHARACTERWIDTH = 50;
+	public static final int CHARACTERHEIGHT;
+	public static final int CHARACTERWIDTH;
 	public static final int CHARACTERSPAWNPOSITIONX = 0;
 	//public static final int CHARACTERSPAWNPOSITIONY = 400;
 	
@@ -54,6 +53,8 @@ public class Ressources {
 		}
 		RASTERSIZE=(int) (RASTERSIZEORG/SCALE);
 		WINDOW.width = 16* RASTERSIZE;
+		CHARACTERHEIGHT=(int)(82/SCALE);
+		CHARACTERWIDTH=(int)(45/SCALE);
 		
 	}
 	
