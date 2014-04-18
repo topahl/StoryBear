@@ -35,9 +35,11 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		storyInfo = new StoryInfo();
 		ringbuffer.write(lastTileType);
 		
-		TextAnalyzer textAnalyzer = new TextAnalyzer();
-		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(4));
-//		storyInfo = db.getStoryInfoFromDatabase(33);
+//		TextAnalyzer textAnalyzer = new TextAnalyzer();
+//		Database.requestnum = 0;
+//		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(1));
+//		System.out.println(Database.requestnum);
+		storyInfo = db.getStoryInfoFromDatabase(1);
 	}
 	
 	private BufferedImage getNextMapElement(){
@@ -78,7 +80,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
-				((Word)elements.get(elementPointer)).render(g);
+				(elements.get(elementPointer)).render(g);
 				elementPointer++;
 			}
 		}
