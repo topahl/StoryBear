@@ -125,7 +125,7 @@ public class Editor extends JFrame {
 		
 		// Headline
 		headline = new JTextField();
-		headline.setBounds(902, 11, 630, 80);
+		headline.setBounds(902, 11, (int)(630/Ressources.SCALE), (int)(80/Ressources.SCALE));
 		headline.setFont(FontCache.getInstance().getFont("Standard", 60));
 		headline.setBorder(null);
 		headline.setVisible(true);
@@ -133,7 +133,7 @@ public class Editor extends JFrame {
 		
 		// Editor
 		editor = new StoryEditor();
-		editor.setBounds(902, 102, 630, 800);
+		editor.setBounds(902, 102, (int)(630/Ressources.SCALE), (int)(800/Ressources.SCALE));
 		editor.setFont(FontCache.getInstance().getFont("Fontin_R", 25));
 		editor.setVisible(true);
 		editor.addFocusListener(new EmptyTextFieldListener(EMPTY_STORY, Color.GRAY, Color.BLACK).initializeCallerTextComponent(editor));
