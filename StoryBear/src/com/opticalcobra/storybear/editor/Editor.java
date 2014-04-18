@@ -24,6 +24,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.Border;
@@ -73,6 +74,8 @@ public class Editor extends JFrame {
 	public void loadStory(int id) {
 		Story story = db.getStoryFromDatabase(id);
 		editor.setText(story.getText());
+		editor.setLineWrap(true);
+		editor.setWrapStyleWord(true);
 		headline.setText(story.getTitle());
 		editor.setForeground(Color.black);
 		headline.setForeground(Color.black);
@@ -101,7 +104,7 @@ public class Editor extends JFrame {
 	 */
 	public static void main(String args[]) {
 		Editor e = new Editor();
-		e.loadStory(2);
+		e.loadStory(1);
 	}
 	
 	/**
