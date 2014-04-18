@@ -133,7 +133,7 @@ public class Window extends JFrame {
 			clouds.step();
 		}
 		
-		hero.runFreazing(stepcounterLayer);
+		hero.runFreazing(stepcounterLayer, this.controle.getRunDirection());
 		
 		stepcounterLayer++;
 	}

@@ -22,6 +22,7 @@ public class Hero extends JLabel{
 	private Imagelib imageLib = Imagelib.getInstance();
 	private char type; 		//shows which kind of hero it is, eg. bear, ...
 	private Database db = new Database();
+	private int ringbufferCounter = 0;
 	
 	/**
 	 * @author Miriam
@@ -82,24 +83,47 @@ public class Hero extends JLabel{
 		
 		this.setLocation(posX, this.getLocation().y);
 		
-		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && getLocation().x < Ressources.RASTERSIZE*5){
-			if (!inAJump){
-				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT);
-			} 
-			else {
-				ringbuffer.read();
+		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && 
+				getLocation().x < Ressources.RASTERSIZE*5 && getLocation().x != 0){
+			if (direction == 'r'){
+				if (ringbufferCounter>5){
+					ringbuffer.read();
+				}
+				else{
+					ringbufferCounter++;
+				}
 			}
+			if (direction == 'l' && ringbufferCounter>0){
+				ringbufferCounter--;
+			}
+			if (!inAJump){
+				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
+			} 
 		}
 	}
 	
-	
-	public void runFreazing(int currentCounterStep){
+	/**
+	 * it looks like hero is running
+	 * @author Martika
+	 * @param currentCounterStep
+	 * @param direction 
+	 */
+	public void runFreazing(int currentCounterStep, char direction){
 		if(currentCounterStep % Ressources.RASTERSIZE == 0){
-			if (!inAJump){
-				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT);
+			if (direction == 'r'){
+				if (ringbufferCounter>5){
+					ringbuffer.read();
+				} 
+				else{
+					ringbufferCounter++;
+				}
+				
 			}
-			else {
-				ringbuffer.read();
+			if (direction == 'l'){
+				ringbufferCounter--;
+			}
+			if (!inAJump){
+				setLocation(getLocation().x, db.getLevelHeight(ringbuffer.top(ringbufferCounter)) - Ressources.CHARACTERHEIGHT);
 			}
 		}
 	}
@@ -154,6 +178,8 @@ public class Hero extends JLabel{
 
 	public void setRingbuffer(Ringbuffer<Integer> ringbuffer) {
 		this.ringbuffer = ringbuffer;
+		
+		//Startposition from Hero changes after ringbuffer -> new y pos
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
 				db.getLevelHeight(ringbuffer.read()) - Ressources.CHARACTERHEIGHT,
 				Ressources.CHARACTERWIDTH,Ressources.CHARACTERHEIGHT);

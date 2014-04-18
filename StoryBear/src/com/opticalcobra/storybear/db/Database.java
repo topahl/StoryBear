@@ -195,7 +195,6 @@ public class Database {
 			height = DBConstants.LEVELHEIGHTPLUSTWO;
 			break;
 		}
-		System.out.println(height);
 		return height;
 	}
 	
