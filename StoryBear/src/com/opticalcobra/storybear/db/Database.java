@@ -202,7 +202,7 @@ public class Database {
 	
 	
 	
-	private synchronized ResultSet query(String expression) throws SQLException {
+	public synchronized ResultSet query(String expression) throws SQLException {
 		requestnum++;
         Statement st = null;
         ResultSet rs = null;
@@ -363,17 +363,17 @@ public class Database {
 			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
 			if (rsCharacter.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER, rsMiddleground.getInt("IMAGE_ID"),rsFexione);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER, rsMiddleground.getInt("IMAGE_ID"));
 			}
 			else if (rsCollectable.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsMiddleground.getInt("IMAGE_ID"),rsFexione);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsMiddleground.getInt("IMAGE_ID"));
 			}
 			else if (rsMiddleground.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),rsFexione);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"));
 			}
 		}
 		if (result==null) {
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1,rsFexione);
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1);
 		}
 		rsFexione.close();
 		return result;

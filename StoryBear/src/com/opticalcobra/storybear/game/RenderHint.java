@@ -39,6 +39,10 @@ public class RenderHint implements ILevelAppearance {
 		return this.renderHint;
 	}
 	
+	public void setBlock(int block){
+		this.block = block;
+	}
+	
 	
 	@Override
 	public int getBlock() {
