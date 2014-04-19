@@ -33,7 +33,7 @@ public class Hero extends JLabel{
 
 	//Run attributes
 	private char runDirection = 'n';
-	private int ringbufferCounter = 0;
+	private int ringbufferCounter = 1;
 	
 	
 	private Hero(){
@@ -56,8 +56,9 @@ public class Hero extends JLabel{
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
+
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
-				ringbuffer.read().getTileHeight() - Ressources.CHARACTERHEIGHT,
+				ringbuffer.top().getTileHeight() - Ressources.CHARACTERHEIGHT,
 				Ressources.CHARACTERWIDTH,
 				Ressources.CHARACTERHEIGHT);
 	}

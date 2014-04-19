@@ -162,7 +162,7 @@ public class Database {
 		boolean walkable = false;
 
 		try {
-			rs = query("SELECT height_level walkable from foreground_type where id = '" + tileType + "';");
+			rs = query("SELECT height_level, walkable from foreground_type where id = '" + tileType + "';");
 			rs.next();
 			height = (int) rs.getObject("HEIGHT_LEVEL");
 			walkable = rs.getBoolean("WALKABLE");

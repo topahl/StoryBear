@@ -44,11 +44,14 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	}
 	
 	private BufferedImage getNextMapElement(){
-		Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
-		int next = following[rand.nextInt(following.length)];
+		int next = 0;
+		
+		if (!(ringbuffer.top() == null)){
+			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+			next = following[rand.nextInt(following.length)];
+		}
+		
 		lastTileType = next;
-		
-		
 		ringbuffer.write(db.getTileInfo(lastTileType));
 		
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND);

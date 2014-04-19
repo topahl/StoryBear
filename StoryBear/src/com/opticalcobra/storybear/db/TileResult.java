@@ -42,5 +42,15 @@ public class TileResult {
 	public void setTileHeight(int tileHeight) {
 		this.tileHeight = tileHeight;
 	}
+
+
+	public boolean isWalkable() {
+		return walkable;
+	}
+
+
+	public void setWalkable(boolean walkable) {
+		this.walkable = walkable;
+	}
 	
 }
