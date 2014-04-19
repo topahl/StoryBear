@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.editor;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.Font;
@@ -18,6 +19,7 @@ import com.opticalcobra.storybear.db.WordResult;
 import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
 import com.opticalcobra.storybear.game.Landscape;
+import com.opticalcobra.storybear.game.RenderHint;
 import com.opticalcobra.storybear.game.Word;
 import com.sun.javafx.tk.quantum.PathIteratorHelper.Struct;
 
@@ -42,6 +44,7 @@ public class TextAnalyzer {
 		int numberOfBlocks = 0;			//how many blocks are needed for a word
 		int blockPosition = 0; 	//block number, where a word starts in the level
 		int stringLength = 0;	//how many pixels are needed
+		ArrayList<RenderHint> renderHint = new ArrayList();
 		
 		storyInfo.setStory(story);
 		
@@ -72,20 +75,115 @@ public class TextAnalyzer {
 					elements.add(new Landscape(blockPosition));
 					break;
 				}
+				
+				renderHint.add(this.getScheme(word,wr,blockPosition));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				System.out.println(word);
 			}
-			
+					
 			elements.add(new Word(word,blockPosition));
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new word
 
 		}
 		
 		storyInfo.setNumberOfBlocks(blockPosition);
+		
+		//analyze RenderHint --> are the blocks ok? or are the schemes coming to close in some parts of the story
+		//one Scheme has a minimum size of 16 kacheln
+		renderHint = this.calculateImportanceOfSchemes(renderHint);
+		//renderHint = this.calcNewBlockPositions(renderHint,blockPosition);
+		
+		//insert renderHints in elements
+		for(int i=0;i<renderHint.size();i++){
+			elements.add(renderHint.get(i));
+		}
+		//end of analyzing RenderHint
+		
+		
 		storyInfo.setElements(elements);
 		db.insertStoryInfoToDatabase(storyInfo);
 		return storyInfo;
+	}
+	
+	
+	/*
+	 * @author Miriam
+	 * if the schemes are coming to close after each other their position has to be modified
+	 */
+	/*private ArrayList<RenderHint> calcNewBlockPositions(ArrayList<RenderHint> renderHint, int numberOfBlocks){
+		ArrayList<Integer> distances = new ArrayList();
+		
+		
+		if(renderHint.size() / numberOfBlocks >= Ressources.TILESPERPANEL){	//each scheme can be longer than one panel
+			
+		}
+		else{											//too many schemes -> delete schemes with low importance
+			
+		}
+		
+		return renderHint;
+	}*/
+	
+	
+	/*
+	 * @author Miriam
+	 * if same schemes are coming exactly after each other then the importance should be increased
+	 */
+	private ArrayList<RenderHint> calculateImportanceOfSchemes(ArrayList<RenderHint> renderHint){
+		RenderHint rh;
+		if(renderHint.size() > 0){
+			for(int i=1;i<renderHint.size();i++){
+				rh = renderHint.get(i-1);
+				if(renderHint.get(i).getRenderHint() == rh.getRenderHint()){
+					renderHint.get(i-1).setImportance(renderHint.get(i-1).getImportance()+1); //increase Importance
+					renderHint.remove(i);
+					i--;
+				}
+			}
+		}
+		return renderHint;
+	}
+	
+	
+	
+	/*
+	 * @author Miriam
+	 * analyzes if the words indicates a scheme, eg. Water, Mountains, ... for the Foreground
+	 */
+	private RenderHint getScheme(String word, WordResult wr, int block) throws SQLException{
+		RenderHint rh;
+		ResultSet rs = wr.getResultSet();
+		
+		while(rs.next()){
+			//checks if scheme is water
+			for(int i=0;i<RenderHint.WORDGROUP_LENGTH;i++){
+				if((RenderHint.WORDGROUP_WATER.length>i) && (rs.getObject(0).equals(RenderHint.WORDGROUP_WATER[i]))){
+					rh = new RenderHint(block,RenderHint.RENDERHINT_WATER,1);
+					rs.close();
+					return rh;
+				}
+				else if((RenderHint.WORDGROUP_MOUNTAINS.length>i) && (rs.getObject(0).equals(RenderHint.WORDGROUP_MOUNTAINS[i]))){
+					rh = new RenderHint(block,RenderHint.RENDERHINT_MOUNTAINS,1);
+					rs.close();
+					return rh;
+				}
+				else if((RenderHint.WORDGROUP_CITY.length>i) && (rs.getObject(0).equals(RenderHint.WORDGROUP_CITY[i]))){
+					rh = new RenderHint(block,RenderHint.RENDERHINT_CITY,1);
+					rs.close();
+					return rh;
+				}
+				else if((RenderHint.WORDGROUP_WINTER.length>i) && (rs.getObject(0).equals(RenderHint.WORDGROUP_WINTER[i]))){
+					rh = new RenderHint(block,RenderHint.RENDERHINT_WINTER,1);
+					rs.close();
+					return rh;
+				}
+			}
+			
+		}
+		rs.close();
+		
+		return null;
 	}
 	
 

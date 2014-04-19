@@ -11,4 +11,6 @@ public interface ILevelAppearance extends Serializable{
 
 	public void render(Graphics2D g);
 	
+	//public getRenderHint();
+	
 }

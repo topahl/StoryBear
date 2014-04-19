@@ -37,6 +37,10 @@ public class Ressources {
 	public static final int RUNCONSTANT;
 	
 	
+	//Contants for Kacheln and co.
+	public static final int TILESPERPANEL = 16;
+	public static final int MAXLENGTHOFSCHEME = 160; //unity = tiles
+	
 	static {
 		
 		SCREEN=Toolkit.getDefaultToolkit().getScreenSize();
