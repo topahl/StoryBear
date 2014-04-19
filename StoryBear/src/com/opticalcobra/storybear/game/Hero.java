@@ -68,13 +68,13 @@ public class Hero extends JLabel{
 	 * let hero do, whatever he has to do
 	 * @author Martika & Tobias
 	 */
-	public void heroStep(){
+	public void heroStep(int stepCounterLayer){
 		
 		if (isInAJump()){
 			jump();
 		}
 		if(runDirection != 'n'){
-			run();
+			run(stepCounterLayer);
 		}
 	}
 	
@@ -130,60 +130,96 @@ public class Hero extends JLabel{
 	/**
 	 * @author Miriam
 	 */
-	public void run(){
+	public void run(int stepCounterLayer){
 		int posX = this.getLocation().x;
 		double runConstant = Ressources.RUNCONSTANT;
 		ImageIcon image; 
 		
-		if(runDirection == 'l' && posX > 0){
-			posX -= (int) runConstant;
-			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
-			/*try {
-				image = new ImageIcon(this.imageLib.loadHeroPic('l', this.type));
-				this.setIcon(image);
-			} catch (ImageNotFoundException e) {
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			} catch (SQLException e) {
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}*/
+		if(runDirection == 'l'){
+			if (posX > 0){
+				posX -= (int) runConstant;
+				//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
+				/*try {
+					image = new ImageIcon(this.imageLib.loadHeroPic('l', this.type));
+					this.setIcon(image);
+				} catch (ImageNotFoundException e) {
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				} catch (SQLException e) {
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				}*/
+			}
+			
+			//Ringbuffer für die Tiles aktuallisieren   - Ressources.CHARACTERWIDTH
+			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5 && 
+					getLocation().x + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE &&
+					(Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  < 0 ){
+				if (ringbufferCounter == 5){
+					System.out.print("Counter 5");
+				}
+				if (ringbufferCounter>0){
+					ringbufferCounter--;
+				}
+				if (!isInAJump()){
+					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+				} 
+			}
 		}
-		//Hero darf nur sich nur zwischen 1. und 3. siebtel bewegen
-		else if(runDirection == 'r' && posX < Ressources.RASTERSIZE*5){
-			posX += (int) runConstant;	
-			//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
-			/*try {
-				image = new ImageIcon(this.imageLib.loadHeroPic('r', this.type));
-				this.setIcon(image);
-			} catch (ImageNotFoundException e) {
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			} catch (SQLException e) {
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}*/
-		}
-		
-		this.setLocation(posX, this.getLocation().y);
-		
-		if ((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE) - runConstant < 0 && 
-				getLocation().x < Ressources.RASTERSIZE*5 && getLocation().x != 0){
-			if (runDirection == 'r'){
-				if (ringbufferCounter>5){
+
+		else if(runDirection == 'r'){
+			if (posX < Ressources.RASTERSIZE*5){
+				posX += (int) runConstant;	
+				//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
+				/*try {
+					image = new ImageIcon(this.imageLib.loadHeroPic('r', this.type));
+					this.setIcon(image);
+				} catch (ImageNotFoundException e) {
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				} catch (SQLException e) {
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				}*/
+			}
+
+			//Ringbuffer für die Tiles aktuallisieren     - (Ressources.CHARACTERWIDTH / 2)   + stepCounterLayer % Ressources.SCALE
+			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5 && 
+					getLocation().x + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE &&
+					((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant  < 0 ){
+				if (ringbufferCounter == 5){
 					ringbuffer.read();
 				}
 				else{
 					ringbufferCounter++;
 				}
+				if (!isInAJump()){
+					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+				} 
 			}
-			if (runDirection == 'l' && ringbufferCounter>0){
-				ringbufferCounter--;
-			}
-			if (!isInAJump()){
-				setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-			} 
 		}
+		
+		this.setLocation(posX, this.getLocation().y);
+		
+		
+//		// && stepCounterLayer != 0
+//		if (getLocation().x != 0  && getLocation().x < Ressources.RASTERSIZE*5 &&
+//				((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE)) + stepCounterLayer % Ressources.SCALE - runConstant < 0 ){
+//			if (runDirection == 'r'){
+//				if (ringbufferCounter == 5){
+//					ringbuffer.read();
+//				}
+//				else{
+//					ringbufferCounter++;
+//				}
+//			}
+//			if (runDirection == 'l' && ringbufferCounter>0){
+//				ringbufferCounter--;
+//			}
+//			if (!isInAJump()){
+//				setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+//			} 
+//		}
 	}
 	
 	

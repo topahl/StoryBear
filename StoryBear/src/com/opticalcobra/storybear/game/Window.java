@@ -21,8 +21,8 @@ public class Window extends JFrame {
 	private GameLayer bg;
 	private GameLayer clouds;
 	
-	private int stepcounter = 1;
-	private int stepcounterLayer = 0;
+	private int stepCounter = 1;
+	private int stepCounterLayer = 0;
 	private Control controle;
 	
 //	private boolean inAJump = false; //shows that jump is executed currently
@@ -120,18 +120,18 @@ public class Window extends JFrame {
 	 */
 	private void layerStep(){
 		vg2.step();
-		if(stepcounterLayer % 2 == 0)
+		if(stepCounterLayer % 2 == 0)
 			mg.step();
-		if(stepcounterLayer % 4 == 0){
+		if(stepCounterLayer % 4 == 0){
 			bg.step();
 		}
-		if(stepcounterLayer % 6 == 0){
+		if(stepCounterLayer % 6 == 0){
 			clouds.step();
 		}
 		
-		Hero.getInstance().runFreazing(stepcounterLayer);
+		Hero.getInstance().runFreazing(stepCounterLayer);
 		
-		stepcounterLayer++;
+		stepCounterLayer++;
 	}
 	
 	
@@ -140,19 +140,19 @@ public class Window extends JFrame {
 	 */
 	public synchronized void step(){
 		
-		if(stepcounter % 6 == 0){
+		if(stepCounter % 6 == 0){
 			clouds.step();
 		}
 			
 		//Navigation of the hero via the right, left, up and down keys
-		if(stepcounter % 4 == 0){
-			Hero.getInstance().heroStep();
+		if(stepCounter % 4 == 0){
+			Hero.getInstance().heroStep(stepCounterLayer);
 		}
 		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() >= Ressources.RASTERSIZE*5){
 			layerStep();
 		}
 		
-		stepcounter++;
+		stepCounter++;
 		repaint();
 	}
 }
