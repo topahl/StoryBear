@@ -22,6 +22,7 @@ public class Ressources {
 	
 	//Colors
 	public static final Color SKYCOLOR = new Color(111, 213, 239, 255); //Standard: 158, 234, 252, 255
+	public static final Color SHELFCOLOR = new Color(170,128,86);
 	
 	//Game Character
 	public static final int CHARACTERHEIGHT;

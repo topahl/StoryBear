@@ -7,10 +7,12 @@ import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.editor.TextAnalyzer;
 import com.opticalcobra.storybear.main.User;
+import com.opticalcobra.storybear.menu.Menu;
 
 
 public class Main {
 	public static void main(String args[]){
+//		Menu menu = new Menu();
 		Window gui = new Window();
 		
 //		TextAnalyzer ta = new TextAnalyzer();

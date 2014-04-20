@@ -27,6 +27,7 @@ public class Imagelib {
 	 * 		img-	Internal graphics (eg cluster graphics)
 	 * 		hero-	Image of a hero
 	 * 		cha-	Character Object
+	 * 		menu-	Images for Menu
 	 */
 	
 	private HashMap<String,BufferedImage> images;   //Hashmap für alle Bilder
@@ -38,6 +39,13 @@ public class Imagelib {
 	public static final char QUERY_MIDDLEGROUND = 'm';
 	public static final char QUERY_BACKGROUND = 'b';
 	public static final char QUERY_CLOUDS = 'c';
+	
+	public static final int MENU_SHELF = 246;
+	public static final int MENU_SCROLL_UP = 247;
+	public static final int MENU_SCROLL_DOWN = 248;
+	public static final int MENU_SCROLL_THUMB_TOP = 249;
+	public static final int MENU_SCROLL_THUMB_BOTTOM = 250;
+	public static final int MENU_SCROLL_THUMB_MIDDLE = 251;
 	
 	
 	private Imagelib(){
@@ -238,6 +246,32 @@ public class Imagelib {
 			e.printStackTrace();
 			return null; //TODO richtiges fehlerhandlich einbauen
 		}
+		
+	}
+	/**
+	 * 
+	 * @param type
+	 */
+	public BufferedImage MenuImage (int type){
+		BufferedImage result;
+		BufferedImage full;
+		//Check whether image is already cached
+		result = images.get("menu-"+type);
+		if(result != null){
+			return result;
+		}
+		//Request must be handled via database request
+		ImageResult image;
+		try {
+			image = db.queryImagedata(type);
+			full=loadRessourcesImage(image.getUrl());
+			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+			images.put("menu-"+type, result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 		
 	}
 	
