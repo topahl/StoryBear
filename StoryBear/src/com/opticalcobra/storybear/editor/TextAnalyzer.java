@@ -196,6 +196,10 @@ public class TextAnalyzer {
 						rh = new RenderHint(block,RenderHint.RENDERHINT_WINTER,1);
 						return rh;
 					}
+					else if((RenderHint.WORDGROUP_FOREST.length>i) && s.contains(RenderHint.WORDGROUP_FOREST[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_FOREST,1);
+						return rh;
+					}
 				}
 			}
 		}

@@ -19,6 +19,7 @@ public class RenderHint implements ILevelAppearance {
 	public static final int RENDERHINT_MOUNTAINS = 1;
 	public static final int RENDERHINT_CITY = 2;
 	public static final int RENDERHINT_WINTER = 3;
+	public static final int RENDERHINT_FOREST = 4;
 	
 	
 	public static final int WORDGROUP_LENGTH = 3;
@@ -26,6 +27,7 @@ public class RenderHint implements ILevelAppearance {
 	public static final String[] WORDGROUP_MOUNTAINS = {"Gebirge","Berg"};
 	public static final String[] WORDGROUP_CITY = {"Stadt","Hof","Dorf"};
 	public static final String[] WORDGROUP_WINTER = {"Winter","Weihnachten"};
+	public static final String[] WORDGROUP_FOREST = {"Wald","Baum"};
 	
 
 	public RenderHint(int block, int hint, int importance){
