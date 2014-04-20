@@ -8,12 +8,14 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.res.FontCache;
+import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
 public class BookRenderer extends DefaultListCellRenderer {
@@ -27,8 +29,9 @@ public class BookRenderer extends DefaultListCellRenderer {
 		private JLabel title;
 		private JLabel book;
 		private FontCache fc = FontCache.getInstance();
+		private Imagelib il = Imagelib.getInstance();
 		private int [] offset = new int[4]; 
-		private int bookNumber=-1;
+		private int [] books = {Imagelib.MENU_BOOK_1,Imagelib.MENU_BOOK_2,Imagelib.MENU_BOOK_3,Imagelib.MENU_BOOK_4};
 				
 	
 	
@@ -45,8 +48,10 @@ public class BookRenderer extends DefaultListCellRenderer {
 		pane.setSize((int)(1050/Ressources.SCALE), (int)(144/Ressources.SCALE));
 		pane.add(user);
 		pane.add(title);
+		pane.add(book);
 		title.setFont(fc.getFont("Standard",(float) (25/Ressources.SCALE)));
 		user.setFont(fc.getFont("Fontier_R", (float) (15/Ressources.SCALE)));
+		book.setBounds(0,0,(int) (1050/Ressources.SCALE), (int)(144/Ressources.SCALE));
 	}
 	
 	
@@ -59,11 +64,10 @@ public class BookRenderer extends DefaultListCellRenderer {
             boolean expanded) {
 		
 		//Story story = (Story) value;
-		
-		bookNumber++;
-		user.setBounds(offset[bookNumber%4], (int)(40/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		book.setIcon(new ImageIcon(il.MenuImage(books[index%4])));
+		user.setBounds(offset[index%4], (int)(40/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(60/Ressources.SCALE));
 		user.setText("text");
-		title.setBounds(offset[bookNumber%4], (int)(100/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(40/Ressources.SCALE));
+		title.setBounds(offset[index%4], (int)(100/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(40/Ressources.SCALE));
 		title.setText("text");
 
 		return pane;

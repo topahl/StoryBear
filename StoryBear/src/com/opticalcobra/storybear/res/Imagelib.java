@@ -46,6 +46,10 @@ public class Imagelib {
 	public static final int MENU_SCROLL_THUMB_TOP = 249;
 	public static final int MENU_SCROLL_THUMB_BOTTOM = 250;
 	public static final int MENU_SCROLL_THUMB_MIDDLE = 251;
+	public static final int MENU_BOOK_1 = 261;
+	public static final int MENU_BOOK_2 = 262;
+	public static final int MENU_BOOK_3 = 263;
+	public static final int MENU_BOOK_4 = 264;
 	
 	public static final int GAME_BUTTON_MENU_BLACK = 252;
 	public static final int GAME_BUTTON_MENU_WHITE = 255;
