@@ -12,8 +12,8 @@ import com.opticalcobra.storybear.menu.Menu;
 
 public class Main {
 	public static void main(String args[]){
-//		Menu menu = new Menu();
-		Window gui = new Window();
+		Menu menu = new Menu();
+//		Window gui = new Window();
 		
 //		TextAnalyzer ta = new TextAnalyzer();
 //		Database db = new Database();

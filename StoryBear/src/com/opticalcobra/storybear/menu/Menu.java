@@ -62,9 +62,7 @@ public class Menu extends JFrame{
         sb.setBackground(Ressources.SHELFCOLOR);
         scrollpane.setBounds((int)(96/Ressources.SCALE),(int)(60/Ressources.SCALE), (int)(1152/Ressources.SCALE), (int)(959/Ressources.SCALE));
         buecherRegal.add(scrollpane);
-		
-		
-        
+        levelBuecher.setCellRenderer(new BookRenderer());
         DefaultListModel<String> model = new DefaultListModel<String>();
         model.addElement("hallo");
         model.addElement("Welt");
