@@ -55,7 +55,7 @@ public class TextAnalyzer {
 		//if word in db then return type of word, e.g. collectable, character, ...
 		//else return null
 		for(String word : words){
-			
+			String word_short = word.replaceAll("[^a-zA-Z äüöß]", "");
 			//get the length of the word in pixels
 			stringLength = this.numberOfPixelsOfString(word);
 			
@@ -64,7 +64,7 @@ public class TextAnalyzer {
 			
 			//TODO: überarbeiten, aktuell nur Dummywerte
 			try {
-				WordResult wr =db.queryWordType(word); 
+				WordResult wr =db.queryWordType(word_short); 
 				switch (wr.getType()){
 				case DBConstants.WORD_OBJECT_TYPE_CHARACTER:
 					elements.add(new Character(blockPosition,wr.getImage_id()));
@@ -82,7 +82,7 @@ public class TextAnalyzer {
 					renderHint.add(rh);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				System.out.println(word);
+				System.out.println(word_short);
 			}
 					
 			elements.add(new Word(word,blockPosition));

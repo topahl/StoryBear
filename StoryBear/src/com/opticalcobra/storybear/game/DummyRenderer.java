@@ -40,7 +40,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 //		Database.requestnum = 0;
 //		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(1));
 //		System.out.println(Database.requestnum);
-		storyInfo = db.getStoryInfoFromDatabase(1);
+		storyInfo = db.getStoryInfoFromDatabase(7);
 	}
 	
 	private BufferedImage getNextMapElement(){

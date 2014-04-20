@@ -39,7 +39,7 @@ public class Main {
 //		db.insertStoryToDatabase(currentStory);
 //		ta.analyzeText(currentStory);
 //		
-		
-		//System.out.print(db.queryGetStoryFromDatabaye(3));
+//		
+//		System.out.print("feddisch!");
 	}
 }

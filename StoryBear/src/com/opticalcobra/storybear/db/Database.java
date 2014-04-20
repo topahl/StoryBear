@@ -368,10 +368,10 @@ public class Database {
 			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
 			if (rsCharacter.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER,rsCharacter.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsCollectable.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsCollectable.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsMiddleground.next()){
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);

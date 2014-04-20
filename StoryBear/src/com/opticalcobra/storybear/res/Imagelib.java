@@ -132,22 +132,21 @@ public class Imagelib {
 		}
 	}
 	
-	public BufferedImage loadCharacterObjectPic(String word){
+	public BufferedImage loadCharacterObjectPic(int image_id){
 		BufferedImage result;
 		BufferedImage full;
 		//Check whether image is already cached
-		result = images.get("cha-"+word);
+		result = images.get("cha-"+image_id);
 		if(result != null){
 			return result;
 		}
 		//Request must be handled via database request
-		String sql = "SELECT IMAGEID FROM CHARACTER_OBJECT WHERE WORD = '" + word +";";
 		ImageResult image;
 		try {
-			image = db.queryImagedata(db.queryNumberResultOnly(sql)[0]);
+			image = db.queryImagedata(image_id);
 			full=loadRessourcesImage(image.getUrl());
 			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
-			images.put("cha-"+word, result);
+			images.put("cha-"+image_id, result);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
