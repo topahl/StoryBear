@@ -150,39 +150,7 @@ public class Hero extends JLabel{
 					e7.printStackTrace();
 				}*/
 			}
-			
-			//Ringbuffer für die Tiles aktuallisieren   
-			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5  ){
-				
-				//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
-				if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
-					
-					//Befindet sich Hero genau auf einer Kachelgrenze?
-					if ((Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
-						if (ringbufferCounter>0){
-							ringbufferCounter--;
-						}
-						
-						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-						if (!isInAJump()){
-							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-						}
-					}
-				}
-				
-				//Der Foreground hat sich um keine ganze Kachel verschoben
-				 else{ 
-					 
-					//Befindet sich Hero genau auf einer Kachelgrenze?
-					if (((Ressources.RASTERSIZE - ((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
-							ringbufferCounter--;
-						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-						if (!isInAJump()){
-							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-						}
-					}
-				}
-			}
+			checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant);
 		}
 
 		else if(runDirection == 'r'){
@@ -200,50 +168,103 @@ public class Hero extends JLabel{
 					e.printStackTrace();
 				}*/
 			}
-
-			//Ringbuffer für die Tiles aktuallisieren    
-			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5){
-				
-				//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
-				if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
-					
-					//Befindet sich Hero genau auf einer Kachelgrenze?
-					if (((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
-						if (ringbufferCounter != 6){
-							ringbufferCounter++;
-						}
-						
-						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-						if (!isInAJump()){
-							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-						}
-					}
-				}	
-				
-				//Der Foreground hat sich um keine ganze Kachel verschoben
-				 else{
-					 
-					//Befindet sich Hero genau auf einer Kachelgrenze?
-					if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE) + 
-							(Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
-						if (ringbufferCounter == 6){
-							ringbuffer.read();
-						}
-						else{
-							ringbufferCounter++;
-						}
-						
-						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-						if (!isInAJump()){
-							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-						}
-					}
-				}
-			}
+			checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant);
 		}
 		this.setLocation(posX, this.getLocation().y);
 	}
 	
+	
+	/**
+	 * requires that hero runs to the left
+	 * checks if hero reaches a new Tile. If yes, the height will be adjusted and the Ringbuffer refreshed
+	 * @author Martika
+	 * @param stepCounterLayer
+	 * @param runConstant
+	 */
+	public void checkIfHeroReachsANewTileByWalkingLeft(int stepCounterLayer, double runConstant){
+		//Ringbuffer für die Tiles aktuallisieren   
+		if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5  ){
+			
+			//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
+			if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
+				
+				//Befindet sich Hero genau auf einer Kachelgrenze?
+				if ((Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
+					if (ringbufferCounter>0){
+						ringbufferCounter--;
+					}
+					
+					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+					if (!isInAJump()){
+						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					}
+				}
+			}
+			
+			//Der Foreground hat sich um keine ganze Kachel verschoben
+			 else{ 
+				 
+				//Befindet sich Hero genau auf einer Kachelgrenze?
+				if (((Ressources.RASTERSIZE - ((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
+						ringbufferCounter--;
+					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+					if (!isInAJump()){
+						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					}
+				}
+			}
+		}
+	}
+	
+	
+	/**
+	 * requires that hero runs to the right
+	 * checks if hero reaches a new Tile. If yes, the height will be adjusted and the Ringbuffer refreshed
+	 * @author Martika
+	 * @param stepCounterLayer
+	 * @param runConstant
+	 */
+	public void checkIfHeroReachsANewTileByWalkingRight(int stepCounterLayer, double runConstant){
+		//Ringbuffer für die Tiles aktuallisieren    
+		if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5){
+			
+			//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
+			if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
+				
+				//Befindet sich Hero genau auf einer Kachelgrenze?
+				if (((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
+					if (ringbufferCounter != 6){
+						ringbufferCounter++;
+					}
+					
+					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+					if (!isInAJump()){
+						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					}
+				}
+			}	
+			
+			//Der Foreground hat sich um keine ganze Kachel verschoben
+			 else{
+				 
+				//Befindet sich Hero genau auf einer Kachelgrenze?
+				if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE) + 
+						(Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
+					if (ringbufferCounter == 6){
+						ringbuffer.read();
+					}
+					else{
+						ringbufferCounter++;
+					}
+					
+					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+					if (!isInAJump()){
+						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					}
+				}
+			}
+		}
+	}
 	
 	/**
 	 * it looks like hero is running
