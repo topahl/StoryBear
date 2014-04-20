@@ -361,7 +361,7 @@ public class Database {
 		while (rsFexione.next()){ 
 
 			flexinom= (String) rsFexione.getObject(1);
-			flexinom.replace("'", "");
+			flexinom.replaceAll("[^a-zA-Z δόφί]", "");
 			
 			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");		
 			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+flexinom+"';");

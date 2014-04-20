@@ -105,7 +105,7 @@ public class TextAnalyzer {
 		
 		
 		storyInfo.setElements(elements);
-		db.insertStoryInfoToDatabase(storyInfo);
+//		db.insertStoryInfoToDatabase(storyInfo);
 		return storyInfo;
 	}
 	
