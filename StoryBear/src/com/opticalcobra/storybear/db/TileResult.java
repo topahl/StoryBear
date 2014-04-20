@@ -10,17 +10,19 @@ public class TileResult {
 
 	private int tileType;
 	private int tileHeight;
-	private boolean walkable;
+	private boolean walkableLeft;
+	private boolean walkableRight;
 	
 	/**
 	 * 
 	 * @param tileType
 	 * @param tileHeight
 	 */
-	public TileResult(int tileType, int tileHeight, boolean walkable){
+	public TileResult(int tileType, int tileHeight, boolean walkableLeft, boolean walkableRight){
 		this.tileType = tileType;
 		this.tileHeight = tileHeight;
-		this.walkable = walkable;
+		this.walkableLeft = walkableLeft;
+		this.walkableRight = walkableRight;
 	}
 
 
@@ -44,13 +46,19 @@ public class TileResult {
 	}
 
 
-	public boolean isWalkable() {
-		return walkable;
+	public boolean isWalkableLeft() {
+		return walkableLeft;
 	}
 
-
-	public void setWalkable(boolean walkable) {
-		this.walkable = walkable;
+	public void setWalkableLeft(boolean walkableLeft) {
+		this.walkableLeft = walkableLeft;
 	}
 	
+	public boolean isWalkableRight() {
+		return walkableRight;
+	}
+
+	public void setWalkableRight(boolean walkableRight) {
+		this.walkableRight = walkableRight;
+	}
 }

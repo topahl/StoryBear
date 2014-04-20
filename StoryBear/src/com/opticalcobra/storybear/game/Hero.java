@@ -74,7 +74,7 @@ public class Hero extends JLabel{
 				run(stepCounterLayer);
 			}
 		} else{
-			if(runDirection != 'n' && ringbuffer.top(ringbufferCounter).isWalkable()){
+			if(runDirection == 'r' && ringbuffer.top(ringbufferCounter).isWalkableRight()  ||  runDirection == 'l' && ringbuffer.top(ringbufferCounter).isWalkableLeft()){
 				run(stepCounterLayer);
 			}
 		}
@@ -150,7 +150,7 @@ public class Hero extends JLabel{
 				}*/
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant) && !isInAJump()){
-				if(ringbuffer.top(ringbufferCounter).isWalkable()){
+				if(ringbuffer.top(ringbufferCounter).isWalkableLeft()){
 					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 				}
 			}
@@ -172,7 +172,7 @@ public class Hero extends JLabel{
 				}*/
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant) && !isInAJump()){
-				if(ringbuffer.top(ringbufferCounter).isWalkable()){
+				if(ringbuffer.top(ringbufferCounter).isWalkableRight()){
 					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 				}
 			}
@@ -291,7 +291,8 @@ public class Hero extends JLabel{
 			return true;
 		}
 		
-		if (!isInAJump() && runDirection != 'n'&& ringbuffer.top(ringbufferCounter).isWalkable()){
+		//Nur rechts notwendig?
+		if (!isInAJump() && (runDirection == 'r' && ringbuffer.top(ringbufferCounter).isWalkableRight() || runDirection == 'l' && ringbuffer.top(ringbufferCounter).isWalkableLeft())){
 			return true;
 		}
 		return false;
