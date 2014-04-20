@@ -144,7 +144,7 @@ public class Editor extends JFrame {
 		
 		
 		// Buttons
-		start = new Button(0, 0, (String) null, 0, 0, (MouseMotionListener) null);
+		start = new Button(0, 0, (String) null, 0, 0);
 		start.setText("Spiel starten");
 		start.setBounds(732, 323, 141, 46);
 		baseLayer.add(start);
@@ -163,7 +163,7 @@ public class Editor extends JFrame {
 			}
 		});
 		
-		export = new Button(0, 0, (String) null, 0, 0, (MouseMotionListener) null);
+		export = new Button(0, 0, (String) null, 0, 0);
 		export.setBounds(641, 222, 232, 80);
 		baseLayer.add(export);
 		export.setText("Exportieren");
@@ -195,7 +195,7 @@ public class Editor extends JFrame {
 			} 
 		});
 		
-		save = new Button(0, 0, (String) null, 0, 0, (MouseMotionListener) null);
+		save = new Button(0, 0, (String) null, 0, 0);
 		save.setText("Speichern");
 		save.setBounds(732, 399, 141, 46);
 		save.addMouseListener(new MouseListener() {
