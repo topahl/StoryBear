@@ -31,7 +31,7 @@ public class RenderHint implements ILevelAppearance {
 	public RenderHint(int block, int hint, int importance){
 		this.block = block;
 		this.renderHint = hint;
-		this.setImportance(importance);
+		this.importance = importance;
 	}
 	
 	

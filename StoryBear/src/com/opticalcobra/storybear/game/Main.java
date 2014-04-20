@@ -11,22 +11,22 @@ import com.opticalcobra.storybear.main.User;
 
 public class Main {
 	public static void main(String args[]){
-		Window gui = new Window();
+		//Window gui = new Window();
 		
-//		TextAnalyzer ta = new TextAnalyzer();
+		TextAnalyzer ta = new TextAnalyzer();
 //		Database db = new Database();
-//		Story currentStory = new Story();
-//		User a = new User("Tiki");
-//		currentStory.setAuthor(a);
-//		currentStory.setTitle("Hänsel und Gretel für arme");
-//		currentStory.setChangeDate(new Date());
-//		currentStory.setVersion(1);
-//		currentStory.setText("diiiiiiese Geschiiiiiiiiiiiiiiiiiiiichte hat meeeeeeeeeeeegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa lange wööööööööööörteeeeeeeerrrrrrrrrr"
-//				+ " um auch mal deeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen Überlaaaaaaaaaaaaaaaaauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuf von verscheidenen Laaaaaaaaaaaaaaaayern (wie Tooooooooooooooooooooobi"
-//				+ " sagen wüüüüüüüüüüüüüüüüüüüüüürde \"Lääääääääääääääääääääääääääääääyern\" zu teeeeeeeeeeeeeeeeeeeeeeeeeeesten :)");
-//		
-//		db.insertStoryToDatabase(currentStory);
-//		ta.analyzeText(currentStory);
+		Story currentStory = new Story();
+		User a = new User("Tiki");
+		currentStory.setAuthor(a);
+		currentStory.setTitle("Hänsel und Gretel für arme");
+		currentStory.setChangeDate(new Date());
+		currentStory.setVersion(1);
+		currentStory.setText("Wasser diiiiiiese Geschiiiiiiiiiiiiiiiiiiiichte Ozean hat meeeeeeeeeeeegaaaaa Winter aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa lange wööööööööööörteeeeeeeerrrrrrrrrr"
+				+ " um auch mal deeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen Überlaaaaaaaaaaaaaaa Stadt aauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuf von verscheidenen Laaaaaaaaaaaaaaaayern (wie Tooooooooooooooooooooobi"
+				+ " sagen wüüüüüüüüüüüüüüüüüüüüüürde \"Lääääääääääääääääääääääääääääääyern\" Ozean zu teeeeeeeeeeeeeeeeeeeeeeeeeeesten :)");
+		
+		//db.insertStoryToDatabase(currentStory);
+		ta.analyzeText(currentStory);
 //		
 //		
 //		currentStory = new Story();

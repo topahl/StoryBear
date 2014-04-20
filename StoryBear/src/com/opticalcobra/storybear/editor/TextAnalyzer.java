@@ -115,19 +115,32 @@ public class TextAnalyzer {
 	 * if the schemes are coming to close after each other their position has to be modified
 	 */
 	private ArrayList<RenderHint> calcNewBlockPositions(ArrayList<RenderHint> renderHint, int numberOfBlocks){
-		//the startpoint of the first scheme is always fix
 		if(renderHint.size() > 0){
+			//the startpoint of the first scheme is always fix
 			if(renderHint.get(0).getBlock() < Ressources.TILESPERPANEL/2)
 				renderHint.get(0).setBlock(0);
 			else
 				renderHint.get(0).setBlock(renderHint.get(0).getBlock() - Ressources.TILESPERPANEL/2);
 			
 			for(int i=1;i<renderHint.size();i++){
-				//if the distance of 2 schemes is bigger than needed
-				if(renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() > 3*Ressources.TILESPERPANEL/2)
+				//if the distance of 2 schemes is between 24 and 160
+				if((renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() > 3*Ressources.TILESPERPANEL/2) && (renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() <= Ressources.MAXLENGTHOFSCHEME))
 					renderHint.get(i).setBlock(renderHint.get(i).getBlock() - Ressources.TILESPERPANEL/2);
+				//if the distance of 2 schemes is between 16 and 24 --> new block position can't be less 8 like in the case above 
 				else if(renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() > Ressources.TILESPERPANEL)
 					renderHint.get(i).setBlock(renderHint.get(i-1).getBlock() + Ressources.TILESPERPANEL);
+				//if the distance of 2 schemes is bigger than 160
+				else if(renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() > Ressources.MAXLENGTHOFSCHEME){
+					//insert RenderHint with the scheme NONE
+					if(renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() > Ressources.MAXLENGTHOFSCHEME + Ressources.TILESPERPANEL/2)
+						renderHint.add(i,new RenderHint(renderHint.get(i-1).getBlock()+Ressources.MAXLENGTHOFSCHEME, RenderHint.RENDERHINT_NONE, 1));
+					else
+						renderHint.add(i,new RenderHint(renderHint.get(i-1).getBlock()+Ressources.MAXLENGTHOFSCHEME - Ressources.TILESPERPANEL/2, RenderHint.RENDERHINT_NONE, 1));
+					i++;
+					renderHint.get(i).setBlock(renderHint.get(i).getBlock() - Ressources.TILESPERPANEL/2);
+				}		
+				else
+					renderHint.remove(i);
 			}	
 		}
 		
