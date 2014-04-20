@@ -342,6 +342,7 @@ public class Database {
 		ResultSet rsCharacter;
 		ResultSet rsMiddleground;
 		String flexinom = "";
+		ArrayList[] arrayRS; //needed for the ArrayList of the ResultSet rsFexione
 		
 		rsFexione = query("SELECT DISTINCT t2.word FROM term t "
 				+ "LEFT JOIN synset s ON t.synset_id =s.id "
@@ -352,7 +353,9 @@ public class Database {
 				+ "WHERE t.word in (SELECT basic FROM morph where reflexive= '" +word+ "' ) "
 				+ "OR t.word like '" +word+ "' OR t.normalized_word like '" +word+ "' "
 				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= '" +word+ "' );");
-
+		
+		arrayRS = this.toArrayList(rsFexione);
+		
 		while (rsFexione.next()){ 
 
 			flexinom= (String) rsFexione.getObject(1);
@@ -363,17 +366,17 @@ public class Database {
 			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
 			if (rsCharacter.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER, rsMiddleground.getInt("IMAGE_ID"));
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsCollectable.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsMiddleground.getInt("IMAGE_ID"));
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsMiddleground.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"));
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
 			}
 		}
 		if (result==null) {
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1);
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1, arrayRS);
 		}
 		rsFexione.close();
 		return result;

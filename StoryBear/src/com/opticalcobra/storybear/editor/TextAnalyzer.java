@@ -77,7 +77,7 @@ public class TextAnalyzer {
 					break;
 				}
 
-				rh = this.getScheme(word,blockPosition);
+				rh = this.getScheme(word,blockPosition,wr);
 				if(rh != null)
 					renderHint.add(rh);
 			} catch (SQLException e) {
@@ -158,45 +158,34 @@ public class TextAnalyzer {
 	 * @author Miriam
 	 * analyzes if the words indicates a scheme, eg. Water, Mountains, ... for the Foreground
 	 */
-	private RenderHint getScheme(String word, int block) throws SQLException{
+	private RenderHint getScheme(String word, int block, WordResult wr) throws SQLException{
 		RenderHint rh;
-		ResultSet rs = db.query("SELECT DISTINCT t2.word FROM term t "
-				+ "LEFT JOIN synset s ON t.synset_id =s.id "
-				+ "LEFT JOIN term t2 ON t2.synset_id = s.id "
-				+ "LEFT JOIN category_link cl ON t2.synset_id = cl.synset_id "
-				+ "LEFT JOIN category c ON c.id = cl.category_id "
-				+ "LEFT JOIN term_level tl ON t2.level_id = tl.id "
-				+ "WHERE t.word in (SELECT basic FROM morph where reflexive= '" +word+ "' ) "
-				+ "OR t.word like '" +word+ "' OR t.normalized_word like '" +word+ "' "
-				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= '" +word+ "' );");
+		ArrayList[] rs = wr.getResultSet();
 		
-		while(rs.next()){
-			//checks if scheme is water
-			for(int i=0;i<RenderHint.WORDGROUP_LENGTH;i++){
-				if((RenderHint.WORDGROUP_WATER.length>i) && (((String)rs.getObject(1)).contains(RenderHint.WORDGROUP_WATER[i]))){
-					rh = new RenderHint(block,RenderHint.RENDERHINT_WATER,1);
-					rs.close();
-					return rh;
-				}
-				else if((RenderHint.WORDGROUP_MOUNTAINS.length>i) && (((String)rs.getObject(1)).contains(RenderHint.WORDGROUP_MOUNTAINS[i]))){
-					rh = new RenderHint(block,RenderHint.RENDERHINT_MOUNTAINS,1);
-					rs.close();
-					return rh;
-				}
-				else if((RenderHint.WORDGROUP_CITY.length>i) && (((String)rs.getObject(1)).contains(RenderHint.WORDGROUP_CITY[i]))){
-					rh = new RenderHint(block,RenderHint.RENDERHINT_CITY,1);
-					rs.close();
-					return rh;
-				}
-				else if((RenderHint.WORDGROUP_WINTER.length>i) && (((String)rs.getObject(1)).contains(RenderHint.WORDGROUP_WINTER[i]))){
-					rh = new RenderHint(block,RenderHint.RENDERHINT_WINTER,1);
-					rs.close();
-					return rh;
+		if(rs.length > 0){
+			ArrayList<String> stringResults = rs[0];
+			
+			for(String s : stringResults){
+				for(int i=0;i<RenderHint.WORDGROUP_LENGTH;i++){
+					if((RenderHint.WORDGROUP_WATER.length>i) && s.contains(RenderHint.WORDGROUP_WATER[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_WATER,1);
+						return rh;
+					}
+					else if((RenderHint.WORDGROUP_MOUNTAINS.length>i) && s.contains(RenderHint.WORDGROUP_MOUNTAINS[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_MOUNTAINS,1);
+						return rh;
+					}
+					else if((RenderHint.WORDGROUP_CITY.length>i) && s.contains(RenderHint.WORDGROUP_CITY[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_CITY,1);
+						return rh;
+					}
+					else if((RenderHint.WORDGROUP_WINTER.length>i) && s.contains(RenderHint.WORDGROUP_WINTER[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_WINTER,1);
+						return rh;
+					}
 				}
 			}
-			
 		}
-		rs.close();
 		
 		return null;
 	}
