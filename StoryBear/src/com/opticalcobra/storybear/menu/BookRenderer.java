@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.menu;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -32,6 +33,7 @@ public class BookRenderer extends DefaultListCellRenderer {
 		private Imagelib il = Imagelib.getInstance();
 		private int [] offset = new int[4]; 
 		private int [] books = {Imagelib.MENU_BOOK_1,Imagelib.MENU_BOOK_2,Imagelib.MENU_BOOK_3,Imagelib.MENU_BOOK_4};
+		private Color [] colors = {new Color(200,156,7),new Color(249,194,9),new Color(255,255,255), new Color(249,194,9),new Color(249,194,9),new Color(0,0,0)};
 				
 	
 	
@@ -44,14 +46,28 @@ public class BookRenderer extends DefaultListCellRenderer {
 		user = new JLabel();
 		title = new JLabel();
 		book = new JLabel();
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(pane);
+		pane.setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				this.book, javax.swing.GroupLayout.DEFAULT_SIZE,
+				(int) (1050/Ressources.SCALE), Short.MAX_VALUE));
+		layout.setVerticalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				this.book, javax.swing.GroupLayout.DEFAULT_SIZE,
+				(int) (144/Ressources.SCALE), Short.MAX_VALUE));
 		
 		pane.setSize((int)(1050/Ressources.SCALE), (int)(144/Ressources.SCALE));
+		pane.setBackground(new Color(0,0,0,0));
+		pane.setOpaque(true);
 		pane.add(user);
 		pane.add(title);
 		pane.add(book);
-		title.setFont(fc.getFont("Standard",(float) (25/Ressources.SCALE)));
-		user.setFont(fc.getFont("Fontier_R", (float) (15/Ressources.SCALE)));
+		title.setFont(fc.getFont("Standard",(float) (60/Ressources.SCALE)));
+		user.setFont(fc.getFont("Fontier_SC", (float) (25/Ressources.SCALE)));
 		book.setBounds(0,0,(int) (1050/Ressources.SCALE), (int)(144/Ressources.SCALE));
+		this.setBorder(null);
+		
 	}
 	
 	
@@ -63,12 +79,17 @@ public class BookRenderer extends DefaultListCellRenderer {
             boolean selected,
             boolean expanded) {
 		
-		//Story story = (Story) value;
+		Story story = (Story) value;
 		book.setIcon(new ImageIcon(il.MenuImage(books[index%4])));
-		user.setBounds(offset[index%4], (int)(40/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(60/Ressources.SCALE));
-		user.setText("text");
-		title.setBounds(offset[index%4], (int)(100/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(40/Ressources.SCALE));
-		title.setText("text");
+		
+		title.setForeground(colors[index%colors.length]);
+		title.setText(story.getTitle());
+		title.setBounds(offset[index%4], (int)(20/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		
+		user.setForeground(colors[index%colors.length]);
+		user.setText("von "+story.getAuthor().getName());
+		user.setBounds(offset[index%4], (int)(80/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(40/Ressources.SCALE));
+		
 
 		return pane;
 	}

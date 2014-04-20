@@ -145,8 +145,6 @@ public class Database {
 		try {
 			currentBlob = getBlob(id, "LEVELS");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return ((StoryInfo)Blob.read(currentBlob));
 	}
