@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.db.TileResult;
 import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -23,7 +22,6 @@ public class Hero extends JLabel{
 	
 	private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*17);
 	private Imagelib imageLib = Imagelib.getInstance();
-	private Database db = new Database();
 	
 	private char type; 		//shows which kind of hero it is, eg. bear, ...
 	
@@ -82,7 +80,6 @@ public class Hero extends JLabel{
 		}
 	}
 	
-	
 
 	/**
 	 * starts the jump of hero by pressing keys
@@ -96,7 +93,6 @@ public class Hero extends JLabel{
 			jumpSpeed = Ressources.SPEEDCONSTANT;
 		}
 	}
-	
 	
 	
 	/**
@@ -128,7 +124,6 @@ public class Hero extends JLabel{
 			inADoubleJump = false;
 		}
 	}
-	
 	
 	
 	/**
@@ -206,11 +201,6 @@ public class Hero extends JLabel{
 						ringbufferCounter--;
 					}
 					return true;
-					
-//					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-//					if (!isInAJump()){
-//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-//					}
 				}
 			}
 			
@@ -221,10 +211,6 @@ public class Hero extends JLabel{
 				if (((Ressources.RASTERSIZE - ((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
 						ringbufferCounter--;
 						return true;
-					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-//					if (!isInAJump()){
-//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-//					}
 				}
 			}
 		} 
@@ -252,11 +238,6 @@ public class Hero extends JLabel{
 						ringbufferCounter++;
 					}
 					return true;
-					
-//					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-//					if (!isInAJump()){
-//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-//					}
 				}
 			}	
 			
@@ -273,10 +254,6 @@ public class Hero extends JLabel{
 						ringbufferCounter++;
 					}
 					return true;
-//					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-//					if (!isInAJump()){
-//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-//					}
 				}
 			}
 		} 
@@ -304,6 +281,7 @@ public class Hero extends JLabel{
 	}
 	
 	/**
+	 * @author Martika
 	 * Is Tile walkable?
 	 * @return
 	 */
