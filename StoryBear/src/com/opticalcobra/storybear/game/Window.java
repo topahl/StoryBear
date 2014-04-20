@@ -148,7 +148,7 @@ public class Window extends JFrame {
 		if(stepCounter % 4 == 0){
 			Hero.getInstance().heroStep(stepCounterLayer);
 		}
-		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() >= Ressources.RASTERSIZE*5){
+		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE*5){
 			layerStep();
 		}
 		

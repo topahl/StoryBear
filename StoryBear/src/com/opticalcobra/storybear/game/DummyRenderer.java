@@ -49,6 +49,10 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		if (!(ringbuffer.top() == null)){
 			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 			next = following[rand.nextInt(following.length)];
+			
+		}else{
+			lastTileType = next;
+			ringbuffer.write(db.getTileInfo(lastTileType));
 		}
 		
 		lastTileType = next;

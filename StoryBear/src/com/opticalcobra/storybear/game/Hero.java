@@ -33,7 +33,7 @@ public class Hero extends JLabel{
 
 	//Run attributes
 	private char runDirection = 'n';
-	private int ringbufferCounter = 1;
+	private int ringbufferCounter = 2;    //Es sind auf dem Screen immer 5-6 Kacheln zur freien Bewegung verfügbar
 	
 	
 	private Hero(){
@@ -151,21 +151,37 @@ public class Hero extends JLabel{
 				}*/
 			}
 			
-			if (ringbufferCounter == 5){
-				System.out.print("Counter 5");
-			}
-			
-			//
-			//getLocation().x + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE &&
-			//Ringbuffer für die Tiles aktuallisieren   - Ressources.CHARACTERWIDTH
-			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5 && 
-					(Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
-				if (ringbufferCounter>0){
-					ringbufferCounter--;
+			//Ringbuffer für die Tiles aktuallisieren   
+			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5  ){
+				
+				//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
+				if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
+					
+					//Befindet sich Hero genau auf einer Kachelgrenze?
+					if ((Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
+						if (ringbufferCounter>0){
+							ringbufferCounter--;
+						}
+						
+						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+						if (!isInAJump()){
+							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+						}
+					}
 				}
-				if (!isInAJump()){
-					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-				} 
+				
+				//Der Foreground hat sich um keine ganze Kachel verschoben
+				 else{ 
+					 
+					//Befindet sich Hero genau auf einer Kachelgrenze?
+					if (((Ressources.RASTERSIZE - ((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
+							ringbufferCounter--;
+						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+						if (!isInAJump()){
+							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+						}
+					}
+				}
 			}
 		}
 
@@ -185,43 +201,47 @@ public class Hero extends JLabel{
 				}*/
 			}
 
-			//Ringbuffer für die Tiles aktuallisieren     - (Ressources.CHARACTERWIDTH / 2)   + stepCounterLayer % Ressources.SCALE
-			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5 && 
-					getLocation().x + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE &&
-					((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0 ){
-				if (ringbufferCounter == 5){
-					ringbuffer.read();
+			//Ringbuffer für die Tiles aktuallisieren    
+			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5){
+				
+				//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
+				if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
+					
+					//Befindet sich Hero genau auf einer Kachelgrenze?
+					if (((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
+						if (ringbufferCounter != 6){
+							ringbufferCounter++;
+						}
+						
+						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+						if (!isInAJump()){
+							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+						}
+					}
+				}	
+				
+				//Der Foreground hat sich um keine ganze Kachel verschoben
+				 else{
+					 
+					//Befindet sich Hero genau auf einer Kachelgrenze?
+					if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE) + 
+							(Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
+						if (ringbufferCounter == 6){
+							ringbuffer.read();
+						}
+						else{
+							ringbufferCounter++;
+						}
+						
+						//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+						if (!isInAJump()){
+							setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+						}
+					}
 				}
-				else{
-					ringbufferCounter++;
-				}
-				if (!isInAJump()){
-					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-				} 
 			}
 		}
-		
 		this.setLocation(posX, this.getLocation().y);
-		
-		
-//		// && stepCounterLayer != 0
-//		if (getLocation().x != 0  && getLocation().x < Ressources.RASTERSIZE*5 &&
-//				((getLocation().x-(getLocation().x / Ressources.RASTERSIZE)*Ressources.RASTERSIZE)) + stepCounterLayer % Ressources.SCALE - runConstant < 0 ){
-//			if (runDirection == 'r'){
-//				if (ringbufferCounter == 5){
-//					ringbuffer.read();
-//				}
-//				else{
-//					ringbufferCounter++;
-//				}
-//			}
-//			if (runDirection == 'l' && ringbufferCounter>0){
-//				ringbufferCounter--;
-//			}
-//			if (!isInAJump()){
-//				setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-//			} 
-//		}
 	}
 	
 	
@@ -232,18 +252,12 @@ public class Hero extends JLabel{
 	 * @param direction 
 	 */
 	public void runFreazing(int currentCounterStep){
-		if(currentCounterStep % Ressources.RASTERSIZE == 0){
-			if (runDirection == 'r'){
-				if (ringbufferCounter>5){
-					ringbuffer.read();
-				} 
-				else{
-					ringbufferCounter++;
-				}
-			}
-			if (runDirection == 'l'){
-				ringbufferCounter--;
-			}
+		if((currentCounterStep + (Ressources.CHARACTERWIDTH/2)) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
+			
+			//Da bis zu 6 Kacheln erreichbar sind, darf erst danach aus dem Ringbuffer gelesen werden
+			if (ringbufferCounter==6){
+				ringbuffer.read();
+			} 
 			if (!isInAJump()){
 				setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 			}
