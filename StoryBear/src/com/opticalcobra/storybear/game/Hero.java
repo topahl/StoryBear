@@ -72,9 +72,13 @@ public class Hero extends JLabel{
 		
 		if (isInAJump()){
 			jump();
-		}
-		if(runDirection != 'n'){
-			run(stepCounterLayer);
+			if(runDirection != 'n'){
+				run(stepCounterLayer);
+			}
+		} else{
+			if(runDirection != 'n' && ringbuffer.top(ringbufferCounter).isWalkable()){
+				run(stepCounterLayer);
+			}
 		}
 	}
 	
@@ -150,7 +154,11 @@ public class Hero extends JLabel{
 					e7.printStackTrace();
 				}*/
 			}
-			checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant);
+			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant) && !isInAJump()){
+				if(ringbuffer.top(ringbufferCounter).isWalkable()){
+					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+				}
+			}
 		}
 
 		else if(runDirection == 'r'){
@@ -168,7 +176,11 @@ public class Hero extends JLabel{
 					e.printStackTrace();
 				}*/
 			}
-			checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant);
+			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant) && !isInAJump()){
+				if(ringbuffer.top(ringbufferCounter).isWalkable()){
+					setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+				}
+			}
 		}
 		this.setLocation(posX, this.getLocation().y);
 	}
@@ -181,7 +193,7 @@ public class Hero extends JLabel{
 	 * @param stepCounterLayer
 	 * @param runConstant
 	 */
-	public void checkIfHeroReachsANewTileByWalkingLeft(int stepCounterLayer, double runConstant){
+	public boolean checkIfHeroReachsANewTileByWalkingLeft(int stepCounterLayer, double runConstant){
 		//Ringbuffer für die Tiles aktuallisieren   
 		if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5  ){
 			
@@ -193,11 +205,12 @@ public class Hero extends JLabel{
 					if (ringbufferCounter>0){
 						ringbufferCounter--;
 					}
+					return true;
 					
-					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-					if (!isInAJump()){
-						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-					}
+//					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+//					if (!isInAJump()){
+//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+//					}
 				}
 			}
 			
@@ -207,13 +220,15 @@ public class Hero extends JLabel{
 				//Befindet sich Hero genau auf einer Kachelgrenze?
 				if (((Ressources.RASTERSIZE - ((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
 						ringbufferCounter--;
+						return true;
 					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-					if (!isInAJump()){
-						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-					}
+//					if (!isInAJump()){
+//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+//					}
 				}
 			}
-		}
+		} 
+		return false;
 	}
 	
 	
@@ -224,7 +239,7 @@ public class Hero extends JLabel{
 	 * @param stepCounterLayer
 	 * @param runConstant
 	 */
-	public void checkIfHeroReachsANewTileByWalkingRight(int stepCounterLayer, double runConstant){
+	public boolean checkIfHeroReachsANewTileByWalkingRight(int stepCounterLayer, double runConstant){
 		//Ringbuffer für die Tiles aktuallisieren    
 		if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5){
 			
@@ -236,11 +251,12 @@ public class Hero extends JLabel{
 					if (ringbufferCounter != 6){
 						ringbufferCounter++;
 					}
+					return true;
 					
-					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-					if (!isInAJump()){
-						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-					}
+//					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+//					if (!isInAJump()){
+//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+//					}
 				}
 			}	
 			
@@ -256,15 +272,17 @@ public class Hero extends JLabel{
 					else{
 						ringbufferCounter++;
 					}
-					
-					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
-					if (!isInAJump()){
-						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-					}
+					return true;
+//					//Nur wenn man gerade nicht springt, soll sich die Position automatisch verändern
+//					if (!isInAJump()){
+//						setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+//					}
 				}
 			}
-		}
+		} 
+		return false;
 	}
+	
 	
 	/**
 	 * it looks like hero is running
@@ -285,8 +303,23 @@ public class Hero extends JLabel{
 		}
 	}
 	
-	
+	/**
+	 * Is Tile walkable?
+	 * @return
+	 */
+	public boolean isHeroAllowedToWalk(){
+		
+		if (isInAJump() && runDirection != 'n'){
+			return true;
+		}
+		
+		if (!isInAJump() && runDirection != 'n'&& ringbuffer.top(ringbufferCounter).isWalkable()){
+			return true;
+		}
+		return false;
+	}
 
+	
 	/**
 	 * is hero in a jump or not
 	 * @author Martika & Tobias
