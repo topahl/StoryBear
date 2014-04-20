@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 
 import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.main.OSTimer;
+import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.TestMemory;
@@ -30,9 +31,9 @@ public class Window extends JFrame {
 	private int stepCounterLayer = 0;
 	private Control controle;
 	
-	private JButton buttonMenu = new JButton();
-	private JButton buttonBreak = new JButton();
-	private JButton buttonExit = new JButton();
+	private Button buttonMenu;
+	private Button buttonBreak;
+	private Button buttonExit;
 	private JLabel labelScore = new JLabel();
 	
 //	private boolean inAJump = false; //shows that jump is executed currently
@@ -93,22 +94,31 @@ public class Window extends JFrame {
 		
 		
 		//initialize Buttons
-		this.buttonMenu.setBounds(Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE, 
-				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
-		this.buttonMenu.setIcon(new ImageIcon(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_BLACK)));
-		this.buttonMenu.setVisible(true);
+		this.buttonMenu = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_WHITE),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_GREY),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
+				"buttonMenu",
+				Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE
+				);
 		this.baseLayer.add(this.buttonMenu);
 		
-		this.buttonBreak.setBounds(2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE, 
-				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
-		this.buttonBreak.setIcon(new ImageIcon(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_BLACK)));
-		this.buttonBreak.setVisible(true);
+		this.buttonBreak = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_WHITE),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_GREY),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
+				"buttonBreak",
+				2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
+				);	
 		this.baseLayer.add(this.buttonBreak);
 		
-		this.buttonExit.setBounds(3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE, 
-				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
-		this.buttonExit.setIcon(new ImageIcon(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_BLACK)));
-		this.buttonExit.setVisible(true);
+		this.buttonExit = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_WHITE),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_GREY),
+				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
+				"buttonExit",
+				3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
+				);
 		this.baseLayer.add(this.buttonExit);
 		
 		//initialize Label for Highscore

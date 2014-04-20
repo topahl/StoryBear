@@ -4,19 +4,14 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class Button extends JButton implements ActionListener, MouseListener{
+public class Button extends JButton implements ActionListener{
 	//invisible Button
-	public Button(int width, int height,String funktionsname, int x, int y, MouseMotionListener ml){
-		addMouseMotionListener(ml);
-		addMouseListener(this);
+	public Button(int width, int height,String funktionsname, int x, int y){
 		addActionListener(this);
 		setBorder(null);
         setBorderPainted(false);
@@ -27,9 +22,7 @@ public class Button extends JButton implements ActionListener, MouseListener{
 	}
 
 	//visible Button
-	public Button(BufferedImage normal, BufferedImage hover, BufferedImage clicked,BufferedImage disabled, String funktionsname, int x, int y,MouseMotionListener ml){
-		addMouseMotionListener(ml);
-		addMouseListener(this);
+	public Button(BufferedImage normal, BufferedImage hover, BufferedImage clicked,BufferedImage disabled, String funktionsname, int x, int y){
 		addActionListener(this);
 
 		setIcon(new ImageIcon(normal));
@@ -50,27 +43,6 @@ public class Button extends JButton implements ActionListener, MouseListener{
 	public void actionPerformed(ActionEvent e) {
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		//do nothing
-	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// do nothing
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// do nothing
-	}
 
 }
