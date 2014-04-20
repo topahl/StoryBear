@@ -70,7 +70,7 @@ public class TextAnalyzer {
 					elements.add(new Character(blockPosition,wr.getImage_id()));
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_COLLECTABLE:
-					elements.add(new Collectable(blockPosition));
+					elements.add(new Collectable(blockPosition,wr.getImage_id()));
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND:
 					elements.add(new Landscape(blockPosition));
