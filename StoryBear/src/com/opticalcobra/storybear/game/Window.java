@@ -1,8 +1,10 @@
 package com.opticalcobra.storybear.game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.util.Timer;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -24,6 +26,11 @@ public class Window extends JFrame {
 	private int stepCounter = 1;
 	private int stepCounterLayer = 0;
 	private Control controle;
+	
+	private JButton buttonMenue = new JButton();
+	private JButton buttonBreak = new JButton();
+	private JButton buttonExit = new JButton();
+	private JLabel labelScore = new JLabel();
 	
 //	private boolean inAJump = false; //shows that jump is executed currently
 //	private boolean inADoubleJump = false;
@@ -50,6 +57,7 @@ public class Window extends JFrame {
 		// initialize Controle 
 		this.controle = new Control();
 		this.addKeyListener(this.controle);
+		this.setFocusable(true);
 		timer.scheduleAtFixedRate(new OSTimer(this),Ressources.GAMESPEED, Ressources.GAMESPEED);
 		this.setVisible(true);
 	}
@@ -80,9 +88,40 @@ public class Window extends JFrame {
 			Debugger.main(null);
 		}
 		
-		// initialize Game Character
+		
+		//initialize Buttons
+		this.buttonMenue.setBounds(Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE, 
+				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
+		this.buttonMenue.setText("bla");
+		this.buttonMenue.setVisible(true);
+		this.baseLayer.add(this.buttonMenue);
+		
+		this.buttonBreak.setBounds(2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE, 
+				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
+		this.buttonBreak.setText("bla2");
+		this.buttonBreak.setVisible(true);
+		this.baseLayer.add(this.buttonBreak);
+		
+		this.buttonExit.setBounds(3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE, 
+				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
+		this.buttonExit.setText("bla3");
+		this.buttonExit.setVisible(true);
+		this.baseLayer.add(this.buttonExit);
+		
+		//initialize Label for Highscore
+		this.labelScore.setBounds(Ressources.WINDOW.width - Ressources.SCOREDISTANCERIGHT - 100,
+				Ressources.SCOREDISTANCEUP, 100, Ressources.SCORETEXTSIZE);
+		this.labelScore.setFont(new Font("Fontin Sans RG",Font.PLAIN,Ressources.SCORETEXTSIZE));
+		this.labelScore.setText("123456");
+		this.labelScore.setVisible(true);
+		this.baseLayer.add(this.labelScore);
+		
+		
+		// initialize Hero
 		//this.hero = new Hero('b');	//TODO: einlesen, welcher hero-Typ vom User ausgewählt wurde
 		this.baseLayer.add(Hero.getInstance());
+		
+		
 		
 		
 		//TODO Remove Dummy code

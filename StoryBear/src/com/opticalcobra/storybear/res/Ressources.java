@@ -41,6 +41,14 @@ public class Ressources {
 	public static final int TILESPERPANEL = 16;
 	public static final int MAXLENGTHOFSCHEME = 160; //unity = tiles
 	
+	
+	//Buttons and Highscore
+	public static final int BUTTONSIZE;
+	public static final int BUTTONDISTANCE;
+	public static final int SCORETEXTSIZE;
+	public static final int SCOREDISTANCERIGHT;
+	public static final int SCOREDISTANCEUP;
+	
 	static {
 		
 		SCREEN=Toolkit.getDefaultToolkit().getScreenSize();
@@ -63,6 +71,12 @@ public class Ressources {
 		SPEEDCONSTANT = (int) (36 / SCALE);
 		RUNCONSTANT = (int) (7 / SCALE);
 		
+		BUTTONSIZE = (int)(70 / SCALE);
+		BUTTONDISTANCE = (int)(20 / SCALE);
+		
+		SCORETEXTSIZE = (int)(37 / SCALE);
+		SCOREDISTANCERIGHT = (int)(40 / SCALE);
+		SCOREDISTANCEUP = (int)(37 /SCALE);
 	}
 	
 }

@@ -31,6 +31,17 @@ public class Control implements KeyListener {
 				break;	
 			case KeyEvent.VK_DOWN:
 				break;
+			case KeyEvent.VK_D:
+				Hero.getInstance().setRunDirection('r');
+				break;
+			case KeyEvent.VK_A:
+				Hero.getInstance().setRunDirection('l');
+				break;
+			case KeyEvent.VK_W:
+				Hero.getInstance().startJump();
+				break;	
+			case KeyEvent.VK_S:
+				break;
 		}
 	}
 
@@ -47,6 +58,14 @@ public class Control implements KeyListener {
 		case KeyEvent.VK_UP:
 			break;	
 		case KeyEvent.VK_DOWN:
+			break;
+		case KeyEvent.VK_D:
+		case KeyEvent.VK_A:
+			Hero.getInstance().setRunDirection('n');
+			break;
+		case KeyEvent.VK_W:
+			break;	
+		case KeyEvent.VK_S:
 			break;
 		}
 	}
