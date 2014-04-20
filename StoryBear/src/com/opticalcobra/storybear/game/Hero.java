@@ -147,17 +147,19 @@ public class Hero extends JLabel{
 					e.printStackTrace();
 				} catch (SQLException e) {
 					System.err.println(e.getMessage());
-					e.printStackTrace();
+					e7.printStackTrace();
 				}*/
 			}
 			
+			if (ringbufferCounter == 5){
+				System.out.print("Counter 5");
+			}
+			
+			//
+			//getLocation().x + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE &&
 			//Ringbuffer für die Tiles aktuallisieren   - Ressources.CHARACTERWIDTH
 			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5 && 
-					getLocation().x + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE &&
-					(Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  < 0 ){
-				if (ringbufferCounter == 5){
-					System.out.print("Counter 5");
-				}
+					(Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
 				if (ringbufferCounter>0){
 					ringbufferCounter--;
 				}
@@ -186,7 +188,7 @@ public class Hero extends JLabel{
 			//Ringbuffer für die Tiles aktuallisieren     - (Ressources.CHARACTERWIDTH / 2)   + stepCounterLayer % Ressources.SCALE
 			if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5 && 
 					getLocation().x + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE &&
-					((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant  < 0 ){
+					((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0 ){
 				if (ringbufferCounter == 5){
 					ringbuffer.read();
 				}
