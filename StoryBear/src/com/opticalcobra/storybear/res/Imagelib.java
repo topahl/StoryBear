@@ -47,6 +47,16 @@ public class Imagelib {
 	public static final int MENU_SCROLL_THUMB_BOTTOM = 250;
 	public static final int MENU_SCROLL_THUMB_MIDDLE = 251;
 	
+	public static final int GAME_BUTTON_MENUE_BLACK = 252;
+	public static final int GAME_BUTTON_MENUE_WHITE = 255;
+	public static final int GAME_BUTTON_MENUE_GREY = 258;
+	public static final int GAME_BUTTON_BREAK_BLACK = 253;
+	public static final int GAME_BUTTON_BREAK_WHITE = 256;
+	public static final int GAME_BUTTON_BREAK_GREY = 259;
+	public static final int GAME_BUTTON_EXIT_BLACK = 254;
+	public static final int GAME_BUTTON_EXIT_WHITE = 257;
+	public static final int GAME_BUTTON_EXIT_GREY = 260;
+	
 	
 	private Imagelib(){
 		db = new Database();
