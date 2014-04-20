@@ -47,9 +47,9 @@ public class Imagelib {
 	public static final int MENU_SCROLL_THUMB_BOTTOM = 250;
 	public static final int MENU_SCROLL_THUMB_MIDDLE = 251;
 	
-	public static final int GAME_BUTTON_MENUE_BLACK = 252;
-	public static final int GAME_BUTTON_MENUE_WHITE = 255;
-	public static final int GAME_BUTTON_MENUE_GREY = 258;
+	public static final int GAME_BUTTON_MENU_BLACK = 252;
+	public static final int GAME_BUTTON_MENU_WHITE = 255;
+	public static final int GAME_BUTTON_MENU_GREY = 258;
 	public static final int GAME_BUTTON_BREAK_BLACK = 253;
 	public static final int GAME_BUTTON_BREAK_WHITE = 256;
 	public static final int GAME_BUTTON_BREAK_GREY = 259;

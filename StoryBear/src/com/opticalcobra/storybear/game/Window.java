@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Timer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +13,7 @@ import javax.swing.SwingConstants;
 
 import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.main.OSTimer;
+import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.TestMemory;
 
@@ -28,7 +30,7 @@ public class Window extends JFrame {
 	private int stepCounterLayer = 0;
 	private Control controle;
 	
-	private JButton buttonMenue = new JButton();
+	private JButton buttonMenu = new JButton();
 	private JButton buttonBreak = new JButton();
 	private JButton buttonExit = new JButton();
 	private JLabel labelScore = new JLabel();
@@ -91,21 +93,21 @@ public class Window extends JFrame {
 		
 		
 		//initialize Buttons
-		this.buttonMenue.setBounds(Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE, 
+		this.buttonMenu.setBounds(Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE, 
 				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
-		this.buttonMenue.setText("bla");
-		this.buttonMenue.setVisible(true);
-		this.baseLayer.add(this.buttonMenue);
+		this.buttonMenu.setIcon(new ImageIcon(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_BLACK)));
+		this.buttonMenu.setVisible(true);
+		this.baseLayer.add(this.buttonMenu);
 		
 		this.buttonBreak.setBounds(2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE, 
 				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
-		this.buttonBreak.setText("bla2");
+		this.buttonBreak.setIcon(new ImageIcon(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_BLACK)));
 		this.buttonBreak.setVisible(true);
 		this.baseLayer.add(this.buttonBreak);
 		
 		this.buttonExit.setBounds(3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE, 
 				Ressources.BUTTONSIZE, Ressources.BUTTONSIZE);
-		this.buttonExit.setText("bla3");
+		this.buttonExit.setIcon(new ImageIcon(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_BLACK)));
 		this.buttonExit.setVisible(true);
 		this.baseLayer.add(this.buttonExit);
 		
