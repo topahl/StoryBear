@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.SwingConstants;
 
 import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.main.OSTimer;
@@ -109,10 +110,11 @@ public class Window extends JFrame {
 		this.baseLayer.add(this.buttonExit);
 		
 		//initialize Label for Highscore
-		this.labelScore.setBounds(Ressources.WINDOW.width - Ressources.SCOREDISTANCERIGHT - 100,
-				Ressources.SCOREDISTANCEUP, 100, Ressources.SCORETEXTSIZE);
+		this.labelScore.setBounds(Ressources.WINDOW.width - Ressources.SCOREDISTANCERIGHT - 200,
+				Ressources.SCOREDISTANCEUP, 200, Ressources.SCORETEXTSIZE);
 		this.labelScore.setFont(new Font("Fontin Sans RG",Font.PLAIN,Ressources.SCORETEXTSIZE));
 		this.labelScore.setText("123456");
+		this.labelScore.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.labelScore.setVisible(true);
 		this.baseLayer.add(this.labelScore);
 		
