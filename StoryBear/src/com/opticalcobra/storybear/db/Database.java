@@ -337,6 +337,9 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public WordResult queryWordType(String word) throws SQLException{
+		if (word.equals("Geld")){
+			System.out.println("DB Anbindung");
+		}
 		WordResult result = null;
 		int typeId = DBConstants.WORD_OBJECT_TYPE_NO_IMAGE;
 		ResultSet rsFexione;
@@ -378,7 +381,23 @@ public class Database {
 			}
 		}
 		if (result==null) {
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1, arrayRS);
+			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+word+"';");		
+			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+word+"';");
+			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+word+"';");
+			
+			if (rsCharacter.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER,rsCharacter.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsCollectable.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsCollectable.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsMiddleground.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
+			}
+			
+			if (result == null){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1, arrayRS);
+			}
 		}
 		rsFexione.close();
 		return result;
