@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.db;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -200,6 +201,34 @@ public class Database {
 		return new TileResult(tileType, height, walkableLeft, walkableRight);
 	}
 	
+	
+	/**
+	 * @author Martika
+	 * @param tileTypeId
+	 * @param containerTypeId
+	 * @return
+	 */
+	public Point getObjectPos(int tileTypeId, int containerTypeId){
+		ResultSet rs;
+		Point position = new Point(0, 0);
+		try {
+			rs = query("SELECT x, y FROM foreground_container WHERE type_id = '" +tileTypeId+ "' AND "
+					+ "container_type = '" + containerTypeId + "';");
+			rs.next();
+			position.x = (int) rs.getObject("X");
+			position.y = (int) rs.getObject("Y");
+			
+			position.x = (int) (position.x / Ressources.SCALE);
+			position.y = (int) (position.y / Ressources.SCALE);
+			
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return position;
+	}
 	
 	
 	public synchronized ResultSet query(String expression) throws SQLException {

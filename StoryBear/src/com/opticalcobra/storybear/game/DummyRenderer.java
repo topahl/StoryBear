@@ -29,6 +29,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private int elementPointer = 0;
 	private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*16); 
 	private Database db;
+	private ArrayList<Integer> currentTileIds;
 	
 	public DummyRenderer(){		
 		
@@ -53,11 +54,12 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		}else{
 			lastTileType = next;
 			ringbuffer.write(db.getTileInfo(lastTileType));
+			
 		}
 		
 		lastTileType = next;
 		ringbuffer.write(db.getTileInfo(lastTileType));
-		
+		currentTileIds.add(lastTileType);
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND);
 	}
 
@@ -66,6 +68,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	public void getNextViewPart(JLabel pane) {
 		int pointerCounter=1;
 		ArrayList<ILevelAppearance> elements = this.storyInfo.getElements();
+		currentTileIds = new ArrayList<Integer>();
 		
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
@@ -95,11 +98,15 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			//Wörter und Bilder werden geredert
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
-				(elements.get(elementPointer)).render(g, lastTileType);
+				
+				
+				(elements.get(elementPointer)).render(g, currentTileIds.get(0));
 				
 				//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
 				if (elementPointer+1 < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
 					i--;
+				} else{
+					currentTileIds.remove(0);
 				}
 				elementPointer++;
 			}
