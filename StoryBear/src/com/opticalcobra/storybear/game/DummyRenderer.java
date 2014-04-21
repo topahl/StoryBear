@@ -94,7 +94,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
-				System.out.print(storyInfo.getElements().get(elementPointer).getBlock()+" ");
 				(elements.get(elementPointer)).render(g);
 				if (elementPointer+1 < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
 					i--;
@@ -102,8 +101,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				elementPointer++;
 			}
 		}
-		System.out.println();
-		
+	
 		if(DebugSettings.fg1panelnum)
 			renderText(g,50, panelnum+"", 20, 40);
 
