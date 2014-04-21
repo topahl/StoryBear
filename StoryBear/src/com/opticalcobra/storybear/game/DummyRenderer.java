@@ -40,7 +40,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 //		Database.requestnum = 0;
 //		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(1));
 //		System.out.println(Database.requestnum);
-		storyInfo = db.getStoryInfoFromDatabase(7);
+		storyInfo = db.getStoryInfoFromDatabase(9);
 	}
 	
 	private BufferedImage getNextMapElement(){
@@ -64,6 +64,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	
 	@Override
 	public void getNextViewPart(JLabel pane) {
+		int pointerCounter=1;
 		ArrayList<ILevelAppearance> elements = this.storyInfo.getElements();
 		
 		panelnum++;
@@ -77,22 +78,31 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 			
 		}
-		for(int i=0;i*Ressources.RASTERSIZE<=Ressources.WINDOW.width;i++){
+		for(int i=0;i<=Ressources.TILESPERPANEL;i++){
 			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
 							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
 			
 				if (storyInfo.getElements().get(elementPointer) instanceof Word){
-					((Word)elements.get(elementPointer-1)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer-1).getBlock()%16)))*-1);
+					while (!(storyInfo.getElements().get(elementPointer - pointerCounter) instanceof Word)){
+						pointerCounter++;
+					}
+					((Word)elements.get(elementPointer-pointerCounter)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer-1).getBlock()%16)))*-1);
 				}	
 			}
 			
 			
+			
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+				System.out.print(storyInfo.getElements().get(elementPointer).getBlock()+" ");
 				(elements.get(elementPointer)).render(g);
+				if (elementPointer+1 < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
+					i--;
+				}
 				elementPointer++;
 			}
 		}
+		System.out.println();
 		
 		if(DebugSettings.fg1panelnum)
 			renderText(g,50, panelnum+"", 20, 40);

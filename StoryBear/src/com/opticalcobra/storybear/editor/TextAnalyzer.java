@@ -76,7 +76,6 @@ public class TextAnalyzer {
 					elements.add(new Landscape(blockPosition));
 					break;
 				}
-
 				rh = this.getScheme(word,blockPosition,wr);
 				if(rh != null)
 					renderHint.add(rh);
@@ -84,7 +83,7 @@ public class TextAnalyzer {
 				// TODO Auto-generated catch block
 				System.out.println(word_short);
 			}
-					
+			
 			elements.add(new Word(word,blockPosition));
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new word
 
@@ -102,7 +101,6 @@ public class TextAnalyzer {
 			elements.add(renderHint.get(i));
 		}
 		//end of analyzing RenderHint
-		
 		
 		storyInfo.setElements(elements);
 //		db.insertStoryInfoToDatabase(storyInfo);
