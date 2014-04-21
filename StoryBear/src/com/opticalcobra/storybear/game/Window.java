@@ -101,7 +101,9 @@ public class Window extends JFrame {
 				"buttonMenu",
 				Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE
 				);
+		this.buttonMenu.setFocusable(false);
 		this.baseLayer.add(this.buttonMenu);
+		
 		
 		this.buttonBreak = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
 				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_WHITE),
@@ -110,6 +112,7 @@ public class Window extends JFrame {
 				"buttonBreak",
 				2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);	
+		this.buttonBreak.setFocusable(false);
 		this.baseLayer.add(this.buttonBreak);
 		
 		this.buttonExit = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
@@ -119,6 +122,7 @@ public class Window extends JFrame {
 				"buttonExit",
 				3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);
+		this.buttonExit.setFocusable(false);
 		this.baseLayer.add(this.buttonExit);
 		
 		//initialize Label for Highscore
