@@ -129,7 +129,7 @@ public class Window extends JFrame {
 		this.labelScore.setBounds(Ressources.WINDOW.width - Ressources.SCOREDISTANCERIGHT - 200,
 				Ressources.SCOREDISTANCEUP, 200, Ressources.SCORETEXTSIZE);
 		this.labelScore.setFont(new Font("Fontin Sans RG",Font.PLAIN,Ressources.SCORETEXTSIZE));
-		this.labelScore.setText("123456");
+		this.labelScore.setText(((Integer)(Hero.getInstance().getHighscore())).toString());
 		this.labelScore.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.labelScore.setVisible(true);
 		this.baseLayer.add(this.labelScore);
@@ -187,6 +187,7 @@ public class Window extends JFrame {
 		}
 		
 		Hero.getInstance().runFreazing(stepCounterLayer);
+		this.labelScore.setText(((Integer)(Hero.getInstance().getHighscore())).toString());
 		
 		stepCounterLayer++;
 	}
@@ -204,6 +205,7 @@ public class Window extends JFrame {
 		//Navigation of the hero via the right, left, up and down keys
 		if(stepCounter % 4 == 0){
 			Hero.getInstance().heroStep(stepCounterLayer);
+			this.labelScore.setText(((Integer)(Hero.getInstance().getHighscore())).toString());
 		}
 		
 		//Hero klebt an der unsichtbaren Wand an Kachel 5

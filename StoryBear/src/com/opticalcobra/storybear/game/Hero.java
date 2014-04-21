@@ -33,6 +33,7 @@ public class Hero extends JLabel{
 	private char runDirection = 'n';
 	private int ringbufferCounter = 2;    //Es sind auf dem Screen immer 5-6 Kacheln zur freien Bewegung verfügbar
 	
+	private int highscore = 0;
 	
 	private Hero(){
 	}
@@ -273,6 +274,7 @@ public class Hero extends JLabel{
 			//Da bis zu 6 Kacheln erreichbar sind, darf erst danach aus dem Ringbuffer gelesen werden
 			if (ringbufferCounter==6){
 				ringbuffer.read();
+				this.highscore += Ressources.SCOREPOINTSFORRUNNING;
 			} 
 			if (!isInAJump()){
 				setLocation(getLocation().x, ringbuffer.top(ringbufferCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
@@ -295,6 +297,9 @@ public class Hero extends JLabel{
 		if (!isInAJump() && (runDirection == 'r' && ringbuffer.top(ringbufferCounter).isWalkableRight() || runDirection == 'l' && ringbuffer.top(ringbufferCounter).isWalkableLeft())){
 			return true;
 		}
+		this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
+		if(this.highscore < 0)
+			this.highscore = 0;
 		return false;
 	}
 
@@ -330,5 +335,13 @@ public class Hero extends JLabel{
 
 	public void setRunDirection(char runDirection) {
 		this.runDirection = runDirection;
+	}
+
+	public int getHighscore() {
+		return highscore;
+	}
+
+	public void setHighscore(int highscore) {
+		this.highscore = highscore;
 	}
 }
