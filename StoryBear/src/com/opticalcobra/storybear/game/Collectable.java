@@ -13,7 +13,7 @@ public class Collectable implements ILevelAppearance {
 	
 	private int block;
 	private int image_id;
-	private static Imagelib il = Imagelib.getInstance();
+	private static transient Imagelib il = Imagelib.getInstance();
 	private static transient Database db = new Database();
 	
 	public Collectable(int block, int image_id){
