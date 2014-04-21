@@ -277,7 +277,7 @@ public class Imagelib {
 	 * 
 	 * @param type
 	 */
-	public BufferedImage MenuImage (int type){
+	public BufferedImage menuImage (int type){
 		BufferedImage result;
 		BufferedImage full;
 		//Check whether image is already cached

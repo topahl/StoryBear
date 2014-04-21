@@ -40,20 +40,20 @@ public class Scrollbar extends JScrollPane {
 	    ScrollbarUI() {
 	        
 			up = new JButton();
-			up.setIcon(new ImageIcon(il.MenuImage(Imagelib.MENU_SCROLL_UP)));
-			up.setRolloverIcon(new ImageIcon(il.MenuImage(Imagelib.MENU_SCROLL_UP)));
-			up.setPressedIcon(new ImageIcon(il.MenuImage(Imagelib.MENU_SCROLL_UP)));
+			up.setIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
+			up.setRolloverIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
+			up.setPressedIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
 			up.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
 			up.setBorder(null);
 	        up.setBorderPainted(false);
 	        up.setContentAreaFilled(false);
 	        
 			down = new JButton();
-			down.setIcon(new ImageIcon(il.MenuImage(Imagelib.MENU_SCROLL_DOWN)));
-			down.setRolloverIcon(new ImageIcon(il.MenuImage(Imagelib.MENU_SCROLL_DOWN)));
-			down.setPressedIcon(new ImageIcon(il.MenuImage(Imagelib.MENU_SCROLL_DOWN)));
+			down.setIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_DOWN)));
+			down.setRolloverIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_DOWN)));
+			down.setPressedIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_DOWN)));
 			BufferedImage imageDown = new BufferedImage((int)(60/Ressources.SCALE), (int)(40/Ressources.SCALE), BufferedImage.TYPE_INT_ARGB);
-			imageDown.getGraphics().drawImage(il.MenuImage(Imagelib.MENU_SCROLL_THUMB_TOP), (int)(15/Ressources.SCALE), 0, null);
+			imageDown.getGraphics().drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP), (int)(15/Ressources.SCALE), 0, null);
 			down.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
 			down.setBorder(null);
 	        down.setBorderPainted(false);
@@ -70,17 +70,17 @@ public class Scrollbar extends JScrollPane {
 	        if(thumb<0){
 	        	imageThumb = new BufferedImage(thumbBounds.width, (int)(30/Ressources.SCALE), BufferedImage.TYPE_INT_ARGB);
 	        	Graphics g2 = imageThumb.getGraphics();
-		        g2.drawImage(il.MenuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0, null);
-		        g2.drawImage(il.MenuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(15/Ressources.SCALE),null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0, null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(15/Ressources.SCALE),null);
 		        
 		        g.drawImage(imageThumb, thumbBounds.x,thumbBounds.y + (int)((thumbBounds.height-(30/Ressources.SCALE))/2), null);
 	        }
 	        else{
 	        	imageThumb = new BufferedImage(thumbBounds.width, thumbBounds.height, BufferedImage.TYPE_INT_ARGB);
 	        	Graphics g2 = imageThumb.getGraphics();
-	        	g2.drawImage(il.MenuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0, null);
-		        g2.drawImage(il.MenuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(thumbBounds.height-(15/Ressources.SCALE)),null);
-		        g2.drawImage(il.MenuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(15/Ressources.SCALE), (int)(30/Ressources.SCALE), thumb, null);
+	        	g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0, null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(thumbBounds.height-(15/Ressources.SCALE)),null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(15/Ressources.SCALE), (int)(30/Ressources.SCALE), thumb, null);
 		        
 		        g.drawImage(imageThumb, thumbBounds.x,thumbBounds.y, null);
 	        }

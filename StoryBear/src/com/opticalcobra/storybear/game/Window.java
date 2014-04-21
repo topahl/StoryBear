@@ -94,10 +94,10 @@ public class Window extends JFrame {
 		
 		
 		//initialize Buttons
-		this.buttonMenu = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_WHITE),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_GREY),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
+		this.buttonMenu = new Button(Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_WHITE),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_GREY),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
 				"buttonMenu",
 				Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE
 				);
@@ -105,20 +105,20 @@ public class Window extends JFrame {
 		this.baseLayer.add(this.buttonMenu);
 		
 		
-		this.buttonBreak = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_WHITE),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_GREY),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
+		this.buttonBreak = new Button(Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_WHITE),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_GREY),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
 				"buttonBreak",
 				2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);	
 		this.buttonBreak.setFocusable(false);
 		this.baseLayer.add(this.buttonBreak);
 		
-		this.buttonExit = new Button(Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_WHITE),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_GREY),
-				Imagelib.getInstance().MenuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
+		this.buttonExit = new Button(Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_WHITE),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_GREY),
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
 				"buttonExit",
 				3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);

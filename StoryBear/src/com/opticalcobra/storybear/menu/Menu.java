@@ -80,7 +80,7 @@ public class Menu extends JFrame{
         
         //Background
         JLabel shelf = new JLabel();
-		shelf.setIcon(new ImageIcon(il.MenuImage(Imagelib.MENU_SHELF)));
+		shelf.setIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SHELF)));
 		shelf.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
 		buecherRegal.add(shelf);
 		

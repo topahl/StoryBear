@@ -80,7 +80,7 @@ public class BookRenderer extends DefaultListCellRenderer {
             boolean expanded) {
 		
 		Story story = (Story) value;
-		book.setIcon(new ImageIcon(il.MenuImage(books[index%4])));
+		book.setIcon(new ImageIcon(il.menuImage(books[index%4])));
 		
 		title.setForeground(colors[index%colors.length]);
 		title.setText(story.getTitle());
