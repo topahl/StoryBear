@@ -22,7 +22,7 @@ public class Window extends JFrame {
 	
 	private JLayeredPane baseLayer; // base Layer on witch all other displaying is done
 	private Timer timer;
-	private GameLayer vg2;
+	private GameLayer fg1;
 	private GameLayer mg;
 	private GameLayer bg;
 	private GameLayer clouds;
@@ -144,10 +144,10 @@ public class Window extends JFrame {
 		
 		//TODO Remove Dummy code
 		//Dummy Code 
-		vg2=new GameLayer(renderer);
-		vg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
-		vg2.setLocation(0, 0);
-		baseLayer.add(vg2);
+		fg1=new GameLayer(renderer);
+		fg1.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		fg1.setLocation(0, 0);
+		baseLayer.add(fg1);
 		
 		mg=new GameLayer(rendererMG);
 		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
@@ -176,7 +176,7 @@ public class Window extends JFrame {
 	 * @author Martika
 	 */
 	private void layerStep(){
-		vg2.step();
+		fg1.step();
 		if(stepCounterLayer % 2 == 0)
 			mg.step();
 		if(stepCounterLayer % 4 == 0){

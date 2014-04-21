@@ -453,15 +453,15 @@ public class Debugger extends javax.swing.JFrame {
     }                                     
 
     private void jCheckBox1MouseClicked(java.awt.event.MouseEvent evt) {                                        
-        DebugSettings.vg1panelnum = jCheckBox1.isSelected();
+        DebugSettings.fg1panelnum = jCheckBox1.isSelected();
     }                                       
 
     private void jCheckBox2MouseClicked(java.awt.event.MouseEvent evt) {                                        
-        DebugSettings.vg1panelborder = jCheckBox2.isSelected();
+        DebugSettings.fg1panelborder = jCheckBox2.isSelected();
     }                                       
 
     private void jCheckBox3MouseClicked(java.awt.event.MouseEvent evt) {                                        
-        DebugSettings.vg1tilenum = jCheckBox3.isSelected();
+        DebugSettings.fg1tilenum = jCheckBox3.isSelected();
     }                                       
 
     private void jCheckBox4MouseClicked(java.awt.event.MouseEvent evt) {                                        
