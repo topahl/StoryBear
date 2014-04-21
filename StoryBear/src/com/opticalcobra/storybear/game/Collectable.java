@@ -26,7 +26,7 @@ public class Collectable implements ILevelAppearance {
 
 	@Override
 	public void render(Graphics2D g) {
-		BufferedImage image = il.loadCharacterObjectPic(image_id);
+		BufferedImage image = il.loadObjectPic(image_id, "Col");
 		g.drawImage(image, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height/2, null);
 	}
 

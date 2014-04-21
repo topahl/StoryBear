@@ -155,11 +155,18 @@ public class Imagelib {
 		}
 	}
 	
-	public BufferedImage loadCharacterObjectPic(int image_id){
+	
+	/**
+	 * @author Martika
+	 * @param image_id
+	 * @param prefix
+	 * @return
+	 */
+	public BufferedImage loadObjectPic(int image_id, String prefix){
 		BufferedImage result;
 		BufferedImage full;
 		//Check whether image is already cached
-		result = images.get("cha-"+image_id);
+		result = images.get(prefix+"-"+image_id);
 		if(result != null){
 			return result;
 		}
@@ -169,7 +176,7 @@ public class Imagelib {
 			image = db.queryImagedata(image_id);
 			full=loadRessourcesImage(image.getUrl());
 			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
-			images.put("cha-"+image_id, result);
+			images.put(prefix+"-"+image_id, result);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,30 +188,7 @@ public class Imagelib {
 	}
 	
 	
-	public BufferedImage loadCollectableObjectPic(int image_id){
-		BufferedImage result;
-		BufferedImage full;
-		//Check whether image is already cached
-		result = images.get("col-"+image_id);
-		if(result != null){
-			return result;
-		}
-		//Request must be handled via database request
-		ImageResult image;
-		try {
-			image = db.queryImagedata(image_id);
-			full=loadRessourcesImage(image.getUrl());
-			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
-			images.put("col-"+image_id, result);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//cut images to fit
-		return result;
-		
-	}
+	
 	/**
 	 * Singleton implementation
 	 * @return Instance of {@link Imagelib}
