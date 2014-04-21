@@ -121,6 +121,24 @@ public class Database {
 	}
 	
 	
+	public ArrayList<StoryInfo> getAllStorysFromDatabase(){
+		ArrayList<StoryInfo> result = new ArrayList<StoryInfo>();
+		try {
+			ResultSet rs = query("Select Object, length from levels");
+			while(rs.next()){
+				
+				java.sql.Blob obj = rs.getBlob("OBJECT");
+				byte[] ba = obj.getBytes(1, rs.getInt("LENGTH"));
+				StoryInfo si = (StoryInfo)(Blob.read(ba));
+				result.add(si);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 	/**
 	 * @Martika
 	 * @param currentStory

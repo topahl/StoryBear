@@ -11,7 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.SwingConstants;
 
+import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.debug.Debugger;
+import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -36,17 +38,24 @@ public class Window extends JFrame {
 	private Button buttonExit;
 	private JLabel labelScore = new JLabel();
 	
+	public StoryInfo level = null;
+	
 //	private boolean inAJump = false; //shows that jump is executed currently
 //	private boolean inADoubleJump = false;
 	
 
-	DummyRenderer renderer = new DummyRenderer();
-	DummyRendererMG rendererMG = new DummyRendererMG();
-	BackgroundRenderer rendererBG = new BackgroundRenderer();
-	CloudRenderer rendererCloud = new CloudRenderer();
+	DummyRenderer renderer;
+	DummyRendererMG rendererMG;
+	BackgroundRenderer rendererBG;
+	CloudRenderer rendererCloud;
+	
 	
 	public Window(){
-		
+		this(7); //Change here default Level
+	}
+	
+	public Window(int level_num){
+		this.level = new Database().getStoryInfoFromDatabase(level_num);
 		this.timer = new Timer();	
 		
 		this.baseLayer = new JLayeredPane();
@@ -71,6 +80,12 @@ public class Window extends JFrame {
 	 * @author Tobias
 	 */
 	private void initComponents() {
+		//create remderer
+		renderer = new DummyRenderer(level);
+		rendererMG = new DummyRendererMG();
+		rendererBG = new BackgroundRenderer();
+		rendererCloud = new CloudRenderer();
+		
 		baseLayer.setBackground(Ressources.SKYCOLOR);
 		getContentPane().setBackground(Color.BLACK);
 		//Letzte Einstellungen zum Fenster

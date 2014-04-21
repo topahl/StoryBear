@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 
 import com.opticalcobra.storybear.editor.Story;
+import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
@@ -79,7 +80,7 @@ public class BookRenderer extends DefaultListCellRenderer {
             boolean selected,
             boolean expanded) {
 		
-		Story story = (Story) value;
+		Story story = ((StoryInfo) value).getStory();
 		book.setIcon(new ImageIcon(il.menuImage(books[index%4])));
 		
 		title.setForeground(colors[index%colors.length]);

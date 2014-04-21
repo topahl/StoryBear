@@ -2,6 +2,7 @@ package com.opticalcobra.storybear.menu;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -11,17 +12,21 @@ import javax.swing.JLayeredPane;
 import javax.swing.JList;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.editor.Story;
+import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.game.Control;
+import com.opticalcobra.storybear.game.Window;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
 
-public class Menu extends JFrame{
+public class Menu extends JFrame implements ListSelectionListener{
 	
 	private Imagelib il = Imagelib.getInstance();
 	private Database db = new Database();
@@ -29,8 +34,8 @@ public class Menu extends JFrame{
 	private JLayeredPane baseLayer;
 	private JLayeredPane buecherRegal;
 	
-	private JList<Story> levelBuecher;
-	private DefaultListModel<Story> model = new DefaultListModel<Story>();
+	private JList<StoryInfo> levelBuecher;
+	private DefaultListModel<StoryInfo> model = new DefaultListModel<StoryInfo>();
 	
 	public Menu(){
 
@@ -51,10 +56,7 @@ public class Menu extends JFrame{
 	private void initShelf() {
 		
 		buecherRegal.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
-		
-		
-		
-		levelBuecher = new JList<Story>();
+		levelBuecher = new JList<StoryInfo>();
 		JScrollPane scrollpane = new Scrollbar();
 		scrollpane.setViewportView(levelBuecher);
 		scrollpane.getViewport().setOpaque(false);
@@ -72,8 +74,7 @@ public class Menu extends JFrame{
         buecherRegal.setBackground(new Color(0,0,0,0));
         levelBuecher.setOpaque(false);
         levelBuecher.setBackground(new Color(0,0,0,0));
-        
-        
+        levelBuecher.addListSelectionListener(this);
         baseLayer.add(buecherRegal);
         loadStories();
         
@@ -87,15 +88,11 @@ public class Menu extends JFrame{
 	}
 
 	private void loadStories() {
-		Story story;
-		int  i = 0;
-		do {
-			story = db.getStoryFromDatabase(i);
-			if(story != null){
-				model.addElement(story);
-			}
-			i++;
-		} while (story==null);
+		ArrayList<StoryInfo> story = db.getAllStorysFromDatabase();
+		model.clear();
+		for(int i=0 ; i<story.size();i++){
+			model.addElement(story.get(i));
+		}
         
         levelBuecher.setModel(model);
 		
@@ -121,6 +118,13 @@ public class Menu extends JFrame{
 		add(baseLayer);
 		this.pack();
 
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		@SuppressWarnings("unused")
+		Window gui = new Window(e.getFirstIndex());
+		this.dispose();
 	}
 	
 }

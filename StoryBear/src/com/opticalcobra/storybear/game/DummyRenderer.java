@@ -31,17 +31,10 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private Database db;
 	private ArrayList<Integer> currentTileIds;
 	
-	public DummyRenderer(){		
+	public DummyRenderer(StoryInfo si){		
 		
 		db = new Database();
-		storyInfo = new StoryInfo();
-		//ringbuffer.write(lastTileType);
-		
-//		TextAnalyzer textAnalyzer = new TextAnalyzer();
-//		Database.requestnum = 0;
-//		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(1));
-//		System.out.println(Database.requestnum);
-		storyInfo = db.getStoryInfoFromDatabase(10);
+		storyInfo = si;
 	}
 	
 	private BufferedImage getNextMapElement(){
