@@ -382,9 +382,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	public WordResult queryWordType(String word) throws SQLException{
-		if (word.equals("Geld")){
-			System.out.println("DB Anbindung");
-		}
+
 		WordResult result = null;
 		int typeId = DBConstants.WORD_OBJECT_TYPE_NO_IMAGE;
 		ResultSet rsFexione;
@@ -406,9 +404,9 @@ public class Database {
 		
 		arrayRS = this.toArrayList(rsFexione);
 		
-		while (rsFexione.next()){ 
+		for (int i = 0; i<arrayRS[0].size(); i++){
 
-			flexinom= (String) rsFexione.getObject(1);
+			flexinom= (String) arrayRS[0].get(i);
 			flexinom.replaceAll("[^a-zA-Z δόφί]", "");
 			
 			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");		
