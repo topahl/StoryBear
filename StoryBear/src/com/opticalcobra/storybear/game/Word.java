@@ -34,7 +34,7 @@ public class Word extends Renderer implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g, int tileTypeId) {
 		g.setColor(Color.BLACK);
 		renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height-30);
 	}

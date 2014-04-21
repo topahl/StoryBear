@@ -24,7 +24,7 @@ public class Character implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g, int tileTypeId) {
 		BufferedImage image = il.loadObjectPic(image_id, "Cha");
 		g.drawImage(image, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height/2, null);
 		

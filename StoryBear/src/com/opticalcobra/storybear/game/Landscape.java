@@ -20,7 +20,7 @@ public class Landscape implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g, int tileTypeId) {
 		// TODO Auto-generated method stub
 		
 	}

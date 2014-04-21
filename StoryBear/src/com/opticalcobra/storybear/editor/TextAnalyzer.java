@@ -62,7 +62,6 @@ public class TextAnalyzer {
 			//Math.ceil rundet immer auf: 0.1 wird zu 1.0
 			numberOfBlocks = (int) Math.ceil((double)stringLength / (double)Ressources.RASTERSIZE);
 			
-			//TODO: überarbeiten, aktuell nur Dummywerte
 			try {
 				WordResult wr =db.queryWordType(word_short); 
 				switch (wr.getType()){

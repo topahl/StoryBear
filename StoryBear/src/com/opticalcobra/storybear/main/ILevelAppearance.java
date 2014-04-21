@@ -9,7 +9,7 @@ public interface ILevelAppearance extends Serializable{
 	
 	public int getBlock();
 
-	public void render(Graphics2D g);
+	public void render(Graphics2D g, int tileTypeID);
 	
 	//public getRenderHint();
 	

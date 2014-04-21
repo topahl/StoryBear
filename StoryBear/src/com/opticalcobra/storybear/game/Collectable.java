@@ -15,8 +15,8 @@ public class Collectable implements ILevelAppearance {
 	private static Imagelib il = Imagelib.getInstance();
 	
 	public Collectable(int block, int image_id){
-		this.block = block;
-		this.image_id=image_id;
+		this.block  = block;
+		this.image_id = image_id;
 	}
 
 	@Override
@@ -25,12 +25,20 @@ public class Collectable implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g) {
+	public void render(Graphics2D g, int tileTypeId) {
 		BufferedImage image = il.loadObjectPic(image_id, "Col");
-		g.drawImage(image, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height/2, null);
+		g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+1,1, null);
 	}
 
-
-
+//	public void setX(int x) {
+//		this.x = x;
+//	}
+//
+//	public void setY(int y) {
+//		this.y = y;
+//	}
+//
+//
+//
 
 }

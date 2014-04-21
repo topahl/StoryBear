@@ -40,7 +40,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 //		Database.requestnum = 0;
 //		this.storyInfo = textAnalyzer.analyzeText(db.getStoryFromDatabase(1));
 //		System.out.println(Database.requestnum);
-		storyInfo = db.getStoryInfoFromDatabase(9);
+		storyInfo = db.getStoryInfoFromDatabase(10);
 	}
 	
 	private BufferedImage getNextMapElement(){
@@ -82,6 +82,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
 							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
 			
+				//Wortübertrag auf ein neues Panel
 				if (storyInfo.getElements().get(elementPointer) instanceof Word){
 					while (!(storyInfo.getElements().get(elementPointer - pointerCounter) instanceof Word)){
 						pointerCounter++;
@@ -91,10 +92,12 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			}
 			
 			
-			
+			//Wörter und Bilder werden geredert
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
-				(elements.get(elementPointer)).render(g);
+				(elements.get(elementPointer)).render(g, lastTileType);
+				
+				//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
 				if (elementPointer+1 < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
 					i--;
 				}
