@@ -79,7 +79,7 @@ public class Menu extends JFrame {
 	}
 	
 	private JLayeredPane createNewInnerPanel(JLayeredPane panel) {
-		panel.setBounds((int)(348/Ressources.SCALE), (int)(100/Ressources.SCALE), innerPanel.width, innerPanel.height);
+		panel.setBounds((int)(350/Ressources.SCALE), (int)(100/Ressources.SCALE), innerPanel.width, innerPanel.height);
 		panel.setVisible(false);
 		getContentPane().add(panel);
 		return panel;

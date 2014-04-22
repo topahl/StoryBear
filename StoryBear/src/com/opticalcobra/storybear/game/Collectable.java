@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.game;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -27,11 +28,13 @@ public class Collectable implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g, int tileTypeId) {
-		Point position = db.getObjectPos(tileTypeId, 0);
-		
-		BufferedImage image = il.loadObjectPic(image_id, "Col");
-		g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
+		if (layerID == Ressources.LAYERINTERAKTION){
+			Point position = db.getObjectPos(tileTypeId, 0);
+			
+			BufferedImage image = il.loadObjectPic(image_id, "Col");
+			g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+		}
 	}
 
 //	public void setX(int x) {

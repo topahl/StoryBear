@@ -52,6 +52,16 @@ public class Ressources {
 	public static final int SCOREPOINTSFORRUNNING = 2;
 	public static final int SCOREDECREASEAFTERMISTAKE = 1;
 	
+	
+	//Layer Konstanten
+	
+	public static final int LAYERFOREGROUNDONE = 1;
+	public static final int LAYERFOREGROUNDTWO = 2;
+	public static final int LAYERINTERAKTION = 3;
+	public static final int LAYERBACKGROUND = 4;
+	public static final int LAYERMIDDLEGROUND = 5;
+	
+	
 	static {
 		
 		SCREEN=Toolkit.getDefaultToolkit().getScreenSize();

@@ -93,7 +93,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
 				
 				
-				(elements.get(elementPointer)).render(g, currentTileIds.get(0));
+				(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
 				
 				//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
 				if (elementPointer+1 < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){

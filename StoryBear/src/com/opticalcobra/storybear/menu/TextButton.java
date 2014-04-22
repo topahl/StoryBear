@@ -19,7 +19,7 @@ public class TextButton extends JButton implements ActionListener, MouseListener
 	private final static int borderThick = 2;
 	private final static Color standardColor = Color.black;
 	private final static Color hoverColor = Color.red;
-	private final static float fontSize = (float)(15f/Ressources.SCALE);
+	private final static float fontSize = (float)(25f/Ressources.SCALE);
 	private final static Font font = FontCache.getInstance().getFont("Fontin_R", fontSize);
 	
 	
@@ -35,7 +35,7 @@ public class TextButton extends JButton implements ActionListener, MouseListener
 		
 		setOpaque(false);
 		setContentAreaFilled(false);
-		setText(text);
+		setText(text.toUpperCase());
 		setFont(font);
 		setBounds((int)(x/Ressources.SCALE), (int)(y/Ressources.SCALE), (int)(width/Ressources.SCALE), (int)(height/Ressources.SCALE));
 		setFocusable(false);
