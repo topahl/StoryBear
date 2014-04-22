@@ -17,6 +17,8 @@ import com.opticalcobra.storybear.menu.Menu;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.menu.TextButton;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EtchedBorder;
 
 /**
  * 
@@ -43,6 +45,7 @@ public class Editor extends JLayeredPane {
 	public Editor(){
 		db = new Database();
 		initializePanel();
+		loadStory(1);
 	}
 	
 	/**
@@ -94,15 +97,14 @@ public class Editor extends JLayeredPane {
 		background.setVisible(true);
 		
 		// WordSuggestor
-//		wordSugg = new WordSuggestor();
-//		wordSugg.setBounds(98, 67, 455, 479);
-//		wordSugg.setBorder(BorderFactory.createLineBorder(Color.blue));
-//		wordSugg.setVisible(true);
+		wordSugg = new WordSuggestor();
+		wordSugg.setBounds((int)(40/Ressources.SCALE), (int)(335/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(520/Ressources.SCALE));
+		wordSugg.setVisible(true);
 		
 		// Headline
 		headline = new JTextField();
-		headline.setBounds((int)(902/Ressources.SCALE), (int)(11/Ressources.SCALE), (int)(630/Ressources.SCALE), (int)(80/Ressources.SCALE));
-		headline.setFont(FontCache.getInstance().getFont("Standard", 60));
+		headline.setBounds((int)(40/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
+		headline.setFont(FontCache.getInstance().getFont("Standard", (float)(60f/Ressources.SCALE)));
 		headline.setOpaque(false);
 		headline.setBorder(null);
 		headline.setVisible(true);
@@ -110,21 +112,21 @@ public class Editor extends JLayeredPane {
 		
 		// Editor
 		editor = new StoryEditor();
-		editor.setBounds((int)(902/Ressources.SCALE), (int)(102/Ressources.SCALE), (int)(630/Ressources.SCALE), (int)(800/Ressources.SCALE));
-		editor.setFont(FontCache.getInstance().getFont("Fontin_R", 25));
+		editor.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(800/Ressources.SCALE));
 		editor.setVisible(true);
-		editor.addFocusListener(new EmptyTextFieldListener(EMPTY_STORY, Color.GRAY, Color.BLACK).initializeCallerTextComponent(editor));
 		
 		// Author
 		JLabel author = new JLabel();
 		author.setText("Autor: ");
-		author.setBounds((int)(200/Ressources.SCALE),0,(int)(190/Ressources.SCALE),(int)(30/Ressources.SCALE));
+		author.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		author.setBounds((int)(40/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
 		author.setVisible(true);
 		
 		// Date
 		JLabel date = new JLabel();
 		date.setText("Datum: ");
-		date.setBounds((int)(200/Ressources.SCALE),0,(int)(190/Ressources.SCALE),(int)(30/Ressources.SCALE));
+		date.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		date.setBounds((int)(440/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
 		date.setHorizontalAlignment(SwingConstants.RIGHT);
 		date.setVisible(true);
 		
@@ -134,7 +136,7 @@ public class Editor extends JLayeredPane {
 		
 		
 		// Buttons
-		start = new TextButton("Spiel starten", 60, 300, 195, 60);
+		start = new TextButton("Spiel starten", 40, 255, 195, 60);
 		baseLayer.add(start);
 		start.addMouseListener(new MouseListener() {
 			@Override
@@ -151,7 +153,7 @@ public class Editor extends JLayeredPane {
 			}
 		});
 		
-		export = new TextButton("Exportieren", 60+195+10, 300, 195, 60);
+		export = new TextButton("Exportieren", 40+195+10, 255, 195, 60);
 		baseLayer.add(export);
 		export.addMouseListener(new MouseListener() {
 			@Override
@@ -181,7 +183,7 @@ public class Editor extends JLayeredPane {
 			} 
 		});
 		
-		save = new TextButton("Speichern", 60+2*(195+10), 300, 195, 60);
+		save = new TextButton("Speichern", 40+2*(195+10), 255, 195, 60);
 		save.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {}
@@ -200,7 +202,7 @@ public class Editor extends JLayeredPane {
 		baseLayer.add(save);
 		baseLayer.add(headline);
 		baseLayer.add(editor);
-//		baseLayer.add(wordSugg);
+		baseLayer.add(wordSugg);
 		baseLayer.add(date);
 		baseLayer.add(author);
 		baseLayer.add(background);
