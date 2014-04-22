@@ -187,7 +187,34 @@ public class Imagelib {
 		
 	}
 	
-	
+	/**
+	 * load images for design
+	 * @param name name as identifier for image
+	 * @return need image
+	 * @throws ImageNotFoundException
+	 * @author Nicolas
+	 */
+	public BufferedImage loadDesignImage(String name) throws ImageNotFoundException {
+		BufferedImage result;
+		BufferedImage full;
+		
+		try {
+			ImageResult image = db.queryImagedata(db.queryNumberResultOnly("SELECT IMAGES_ID FROM DESIGNELEMENTS WHERE NAME = '" + name + "';")[0]);
+			result = images.get("design-"+image.getId());
+			if(result != null){
+				return result;
+			}
+			
+			//cut images to fit
+			full = loadRessourcesImage(image.getUrl());
+			result = full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+			images.put("design-"+image.getId(), result);
+			
+			return result;
+		} catch (SQLException e) {
+			throw new ImageNotFoundException("No entry for " + name + " in database", e);
+		}
+	}
 	
 	/**
 	 * Singleton implementation
