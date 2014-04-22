@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Story;
+import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.editor.TextAnalyzer;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.menu.Menu;
@@ -17,7 +18,15 @@ public class Main {
 		
 //		TextAnalyzer ta = new TextAnalyzer();
 //		Database db = new Database();
+//		StoryInfo storyInfo = new StoryInfo();
 //		Story currentStory = new Story();
+//		currentStory = db.getStoryFromDatabase(2);
+//		storyInfo = ta.analyzeText(currentStory);
+//		db.insertStoryInfoToDatabase(storyInfo);
+//	
+//		System.out.print("feddisch!");
+		
+		
 //		User a = new User("Tiki");
 //		currentStory.setAuthor(a);
 //		currentStory.setTitle("Hänsel und Gretel für arme");
