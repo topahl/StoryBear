@@ -1,6 +1,7 @@
 package com.opticalcobra.storybear.game;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -34,9 +35,11 @@ public class Word extends Renderer implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g, int tileTypeId) {
-		g.setColor(Color.BLACK);
-		renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height-30);
+	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
+		if (layerID == Ressources.LAYERFOREGROUNDTWO){
+			g.setColor(Color.BLACK);
+			renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height-30);
+		}
 	}
 
 	public void renderPreviousLostWord(Graphics2D g, int startTile) {

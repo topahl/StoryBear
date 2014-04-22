@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.game;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 
 import com.opticalcobra.storybear.main.ILevelAppearance;
@@ -52,7 +53,7 @@ public class RenderHint implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g, int tileTypeId) {
+	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		// TODO Auto-generated method stub
 
 	}

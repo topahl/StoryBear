@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.game;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -7,6 +8,7 @@ import java.awt.image.BufferedImage;
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.res.Imagelib;
+import com.opticalcobra.storybear.res.Ressources;
 
 public class Landscape implements ILevelAppearance {
 	
@@ -25,8 +27,11 @@ public class Landscape implements ILevelAppearance {
 	}
 
 	@Override
-	public void render(Graphics2D g, int tileTypeId) {
-		// TODO Auto-generated method stub
+	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
+		if (layerID == Ressources.LAYERFOREGROUNDONE){
+			//RENDER
+		}
+		
 		
 	}
 
