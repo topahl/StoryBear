@@ -15,12 +15,12 @@ public class Main {
 	public static void main(String args[]){
 		Menu menu = new Menu();
 //		Window gui = new Window();
-		
+//		
 //		TextAnalyzer ta = new TextAnalyzer();
 //		Database db = new Database();
 //		StoryInfo storyInfo = new StoryInfo();
 //		Story currentStory = new Story();
-//		currentStory = db.getStoryFromDatabase(2);
+//		currentStory = db.getStoryFromDatabase(1);
 //		storyInfo = ta.analyzeText(currentStory);
 //		db.insertStoryInfoToDatabase(storyInfo);
 //	
