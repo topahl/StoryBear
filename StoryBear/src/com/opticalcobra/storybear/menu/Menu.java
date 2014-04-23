@@ -41,6 +41,9 @@ public class Menu extends JFrame {
 		// Frame-Settings
 		initializeFrame();
 		
+		// BookBox
+		initializeBookBox();
+		
 		// Inner Panels
 		manu = createNewInnerPanel(new Manual());
 		highscore = createNewInnerPanel();
@@ -50,9 +53,6 @@ public class Menu extends JFrame {
 		
 		// Set start screen
 		main = user;
-		
-		// BookBox
-		initializeBookBox();
 		
 		// Navigation
 		initializeNavigation();
