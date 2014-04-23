@@ -46,8 +46,9 @@ public class Hero extends JLabel{
 	}
 	
 	public void initHero(char type){
+		this.type = type;
 		try {
-			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('n', type)));
+			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('n', this.type)));
 		} catch (ImageNotFoundException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -68,6 +69,19 @@ public class Hero extends JLabel{
 	 * @author Martika & Tobias
 	 */
 	public void heroStep(int stepCounterLayer){
+		ImageIcon image;
+		
+		//bear looks in a direction
+		try {
+			image = new ImageIcon(this.imageLib.loadHeroPic(this.runDirection, this.type));
+			this.setIcon(image);
+		} catch (ImageNotFoundException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 		
 		if (isInAJump()){
 			jump();
@@ -138,17 +152,6 @@ public class Hero extends JLabel{
 		if(runDirection == 'l'){
 			if (posX > 0){
 				posX -= (int) runConstant;
-				//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
-				/*try {
-					image = new ImageIcon(this.imageLib.loadHeroPic('l', this.type));
-					this.setIcon(image);
-				} catch (ImageNotFoundException e) {
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				} catch (SQLException e) {
-					System.err.println(e.getMessage());
-					e7.printStackTrace();
-				}*/
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant) && !isInAJump()){
 				if(ringbuffer.top(ringbufferCounter).isWalkableLeft()){
@@ -160,17 +163,6 @@ public class Hero extends JLabel{
 		else if(runDirection == 'r'){
 			if (posX < Ressources.RASTERSIZE*5){
 				posX += (int) runConstant;	
-				//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
-				/*try {
-					image = new ImageIcon(this.imageLib.loadHeroPic('r', this.type));
-					this.setIcon(image);
-				} catch (ImageNotFoundException e) {
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				} catch (SQLException e) {
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				}*/
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant) && !isInAJump()){
 				if(ringbuffer.top(ringbufferCounter).isWalkableRight()){
