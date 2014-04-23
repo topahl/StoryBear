@@ -53,17 +53,20 @@ public class TextButton extends JButton implements ActionListener, MouseListener
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		setStyle(standardColor, standardBorder);
+		if(isEnabled())
+			setStyle(standardColor, standardBorder);
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		setStyle(hoverColor, hoverBorder);
+		if(isEnabled())
+			setStyle(hoverColor, hoverBorder);
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		setStyle(standardColor, standardBorder);
+		if(isEnabled())
+		 setStyle(standardColor, standardBorder);
 	}
 
 	@Override

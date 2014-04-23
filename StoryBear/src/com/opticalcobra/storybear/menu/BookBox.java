@@ -39,6 +39,8 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	
 	private JLayeredPane baseLayer;
 	private JLayeredPane buecherRegal;
+	private MouseListener mouseAreaListener;
+	private JLabel mouseArea;
 	private JList<StoryInfo> levelBuecher;
 	private DefaultListModel<StoryInfo> model = new DefaultListModel<StoryInfo>();
 	
@@ -96,20 +98,18 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 //		add(boxImage);
 		
 		// MouseIn-Out-Area
-		JLabel mouseArea = new JLabel();
-		mouseArea.setBounds(0,0,(int)(100/Ressources.SCALE),(int)(1080/Ressources.SCALE));
-		mouseArea.addMouseListener(new MouseListener() {
+		 mouseAreaListener = new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
 			public void mousePressed(MouseEvent arg0) {}
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				hoverOut();
+					hoverOut();
 			}
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				hoverIn();
+					hoverIn();
 			}
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -119,8 +119,20 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 				else
 					makeAvailable();
 			}
-		});
+		};
+		mouseArea = new JLabel();
+		mouseArea.setBounds(0,0,(int)(100/Ressources.SCALE),(int)(1080/Ressources.SCALE));
 		add(mouseArea);
+	}
+	
+	public void disable() {
+		mouseArea.removeMouseListener(mouseAreaListener);
+		setEnabled(false);
+	}
+	
+	public void enable() {
+		mouseArea.addMouseListener(mouseAreaListener);
+		setEnabled(true);
 	}
 	
 	public void makeAvailable() {
@@ -138,7 +150,6 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	public void hoverIn() {
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		setLocation(((available) ? postionAvailable+(int)(15/Ressources.SCALE) : postionNormal-(int)(15/Ressources.SCALE)),0);
-		
 	}
 	
 	public void hoverOut() {

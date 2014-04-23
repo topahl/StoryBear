@@ -47,5 +47,11 @@ public class User implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
+	/**
+	 * @return name
+	 */
+	public String toString() {
+		return name;
+	}
 }
