@@ -34,6 +34,7 @@ public class Hero extends JLabel{
 	private int ringbufferCounter = 2;    //Es sind auf dem Screen immer 5-6 Kacheln zur freien Bewegung verfügbar
 	
 	private int highscore = 0;
+	private boolean walkedAtSomething = false;  
 	
 	private Hero(){
 	}
@@ -46,8 +47,9 @@ public class Hero extends JLabel{
 	}
 	
 	public void initHero(char type){
+		this.type = type;
 		try {
-			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('n', type)));
+			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('n', this.type)));
 		} catch (ImageNotFoundException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
@@ -68,6 +70,19 @@ public class Hero extends JLabel{
 	 * @author Martika & Tobias
 	 */
 	public void heroStep(int stepCounterLayer){
+		ImageIcon image;
+		
+		//bear looks in a direction
+		try {
+			image = new ImageIcon(this.imageLib.loadHeroPic(this.runDirection, this.type));
+			this.setIcon(image);
+		} catch (ImageNotFoundException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
 		
 		if (isInAJump()){
 			jump();
@@ -138,17 +153,6 @@ public class Hero extends JLabel{
 		if(runDirection == 'l'){
 			if (posX > 0){
 				posX -= (int) runConstant;
-				//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
-				/*try {
-					image = new ImageIcon(this.imageLib.loadHeroPic('l', this.type));
-					this.setIcon(image);
-				} catch (ImageNotFoundException e) {
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				} catch (SQLException e) {
-					System.err.println(e.getMessage());
-					e7.printStackTrace();
-				}*/
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant) && !isInAJump()){
 				if(ringbuffer.top(ringbufferCounter).isWalkableLeft()){
@@ -160,17 +164,6 @@ public class Hero extends JLabel{
 		else if(runDirection == 'r'){
 			if (posX < Ressources.RASTERSIZE*5){
 				posX += (int) runConstant;	
-				//TODO: reinkommentieren, wenn Links-Geh-Bild vom Bär da ist
-				/*try {
-					image = new ImageIcon(this.imageLib.loadHeroPic('r', this.type));
-					this.setIcon(image);
-				} catch (ImageNotFoundException e) {
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				} catch (SQLException e) {
-					System.err.println(e.getMessage());
-					e.printStackTrace();
-				}*/
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant) && !isInAJump()){
 				if(ringbuffer.top(ringbufferCounter).isWalkableRight()){
@@ -290,16 +283,23 @@ public class Hero extends JLabel{
 	public boolean isHeroAllowedToWalk(){
 		
 		if (isInAJump() && runDirection != 'n'){
+			this.walkedAtSomething = false;
 			return true;
 		}
 		
 		//Nur rechts notwendig?
 		if (!isInAJump() && (runDirection == 'r' && ringbuffer.top(ringbufferCounter).isWalkableRight() || runDirection == 'l' && ringbuffer.top(ringbufferCounter).isWalkableLeft())){
+			this.walkedAtSomething = false;
 			return true;
 		}
-		this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
-		if(this.highscore < 0)
-			this.highscore = 0;
+		
+		//don't decrease score just because you are permanently running against a wall :-D
+		if(this.walkedAtSomething == false){
+			this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
+			if(this.highscore < 0)
+				this.highscore = 0;
+			this.walkedAtSomething = true;
+		}
 		return false;
 	}
 
