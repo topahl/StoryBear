@@ -28,7 +28,7 @@ public class Menu extends JFrame {
 	public static final Font fontText[] = { FontCache.getInstance().getFont("Standard", (float) (28f/Ressources.SCALE)) };
 	
 	public JLayeredPane main, editor, welcome, credits, user, manu, highscore;
-	public JLayeredPane bookBox;
+	public BookBox bookBox;
 	public Container me;
 	public MenuButton navManu,navUser,navEditor,navHigh, navCredits, navExit;
 	
@@ -44,7 +44,7 @@ public class Menu extends JFrame {
 		// Inner Panels
 		manu = createNewInnerPanel(new Manual());
 		highscore = createNewInnerPanel();
-		user = createNewInnerPanel(new UserPanel());
+		user = createNewInnerPanel(new UserPanel(this));
 		editor = createNewInnerPanel(new Editor());
 		credits = createNewInnerPanel(new Credits());
 		
@@ -80,6 +80,14 @@ public class Menu extends JFrame {
 	
 	public void setMain(JComponent innerComp) {
 		this.main = (JLayeredPane) innerComp;
+	}
+	
+	public void enableAllMenuButtons() {
+		navManu.enable();
+		navEditor.enable();
+		navHigh.enable();
+		navCredits.enable();
+		bookBox.enable();
 	}
 	
 	public void close() {

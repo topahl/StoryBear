@@ -36,9 +36,13 @@ public class UserPanel extends JLayeredPane {
 	private JList benutzerliste;
 	private TextButton selectUser;
 	
+	private Menu menu;
+	
 	private Database db = new Database();
 	
-	public UserPanel() {
+	public UserPanel(Menu menu) {
+		this.menu = menu;
+		
 		JTextArea beschreibung = new JTextArea();
         beschreibung.setLineWrap(true);
         beschreibung.setText("Melden Sie sich mit Ihrem Nutzernamen an.");
@@ -130,6 +134,10 @@ public class UserPanel extends JLayeredPane {
 	
 	private void selectUser() {
 		User u = (User) benutzerliste.getSelectedValue();
+		menu.enableAllMenuButtons();
+		menu.getMain().setVisible(false);
+		menu.setMain(menu.highscore);
+		menu.getMain().setVisible(true);
 	}
 	
 	private void loadUser() {

@@ -126,13 +126,13 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	}
 	
 	public void disable() {
-		mouseArea.removeMouseListener(mouseAreaListener);
-		setEnabled(false);
+		mouseArea.removeMouseListener(mouseAreaListener); 
+		mouseArea.setEnabled(false);
 	}
 	
 	public void enable() {
 		mouseArea.addMouseListener(mouseAreaListener);
-		setEnabled(true);
+		mouseArea.setEnabled(true);
 	}
 	
 	public void makeAvailable() {
