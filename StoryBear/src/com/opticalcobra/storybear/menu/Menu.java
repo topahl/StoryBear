@@ -146,6 +146,7 @@ public class Menu extends JFrame {
 		setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 		setResizable(false);
 		setUndecorated(true);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		setVisible(true);
 	}
