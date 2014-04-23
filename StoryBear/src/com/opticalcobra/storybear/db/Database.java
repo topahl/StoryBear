@@ -41,9 +41,9 @@ public class Database {
 				Class.forName("org.hsqldb.jdbcDriver");
 				conn = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/", "sa","");
 			} catch (SQLException e) {
-				System.err.println("Cound not establish database connection");
+				System.err.println("Could not establish database connection");
 			} catch (ClassNotFoundException e) {
-				System.err.println("Cound not load jdbc driver");
+				System.err.println("Could not load jdbc driver");
 				e.printStackTrace();
 			}
 		}
