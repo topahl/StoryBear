@@ -32,17 +32,12 @@ public class BookRenderer extends DefaultListCellRenderer {
 		private JLabel book;
 		private FontCache fc = FontCache.getInstance();
 		private Imagelib il = Imagelib.getInstance();
-		private int [] offset = new int[4]; 
 		private int [] books = {Imagelib.MENU_BOOK_1,Imagelib.MENU_BOOK_2,Imagelib.MENU_BOOK_3,Imagelib.MENU_BOOK_4};
 		private Color [] colors = {new Color(200,156,7),new Color(249,194,9),new Color(255,255,255), new Color(249,194,9),new Color(249,194,9),new Color(0,0,0)};
 				
 	
 	
 	public BookRenderer(){
-		offset[0]=(int) (170/Ressources.SCALE);
-		offset[1]=(int) (210/Ressources.SCALE);
-		offset[2]=(int) (130/Ressources.SCALE);
-		offset[3]=(int) (140/Ressources.SCALE);
 		pane= new JPanel();
 		user = new JLabel();
 		title = new JLabel();
@@ -85,11 +80,11 @@ public class BookRenderer extends DefaultListCellRenderer {
 		
 		title.setForeground(colors[index%colors.length]);
 		title.setText(story.getTitle());
-		title.setBounds(offset[index%4], (int)(20/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		title.setBounds((int) (120/Ressources.SCALE), (int)(20/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(60/Ressources.SCALE));
 		
 		user.setForeground(colors[index%colors.length]);
 		user.setText("von "+story.getAuthor().getName());
-		user.setBounds(offset[index%4], (int)(80/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(40/Ressources.SCALE));
+		user.setBounds((int) (120/Ressources.SCALE), (int)(80/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(40/Ressources.SCALE));
 		
 
 		return pane;
