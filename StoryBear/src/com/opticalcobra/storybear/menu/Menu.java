@@ -2,8 +2,11 @@ package com.opticalcobra.storybear.menu;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+
+import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Editor;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -12,8 +15,10 @@ import com.opticalcobra.storybear.res.Ressources;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.sql.SQLException;
 
 import javax.swing.JLabel;
 
@@ -27,6 +32,7 @@ public class Menu extends JFrame {
 	public Container me;
 	
 	private Imagelib imagelib;
+	private Database db = new Database();
 	
 	public Menu() {
 		imagelib = Imagelib.getInstance();
@@ -69,6 +75,11 @@ public class Menu extends JFrame {
 	}
 	
 	public void close() {
+		try {
+			db.shutdown();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		System.exit(0);
 	}
 	
