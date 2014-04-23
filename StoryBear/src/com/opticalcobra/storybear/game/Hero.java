@@ -34,6 +34,7 @@ public class Hero extends JLabel{
 	private int ringbufferCounter = 2;    //Es sind auf dem Screen immer 5-6 Kacheln zur freien Bewegung verfügbar
 	
 	private int highscore = 0;
+	private boolean walkedAtSomething = false;  
 	
 	private Hero(){
 	}
@@ -282,16 +283,23 @@ public class Hero extends JLabel{
 	public boolean isHeroAllowedToWalk(){
 		
 		if (isInAJump() && runDirection != 'n'){
+			this.walkedAtSomething = false;
 			return true;
 		}
 		
 		//Nur rechts notwendig?
 		if (!isInAJump() && (runDirection == 'r' && ringbuffer.top(ringbufferCounter).isWalkableRight() || runDirection == 'l' && ringbuffer.top(ringbufferCounter).isWalkableLeft())){
+			this.walkedAtSomething = false;
 			return true;
 		}
-		this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
-		if(this.highscore < 0)
-			this.highscore = 0;
+		
+		//don't decrease score just because you are permanently running against a wall :-D
+		if(this.walkedAtSomething == false){
+			this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
+			if(this.highscore < 0)
+				this.highscore = 0;
+			this.walkedAtSomething = true;
+		}
 		return false;
 	}
 
