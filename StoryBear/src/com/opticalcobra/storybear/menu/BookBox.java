@@ -3,6 +3,8 @@ package com.opticalcobra.storybear.menu;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -50,52 +52,18 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	private Menu menu;
 	
 	public BookBox(Menu menu) {
-		this.menu = menu;
+		this.menu = menu;		
 		
-//		// TODO: Dummy-data
-//		List<StoryInfo> stories = new ArrayList<StoryInfo>();
-//		StoryInfo s = new StoryInfo();
-//		Story st = new Story();
-//		st.setTitle("Test 123");
-//		st.setAuthor(new User("Hans"));
-//		s.setStory(st);
-//		stories.add(s);
-//		s = new StoryInfo();
-//		st = new Story();
-//		st.setTitle("Das Märchen");
-//		st.setAuthor(new User("Peter"));
-//		s.setStory(st);
-//		stories.add(s);
-//		// Dummy-data END
-		
+		baseLayer = new JLayeredPane();
 		
 		setLocation(postionNormal, 0);
 		setSize((int)(1600/Ressources.SCALE),(int)(1080/Ressources.SCALE));
 		
-		// Books
-//		JScrollPane bookList = new JScrollPane();
-//		int bookCouter = 0;
-//		for(StoryInfo info : stories) {
-//			JComponent book = createBook(info);
-//			book.setLocation((new Random().nextInt(80)), bookCouter*145+65);
-//			bookList.add(book);
-//			bookCouter++;
-//		}
-//		bookList.setBounds(60, 60, 960, 960);
-//		add(bookList);
-////		bookList.setViewportView(persHighscoreList);
-//		bookList.getViewport().setOpaque(false);
-//		bookList.setOpaque(false);
-//		bookList.setBackground(new Color(0,0,0,0));
-//		bookList.setBorder(null);
+		// right shelf
+		initializeRightShelf();
 		
+		// left shelf
 		initShelf();
-		
-//		// Background
-//		JLabel boxImage = new JLabel(new ImageIcon(Imagelib.getInstance().loadDesignImage("menu_box_bg")));
-//		boxImage.setVisible(true);
-//		boxImage.setSize(1600, 1080);
-//		add(boxImage);
 		
 		// MouseIn-Out-Area
 		 mouseAreaListener = new MouseListener() {
@@ -123,8 +91,17 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 		mouseArea = new JLabel();
 		mouseArea.setBounds(0,0,(int)(100/Ressources.SCALE),(int)(1080/Ressources.SCALE));
 		add(mouseArea);
+		
+		// set standards
+		levelBuecher.setSelectedIndex(0);
 	}
 	
+	public void startGame() {
+		@SuppressWarnings("unused")
+		Window gui = new Window(levelBuecher.getSelectedIndex());
+		menu.dispose();
+	}
+
 	public void disable() {
 		mouseArea.removeMouseListener(mouseAreaListener); 
 		mouseArea.setEnabled(false);
@@ -156,41 +133,35 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 		setCursor(Cursor.getDefaultCursor());
 		setLocation(((available) ? postionAvailable : postionNormal),0);
 	}
-	
-//	private JComponent createBook(StoryInfo storyInfo) {
-//		JLayeredPane book = new JLayeredPane();
-//		
-//		JLabel title = new JLabel(storyInfo.getStory().getTitle());
-//		title.setBounds(130, 10, 700, 100);
-//		title.setForeground(Color.black);
-//		title.setFont(FontCache.getInstance().getFont("Standard", 30f));
-//		book.add(title);
-//		
-////		JLabel author = new JLabel(storyInfo.getStory().getAuthor().getName());
-//		JLabel author = new JLabel("Peter");
-//		author.setForeground(Color.black);
-//		author.setBounds(145, 80, 700, 20);
-//		author.setFont(FontCache.getInstance().getFont("Fontin_R", 20f));
-//		book.add(author);
-//		
-//		
-//		String[] imageNames = {"menu_box_book_red", "menu_box_book_blue", "menu_box_book_green", "menu_box_book_brown"};
-//		
-//		JLabel image = new JLabel(new ImageIcon(Imagelib.getInstance().loadDesignImage(imageNames[(new Random().nextInt(3))])));
-//		image.setBounds(0,0,972,150);
-//		book.add(image);
-//		
-//		book.setBounds(0,0,972,150);
-//		
-//		book.setVisible(true);
-//		return book;
-//	}
+
+	private void initializeRightShelf() {
+		HeroButton[] heroButtons = new HeroButton[3];
+		heroButtons[0] = new HeroButton('b', imagelib.loadDesignImage("hero_bear_normal"),imagelib.loadDesignImage("hero_bear_hover"),imagelib.loadDesignImage("hero_bear_selected"));
+		heroButtons[1] = new HeroButton('f', imagelib.loadDesignImage("hero_fairy_normal"),imagelib.loadDesignImage("hero_fairy_hover"),imagelib.loadDesignImage("hero_fairy_selected"));
+		heroButtons[2] = new HeroButton('p', imagelib.loadDesignImage("hero_prince_normal"),imagelib.loadDesignImage("hero_prince_hover"),imagelib.loadDesignImage("hero_prince_selected"));
+		
+		int buttonCnt = 0;
+		for (HeroButton button : heroButtons) {
+			button.setLocation((int)(1305/Ressources.SCALE),(int)((170+buttonCnt*215)/Ressources.SCALE));
+			baseLayer.add(button);
+			buttonCnt++;
+		}
+			
+		TextButton start = new TextButton("Spielen", 1305, 925, 215, 65);
+		start.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startGame();
+				
+			}
+		});
+		baseLayer.add(start);
+	}
 	
 	/**
 	 * @author Tobias
 	 */
 	private void initShelf() {
-		baseLayer = new JLayeredPane();
 		buecherRegal = new JLayeredPane();
 		
 		buecherRegal.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
@@ -245,8 +216,11 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	 */
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		@SuppressWarnings("unused")
-		Window gui = new Window(e.getFirstIndex());
-		menu.dispose();
+//		@SuppressWarnings("unused")
+//		Window gui = new Window(e.getFirstIndex());
+//		JList list =(JList) e.getSource();
+//		((BookRenderer) list.getSelectedValue()).title.setForeground(Color.red);
+		
+//		menu.dispose();
 	}
 }

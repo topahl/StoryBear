@@ -45,7 +45,7 @@ public class UserPanel extends JLayeredPane {
 		
 		JTextArea beschreibung = new JTextArea();
         beschreibung.setLineWrap(true);
-        beschreibung.setText("Melden Sie sich mit Ihrem Nutzernamen an.");
+        beschreibung.setText("Melde dich mit deinem Nutzernamen an.");
         beschreibung.setWrapStyleWord(true);
         beschreibung.setFocusCycleRoot(true);
         beschreibung.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -104,7 +104,7 @@ public class UserPanel extends JLayeredPane {
         
         beschreibung = new JTextArea();
         beschreibung.setLineWrap(true);
-        beschreibung.setText("Sie haben noch keinen Nutzernamen? Legen Sie hier einen neuen an.");
+        beschreibung.setText("Du hast noch keinen Nutzernamen? Leg dir hier einen neuen an.");
         beschreibung.setWrapStyleWord(true);
         beschreibung.setFocusCycleRoot(true);
         beschreibung.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
