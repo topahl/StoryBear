@@ -44,6 +44,8 @@ public class BookRenderer extends DefaultListCellRenderer {
 		private Color shadowColor = new Color(0,0,0,0.5f);
 		private int titleTop = 40;
 		private int userTop = 95;
+		private int [] bookLeft = {159,205,123,133};
+		private JLabel bg;
 	
 	
 	public BookRenderer(){
@@ -51,6 +53,7 @@ public class BookRenderer extends DefaultListCellRenderer {
 		user = new JLabel();
 		title = new JLabel();
 		book = new JLabel();
+		bg = new JLabel();
 		userShadow = new JLabel();
 		titleShadow = new JLabel();
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(pane);
@@ -71,12 +74,14 @@ public class BookRenderer extends DefaultListCellRenderer {
 		pane.add(title);
 		pane.add(userShadow);
 		pane.add(titleShadow);
+		pane.add(bg);
 		pane.add(book);
-		title.setFont(fc.getFont("Standard",(float) (40/Ressources.SCALE)));
-		user.setFont(fc.getFont("Fontin_SC", (float) (20/Ressources.SCALE)));
+		title.setFont(fc.getFont("Standard",(float) (55/Ressources.SCALE)));
+		user.setFont(fc.getFont("Fontin_SC", (float) (28/Ressources.SCALE)));
 		titleShadow.setFont(title.getFont());
 		userShadow.setFont(user.getFont());
 		book.setBounds(0,0,(int) (1050/Ressources.SCALE), (int)(144/Ressources.SCALE));
+		bg.setBounds(0,0,(int) (1050/Ressources.SCALE), (int)(144/Ressources.SCALE));
 		
 		this.setBorder(null);	
 	}
@@ -91,23 +96,24 @@ public class BookRenderer extends DefaultListCellRenderer {
             boolean expanded) {
 		
 		Story story = ((StoryInfo) value).getStory();
-		book.setIcon(new ImageIcon(il.menuImage(books[index%4])));
+		bg.setIcon(new ImageIcon(il.menuImage(books[index%4])));
+		bg.setLocation((int) ((bookLeft[index%4]-120)/Ressources.SCALE), 0);
 		
 		title.setForeground(normalColor);
 		title.setText(story.getTitle());
-		title.setBounds((int) (120/Ressources.SCALE), (int)(titleTop/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		title.setBounds((int) (bookLeft[index%4]/Ressources.SCALE), (int)(titleTop/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(60/Ressources.SCALE));
 		
 		titleShadow.setForeground(shadowColor);
 		titleShadow.setText(story.getTitle());
-		titleShadow.setBounds((int) (123/Ressources.SCALE), (int)((titleTop+3)/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		titleShadow.setBounds((int) ((bookLeft[index%4]+3)/Ressources.SCALE), (int)((titleTop+3)/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(60/Ressources.SCALE));
 		
 		user.setForeground(normalColor);
 		user.setText("von "+story.getAuthor().getName());
-		user.setBounds((int) (120/Ressources.SCALE), (int)(userTop/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(40/Ressources.SCALE));
+		user.setBounds((int) (bookLeft[index%4]/Ressources.SCALE), (int)(userTop/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(40/Ressources.SCALE));
 		
 		userShadow.setForeground(shadowColor);
 		userShadow.setText("von "+story.getAuthor().getName());
-		userShadow.setBounds((int) (123/Ressources.SCALE), (int)((userTop+3)/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(40/Ressources.SCALE));
+		userShadow.setBounds((int) ((bookLeft[index%4]+3)/Ressources.SCALE), (int)((userTop+3)/Ressources.SCALE), (int)(700/Ressources.SCALE), (int)(40/Ressources.SCALE));
 		
 		if (selected) {
 			title.setForeground(selectedColor);

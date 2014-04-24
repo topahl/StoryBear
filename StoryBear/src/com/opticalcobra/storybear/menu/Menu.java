@@ -154,7 +154,7 @@ public class Menu extends JFrame {
 		getContentPane().setLayout(null);
 		
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+		setCursor(Ressources.CURSORNORMAL);
 		setResizable(false);
 		setUndecorated(true);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);

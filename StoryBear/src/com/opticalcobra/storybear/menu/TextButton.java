@@ -37,6 +37,7 @@ public class TextButton extends JButton implements ActionListener, MouseListener
 		setContentAreaFilled(false);
 		setText(text.toUpperCase());
 		setFont(font);
+		setCursor(Ressources.CURSORCLICKABLE);
 		setBounds((int)(x/Ressources.SCALE), (int)(y/Ressources.SCALE), (int)(width/Ressources.SCALE), (int)(height/Ressources.SCALE));
 		setFocusable(false);
 		

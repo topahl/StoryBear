@@ -1,6 +1,7 @@
 package com.opticalcobra.storybear.res;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -61,6 +62,9 @@ public class Ressources {
 	public static final int LAYERBACKGROUND = 4;
 	public static final int LAYERMIDDLEGROUND = 5;
 	
+	// Cursor
+	public static final Cursor CURSORNORMAL = Cursor.getDefaultCursor();
+	public static final Cursor CURSORCLICKABLE = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 	
 	static {
 		

@@ -30,7 +30,7 @@ public class Credits extends JLayeredPane {
         beschreibung.setLineWrap(true);
         beschreibung.setText("Teamleitung\n\nProjektmanagement\n\nSimulation &\nAlgorithmus\n\nFrontend & GUI\n\n\nDesign");
         beschreibung.setWrapStyleWord(true);
-        beschreibung.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        beschreibung.setCursor(Ressources.CURSORNORMAL);
         beschreibung.setFocusable(false);
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontHeadline[2]);

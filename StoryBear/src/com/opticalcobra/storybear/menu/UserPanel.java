@@ -23,6 +23,7 @@ import javax.swing.ListSelectionModel;
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.res.FontCache;
+import com.opticalcobra.storybear.res.Ressources;
 
 import javax.swing.JTextField;
 import javax.swing.event.ListDataListener;
@@ -48,7 +49,7 @@ public class UserPanel extends JLayeredPane {
         beschreibung.setText("Melde dich mit deinem Nutzernamen an.");
         beschreibung.setWrapStyleWord(true);
         beschreibung.setFocusCycleRoot(true);
-        beschreibung.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        beschreibung.setCursor(Ressources.CURSORNORMAL);
         beschreibung.setFocusable(false);
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontHeadline[1]);

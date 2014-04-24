@@ -32,7 +32,7 @@ public class MenuButton extends JButton implements MouseListener {
         setBorder(null);
         setBorderPainted(false);
         setContentAreaFilled(false);
-        
+        setCursor(Ressources.CURSORCLICKABLE);
 	}
 	
 	public MenuButton(int x, int y, BufferedImage normal, BufferedImage hover, BufferedImage disabled, Menu object, JComponent innerComp) {

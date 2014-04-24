@@ -17,7 +17,7 @@ public class Button extends JButton implements ActionListener{
         setBorderPainted(false);
         setContentAreaFilled(false);
         setPreferredSize(new Dimension(width,height));
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        setCursor(Ressources.CURSORCLICKABLE);
         setBounds(x, y, width,height);
 	}
 
@@ -34,7 +34,7 @@ public class Button extends JButton implements ActionListener{
         setBorderPainted(false);
         setContentAreaFilled(false);
         setPreferredSize(new Dimension(normal.getWidth(),normal.getHeight()));
-        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        setCursor(Ressources.CURSORCLICKABLE);
         
         setBounds(x, y, normal.getWidth(),normal.getHeight());
 	}

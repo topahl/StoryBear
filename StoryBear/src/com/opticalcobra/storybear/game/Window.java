@@ -62,7 +62,7 @@ public class Window extends JFrame {
 		
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		this.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+		this.setCursor(Ressources.CURSORNORMAL);
 		this.setResizable(false);
 		this.setUndecorated(true);
 		

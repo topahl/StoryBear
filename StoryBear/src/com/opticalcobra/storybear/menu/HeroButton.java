@@ -34,6 +34,8 @@ public class HeroButton extends JButton implements ActionListener {
 		setRolloverIcon(new ImageIcon(hover));
 		setDisabledIcon(new ImageIcon(disabled));
 		
+		setCursor(Ressources.CURSORCLICKABLE);
+		
 		addActionListener(this);
 		
 		refresh();
