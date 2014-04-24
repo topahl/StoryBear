@@ -40,6 +40,7 @@ public class Imagelib {
 	public static final char QUERY_MIDDLEGROUND = 'm';
 	public static final char QUERY_BACKGROUND = 'b';
 	public static final char QUERY_CLOUDS = 'c';
+	public static final char QUERY_FOREGROUNDTWO = 'v';
 	
 	public static final int MENU_SHELF = 246;
 	public static final int MENU_SCROLL_UP = 247;
@@ -247,6 +248,9 @@ public class Imagelib {
 		case QUERY_MIDDLEGROUND:
 			query="SELECT DISTINCT f.following_type_id FROM MIDDLEGROUND b JOIN IMAGES i ON i.id = b.images_id JOIN MIDDLEGROUND_FOLLOWING f ON b.type_id = f.type_id WHERE f.type_id = "+type+";";
 			break;
+		case QUERY_FOREGROUNDTWO:
+			query="SELECT DISTINCT f.following_type_id FROM FOREGROUND_TWO b JOIN IMAGES i ON i.id = b.images_id JOIN FOREGROUND_FOLLOWING f ON b.type_id = f.type_id WHERE f.type_id = "+type+";";
+			break;
 		default:
 			throw new QueryTypeNotFoundException("Your Querytype was not valid. Type: "+queryType);
 		}
@@ -280,6 +284,9 @@ public class Imagelib {
 			break;
 		case QUERY_CLOUDS:
 			dbName="";
+			break;
+		case QUERY_FOREGROUNDTWO:
+			dbName = "FOREGROUND_TWO";
 			break;
 		default:
 			throw new QueryTypeNotFoundException("Your Querytype was not valid. Type: "+queryType);

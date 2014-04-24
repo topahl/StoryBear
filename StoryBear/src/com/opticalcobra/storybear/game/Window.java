@@ -25,6 +25,7 @@ public class Window extends JFrame {
 	private JLayeredPane baseLayer; // base Layer on witch all other displaying is done
 	private Timer timer;
 	private GameLayer fg1;
+	private GameLayer fg2;
 	private GameLayer mg;
 	private GameLayer bg;
 	private GameLayer clouds;
@@ -45,6 +46,7 @@ public class Window extends JFrame {
 	
 
 	DummyRenderer renderer;
+	RendererFG2 rendererfg2;
 	DummyRendererMG rendererMG;
 	BackgroundRenderer rendererBG;
 	CloudRenderer rendererCloud;
@@ -82,6 +84,7 @@ public class Window extends JFrame {
 	private void initComponents() {
 		//create remderer
 		renderer = new DummyRenderer(level);
+		rendererfg2 = new RendererFG2(level);
 		rendererMG = new DummyRendererMG();
 		rendererBG = new BackgroundRenderer();
 		rendererCloud = new CloudRenderer();
@@ -150,6 +153,12 @@ public class Window extends JFrame {
 		this.baseLayer.add(this.labelScore);
 		
 		
+		
+		fg2=new GameLayer(rendererfg2);
+		fg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		fg2.setLocation(0, 0);
+		baseLayer.add(fg2);
+		
 		// initialize Hero
 		//this.hero = new Hero('b');	//TODO: einlesen, welcher hero-Typ vom User ausgewählt wurde
 		this.baseLayer.add(Hero.getInstance());
@@ -159,6 +168,7 @@ public class Window extends JFrame {
 		
 		//TODO Remove Dummy code
 		//Dummy Code 
+		
 		fg1=new GameLayer(renderer);
 		fg1.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		fg1.setLocation(0, 0);
@@ -192,6 +202,7 @@ public class Window extends JFrame {
 	 */
 	private void layerStep(){
 		fg1.step();
+		fg2.step();
 		if(stepCounterLayer % 2 == 0)
 			mg.step();
 		if(stepCounterLayer % 4 == 0){
