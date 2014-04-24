@@ -64,7 +64,7 @@ public class Scrollbar extends JScrollPane {
 	    @Override
 	    protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {        
 	        
-	        int thumb = (int) (thumbBounds.height - (30/Ressources.SCALE));
+	        int thumb = (int) (thumbBounds.height - (20/Ressources.SCALE));
 	        Image imageThumb;
 	        
 	        if(thumb<0){
@@ -78,9 +78,9 @@ public class Scrollbar extends JScrollPane {
 	        else{
 	        	imageThumb = new BufferedImage(thumbBounds.width, thumbBounds.height, BufferedImage.TYPE_INT_ARGB);
 	        	Graphics g2 = imageThumb.getGraphics();
-	        	g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0, null);
-		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(thumbBounds.height-(15/Ressources.SCALE)),null);
-		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(15/Ressources.SCALE), (int)(30/Ressources.SCALE), thumb, null);
+	        	g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0,thumbBounds.width,(int) (10/Ressources.SCALE), null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(thumbBounds.height-(10/Ressources.SCALE)),thumbBounds.width,(int) (10/Ressources.SCALE),null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(10/Ressources.SCALE), thumbBounds.width, thumb, null);
 		        
 		        g.drawImage(imageThumb, thumbBounds.x,thumbBounds.y, null);
 	        }
