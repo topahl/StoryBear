@@ -20,7 +20,7 @@ import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.StoryBearRandom;
 
 
-public class InteractionRenderer extends Renderer{
+public class InteractionRenderer extends Renderer implements IRenderer{
 
 	private int panelnum = 0;
 	private ArrayList<ILevelAppearance> storyInfoElements;
