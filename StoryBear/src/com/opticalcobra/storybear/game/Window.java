@@ -29,6 +29,7 @@ public class Window extends JFrame {
 	private GameLayer mg;
 	private GameLayer bg;
 	private GameLayer clouds;
+	private InteractionLayer ia;
 	
 	private int stepCounter = 1;
 	private int stepCounterLayer = 0;
@@ -50,6 +51,7 @@ public class Window extends JFrame {
 	DummyRendererMG rendererMG;
 	BackgroundRenderer rendererBG;
 	CloudRenderer rendererCloud;
+	InteractionRenderer rendererInteraction;
 	
 	
 	public Window(){
@@ -88,6 +90,7 @@ public class Window extends JFrame {
 		rendererMG = new DummyRendererMG();
 		rendererBG = new BackgroundRenderer();
 		rendererCloud = new CloudRenderer();
+		rendererInteraction = new InteractionRenderer(renderer.getRingbuffer(), level.getElements());
 		
 		baseLayer.setBackground(Ressources.SKYCOLOR);
 		getContentPane().setBackground(Color.BLACK);
@@ -164,15 +167,18 @@ public class Window extends JFrame {
 		this.baseLayer.add(Hero.getInstance());
 		
 		
-		
-		
-		//TODO Remove Dummy code
-		//Dummy Code 
+		ia=new InteractionLayer();
+		ia.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		ia.setLocation(0, 0);
+		baseLayer.add(ia);
 		
 		fg1=new GameLayer(renderer);
 		fg1.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		fg1.setLocation(0, 0);
 		baseLayer.add(fg1);
+		
+		//ia can just be rendered after fg1 was renderd. therefore we need a initializemethod
+		ia.initialize(rendererInteraction, renderer.getRingbuffer());
 		
 		mg=new GameLayer(rendererMG);
 		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
@@ -203,6 +209,7 @@ public class Window extends JFrame {
 	private void layerStep(){
 		fg1.step();
 		fg2.step();
+		ia.step();
 		if(stepCounterLayer % 2 == 0)
 			mg.step();
 		if(stepCounterLayer % 4 == 0){
