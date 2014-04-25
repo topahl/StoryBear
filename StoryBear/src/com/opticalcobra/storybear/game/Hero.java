@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import com.opticalcobra.storybear.db.DBConstants;
 import com.opticalcobra.storybear.db.TileResult;
 import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -59,7 +60,7 @@ public class Hero extends JLabel{
 		}
 
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
-				ringbuffer.top().getTileHeight() - Ressources.CHARACTERHEIGHT,
+				DBConstants.LEVELHEIGHTZERO - Ressources.CHARACTERHEIGHT,
 				Ressources.CHARACTERWIDTH,
 				Ressources.CHARACTERHEIGHT);
 	}
