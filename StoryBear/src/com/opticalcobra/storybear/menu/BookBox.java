@@ -98,7 +98,7 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	
 	public void startGame() {
 		@SuppressWarnings("unused")
-		Window gui = new Window(levelBuecher.getSelectedIndex());
+		Window gui = new Window(levelBuecher.getSelectedIndex(), HeroButton.getType());
 		menu.dispose();
 	}
 

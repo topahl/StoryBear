@@ -41,6 +41,7 @@ public class Window extends JFrame {
 	private JLabel labelScore = new JLabel();
 	
 	public StoryInfo level = null;
+	public char heroType;
 	
 //	private boolean inAJump = false; //shows that jump is executed currently
 //	private boolean inADoubleJump = false;
@@ -55,12 +56,13 @@ public class Window extends JFrame {
 	
 	
 	public Window(){
-		this(7); //Change here default Level
+		this(7, 'b'); //Change here default Level
 	}
 	
-	public Window(int level_num){
+	public Window(int level_num, char heroType){
 		this.level = new Database().getStoryInfoFromDatabase(level_num);
-		this.timer = new Timer();	
+		this.heroType = heroType;
+		this.timer = new Timer();
 		
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -197,7 +199,7 @@ public class Window extends JFrame {
 		//Dummy Code end
 				
 		Hero.getInstance().setRingbuffer(renderer.getRingbuffer());
-		Hero.getInstance().initHero('b');
+		Hero.getInstance().initHero(heroType);
 	}
 	
 	
