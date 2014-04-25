@@ -68,6 +68,9 @@ public class Ressources {
 	public static final Cursor CURSORNORMAL = Cursor.getDefaultCursor();
 	public static final Cursor CURSORCLICKABLE = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 	
+	// Menü-Farben
+	public static final Color MENUCOLORSELECTED = new Color(178,22,22);
+	
 	static {
 		
 		SCREEN=Toolkit.getDefaultToolkit().getScreenSize();

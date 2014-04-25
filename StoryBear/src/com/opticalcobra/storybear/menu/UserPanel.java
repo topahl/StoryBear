@@ -1,6 +1,7 @@
 package com.opticalcobra.storybear.menu;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
@@ -58,6 +61,7 @@ public class UserPanel extends JLayeredPane {
         add(beschreibung, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
         benutzerliste = new JList(new UserList());
+        benutzerliste.setCellRenderer(new UserListCellRenderer());
         benutzerliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         benutzerliste.setOpaque(false);
         benutzerliste.setBackground(new Color(0,0,0,0));
@@ -180,4 +184,17 @@ public class UserPanel extends JLayeredPane {
 		}
 	}
 	
+	private class UserListCellRenderer extends DefaultListCellRenderer {
+	     @Override
+	     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+	         JComponent c = (JComponent) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+	         c.setBackground(new Color(0,0,0,0));
+	         c.setBorder(null);
+	         c.setCursor(Ressources.CURSORCLICKABLE);
+	         if (isSelected) {
+	             c.setForeground(Ressources.MENUCOLORSELECTED);
+	         }
+	         return c;
+	     }
+	}
 }

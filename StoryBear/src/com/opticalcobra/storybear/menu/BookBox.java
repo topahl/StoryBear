@@ -142,6 +142,18 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	}
 
 	private void initializeRightShelf() {
+		JLabel chooseHeadline = new JLabel("Spieler-");
+		chooseHeadline.setBounds((int)(1305/Ressources.SCALE), (int)(0/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(200/Ressources.SCALE));
+		chooseHeadline.setFont(FontCache.getInstance().getFont("Fontin_SC", 45));
+		chooseHeadline.setForeground(Color.white);
+		baseLayer.add(chooseHeadline);
+		chooseHeadline = new JLabel("auswahl");
+		chooseHeadline.setBounds((int)(1305/Ressources.SCALE), (int)(45/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(200/Ressources.SCALE));
+		chooseHeadline.setFont(FontCache.getInstance().getFont("Fontin_SC", 45));
+		chooseHeadline.setForeground(Color.white);
+		baseLayer.add(chooseHeadline);
+		
+		
 		HeroButton[] heroButtons = new HeroButton[3];
 		heroButtons[0] = new HeroButton('b', imagelib.loadDesignImage("hero_bear_normal"),imagelib.loadDesignImage("hero_bear_hover"),imagelib.loadDesignImage("hero_bear_selected"));
 		heroButtons[1] = new HeroButton('f', imagelib.loadDesignImage("hero_fairy_normal"),imagelib.loadDesignImage("hero_fairy_hover"),imagelib.loadDesignImage("hero_fairy_selected"));
@@ -154,7 +166,7 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 			buttonCnt++;
 		}
 			
-		TextButton start = new TextButton("Spielen", 1305, 925, 215, 65);
+		TextButton start = new TextButton("Spielen", 1305, 925, 215, 65, 35);
 		start.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

@@ -41,7 +41,7 @@ public class Credits extends JLayeredPane {
         beschreibung_2.setLocation((int)(1100/Ressources.SCALE), (int)(142/Ressources.SCALE));
         beschreibung_2.setSize((int)(332/Ressources.SCALE), (int)(594/Ressources.SCALE));
         beschreibung_2.setLineWrap(true);
-        beschreibung_2.setText("Tobias Pahlings\n\nSven Wessiepe\n\nMiriam Marx\nMartika Schwan\n\nTobias Pahlings\nStephan Giesau\n\nStephan Giesau\n");
+        beschreibung_2.setText("Tobias Pahlings\n\nSven Wessiepe\n\nMiriam Marx\nMartika Schwan\n\nStephan Giesau\nNicolas Marin\n\nStephan Giesau\n");
         beschreibung_2.setWrapStyleWord(true);
         beschreibung_2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         beschreibung_2.setFocusable(false);

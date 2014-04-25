@@ -18,13 +18,18 @@ import com.opticalcobra.storybear.res.Ressources;
 public class TextButton extends JButton implements ActionListener, MouseListener{
 	private final static int borderThick = 2;
 	private final static Color standardColor = Color.black;
-	private final static Color hoverColor = Color.red;
-	private final static float fontSize = (float)(25f/Ressources.SCALE);
+	private final static Color hoverColor = Ressources.MENUCOLORSELECTED;
+	private final static float fontSize = (float)(28f/Ressources.SCALE);
 	private final static Font font = FontCache.getInstance().getFont("Fontin_R", fontSize);
 	
 	
 	private Border standardBorder;
 	private Border hoverBorder;
+	
+	public TextButton(String text, int x, int y, int width, int height, float size) {
+		this(text, x, y, width, height);
+		setFontSize(size);
+	}
 	
 	public TextButton(String text, int x, int y, int width, int height) {
 		standardBorder = BorderFactory.createLineBorder(standardColor, borderThick);
@@ -42,6 +47,10 @@ public class TextButton extends JButton implements ActionListener, MouseListener
 		setFocusable(false);
 		
 		setStyle(standardColor, standardBorder);
+	}
+	
+	public void setFontSize(float size) {
+		setFont(getFont().deriveFont(size));
 	}
 	
 	private void setStyle(Color color, Border border) {
