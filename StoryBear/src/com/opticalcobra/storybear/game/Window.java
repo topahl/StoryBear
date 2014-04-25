@@ -87,7 +87,7 @@ public class Window extends JFrame {
 	private void initComponents() {
 		//create remderer
 		renderer = new DummyRenderer(level);
-		rendererfg2 = new RendererFG2(level);
+		rendererfg2 = new RendererFG2(level); //renderer.getRingbuffer(), 
 		rendererMG = new DummyRendererMG();
 		rendererBG = new BackgroundRenderer();
 		rendererCloud = new CloudRenderer();
@@ -160,25 +160,17 @@ public class Window extends JFrame {
 		
 		
 		
+		fg1=new GameLayer(renderer);
+		fg1.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		fg1.setLocation(0, 0);
+		
 		fg2=new GameLayer(rendererfg2);
 		fg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		fg2.setLocation(0, 0);
-		baseLayer.add(fg2);
-		
-		// initialize Hero
-		//this.hero = new Hero('b');	//TODO: einlesen, welcher hero-Typ vom User ausgewählt wurde
-		this.baseLayer.add(Hero.getInstance());
-		
 		
 		ia=new InteractionLayer();
 		ia.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		ia.setLocation(0, 0);
-		baseLayer.add(ia);
-		
-		fg1=new GameLayer(renderer);
-		fg1.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
-		fg1.setLocation(0, 0);
-		baseLayer.add(fg1);
 		
 		//ia can just be rendered after fg1 was renderd. therefore we need a initializemethod
 		ia.initialize(rendererInteraction, renderer.getRingbuffer());
@@ -186,21 +178,30 @@ public class Window extends JFrame {
 		mg=new GameLayer(rendererMG);
 		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		mg.setLocation(0, 0); //TODO: -100 entfernen
-		baseLayer.add(mg);
 		
 		bg=new GameLayer(rendererBG);
 		bg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		bg.setLocation(0, 0); //TODO: -100 entfernen
-		baseLayer.add(bg);
 		
 		clouds=new GameLayer(rendererCloud);
 		clouds.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		clouds.setLocation(0, 0); //TODO: -100 entfernen
-		baseLayer.add(clouds);
-		//Dummy Code end
+		
 				
 		Hero.getInstance().setRingbuffer(renderer.getRingbuffer());
 		Hero.getInstance().initHero(heroType);
+		
+		//Add in Order:
+		baseLayer.add(fg2);
+		// initialize Hero
+		//this.hero = new Hero('b');	//TODO: einlesen, welcher hero-Typ vom User ausgewählt wurde
+		baseLayer.add(Hero.getInstance());
+		baseLayer.add(ia);
+		baseLayer.add(fg1);
+		baseLayer.add(mg);
+		baseLayer.add(bg);
+		baseLayer.add(clouds);
+		
 	}
 	
 	

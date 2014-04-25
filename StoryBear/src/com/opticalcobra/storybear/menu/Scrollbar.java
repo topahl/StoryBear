@@ -25,19 +25,18 @@ public class Scrollbar extends JScrollPane {
 	 * 
 	 */
 	private static final long serialVersionUID = -6473015188076754224L;
-
-	public Scrollbar(){
+	public Scrollbar(Color bg){
 		super(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 	            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		JScrollBar sb = this.getVerticalScrollBar();
-	    sb.setUI(new ScrollbarUI());
-		
+		JScrollBar sb = this.getVerticalScrollBar();		
+	    sb.setUI(new ScrollbarUI(bg));
 	}
 	static class ScrollbarUI extends MetalScrollBarUI {
 	    private JButton up,down;
 	    private Imagelib il= Imagelib.getInstance();
-	    
-	    ScrollbarUI() {
+	    private Color background;
+	    public ScrollbarUI(Color bg) {
+	        this.background=bg;
 	        
 			up = new JButton();
 			up.setIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
@@ -45,6 +44,8 @@ public class Scrollbar extends JScrollPane {
 			up.setPressedIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
 			up.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
 			up.setBorder(null);
+			up.setBackground(background);
+			up.setForeground(background);
 	        up.setBorderPainted(false);
 	        up.setContentAreaFilled(false);
 	        
@@ -56,6 +57,8 @@ public class Scrollbar extends JScrollPane {
 			imageDown.getGraphics().drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP), (int)(15/Ressources.SCALE), 0, null);
 			down.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
 			down.setBorder(null);
+			down.setBackground(background);
+			down.setForeground(background);
 	        down.setBorderPainted(false);
 	        down.setContentAreaFilled(false);
 			
@@ -66,6 +69,7 @@ public class Scrollbar extends JScrollPane {
 	        
 	        int thumb = (int) (thumbBounds.height - (20/Ressources.SCALE));
 	        Image imageThumb;
+	        double scale = ((double)thumbBounds.width/30);
 	        
 	        if(thumb<0){
 	        	imageThumb = new BufferedImage(thumbBounds.width, (int)(30/Ressources.SCALE), BufferedImage.TYPE_INT_ARGB);
@@ -78,9 +82,10 @@ public class Scrollbar extends JScrollPane {
 	        else{
 	        	imageThumb = new BufferedImage(thumbBounds.width, thumbBounds.height, BufferedImage.TYPE_INT_ARGB);
 	        	Graphics g2 = imageThumb.getGraphics();
-	        	g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0,thumbBounds.width,(int) (10/Ressources.SCALE), null);
-		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(thumbBounds.height-(10/Ressources.SCALE)),thumbBounds.width,(int) (10/Ressources.SCALE),null);
-		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(10/Ressources.SCALE), thumbBounds.width, thumb, null);
+	        	g2.setColor(new Color(128,128,128));
+	        	g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0, null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(thumbBounds.height-(10/Ressources.SCALE)),null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(10/Ressources.SCALE), (int)(30/Ressources.SCALE), thumb, null);
 		        
 		        g.drawImage(imageThumb, thumbBounds.x,thumbBounds.y, null);
 	        }
@@ -90,7 +95,8 @@ public class Scrollbar extends JScrollPane {
 	    
 	    @Override
 	    protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) { 
-	    	g.setColor(Ressources.SHELFCOLOR);
+	    	g.setColor(background);
+//	    	g.setColor(Color.BLUE);
 	    	g.fillRect(trackBounds.x, trackBounds.y, trackBounds.width, trackBounds.height);
 	    }
 	    

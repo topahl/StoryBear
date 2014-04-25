@@ -27,7 +27,7 @@ public class StoryEditor extends JPanel {
 		editor.addFocusListener(new EmptyTextFieldListener(Editor.EMPTY_STORY, Color.GRAY, Color.BLACK).initializeCallerTextComponent(editor));
 		
 		// TODO: ScrollBar funktionstüchtig machen
-		Scrollbar sb = new Scrollbar();
+		Scrollbar sb = new Scrollbar(Ressources.PAGECOLOR);
 		sb.setViewportView(editor);
 		sb.getViewport().setOpaque(false);
 		sb.getViewport().setBackground(new Color(0,0,0,0));

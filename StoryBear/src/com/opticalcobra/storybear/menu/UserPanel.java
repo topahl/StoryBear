@@ -73,7 +73,7 @@ public class UserPanel extends JLayeredPane {
 				selectUser.setEnabled(true);
 			}
         });
-        JScrollPane scrollpane = new Scrollbar(); 
+        JScrollPane scrollpane = new Scrollbar(Ressources.SHELFCOLOR); 
         scrollpane.setViewportView(benutzerliste);
         scrollpane.getViewport().setOpaque(false);
         scrollpane.setOpaque(false);

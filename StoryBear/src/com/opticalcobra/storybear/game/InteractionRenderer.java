@@ -43,7 +43,7 @@ public class InteractionRenderer extends Renderer{
 		for (int i = 0; i < Ressources.TILESPERPANEL; i++){
 			//render collectable and character
 			
-			if (storyInfoElements.get(elementPointer).getBlock()%Ressources.TILESPERPANEL == i){
+			if (elementPointer < storyInfoElements.size() && storyInfoElements.get(elementPointer).getBlock()%Ressources.TILESPERPANEL == i){
 				if (storyInfoElements.get(elementPointer) instanceof Collectable ||
 						storyInfoElements.get(elementPointer) instanceof Character){
 					
@@ -55,7 +55,7 @@ public class InteractionRenderer extends Renderer{
 				}
 				
 				//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
-				if (elementPointer + 1 <= storyInfoElements.size() && storyInfoElements.get(elementPointer).getBlock()%Ressources.TILESPERPANEL == 
+				if (elementPointer + 1 < storyInfoElements.size() && storyInfoElements.get(elementPointer).getBlock()%Ressources.TILESPERPANEL == 
 						storyInfoElements.get(elementPointer + 1).getBlock()%Ressources.TILESPERPANEL){
 					i--;
 				}
