@@ -35,27 +35,36 @@ public class InteractionRenderer extends Renderer{
 	
 	public void getNextViewPart(JLabel pane) {
 		
+		int elementPointer = 0;
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		
+//		for (int j = 2; j < 50; j++){
+//			System.out.println("" + ringbuffer.top(j).getTileType());
+//		}
+		
+		
+		
 		for (int i = 0; i < Ressources.TILESPERPANEL; i++){
 			//render collectable and character
-			if (storyInfoElements.get((panelnum - 1 + i)%Ressources.TILESPERPANEL) instanceof Collectable ||
-					storyInfoElements.get((panelnum - 1 + i)%Ressources.TILESPERPANEL) instanceof Character){
+			if (storyInfoElements.get((panelnum - 1 + elementPointer)%Ressources.TILESPERPANEL) instanceof Collectable ||
+					storyInfoElements.get((panelnum - 1 + elementPointer)%Ressources.TILESPERPANEL) instanceof Character){
 				
-				if (panelnum < 3){
-					storyInfoElements.get((panelnum - 1 + i)%Ressources.TILESPERPANEL).render(g, ringbuffer.top(panelnum - 1 + i).getTileType(), Ressources.LAYERINTERACTION, pane);
+				if (panelnum <= 3){
+					storyInfoElements.get((panelnum - 1 + elementPointer)%Ressources.TILESPERPANEL).render(g, ringbuffer.top(panelnum + 1 + i).getTileType(), Ressources.LAYERINTERACTION, pane);
+					System.out.println("Collectbale auf ID " + ringbuffer.top(panelnum + 1 + i).getTileType());
 				} else{
-					storyInfoElements.get((panelnum - 1 + i)%Ressources.TILESPERPANEL).render(g, ringbuffer.top(2*Ressources.TILESPERPANEL + 1).getTileType(), Ressources.LAYERINTERACTION, pane);
+					storyInfoElements.get((panelnum - 1 + elementPointer)%Ressources.TILESPERPANEL).render(g, ringbuffer.top(2*Ressources.TILESPERPANEL + 1).getTileType(), Ressources.LAYERINTERACTION, pane);
 				}
 			}
 			
 			//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
-			if (storyInfoElements.get((panelnum + i)%Ressources.TILESPERPANEL).getBlock() == 
-					(storyInfoElements.get((panelnum + i)%Ressources.TILESPERPANEL).getBlock())+1){
+			if (storyInfoElements.get((panelnum -1 + elementPointer)%Ressources.TILESPERPANEL).getBlock() == 
+					storyInfoElements.get((panelnum + elementPointer)%Ressources.TILESPERPANEL).getBlock()){
 				i--;
 			}
+			elementPointer++;
 		}
 		pane.setIcon(new ImageIcon(image));
 	}
