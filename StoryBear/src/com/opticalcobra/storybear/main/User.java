@@ -3,6 +3,7 @@ package com.opticalcobra.storybear.main;
 import java.io.Serializable;
 
 public class User implements Serializable{
+	private static User currentUser;
 	
 	/**
 	 * 
@@ -53,5 +54,24 @@ public class User implements Serializable{
 	 */
 	public String toString() {
 		return name;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static User getCurrentUser() {
+		return currentUser;
+	}
+	
+	/**
+	 * 
+	 */
+	public static void setCurrentUser(User newCurrentUser) {
+		currentUser = newCurrentUser;
+	}
+	
+	public static boolean isCurrentUserSet() {
+		return currentUser != null;
 	}
 }

@@ -11,6 +11,7 @@ import com.opticalcobra.storybear.editor.Editor;
 import com.opticalcobra.storybear.editor.Loadingscreen;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
+import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.menu.MenuButton;
 import com.opticalcobra.storybear.res.Ressources;
 
@@ -28,6 +29,7 @@ public class Menu extends JFrame {
 	public static final Font fontHeadline[] = { FontCache.getInstance().getFont("Standard", 50f), FontCache.getInstance().getFont("Standard", 40f), FontCache.getInstance().getFont("Standard", 35f) };
 	public static final Font fontText[] = { FontCache.getInstance().getFont("Standard", 28f) };
 	
+	public JLabel currentUser;
 	public JLayeredPane main, editor, welcome, credits, user, manu, highscore;
 	public BookBox bookBox;
 	public Container me;
@@ -38,7 +40,6 @@ public class Menu extends JFrame {
 	
 	public Menu(Loadingscreen ls) {
 		imagelib = Imagelib.getInstance(); //database Loading starts
-		
 		
 		// Frame-Settings
 		initializeFrame();
@@ -57,6 +58,7 @@ public class Menu extends JFrame {
 		main = user;
 		
 		// Navigation
+		initializeUser();
 		initializeNavigation();
 		
 		// Background
@@ -113,6 +115,15 @@ public class Menu extends JFrame {
 	private void initializeBookBox() {
 		bookBox = new BookBox(this);
 		getContentPane().add(bookBox);
+	}
+	
+	private void initializeUser() {
+		//TODO: add graphic
+		currentUser = new JLabel();
+		currentUser.setBounds((int)(0/Ressources.SCALE), (int)(0/Ressources.SCALE), (int)(100/Ressources.SCALE), (int)(100/Ressources.SCALE));
+		currentUser.setFont(Menu.fontText[0]);
+		currentUser.setForeground(Color.red);
+		getContentPane().add(currentUser);
 	}
 	
 	private void initializeNavigation() {

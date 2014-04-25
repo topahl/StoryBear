@@ -134,7 +134,8 @@ public class UserPanel extends JLayeredPane {
 	}
 	
 	private void selectUser() {
-		User u = (User) benutzerliste.getSelectedValue();
+		User.setCurrentUser((User) benutzerliste.getSelectedValue());
+		menu.currentUser.setText(User.isCurrentUserSet() ? User.getCurrentUser().getName() : "");
 		menu.enableAllMenuButtons();
 		menu.getMain().setVisible(false);
 		menu.setMain(menu.highscore);
