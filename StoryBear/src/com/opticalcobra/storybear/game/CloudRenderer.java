@@ -23,7 +23,7 @@ public class CloudRenderer extends Renderer implements IRenderer{
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
-		g.setColor((new Color(158, 234, 252, 255)));
+		g.setColor(Ressources.SKYCOLOR);
 		g.fillRect(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
 		
 		for(int i=0;i*Ressources.RASTERSIZE*4<Ressources.WINDOW.width;i++){
