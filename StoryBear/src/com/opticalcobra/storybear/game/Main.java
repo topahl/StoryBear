@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import com.opticalcobra.storybear.db.Database;
+import com.opticalcobra.storybear.editor.Loadingscreen;
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.editor.TextAnalyzer;
@@ -13,7 +14,8 @@ import com.opticalcobra.storybear.menu.Menu;
 
 public class Main {
 	public static void main(String args[]){
-		Menu menu = new Menu();
+		Loadingscreen ls = new Loadingscreen();
+//		Menu menu = new Menu();
 //		Window gui = new Window();
 //		
 //		TextAnalyzer ta = new TextAnalyzer();

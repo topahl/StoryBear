@@ -8,6 +8,7 @@ import javax.swing.JLayeredPane;
 
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Editor;
+import com.opticalcobra.storybear.editor.Loadingscreen;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.menu.MenuButton;
@@ -35,9 +36,10 @@ public class Menu extends JFrame {
 	private Imagelib imagelib;
 	private Database db = new Database();
 	
-	public Menu() {
-		imagelib = Imagelib.getInstance();
-
+	public Menu(Loadingscreen ls) {
+		imagelib = Imagelib.getInstance(); //database Loading starts
+		
+		
 		// Frame-Settings
 		initializeFrame();
 		
@@ -66,12 +68,8 @@ public class Menu extends JFrame {
 		navHigh.disable();
 		navCredits.disable();
 		bookBox.disable();
-	}
-	
-	
-	//TODO: delete
-	public static void main(String[] args) {
-		new Menu();
+		
+		ls.dispose(); //Diable Loading Screen
 	}
 	
 	public JLayeredPane getMain() {

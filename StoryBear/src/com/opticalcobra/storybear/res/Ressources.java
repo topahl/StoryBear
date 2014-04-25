@@ -11,6 +11,8 @@ public class Ressources {
 	
 	public static final boolean DEBUG = false;
 	
+	public static final String LOADINGPICTURE = "images\\menu_storybook_closed.png";
+	
 	public static final Dimension FULLHD;
 	public static final Dimension SCREEN;
 	public static final Dimension WINDOW;
