@@ -7,16 +7,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Date;
+
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.menu.Menu;
+import com.opticalcobra.storybear.menu.Scrollbar;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.menu.TextButton;
+
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 
@@ -28,10 +34,11 @@ import javax.swing.border.EtchedBorder;
 public class Editor extends JLayeredPane {
 	private JLayeredPane baseLayer;
 	
-	private StoryEditor editor;
+	private JTextArea editor;
 	private WordSuggestor wordSugg;
 	private JTextField headline;
 	private JLabel background;
+	private JScrollPane scrollpane;
 	private TextButton export, save, start;
 
 	private Database db;
@@ -58,6 +65,8 @@ public class Editor extends JLayeredPane {
 		headline.setText(story.getTitle());
 		editor.setForeground(Color.black);
 		headline.setForeground(Color.black);
+		
+		scrollpane.setViewportView(editor);
 	}
 	
 	/**
@@ -76,15 +85,6 @@ public class Editor extends JLayeredPane {
 		return newStory;
 	}
 	
-	/**
-	 * Testing purposes
-	 * TODO: delete after testing
-	 * @param args -
-	 */
-	public static void main(String args[]) {
-		Editor e = new Editor();
-		e.loadStory(1);
-	}
 	
 	/**
 	 * initialize all elements
@@ -110,10 +110,23 @@ public class Editor extends JLayeredPane {
 		headline.setVisible(true);
 		headline.addFocusListener(new EmptyTextFieldListener(EMPTY_TITLE, Color.GRAY, Color.BLACK).initializeCallerTextComponent(headline));
 		
+		// Scrollpane
+		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
+		scrollpane.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE)+30, (int)(800/Ressources.SCALE));
+		scrollpane.setBackground(Ressources.PAGECOLOR);
+		scrollpane.setForeground(Ressources.PAGECOLOR);
+		scrollpane.setBorder(null);
+		
 		// Editor
-		editor = new StoryEditor();
+		editor = new JTextArea();
 		editor.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(800/Ressources.SCALE));
-		editor.setVisible(true);
+		editor.setBackground(Ressources.PAGECOLOR);
+		editor.setBorder(null);
+		editor.setLineWrap(true);
+		editor.setWrapStyleWord(true);
+		editor.setForeground(Color.black);
+		editor.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		
 		
 		// Author
 		JLabel author = new JLabel();
@@ -201,7 +214,8 @@ public class Editor extends JLayeredPane {
 		
 		baseLayer.add(save);
 		baseLayer.add(headline);
-		baseLayer.add(editor);
+//		baseLayer.add(editor);
+		baseLayer.add(scrollpane);
 		baseLayer.add(wordSugg);
 		baseLayer.add(date);
 		baseLayer.add(author);
