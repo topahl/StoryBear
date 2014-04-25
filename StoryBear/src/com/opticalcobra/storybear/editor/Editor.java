@@ -6,8 +6,10 @@ import java.awt.event.MouseListener;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.DateFormat;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -20,6 +22,7 @@ import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.menu.Menu;
 import com.opticalcobra.storybear.menu.Scrollbar;
 import com.opticalcobra.storybear.res.FontCache;
+import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.menu.TextButton;
 
@@ -37,7 +40,7 @@ public class Editor extends JLayeredPane {
 	private JTextArea editor;
 	private WordSuggestor wordSugg;
 	private JTextField headline;
-	private JLabel background;
+	private JLabel background, date, author;
 	private JScrollPane scrollpane;
 	private TextButton export, save, start;
 
@@ -63,6 +66,9 @@ public class Editor extends JLayeredPane {
 		Story story = db.getStoryFromDatabase(id);
 		editor.setText(story.getText());
 		headline.setText(story.getTitle());
+		author.setText(author.getText() + story.getAuthor().getName());
+		date.setText(date.getText() + DateFormat.getDateInstance().format(story.getChangeDate()));
+		
 		editor.setForeground(Color.black);
 		headline.setForeground(Color.black);
 		
@@ -110,6 +116,9 @@ public class Editor extends JLayeredPane {
 		headline.setVisible(true);
 		headline.addFocusListener(new EmptyTextFieldListener(EMPTY_TITLE, Color.GRAY, Color.BLACK).initializeCallerTextComponent(headline));
 		
+		JLabel headlineUnderscore = new JLabel(new ImageIcon(Imagelib.getInstance().loadDesignImage("menu_headline_underscore")));
+		headlineUnderscore.setBounds((int)(40/Ressources.SCALE), (int)(140/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(70/Ressources.SCALE));
+		
 		// Scrollpane
 		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
 		scrollpane.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE)+30, (int)(800/Ressources.SCALE));
@@ -129,14 +138,14 @@ public class Editor extends JLayeredPane {
 		
 		
 		// Author
-		JLabel author = new JLabel();
+		author = new JLabel();
 		author.setText("Autor: ");
 		author.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
 		author.setBounds((int)(40/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
 		author.setVisible(true);
 		
 		// Date
-		JLabel date = new JLabel();
+		date = new JLabel();
 		date.setText("Datum: ");
 		date.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
 		date.setBounds((int)(440/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
@@ -212,6 +221,7 @@ public class Editor extends JLayeredPane {
 			}
 		});
 		
+		baseLayer.add(headlineUnderscore);
 		baseLayer.add(save);
 		baseLayer.add(headline);
 //		baseLayer.add(editor);
