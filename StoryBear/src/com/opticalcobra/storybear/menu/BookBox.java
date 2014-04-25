@@ -42,6 +42,7 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	private JLayeredPane baseLayer;
 	private JLayeredPane buecherRegal;
 	private MouseListener mouseAreaListener;
+	private JLabel arrow;
 	private JLabel mouseArea;
 	private JList<StoryInfo> levelBuecher;
 	private DefaultListModel<StoryInfo> model = new DefaultListModel<StoryInfo>();
@@ -59,6 +60,10 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 		setLocation(postionNormal, 0);
 		setSize((int)(1600/Ressources.SCALE),(int)(1080/Ressources.SCALE));
 		
+		arrow = new JLabel(new ImageIcon(imagelib.loadDesignImage("menu_arrow_left")));
+		arrow.setBounds((int)(0/Ressources.SCALE), (int)(20/Ressources.SCALE), (int)(60/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		add(arrow);
+		
 		// right shelf
 		initializeRightShelf();
 		
@@ -66,7 +71,7 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 		initShelf();
 		
 		// MouseIn-Out-Area
-		 mouseAreaListener = new MouseListener() {
+		mouseAreaListener = new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {}
 			@Override
@@ -116,12 +121,14 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 		setLocation(postionAvailable, 0);
 		available = true;
 		menu.getMain().setVisible(false);
+		arrow.setIcon(new ImageIcon(imagelib.loadDesignImage("menu_arrow_right")));
 	}
 	
 	public void hide() {
 		setLocation(postionNormal, 0);
 		available = false;
 		menu.getMain().setVisible(true);
+		arrow.setIcon(new ImageIcon(imagelib.loadDesignImage("menu_arrow_left")));
 	}
 	
 	public void hoverIn() {
