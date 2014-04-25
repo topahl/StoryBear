@@ -18,7 +18,6 @@ import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
-import com.opticalcobra.storybear.res.TestMemory;
 
 public class Window extends JFrame {
 	
@@ -70,12 +69,12 @@ public class Window extends JFrame {
 		this.setResizable(false);
 		this.setUndecorated(true);
 		
+		// initialize Controle 
+		this.controle = new Control(this);
+		this.addKeyListener(this.controle);
+		
 		initComponents();
 		
-		
-		// initialize Controle 
-		this.controle = new Control();
-		this.addKeyListener(this.controle);
 		this.setFocusable(true);
 		timer.scheduleAtFixedRate(new OSTimer(this),Ressources.GAMESPEED, Ressources.GAMESPEED);
 		this.setVisible(true);
@@ -117,35 +116,37 @@ public class Window extends JFrame {
 		
 		
 		//initialize Buttons
-		this.buttonMenu = new Button(Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
+		this.buttonMenu = new Button("menu",
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_WHITE),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_GREY),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
-				"buttonMenu",
 				Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE
 				);
 		this.buttonMenu.setFocusable(false);
+		this.buttonMenu.addActionListener(controle);
 		this.baseLayer.add(this.buttonMenu);
 		
-		
-		this.buttonBreak = new Button(Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
+		this.buttonBreak = new Button("pause",
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_WHITE),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_GREY),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
-				"buttonBreak",
 				2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);	
 		this.buttonBreak.setFocusable(false);
+		this.buttonBreak.addActionListener(controle);
 		this.baseLayer.add(this.buttonBreak);
 		
-		this.buttonExit = new Button(Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
+		this.buttonExit = new Button("close",
+				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_WHITE),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_GREY),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
-				"buttonExit",
 				3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);
 		this.buttonExit.setFocusable(false);
+		this.buttonExit.addActionListener(controle);
 		this.baseLayer.add(this.buttonExit);
 		
 		//initialize Label for Highscore

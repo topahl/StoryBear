@@ -9,10 +9,12 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class Button extends JButton implements ActionListener{
+public class Button extends JButton {
+	private String method;
+
 	//invisible Button
-	public Button(int width, int height,String funktionsname, int x, int y){
-		addActionListener(this);
+	public Button(String method, int width, int height, int x, int y){
+		this.method = method;
 		setBorder(null);
         setBorderPainted(false);
         setContentAreaFilled(false);
@@ -22,9 +24,8 @@ public class Button extends JButton implements ActionListener{
 	}
 
 	//visible Button
-	public Button(BufferedImage normal, BufferedImage hover, BufferedImage clicked,BufferedImage disabled, String funktionsname, int x, int y){
-		addActionListener(this);
-
+	public Button(String method, BufferedImage normal, BufferedImage hover, BufferedImage clicked, BufferedImage disabled, int x, int y){
+		this.method = method;
 		setIcon(new ImageIcon(normal));
 		setRolloverIcon(new ImageIcon(hover));
         setPressedIcon(new ImageIcon(clicked));
@@ -39,7 +40,11 @@ public class Button extends JButton implements ActionListener{
         setBounds(x, y, normal.getWidth(),normal.getHeight());
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
 	}
 }

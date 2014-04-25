@@ -1,18 +1,27 @@
 package com.opticalcobra.storybear.game;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.InvocationTargetException;
 
-public class Control implements KeyListener {
+import com.opticalcobra.storybear.editor.Loadingscreen;
+import com.opticalcobra.storybear.menu.Menu;
+import com.opticalcobra.storybear.res.Button;
+
+public class Control implements KeyListener, ActionListener {
 //	private char runDirection = 'n'; 	//n=not running, l=left, r=right
 //	private char jumpDirection = 'n';	//n=not, u=jump up, d=duck down
 //	private boolean doubleJump = false;	
 //	public char jumpStatus = 'n';				//n=no, y=yes, m=maybe --> tracks Doublejump
 	
+	public Window window;
 	
-	public Control(){
-		
+	public Control(Window window) {
+		this.window = window;
 	}
+
 
 	/**
 	 * @author Miriam
@@ -76,6 +85,31 @@ public class Control implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		try {
+			Class.forName("com.opticalcobra.storybear.game.Control").getMethod(((Button) e.getSource()).getMethod(), null).invoke(this, null);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException | ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public void close() {
+		window.dispose();
+		Menu m = new Menu(false);
+	}
+	
+	public void menu() {
+		
+	}
+	
+	public void pause() {
+		
 	}
 
 //	public char getRunDirection() {

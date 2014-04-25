@@ -38,7 +38,7 @@ public class Menu extends JFrame {
 	private Imagelib imagelib;
 	private Database db = new Database();
 	
-	public Menu(Loadingscreen ls) {
+	public Menu(boolean firstStart) {
 		imagelib = Imagelib.getInstance(); //database Loading starts
 		
 		// Frame-Settings
@@ -55,7 +55,7 @@ public class Menu extends JFrame {
 		credits = createNewInnerPanel(new Credits());
 		
 		// Set start screen
-		main = user;
+		main = (firstStart) ? user : credits;
 		
 		// Navigation
 		initializeUser();
@@ -65,12 +65,18 @@ public class Menu extends JFrame {
 		initializeBackground();
 		
 		main.setVisible(true);
-		navManu.disable();
-		navEditor.disable();
-		navHigh.disable();
-		navCredits.disable();
-		bookBox.disable();
 		
+		if(firstStart) {
+			navManu.disable();
+			navEditor.disable();
+			navHigh.disable();
+			navCredits.disable();
+			bookBox.disable();
+		}
+	}
+	
+	public Menu(Loadingscreen ls) {
+		this(true);
 		ls.dispose(); //Diable Loading Screen
 	}
 	
@@ -122,6 +128,7 @@ public class Menu extends JFrame {
 		currentUser = new JLabel();
 		currentUser.setBounds((int)(0/Ressources.SCALE), (int)(0/Ressources.SCALE), (int)(100/Ressources.SCALE), (int)(100/Ressources.SCALE));
 		currentUser.setFont(Menu.fontText[0]);
+		currentUser.setText(User.isCurrentUserSet() ? User.getCurrentUser().getName() : "");
 		currentUser.setForeground(Color.red);
 		getContentPane().add(currentUser);
 	}
