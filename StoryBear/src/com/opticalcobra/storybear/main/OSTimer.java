@@ -16,6 +16,7 @@ public class OSTimer extends TimerTask {
 
 	@Override
 	public void run() {
+		Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 		this.window.step();
 		
 	}

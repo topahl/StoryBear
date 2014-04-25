@@ -52,7 +52,7 @@ public class Window extends JFrame {
 	BackgroundRenderer rendererBG;
 	CloudRenderer rendererCloud;
 	InteractionRenderer rendererInteraction;
-	
+	RenderThreadWrapper rtw;
 	
 	public Window(){
 		this(7, 'b'); //Change here default Level
@@ -85,6 +85,9 @@ public class Window extends JFrame {
 	 * @author Tobias
 	 */
 	private void initComponents() {
+		
+		rtw= new RenderThreadWrapper();
+		rtw.start();
 		//create remderer
 		renderer = new DummyRenderer(level);
 		rendererfg2 = new RendererFG2(level); //renderer.getRingbuffer(), 

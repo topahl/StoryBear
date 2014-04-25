@@ -39,7 +39,12 @@ public class InteractionRenderer extends Renderer implements IRenderer{
 		
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
-		
+		try {
+			Thread.currentThread().sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for (int i = 0; i < Ressources.TILESPERPANEL; i++){
 			//render collectable and character
 			

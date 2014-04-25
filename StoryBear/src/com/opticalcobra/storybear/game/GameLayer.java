@@ -20,7 +20,7 @@ public class GameLayer extends JLayeredPane {
 			for (int i = 0; i<3; i++){
 				layer[i]=new JLabel();
 				this.add(layer[i]);
-				renderer.getNextViewPart(layer[i]);
+				RenderThreadWrapper.addRenderTask(renderer, layer[i]);
 				if (i==0){
 					layer[i].setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
 				} else {
@@ -38,7 +38,7 @@ public class GameLayer extends JLayeredPane {
 			if(step < 0 ){
 				step = Ressources.WINDOW.width;
 				currentView = (currentView + 1) % 3;
-				renderer.getNextViewPart(layer[(currentView+1)%3]);
+				RenderThreadWrapper.addRenderTask(renderer,layer[(currentView+1)%3]);
 			}
 			layer[currentView].setLocation(step, 0);
 			layer[(currentView+2)%3].setLocation(step-Ressources.WINDOW.width, 0);

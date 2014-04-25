@@ -9,7 +9,7 @@ import com.opticalcobra.storybear.res.Ressources;
 
 public class InteractionLayer extends JLayeredPane {
 
-	private InteractionRenderer renderer;
+	private IRenderer renderer;
 	private int step = Ressources.WINDOW.width;
 	private int currentView = 1; // Zahl des momentan angezeigten JLabels
 	private JLayeredPane [] layer;
@@ -24,7 +24,7 @@ public class InteractionLayer extends JLayeredPane {
 		if(step < 0 ){
 			step = Ressources.WINDOW.width;
 			currentView = (currentView + 1) % 3;
-			renderer.getNextViewPart(label[(currentView+1)%3]);
+			RenderThreadWrapper.addRenderTask(renderer,label[(currentView+1)%3]);
 		}
 		layer[currentView].setLocation(step, 0);
 		layer[(currentView+2)%3].setLocation(step-Ressources.WINDOW.width, 0);
@@ -32,7 +32,7 @@ public class InteractionLayer extends JLayeredPane {
 	}
 
 
-	public void initialize(InteractionRenderer rendererInteraction,	Ringbuffer<TileResult> ringbuffer) {
+	public void initialize(IRenderer rendererInteraction,	Ringbuffer<TileResult> ringbuffer) {
 		this.renderer = rendererInteraction;
 		
 		layer = new JLayeredPane[3];
@@ -43,7 +43,7 @@ public class InteractionLayer extends JLayeredPane {
 			layer[i]=new JLayeredPane();
 			label[i]=new JLabel();
 			this.add(layer[i]);
-			renderer.getNextViewPart(label[i]);
+			RenderThreadWrapper.addRenderTask(renderer, label[i]);
 			layer[i].add(label[i]);
 			label[i].setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
 			if (i==0){
