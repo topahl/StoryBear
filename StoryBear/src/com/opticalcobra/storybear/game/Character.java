@@ -2,6 +2,7 @@ package com.opticalcobra.storybear.game;
 
 import java.awt.Component;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import com.opticalcobra.storybear.db.Database;
@@ -29,8 +30,10 @@ public class Character implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERINTERACTION){
+			Point position = db.getObjectPos(tileTypeId, 0);
+			
 			BufferedImage image = il.loadObjectPic(image_id, "Cha");
-			g.drawImage(image, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height/2, null);
+			g.drawImage(image,(((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
 		}	
 	}
 
