@@ -166,7 +166,7 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 			buttonCnt++;
 		}
 			
-		TextButton start = new TextButton("Spielen", 1305, 925, 215, 65, 35);
+		TextButton start = new TextButton("Spielen", 1305, 860, 215, 130, 35, Color.white);
 		start.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
