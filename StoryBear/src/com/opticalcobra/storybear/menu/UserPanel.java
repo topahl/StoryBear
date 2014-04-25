@@ -54,7 +54,7 @@ public class UserPanel extends JLayeredPane {
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontHeadline[1]);
         beschreibung.setForeground(Color.black);
-        beschreibung.setBounds(30,25, 600, 89);
+        beschreibung.setBounds((int)(30/Ressources.SCALE),(int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(89/Ressources.SCALE));
         add(beschreibung, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
         benutzerliste = new JList(new UserList());
@@ -78,7 +78,7 @@ public class UserPanel extends JLayeredPane {
         JScrollBar sb = scrollpane.getVerticalScrollBar();
         sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(new Color(0,0,0,0));
-        scrollpane.setBounds(31, 125, 315, 315);
+        scrollpane.setBounds((int)(31/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(315/Ressources.SCALE), (int)(315/Ressources.SCALE));
         add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
         textField = new JTextField();
@@ -86,7 +86,7 @@ public class UserPanel extends JLayeredPane {
         textField.setForeground(Color.black);
         textField.setOpaque(false);
         textField.setForeground(Color.black);
-        textField.setBounds(747, 125, 318, 60);
+        textField.setBounds((int)(747/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(318/Ressources.SCALE), (int)(60/Ressources.SCALE));
         textField.setCaretColor(Color.black);
         textField.setBorder(BorderFactory.createLineBorder(Color.black, 2));
         add(textField);
@@ -113,12 +113,12 @@ public class UserPanel extends JLayeredPane {
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontHeadline[1]);
         beschreibung.setForeground(Color.black);
-        beschreibung.setBounds(750,25, 600, 89);
+        beschreibung.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(89/Ressources.SCALE));
         add(beschreibung, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
         TextButton anlegen = new TextButton("Benutzer anlegen", 450, 150, 250, 50);
-	    anlegen.setSize(318, 50);
-	    anlegen.setLocation(747, 196);
+	    anlegen.setSize((int)(318/Ressources.SCALE), (int)(50/Ressources.SCALE));
+	    anlegen.setLocation((int)(747/Ressources.SCALE), (int)(196/Ressources.SCALE));
 	    anlegen.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
