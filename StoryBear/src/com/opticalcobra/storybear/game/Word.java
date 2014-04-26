@@ -38,13 +38,13 @@ public class Word extends Renderer implements ILevelAppearance {
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERFOREGROUNDTWO){
 			g.setColor(Color.BLACK);
-			renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height-30);
+			renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, ((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width,Ressources.WINDOW.height-20);
 		}
 	}
 
 	public void renderPreviousLostWord(Graphics2D g, int startTile) {
 		g.setColor(Color.BLACK);
-		renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, (startTile*Ressources.RASTERSIZE),Ressources.WINDOW.height-30);
+		renderText(g,((float) (Ressources.STORYTEXTSIZE)), text, (startTile*Ressources.RASTERSIZE),Ressources.WINDOW.height-20);
 	}
 
 
