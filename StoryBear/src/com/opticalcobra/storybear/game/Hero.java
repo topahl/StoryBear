@@ -31,11 +31,13 @@ public class Hero extends JLabel{
 	//Jump Attributes
 	private boolean inADoubleJump = false;
 	private double jumpSpeed = 0;
-
+	
+	
+	
 	//Run attributes
 	private char runDirection = 'n';
 	private int queCounter = 0;    //Es sind auf dem Screen immer 5-6 Kacheln zur freien Bewegung verfügbar
-
+	private int annimation=0;
 
 	private int highscore = 0;
 	private boolean walkedAtSomething = false;  
@@ -78,8 +80,19 @@ public class Hero extends JLabel{
 		
 		//bear looks in a direction
 		try {
-			image = new ImageIcon(this.imageLib.loadHeroPic(this.runDirection, this.type));
+			if(runDirection == 'r'){
+				image = new ImageIcon(this.imageLib.loadHeroPic(annimation<5?'r':'s', this.type));
+			}
+			else if(runDirection == 'l'){
+				image = new ImageIcon(this.imageLib.loadHeroPic(annimation<5?'l':'m', this.type));
+			}
+			else{
+				image = new ImageIcon(this.imageLib.loadHeroPic(runDirection, this.type));
+			}
+			
 			this.setIcon(image);
+			annimation=(annimation+1)%10;
+			
 		} catch (ImageNotFoundException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();

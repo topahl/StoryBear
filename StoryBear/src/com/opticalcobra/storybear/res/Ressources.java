@@ -58,12 +58,19 @@ public class Ressources {
 	
 	
 	//Layer Konstanten
-	
 	public static final int LAYERFOREGROUNDONE = 1;
 	public static final int LAYERFOREGROUNDTWO = 2;
 	public static final int LAYERINTERACTION = 3;
 	public static final int LAYERBACKGROUND = 4;
 	public static final int LAYERMIDDLEGROUND = 5;
+	
+	//ContainerID Konstanten
+	public static final int CONTAINERCOLLECTABLEID = 0;
+	public static final int CONTAINERILLUSTRATIONBIGID = 1;
+	public static final int CONTAINERILLUSTRATIONSMALLID = 2;
+	public static final int CONTAINERCHARACTERID = 3;
+	public static final int CONTAINERLANDSCAPEID = 4;
+	
 	
 	// Cursor
 	public static final Cursor CURSORNORMAL = Cursor.getDefaultCursor();

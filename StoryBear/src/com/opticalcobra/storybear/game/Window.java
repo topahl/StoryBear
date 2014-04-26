@@ -20,6 +20,7 @@ import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.StoryBearRandom;
 
 public class Window extends JFrame {
 	
@@ -46,8 +47,6 @@ public class Window extends JFrame {
 	
 	private Database db = new Database();
 	
-//	private boolean inAJump = false; //shows that jump is executed currently
-//	private boolean inADoubleJump = false;
 
 	DummyRenderer renderer;
 	RendererFG2 rendererfg2;
@@ -66,6 +65,10 @@ public class Window extends JFrame {
 		this.level.setId(level_num);
 		this.heroType = heroType;
 		this.timer = new Timer();
+		
+		//init Randoom
+//		StoryBearRandom.getInstance().setSeed(level.getHash());
+		StoryBearRandom.getInstance().setSeed(StoryBearRandom.hash(level.getStory().getText()));
 		
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,7 +97,7 @@ public class Window extends JFrame {
 		rtw.start();
 		//create remderer
 		renderer = new DummyRenderer(level);
-		rendererfg2 = new RendererFG2(level); //renderer.getRingbuffer(), 
+		rendererfg2 = new RendererFG2(renderer.getTileQue(), level); //renderer.getRingbuffer(), 
 		rendererMG = new DummyRendererMG();
 		rendererBG = new BackgroundRenderer();
 		rendererCloud = new CloudRenderer();
@@ -175,12 +178,12 @@ public class Window extends JFrame {
 		fg2.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		fg2.setLocation(0, 0);
 		
-		ia=new InteractionLayer();
+		ia=new InteractionLayer(rendererInteraction);
 		ia.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		ia.setLocation(0, 0);
 		
 		//ia can just be rendered after fg1 was renderd. therefore we need a initializemethod
-		ia.initialize(rendererInteraction, renderer.getTileQue());
+		ia.initialize(renderer.getTileQue());
 		
 		mg=new GameLayer(rendererMG);
 		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);

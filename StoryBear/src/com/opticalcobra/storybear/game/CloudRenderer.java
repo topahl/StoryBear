@@ -3,6 +3,7 @@ package com.opticalcobra.storybear.game;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,7 +15,7 @@ import com.opticalcobra.storybear.res.StoryBearRandom;
 
 public class CloudRenderer extends Renderer implements IRenderer{
 	private Imagelib il = Imagelib.getInstance();
-	private StoryBearRandom rand = StoryBearRandom.getInstance();
+	private Random rand = new Random();
 	private int lastTile = 0;
 	private int panelnum = 0;
 	
@@ -41,7 +42,7 @@ public class CloudRenderer extends Renderer implements IRenderer{
 	
 	
 	private BufferedImage getNextMapElement(){
-		return il.loadLandscapeTile(0 , Imagelib.QUERY_CLOUDS);
+		return il.loadLandscapeTile(0 , Imagelib.QUERY_CLOUDS, null);
 	}
 
 }

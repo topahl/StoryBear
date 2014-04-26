@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -34,6 +35,7 @@ public class Imagelib {
 	private HashMap<String,BufferedImage> images;   //Hashmap für alle Bilder
 	private Database db; //Datenbankverbindung
 	private StoryBearRandom rand = StoryBearRandom.getInstance(); //Zufall mit seed
+	private Random realRand = new Random();
 	
 	//Constants
 	public static final char QUERY_FOREGROUND = 'f';
@@ -80,10 +82,10 @@ public class Imagelib {
 	 * @author Tobias
 	 * @exception ImageNotFoundException will be raised if the image was not found in the database
 	 */
-	public BufferedImage loadLandscapeTile(int type, char queryType) throws ImageNotFoundException{
+	public BufferedImage loadLandscapeTile(int type, char queryType, String settingNameForFG) throws ImageNotFoundException{
 		BufferedImage result;
 		BufferedImage full;
-		ImageResult image = getRandomID(type, queryType);
+		ImageResult image = getRandomID(type, queryType, settingNameForFG);
 		//Request can be handled with internal Hash map
 		result = images.get("map-"+image.getId());
 		if(result != null){
@@ -270,7 +272,7 @@ public class Imagelib {
 	 * @return Image ID
 	 * @author Tobias
 	 */
-	private ImageResult getRandomID(int type, char queryType){
+	private ImageResult getRandomID(int type, char queryType, String settingNameForFG){
 		String dbName;
 		switch (queryType) {//determine which database to query on
 		case QUERY_BACKGROUND:
@@ -293,14 +295,21 @@ public class Imagelib {
 		}
 		try {
 			Integer[] ids;
-			if(queryType != QUERY_CLOUDS){
+			if(queryType != QUERY_CLOUDS && queryType != QUERY_FOREGROUNDTWO){
 				ids = db.queryNumberResultOnly("SELECT i.id from images i JOIN "+dbName+" b ON i.id = b.images_id WHERE b.type_id = "+type+";");
+				return db.queryImagedata(ids[rand.nextInt(ids.length)]);
 			}
 			else{
-				ids = db.queryNumberResultOnly("SELECT id from images where url = 'images\\layer_slice_clouds.png'");
+				if (queryType == QUERY_CLOUDS){
+					ids = db.queryNumberResultOnly("SELECT id from images where url = 'images\\layer_slice_clouds.png'");
+					return db.queryImagedata(ids[realRand.nextInt(ids.length)]);
+				} else {
+					ids = db.queryNumberResultOnly("SELECT i.id from images i JOIN "+dbName+" b ON i.id = b.images_id WHERE b.type_id = "+type+" and b.setting_name = '"+ settingNameForFG +"';");
+					return db.queryImagedata(ids[rand.nextInt(ids.length)]);
+				}
 			}
 				
-			return db.queryImagedata(ids[rand.nextInt(ids.length)]);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null; //TODO richtiges fehlerhandlich einbauen

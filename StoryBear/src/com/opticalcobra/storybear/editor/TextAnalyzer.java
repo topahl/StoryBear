@@ -177,24 +177,24 @@ public class TextAnalyzer {
 			
 			for(String s : stringResults){
 				for(int i=0;i<RenderHint.WORDGROUP_LENGTH;i++){
-					if((RenderHint.WORDGROUP_WATER.length>i) && s.contains(RenderHint.WORDGROUP_WATER[i])){
-						rh = new RenderHint(block,RenderHint.RENDERHINT_WATER,1);
-						return rh;
-					}
-					else if((RenderHint.WORDGROUP_MOUNTAINS.length>i) && s.contains(RenderHint.WORDGROUP_MOUNTAINS[i])){
-						rh = new RenderHint(block,RenderHint.RENDERHINT_MOUNTAINS,1);
+					if((RenderHint.WORDGROUP_FOREST.length>i) && s.contains(RenderHint.WORDGROUP_FOREST[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_FOREST,1);
 						return rh;
 					}
 					else if((RenderHint.WORDGROUP_CITY.length>i) && s.contains(RenderHint.WORDGROUP_CITY[i])){
 						rh = new RenderHint(block,RenderHint.RENDERHINT_CITY,1);
 						return rh;
 					}
-					else if((RenderHint.WORDGROUP_WINTER.length>i) && s.contains(RenderHint.WORDGROUP_WINTER[i])){
-						rh = new RenderHint(block,RenderHint.RENDERHINT_WINTER,1);
+					else if((RenderHint.WORDGROUP_VILLAGE.length>i) && s.contains(RenderHint.WORDGROUP_VILLAGE[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_VILLAGE,1);
 						return rh;
 					}
-					else if((RenderHint.WORDGROUP_FOREST.length>i) && s.contains(RenderHint.WORDGROUP_FOREST[i])){
-						rh = new RenderHint(block,RenderHint.RENDERHINT_FOREST,1);
+					else if((RenderHint.WORDGROUP_CASTLE.length>i) && s.contains(RenderHint.WORDGROUP_CASTLE[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_CASTLE,1);
+						return rh;
+					}
+					else if((RenderHint.WORDGROUP_LANDSCAPE.length>i) && s.contains(RenderHint.WORDGROUP_LANDSCAPE[i])){
+						rh = new RenderHint(block,RenderHint.RENDERHINT_LANDSCAPE,1);
 						return rh;
 					}
 				}

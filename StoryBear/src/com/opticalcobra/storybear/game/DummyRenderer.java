@@ -54,7 +54,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		tileQue.add(db.getTileInfo(lastTileType));
 		
 		currentTileIds.add(lastTileType);
-		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND);
+		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND, null);
 	}
 
 	

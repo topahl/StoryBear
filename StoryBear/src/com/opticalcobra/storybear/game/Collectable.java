@@ -30,9 +30,9 @@ public class Collectable implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERINTERACTION){
-			Point position = db.getObjectPos(tileTypeId, 0);
+			Point position = db.getObjectPos(tileTypeId, Ressources.CONTAINERCOLLECTABLEID);
 			
-			BufferedImage image = il.loadObjectPic(image_id, "Col");
+			BufferedImage image = il.loadObjectPic(image_id, "col");
 			g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
 		}
 	}

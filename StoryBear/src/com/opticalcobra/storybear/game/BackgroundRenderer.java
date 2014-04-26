@@ -44,7 +44,7 @@ public class BackgroundRenderer extends Renderer implements IRenderer {
 		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_BACKGROUND);
 		int next = following[rand.nextInt(following.length)];
 		lastTile = next;
-		return il.loadLandscapeTile(next , Imagelib.QUERY_BACKGROUND);
+		return il.loadLandscapeTile(next , Imagelib.QUERY_BACKGROUND, null);
 		
 	}
 

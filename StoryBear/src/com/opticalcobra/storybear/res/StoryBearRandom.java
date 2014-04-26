@@ -14,5 +14,12 @@ public class StoryBearRandom extends Random {
 			instance = new StoryBearRandom();
 		return instance;
 	}
+	public static int hash(String text){
+		int hash=7;
+		for (int i=0; i < text.length(); i++) {
+		    hash = hash*31+text.charAt(i);
+		}
+		return hash;
+	}
 	
 }
