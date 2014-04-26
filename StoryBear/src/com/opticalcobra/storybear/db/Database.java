@@ -387,6 +387,8 @@ public class Database {
 		int typeId = DBConstants.WORD_OBJECT_TYPE_NO_IMAGE;
 		ResultSet rsFexione;
 		ResultSet rsCollectable;
+		ResultSet rsIllustrationBig;
+		ResultSet rsIllustrationSmall;
 		ResultSet rsCharacter;
 		ResultSet rsMiddleground;
 		String flexinom = "";
@@ -409,7 +411,9 @@ public class Database {
 			flexinom= (String) arrayRS[0].get(i);
 			flexinom.replaceAll("[^a-zA-Z δόφί]", "");
 			
-			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");		
+			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");
+			rsIllustrationBig = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'true';");
+			rsIllustrationSmall = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'false';");
 			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+flexinom+"';");
 			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
@@ -422,9 +426,17 @@ public class Database {
 			else if (rsMiddleground.next()){
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
 			}
+			else if (rsIllustrationBig.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationSmall.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+			}
 		}
 		if (result==null) {
-			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+word+"';");		
+			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+word+"';");	
+			rsIllustrationBig = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'true';");
+			rsIllustrationSmall = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'false';");
 			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+word+"';");
 			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+word+"';");
 			
@@ -436,6 +448,12 @@ public class Database {
 			}
 			else if (rsMiddleground.next()){
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationBig.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationSmall.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
 			}
 			
 			if (result == null){

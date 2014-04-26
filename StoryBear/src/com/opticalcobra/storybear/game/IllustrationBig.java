@@ -30,7 +30,7 @@ public class IllustrationBig implements ILevelAppearance {
 
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
-		if (layerID == Ressources.LAYERINTERACTION){
+		if (layerID == Ressources.LAYERFOREGROUNDONE){
 			Point position = db.getObjectPos(tileTypeId, Ressources.CONTAINERILLUSTRATIONBIGID);
 			
 			BufferedImage image = il.loadObjectPic(image_id, "ilb");

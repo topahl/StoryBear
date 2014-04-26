@@ -18,6 +18,8 @@ import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.db.WordResult;
 import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
+import com.opticalcobra.storybear.game.IllustrationBig;
+import com.opticalcobra.storybear.game.IllustrationSmall;
 import com.opticalcobra.storybear.game.Landscape;
 import com.opticalcobra.storybear.game.RenderHint;
 import com.opticalcobra.storybear.game.Word;
@@ -73,6 +75,12 @@ public class TextAnalyzer {
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND:
 					elements.add(new Landscape(blockPosition));
+					break;
+				case DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL:
+					elements.add(new IllustrationSmall(blockPosition,wr.getImage_id()));
+					break;
+				case DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG:
+					elements.add(new IllustrationBig(blockPosition,wr.getImage_id()));
 					break;
 				}
 				rh = this.getScheme(word,blockPosition,wr);
