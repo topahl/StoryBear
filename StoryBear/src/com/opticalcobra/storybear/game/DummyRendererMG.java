@@ -42,7 +42,7 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 		Integer[] following = il.getFollowingTiles(lastTile, Imagelib.QUERY_MIDDLEGROUND);
 		int next = following[rand.nextInt(following.length)];
 		lastTile = next;
-		return il.loadLandscapeTile(next , Imagelib.QUERY_MIDDLEGROUND);
+		return il.loadLandscapeTile(next, Imagelib.QUERY_MIDDLEGROUND, null);
 		
 	}
 

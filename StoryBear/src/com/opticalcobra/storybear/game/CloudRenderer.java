@@ -41,7 +41,7 @@ public class CloudRenderer extends Renderer implements IRenderer{
 	
 	
 	private BufferedImage getNextMapElement(){
-		return il.loadLandscapeTile(0 , Imagelib.QUERY_CLOUDS);
+		return il.loadLandscapeTile(0 , Imagelib.QUERY_CLOUDS, null);
 	}
 
 }

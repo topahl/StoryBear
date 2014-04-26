@@ -56,7 +56,7 @@ public class RendererFG2 extends Renderer implements IRenderer {
 		
 		lastTileType = next;
 		currentTileIds.add(lastTileType);
-		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO);
+		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, null);
 		
 		
 		

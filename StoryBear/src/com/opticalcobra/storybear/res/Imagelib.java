@@ -80,10 +80,10 @@ public class Imagelib {
 	 * @author Tobias
 	 * @exception ImageNotFoundException will be raised if the image was not found in the database
 	 */
-	public BufferedImage loadLandscapeTile(int type, char queryType) throws ImageNotFoundException{
+	public BufferedImage loadLandscapeTile(int type, char queryType, String settingNameForFG) throws ImageNotFoundException{
 		BufferedImage result;
 		BufferedImage full;
-		ImageResult image = getRandomID(type, queryType);
+		ImageResult image = getRandomID(type, queryType, settingNameForFG);
 		//Request can be handled with internal Hash map
 		result = images.get("map-"+image.getId());
 		if(result != null){
@@ -270,7 +270,7 @@ public class Imagelib {
 	 * @return Image ID
 	 * @author Tobias
 	 */
-	private ImageResult getRandomID(int type, char queryType){
+	private ImageResult getRandomID(int type, char queryType, String settingNameForFG){
 		String dbName;
 		switch (queryType) {//determine which database to query on
 		case QUERY_BACKGROUND:
