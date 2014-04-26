@@ -101,9 +101,9 @@ public class Control implements KeyListener, ActionListener {
 	}
 	
 	public void close() throws SQLException {
+		Menu m = new Menu(false);
 		window.saveHighscore();
 		window.dispose();
-		Menu m = new Menu(false);
 	}
 	
 	public void menu() {
