@@ -224,7 +224,6 @@ public class Editor extends JLayeredPane {
 		baseLayer.add(headlineUnderscore);
 		baseLayer.add(save);
 		baseLayer.add(headline);
-//		baseLayer.add(editor);
 		baseLayer.add(scrollpane);
 		baseLayer.add(wordSugg);
 		baseLayer.add(date);

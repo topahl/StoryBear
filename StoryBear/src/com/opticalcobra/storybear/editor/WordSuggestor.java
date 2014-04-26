@@ -25,10 +25,17 @@ public class WordSuggestor extends JPanel {
 		setOpaque(false);
 		setLayout(null);
 	
+		JLabel strike;
+		
 		for(int i=0; i<2; i++)
 			for (int j=0; j<4; j++) {
 				JLabel sugg;
 				try {
+					if (j > 0) {
+						strike = new JLabel(new ImageIcon(Imagelib.getInstance().loadDesignImage("menu_wordsuggestion_strike")));
+						strike.setBounds((int)((j*(120+40)-40)/Ressources.SCALE),(int)(i*250/Ressources.SCALE),(int)(40/Ressources.SCALE),(int)(240/Ressources.SCALE));
+						add(strike);
+					}
 					//TODO: load random image instead of hero pic (#22)
 					sugg = new Suggestion(Imagelib.getInstance().loadHeroPic('n', 'b'), "Bär");
 					sugg.setBounds((int)(j*(120+40)/Ressources.SCALE), (int)(i*250/Ressources.SCALE), (int)(120/Ressources.SCALE), (int)(240/Ressources.SCALE));
