@@ -12,29 +12,29 @@ public class RenderHint implements ILevelAppearance {
 	 */
 	private static final long serialVersionUID = 3391484487924232956L;
 	private int block;
-	private int importance; 	//if the same group comes several times, the importance increases
+	private int occurance; 	//if the same group comes several times, the importance increases
 	private int renderHint;
 	
 	public static final int RENDERHINT_NONE = -1;
-	public static final int RENDERHINT_WATER = 0;
-	public static final int RENDERHINT_MOUNTAINS = 1;
-	public static final int RENDERHINT_CITY = 2;
-	public static final int RENDERHINT_WINTER = 3;
-	public static final int RENDERHINT_FOREST = 4;
+	public static final int RENDERHINT_FOREST = 0;
+	public static final int RENDERHINT_CITY = 1;
+	public static final int RENDERHINT_VILLAGE = 2;	
+	public static final int RENDERHINT_CASTLE = 3;
+	public static final int RENDERHINT_LANDSCAPE = 4;
 	
 	
 	public static final int WORDGROUP_LENGTH = 3;
-	public static final String[] WORDGROUP_WATER = {"Wasser","Fluss","See"};
-	public static final String[] WORDGROUP_MOUNTAINS = {"Gebirge","Berg"};
-	public static final String[] WORDGROUP_CITY = {"Stadt","Hof","Dorf"};
-	public static final String[] WORDGROUP_WINTER = {"Winter","Weihnachten"};
+	public static final String[] WORDGROUP_CITY = {"Stadt"};
+	public static final String[] WORDGROUP_VILLAGE = {"Hof","Dorf"};
+	public static final String[] WORDGROUP_CASTLE = {"Schloss","Burg"};
 	public static final String[] WORDGROUP_FOREST = {"Wald","Baum"};
+	public static final String[] WORDGROUP_LANDSCAPE = {"Land","Feld","Wiese"};
 	
 
 	public RenderHint(int block, int hint, int importance){
 		this.block = block;
 		this.renderHint = hint;
-		this.importance = importance;
+		this.occurance = importance;
 	}
 	
 	
@@ -60,12 +60,12 @@ public class RenderHint implements ILevelAppearance {
 
 
 	public int getImportance() {
-		return importance;
+		return occurance;
 	}
 
 
 	public void setImportance(int importance) {
-		this.importance = importance;
+		this.occurance = importance;
 	}
 
 }
