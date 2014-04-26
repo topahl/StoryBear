@@ -121,7 +121,7 @@ public class Database {
 	}
 	
 	
-	public ArrayList<StoryInfo> getAllStorysFromDatabase(){
+	public ArrayList<StoryInfo> getAllLevelssFromDatabase(){
 		ArrayList<StoryInfo> result = new ArrayList<StoryInfo>();
 		try {
 			ResultSet rs = query("Select Object, length from levels");
@@ -130,6 +130,24 @@ public class Database {
 				java.sql.Blob obj = rs.getBlob("OBJECT");
 				byte[] ba = obj.getBytes(1, rs.getInt("LENGTH"));
 				StoryInfo si = (StoryInfo)(Blob.read(ba));
+				result.add(si);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public ArrayList<Story> getAllStoriesFromDatabase(){
+		ArrayList<Story> result = new ArrayList<Story>();
+		try {
+			ResultSet rs = query("Select Object, length from story");
+			while(rs.next()){
+				
+				java.sql.Blob obj = rs.getBlob("OBJECT");
+				byte[] ba = obj.getBytes(1, rs.getInt("LENGTH"));
+				Story si = (Story)(Blob.read(ba));
 				result.add(si);
 			}
 		} catch (SQLException e) {

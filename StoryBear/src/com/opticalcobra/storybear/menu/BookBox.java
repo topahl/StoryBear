@@ -218,7 +218,7 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	 * @author Tobias
 	 */
 	private void loadStories() {
-		ArrayList<StoryInfo> story = db.getAllStorysFromDatabase();
+		ArrayList<StoryInfo> story = db.getAllLevelssFromDatabase();
 		model.clear();
 		for(int i=0 ; i<story.size();i++){
 			model.addElement(story.get(i));
