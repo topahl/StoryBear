@@ -90,8 +90,8 @@ public class Ressources {
 		CHARACTERHEIGHT=(int)(90/SCALE);
 		CHARACTERWIDTH=(int)(55/SCALE);
 		
-		JUMPCONSTANTY = 2 / SCALE;
-		SPEEDCONSTANT = (int) (36 / SCALE);
+		JUMPCONSTANTY = 1.0 / SCALE;
+		SPEEDCONSTANT = (int) (20 / SCALE);
 		RUNCONSTANT = (int) (7 / SCALE);
 		
 		BUTTONSIZE = (int)(70 / SCALE);
