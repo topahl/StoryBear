@@ -17,8 +17,8 @@ public class InteractionLayer extends JLayeredPane {
 	private JLayeredPane [] layer;
 	private JLabel [] label;
 	
-	public InteractionLayer() {
-		
+	public InteractionLayer(IRenderer rendererInteraction) {
+		this.renderer = rendererInteraction;
 	}
 	
 	public void step(){
@@ -34,9 +34,7 @@ public class InteractionLayer extends JLayeredPane {
 	}
 
 
-	public void initialize(IRenderer rendererInteraction, LinkedList<TileResult> tileQue) {
-		this.renderer = rendererInteraction;
-		
+	public void initialize(LinkedList<TileResult> tileQue) {
 		layer = new JLayeredPane[3];
 		label = new JLabel[3];
 		

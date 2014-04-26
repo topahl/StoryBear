@@ -32,7 +32,7 @@ public class Collectable implements ILevelAppearance {
 		if (layerID == Ressources.LAYERINTERACTION){
 			Point position = db.getObjectPos(tileTypeId, 0);
 			
-			BufferedImage image = il.loadObjectPic(image_id, "Col");
+			BufferedImage image = il.loadObjectPic(image_id, "col");
 			g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
 		}
 	}

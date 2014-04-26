@@ -32,7 +32,7 @@ public class Character implements ILevelAppearance {
 		if (layerID == Ressources.LAYERINTERACTION){
 			Point position = db.getObjectPos(tileTypeId, 0);
 			
-			BufferedImage image = il.loadObjectPic(image_id, "Cha");
+			BufferedImage image = il.loadObjectPic(image_id, "cha");
 			g.drawImage(image,(((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
 		}	
 	}

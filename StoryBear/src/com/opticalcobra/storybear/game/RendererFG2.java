@@ -3,6 +3,7 @@ package com.opticalcobra.storybear.game;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,33 +25,58 @@ public class RendererFG2 extends Renderer implements IRenderer {
 	private int panelnum = 0;
 	private StoryInfo storyInfo;
 	private int elementPointer = 0;
-	private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*16); 
+	//private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*16); 
+	private LinkedList<TileResult> tileQue;
 	private Database db;
 	private ArrayList<Integer> currentTileIds;
 	
-	public RendererFG2(StoryInfo si){
-		this.storyInfo = si;
+//	public RendererFG2(StoryInfo si){
+//		this.storyInfo = si;
+//		this.db = new Database();
+//	}
+	
+	
+	public RendererFG2(LinkedList<TileResult> tileQue, StoryInfo level) {
+		this.storyInfo = level;
+		this.tileQue = tileQue;
 		this.db = new Database();
+		
 	}
-	
-	
-	private BufferedImage getNextMapElement(){
+
+
+	private BufferedImage getNextMapElement(int currentBlock){
+		
 		int next = 0;
 		
-		if (!(ringbuffer.top() == null)){
-			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUNDTWO);
-			next = following[rand.nextInt(following.length)];
-			
-		}else{
-			lastTileType = next;
-			ringbuffer.write(db.getTileInfo(lastTileType));
-			
+		if (panelnum>=3){
+			next = tileQue.get(2*Ressources.TILESPERPANEL + currentBlock).getTileType();
+		} else{
+			next = tileQue.get(panelnum * currentBlock).getTileType();
 		}
 		
 		lastTileType = next;
-		ringbuffer.write(db.getTileInfo(lastTileType));
 		currentTileIds.add(lastTileType);
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		if (!tileQue.isEmpty()){
+//			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUNDTWO);
+//			next = following[rand.nextInt(following.length)];
+//			
+//		}else{
+//			lastTileType = next;
+//		}
+//		
+//		lastTileType = next;
+//		currentTileIds.add(lastTileType);
+//		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO);
 	}
 
 	
@@ -65,11 +91,7 @@ public class RendererFG2 extends Renderer implements IRenderer {
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
-			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE,0,null);
-			/*if(DebugSettings.fg1tilenum)
-				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTileType+"", (i*Ressources.RASTERSIZE)+20,100);
-			if(DebugSettings.fg1panelborder)
-				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);	*/
+			g.drawImage(getNextMapElement(i),i*Ressources.RASTERSIZE,0,null);
 		}
 
 		for(int i=0;i<=Ressources.TILESPERPANEL;i++){
@@ -102,9 +124,6 @@ public class RendererFG2 extends Renderer implements IRenderer {
 			}
 		}
 	
-		/*if(DebugSettings.fg1panelnum)
-			renderText(g,50, panelnum+"", 20, 40);*/
-
 		
 		pane.setIcon(new ImageIcon(image));
 	}
