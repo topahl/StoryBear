@@ -11,7 +11,7 @@ public class RenderThreadWrapper extends Thread{
 	
 	private JLabel jl;
 	private IRenderer ir;
-	private static LinkedList<Element> que = new LinkedList<Element>();;
+	private static LinkedList<Element> que = new LinkedList<Element>();
 	
 	
 	public RenderThreadWrapper(){

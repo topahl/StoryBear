@@ -3,6 +3,7 @@ package com.opticalcobra.storybear.game;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,8 +14,10 @@ import com.opticalcobra.storybear.db.TileResult;
 import com.opticalcobra.storybear.debug.DebugSettings;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.editor.TextAnalyzer;
+import com.opticalcobra.storybear.game.RenderThreadWrapper.Element;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.main.Ringbuffer;
+import com.opticalcobra.storybear.main.SBLinkedList;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.StoryBearRandom;
@@ -27,7 +30,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private int panelnum = 0;
 	private StoryInfo storyInfo;
 	private int elementPointer = 0;
-	private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*16); 
+	//private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*16); 
+	private static LinkedList<TileResult> tileQue = new SBLinkedList<TileResult>();
 	private Database db;
 	private ArrayList<Integer> currentTileIds;
 	
@@ -40,18 +44,15 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private BufferedImage getNextMapElement(){
 		int next = 0;
 		
-		if (!(ringbuffer.top() == null)){
+		//The first tile has to be 0, otherwise it can be random rendered
+		if (tileQue.size()>0){
 			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 			next = following[rand.nextInt(following.length)];
-			
-		}else{
-			lastTileType = next;
-			ringbuffer.write(db.getTileInfo(lastTileType));
-			
 		}
 		
 		lastTileType = next;
-		ringbuffer.write(db.getTileInfo(lastTileType));
+		tileQue.add(db.getTileInfo(lastTileType));
+		
 		currentTileIds.add(lastTileType);
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND);
 	}
@@ -112,7 +113,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		pane.setIcon(new ImageIcon(image));
 	}
 	
-	public Ringbuffer<TileResult> getRingbuffer() {
-		return this.ringbuffer;
+	public LinkedList<TileResult> getTileQue() {
+		return this.tileQue;
 	}
 }

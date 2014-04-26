@@ -1,5 +1,7 @@
 package com.opticalcobra.storybear.game;
 
+import java.util.LinkedList;
+
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
@@ -32,7 +34,7 @@ public class InteractionLayer extends JLayeredPane {
 	}
 
 
-	public void initialize(IRenderer rendererInteraction,	Ringbuffer<TileResult> ringbuffer) {
+	public void initialize(IRenderer rendererInteraction, LinkedList<TileResult> tileQue) {
 		this.renderer = rendererInteraction;
 		
 		layer = new JLayeredPane[3];

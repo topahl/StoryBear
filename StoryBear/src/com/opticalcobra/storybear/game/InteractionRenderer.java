@@ -3,6 +3,7 @@ package com.opticalcobra.storybear.game;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,12 +25,12 @@ public class InteractionRenderer extends Renderer implements IRenderer{
 
 	private int panelnum = 0;
 	private ArrayList<ILevelAppearance> storyInfoElements;
-	private Ringbuffer<TileResult> ringbuffer;
+	private LinkedList<TileResult> tileQue;
 	int elementPointer = 0;
 	
 	
-	public InteractionRenderer(Ringbuffer<TileResult> ringbuffer, ArrayList<ILevelAppearance> elememts){		
-		this.ringbuffer = ringbuffer;
+	public InteractionRenderer(LinkedList<TileResult> tileQue, ArrayList<ILevelAppearance> elememts){		
+		this.tileQue = tileQue;
 		this.storyInfoElements = elememts;
 	}
 	
@@ -53,9 +54,9 @@ public class InteractionRenderer extends Renderer implements IRenderer{
 						storyInfoElements.get(elementPointer) instanceof Character){
 					
 					if (panelnum < 3){
-						storyInfoElements.get(elementPointer).render(g, ringbuffer.top((panelnum)*Ressources.TILESPERPANEL + i +2).getTileType(), Ressources.LAYERINTERACTION, pane);
+						storyInfoElements.get(elementPointer).render(g, tileQue.get((panelnum)*Ressources.TILESPERPANEL + i).getTileType(), Ressources.LAYERINTERACTION, pane);
 					} else{
-						storyInfoElements.get(elementPointer).render(g, ringbuffer.top(2*Ressources.TILESPERPANEL + 1 +i).getTileType(), Ressources.LAYERINTERACTION, pane);
+						storyInfoElements.get(elementPointer).render(g, tileQue.get(2*Ressources.TILESPERPANEL +i).getTileType(), Ressources.LAYERINTERACTION, pane);
 					}
 				}
 				

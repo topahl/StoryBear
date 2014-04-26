@@ -94,7 +94,7 @@ public class Window extends JFrame {
 		rendererMG = new DummyRendererMG();
 		rendererBG = new BackgroundRenderer();
 		rendererCloud = new CloudRenderer();
-		rendererInteraction = new InteractionRenderer(renderer.getRingbuffer(), level.getElements());
+		rendererInteraction = new InteractionRenderer(renderer.getTileQue(), level.getElements());
 		
 		baseLayer.setBackground(Ressources.SKYCOLOR);
 		getContentPane().setBackground(Color.BLACK);
@@ -176,7 +176,7 @@ public class Window extends JFrame {
 		ia.setLocation(0, 0);
 		
 		//ia can just be rendered after fg1 was renderd. therefore we need a initializemethod
-		ia.initialize(rendererInteraction, renderer.getRingbuffer());
+		ia.initialize(rendererInteraction, renderer.getTileQue());
 		
 		mg=new GameLayer(rendererMG);
 		mg.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
@@ -191,7 +191,7 @@ public class Window extends JFrame {
 		clouds.setLocation(0, 0); //TODO: -100 entfernen
 		
 				
-		Hero.getInstance().setRingbuffer(renderer.getRingbuffer());
+		Hero.getInstance().setTileQue(renderer.getTileQue());
 		Hero.getInstance().initHero(heroType);
 		
 		//Add in Order:
