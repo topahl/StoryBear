@@ -2,7 +2,6 @@ package com.opticalcobra.storybear.game;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.sql.SQLException;
 import java.util.Timer;
 
 import javax.swing.ImageIcon;
@@ -16,7 +15,6 @@ import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.OSTimer;
-import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
@@ -43,8 +41,6 @@ public class Window extends JFrame {
 	
 	public StoryInfo level = null;
 	public char heroType;
-	
-	private Database db = new Database();
 	
 //	private boolean inAJump = false; //shows that jump is executed currently
 //	private boolean inADoubleJump = false;
@@ -210,16 +206,6 @@ public class Window extends JFrame {
 		baseLayer.add(clouds);
 		
 	}
-	
-	
-	/*
-	 * @author Miriam
-	 * is called if game is won/lost or if the user exits the game
-	 */
-	public void saveHighscore() throws SQLException{
-		this.db.addHighscore(User.getCurrentUser().getId(), this.level.getId(), Hero.getInstance().getHighscore());
-	}
-	
 	
 	
 	/**
