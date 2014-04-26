@@ -22,23 +22,25 @@ public class Main {
 //		Database db = new Database();
 //		StoryInfo storyInfo = new StoryInfo();
 //		Story currentStory = new Story();
-//		currentStory = db.getStoryFromDatabase(1);
+//		currentStory = db.getStoryFromDatabase(12);
 //		storyInfo = ta.analyzeText(currentStory);
 //		db.insertStoryInfoToDatabase(storyInfo);
-//	
-//		System.out.print("feddisch!");
-		
+
 		
 //		User a = new User("Tiki");
 //		currentStory.setAuthor(a);
-//		currentStory.setTitle("Hänsel und Gretel für arme");
+//		currentStory.setTitle("Grafik Test all");
 //		currentStory.setChangeDate(new Date());
 //		currentStory.setVersion(1);
-//		currentStory.setText("Wasser diiiiiiese Geschiiiiiiiiiiiiiiiiiiiichte Ozean hat meeeeeeeeeeeegaaaaa Winter aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa lange wööööööööööörteeeeeeeerrrrrrrrrr"
-//				+ " um auch mal deeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen Überlaaaaaaaaaaaaaaa Stadt aauuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuf von verscheidenen Laaaaaaaaaaaaaaaayern (wie Tooooooooooooooooooooobi"
-//				+ " sagen wüüüüüüüüüüüüüüüüüüüüüürde \"Lääääääääääääääääääääääääääääääyern\" Ozean zu teeeeeeeeeeeeeeeeeeeeeeeeeeesten :)");
-		
-		//db.insertStoryToDatabase(currentStory);
+//		currentStory.setText("Charaktere: Fee Frau Geist Hexe Jäger Junge Sohn Kaufmann Händler König Herrscher Königin Herrscherin Kind Mädchen Jungfrau Mann Oma Großmutter, Opa Großvater, Prinz Königssohn, Prinzessin, Räuber Dieb Teufel Zauberer Zauberin Zwerg Sandmann Vater Mutter Agent Spion "
+//				+ "Things: Baum Blume Stein Sternschnuppe Teich Brot Feuer Lagerfeuer Gold Münze Perle Edelstein silber Grab Sarg Kraut Kräuter Leiter Schatztruhe Schlüssel Süßigkeiten Stuhl tisch Tuch Krone 3 7 100 Teddybär "
+//				+ "Tiere: Bär Ente Frosch Froschkönig Fuchs Gans Hund rabe Schlange Känguru Katze Vogel "
+//				+ "Collectables: Münze Apfel Brot 1 2 3 4 5 "
+//				+ "Gebäude: Brunnen Burg Hütte Haus Lebkuchenhaus Mühle Ofen Höhle Grube Mauer Turm Fahnen "
+//				+ "Fahrzeuge: Kutsche Schiff Wagen Boot Floß "
+//				+ "Landscape: Wald wald wald stadt sadt dorf schloss felder land felder land");
+//		
+//		db.insertStoryToDatabase(currentStory);
 //		ta.analyzeText(currentStory);
 //		
 //		
@@ -53,6 +55,6 @@ public class Main {
 //		ta.analyzeText(currentStory);
 ////		
 //		
-//		System.out.print("feddisch!");
+		System.out.print("feddisch!");
 	}
 }
