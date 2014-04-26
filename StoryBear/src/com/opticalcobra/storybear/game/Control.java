@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 
 import com.opticalcobra.storybear.editor.Loadingscreen;
 import com.opticalcobra.storybear.menu.Menu;
@@ -99,7 +100,8 @@ public class Control implements KeyListener, ActionListener {
 		}
 	}
 	
-	public void close() {
+	public void close() throws SQLException {
+		window.saveHighscore();
 		window.dispose();
 		Menu m = new Menu(false);
 	}
