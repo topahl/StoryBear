@@ -64,6 +64,14 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		ArrayList<ILevelAppearance> elements = this.storyInfo.getElements();
 		currentTileIds = new ArrayList<Integer>();
 		
+		if (panelnum >= 3){
+			for (int i = 0; i < Ressources.TILESPERPANEL; i++){
+				tileQue.removeFirst();
+			}
+			Hero.getInstance().setQueCounter(Hero.getInstance().getQueCounter()- Ressources.TILESPERPANEL);
+		}
+		
+		
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();

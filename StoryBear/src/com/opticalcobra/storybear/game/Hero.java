@@ -34,7 +34,8 @@ public class Hero extends JLabel{
 	//Run attributes
 	private char runDirection = 'n';
 	private int queCounter = 0;    //Es sind auf dem Screen immer 5-6 Kacheln zur freien Bewegung verfügbar
-	
+
+
 	private int highscore = 0;
 	private boolean walkedAtSomething = false;  
 	
@@ -230,9 +231,7 @@ public class Hero extends JLabel{
 				
 				//Befindet sich Hero genau auf einer Kachelgrenze?
 				if (((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
-					if (queCounter != 4){
-						queCounter++;
-					}
+					queCounter++;
 					return true;
 				}
 			}	
@@ -243,12 +242,7 @@ public class Hero extends JLabel{
 				//Befindet sich Hero genau auf einer Kachelgrenze?
 				if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE) + 
 						(Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
-					if (queCounter == 4){
-						tileQue.removeFirst();
-					}
-					else{
-						queCounter++;
-					}
+					queCounter++;
 					return true;
 				}
 			}
@@ -266,11 +260,8 @@ public class Hero extends JLabel{
 	public void runFreazing(int currentCounterStep){
 		if((currentCounterStep + (Ressources.CHARACTERWIDTH/2)) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
 			
-			//Da bis zu 6 Kacheln erreichbar sind, darf erst danach aus dem Ringbuffer gelesen werden
-			if (queCounter==4){
-				tileQue.removeFirst();
-				this.highscore += Ressources.SCOREPOINTSFORRUNNING;
-			} 
+			queCounter++;
+			this.highscore += Ressources.SCOREPOINTSFORRUNNING;
 			if (!isInAJump()){
 				setLocation(getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 			}
@@ -346,5 +337,13 @@ public class Hero extends JLabel{
 
 	public void setHighscore(int highscore) {
 		this.highscore = highscore;
+	}	
+	
+	public int getQueCounter() {
+		return queCounter;
+	}
+
+	public void setQueCounter(int queCounter) {
+		this.queCounter = queCounter;
 	}
 }
