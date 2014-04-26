@@ -60,7 +60,7 @@ public class RendererFG2 extends Renderer implements IRenderer {
 		for (int i = 0 ; i < storyInfo.getElements().size(); i++){
 			if (storyInfo.getElements().get(i) instanceof RenderHint && storyInfo.getElements().get(i).getBlock() == currentBlock + (panelnum-1)*Ressources.TILESPERPANEL){
 				if (((RenderHint)(storyInfo.getElements().get(i))).getRenderHint() == RenderHint.RENDERHINT_FOREST){
-					return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, "FORREST");
+					return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, "FOREST");
 				} else{
 					return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, "MEADOEW");
 				}
@@ -121,7 +121,6 @@ public class RendererFG2 extends Renderer implements IRenderer {
 			//Wörter und Bilder werden gerendert
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
-				
 				
 				(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDTWO, pane);
 				

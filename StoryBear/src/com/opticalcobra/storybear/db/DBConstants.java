@@ -13,9 +13,9 @@ public class DBConstants {
 	
 	public static final int WORD_OBJECT_TYPE_CHARACTER = 0;
 	public static final int WORD_OBJECT_TYPE_COLLECTABLE = 1;
-	public static final int WORD_OBJECT_TYPE_MIDDLEGROUND = 2;
-	public static final int WORD_OBJECT_TYPE_ILLUSTRATION_SMALL = 3;
-	public static final int WORD_OBJECT_TYPE_ILLUSTRATION_BIG = 4;
+	public static final int WORD_OBJECT_TYPE_ILLUSTRATION_SMALL = 2;
+	public static final int WORD_OBJECT_TYPE_ILLUSTRATION_BIG = 3;
+	public static final int WORD_OBJECT_TYPE_MIDDLEGROUND = 4;
 	public static final int WORD_OBJECT_TYPE_NO_IMAGE = -1;
 	
 	//Constans for level heights

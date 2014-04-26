@@ -427,10 +427,10 @@ public class Database {
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsIllustrationBig.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsIllustrationSmall.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
 			}
 		}
 		if (result==null) {
@@ -450,10 +450,10 @@ public class Database {
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsIllustrationBig.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
 			}
 			else if (rsIllustrationSmall.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
 			}
 			
 			if (result == null){
