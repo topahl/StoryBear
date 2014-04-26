@@ -9,6 +9,7 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -33,43 +34,60 @@ public class Scrollbar extends JScrollPane {
 	}
 	static class ScrollbarUI extends MetalScrollBarUI {
 	    private JButton up,down;
+	    private ImageIcon iup,idown;
 	    private Imagelib il= Imagelib.getInstance();
 	    private Color background;
+	    private boolean scaled = false;
+	    
+	    
 	    public ScrollbarUI(Color bg) {
 	        this.background=bg;
 	        
+	        iup = new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP));
 			up = new JButton();
-			up.setIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
-			up.setRolloverIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
-			up.setPressedIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_UP)));
-			up.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
+			up.setIcon(iup);
+			up.setRolloverIcon(iup);
+			up.setPressedIcon(iup);
+//			up.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
 			up.setBorder(null);
-			up.setBackground(background);
-			up.setForeground(background);
+			up.setOpaque(true);
 	        up.setBorderPainted(false);
-	        up.setContentAreaFilled(false);
+	        up.setBackground(background);
 	        
-			down = new JButton();
-			down.setIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_DOWN)));
-			down.setRolloverIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_DOWN)));
-			down.setPressedIcon(new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_DOWN)));
-			BufferedImage imageDown = new BufferedImage((int)(60/Ressources.SCALE), (int)(40/Ressources.SCALE), BufferedImage.TYPE_INT_ARGB);
-			imageDown.getGraphics().drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP), (int)(15/Ressources.SCALE), 0, null);
-			down.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
+	        idown = new ImageIcon(il.menuImage(Imagelib.MENU_SCROLL_DOWN));
+	        down = new JButton();
+			down.setIcon(idown);
+			down.setRolloverIcon(idown);
+			down.setPressedIcon(idown);
+//			down.setPreferredSize(new Dimension((int)(30/Ressources.SCALE),(int)(20/Ressources.SCALE)));
 			down.setBorder(null);
-			down.setBackground(background);
-			down.setForeground(background);
 	        down.setBorderPainted(false);
-	        down.setContentAreaFilled(false);
+	        down.setBackground(background);
 			
 	    }
 	 
 	    @Override
 	    protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {        
-	        
-	        int thumb = (int) (thumbBounds.height - (20/Ressources.SCALE));
+	    	double scale = ((double)thumbBounds.width/30)*Ressources.SCALE;
+	        int thumb = (int) (thumbBounds.height - (2*(int)(10*scale)));
 	        Image imageThumb;
-	        double scale = ((double)thumbBounds.width/30);
+	       
+	        if(!scaled){
+	        	scaled = true;
+	        	Image img = iup.getImage() ;  
+        	    Image newimg = img.getScaledInstance( thumbBounds.width, (int) (15*scale),  java.awt.Image.SCALE_SMOOTH ) ;  
+        	    iup= new ImageIcon( newimg );
+        	    up.setIcon(iup);
+    			up.setRolloverIcon(iup);
+    			up.setPressedIcon(iup);
+        	    Image img2 = idown.getImage() ;  
+        	    Image newimg2 = img2.getScaledInstance( thumbBounds.width, (int) (15*scale),  java.awt.Image.SCALE_SMOOTH ) ;  
+        	    idown= new ImageIcon( newimg2 );
+        	    down.setIcon(idown);
+    			down.setRolloverIcon(idown);
+    			down.setPressedIcon(idown);
+	        	
+	        }
 	        
 	        if(thumb<0){
 	        	imageThumb = new BufferedImage(thumbBounds.width, (int)(30/Ressources.SCALE), BufferedImage.TYPE_INT_ARGB);
@@ -83,9 +101,9 @@ public class Scrollbar extends JScrollPane {
 	        	imageThumb = new BufferedImage(thumbBounds.width, thumbBounds.height, BufferedImage.TYPE_INT_ARGB);
 	        	Graphics g2 = imageThumb.getGraphics();
 	        	g2.setColor(new Color(128,128,128));
-	        	g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0, null);
-		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(int)(thumbBounds.height-(10/Ressources.SCALE)),null);
-		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(10/Ressources.SCALE), (int)(30/Ressources.SCALE), thumb, null);
+	        	g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_TOP),0,0,thumbBounds.width,(int) (10*scale), null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_BOTTOM),0,(thumbBounds.height-(int)(10*scale)),thumbBounds.width,(int) (10*scale),null);
+		        g2.drawImage(il.menuImage(Imagelib.MENU_SCROLL_THUMB_MIDDLE), 0, (int)(10*scale), thumbBounds.width, thumb, null);
 		        
 		        g.drawImage(imageThumb, thumbBounds.x,thumbBounds.y, null);
 	        }

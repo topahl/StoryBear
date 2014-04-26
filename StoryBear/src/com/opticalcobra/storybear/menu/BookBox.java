@@ -198,8 +198,8 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
         scrollpane.setBounds((int)(96/Ressources.SCALE),(int)(60/Ressources.SCALE), (int)(1152/Ressources.SCALE), (int)(959/Ressources.SCALE));
         buecherRegal.add(scrollpane);
         levelBuecher.setCellRenderer(new BookRenderer());
-        levelBuecher.setOpaque(true);
-        levelBuecher.setBackground(new Color(0,0,0));//TODO Change to opaque
+        levelBuecher.setOpaque(false);
+        levelBuecher.setBackground(new Color(0,0,0,0));
         levelBuecher.addListSelectionListener(this);
         baseLayer.add(buecherRegal);
         loadStories();
