@@ -1,5 +1,6 @@
 package com.opticalcobra.storybear.game;
 
+import java.awt.Point;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
@@ -119,8 +120,8 @@ public class Hero extends JLabel{
 	 * execution of the jump
 	 */
 	private void jump(){
-		int posX = getLocation().x;
-		int posY = getLocation().y;
+		int posX = super.getLocation().x;
+		int posY = super.getLocation().y;
 		
 		jumpSpeed = jumpSpeed - Ressources.JUMPCONSTANTY;
 		posY = (int) (posY - jumpSpeed);
@@ -138,7 +139,7 @@ public class Hero extends JLabel{
 		
 		//Reaching the current Levelheight
 		if(getLocation().y >= tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT){
-			setLocation(getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+			setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 			jumpSpeed = 0;
 			inADoubleJump = false;
 		}
@@ -149,7 +150,7 @@ public class Hero extends JLabel{
 	 * @author Miriam
 	 */
 	public void run(int stepCounterLayer){
-		int posX = this.getLocation().x;
+		int posX = super.getLocation().x;
 		double runConstant = Ressources.RUNCONSTANT;
 		ImageIcon image; 
 		
@@ -159,7 +160,7 @@ public class Hero extends JLabel{
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant) && !isInAJump()){
 				if(tileQue.get(queCounter).isWalkableLeft()){
-					setLocation(getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 				}
 			}
 		}
@@ -170,7 +171,7 @@ public class Hero extends JLabel{
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant) && !isInAJump()){
 				if(tileQue.get(queCounter).isWalkableRight()){
-					setLocation(getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 				}
 			}
 		}
@@ -187,13 +188,13 @@ public class Hero extends JLabel{
 	 */
 	public boolean checkIfHeroReachsANewTileByWalkingLeft(int stepCounterLayer, double runConstant){
 		//Ringbuffer für die Tiles aktuallisieren   
-		if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5  ){
+		if (getLocation().x < Ressources.RASTERSIZE*5  ){
 			
 			//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
 			if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
 				
 				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if ((Ressources.RASTERSIZE - ((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
+				if ((Ressources.RASTERSIZE - (getLocation().x % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
 					if (queCounter>0){
 						queCounter--;
 					}
@@ -205,7 +206,7 @@ public class Hero extends JLabel{
 			 else{ 
 				 
 				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if (((Ressources.RASTERSIZE - ((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
+				if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
 						queCounter--;
 						return true;
 				}
@@ -224,13 +225,13 @@ public class Hero extends JLabel{
 	 */
 	public boolean checkIfHeroReachsANewTileByWalkingRight(int stepCounterLayer, double runConstant){
 		//Ringbuffer für die Tiles aktuallisieren    
-		if (getLocation().x + (Ressources.CHARACTERWIDTH / 2) < Ressources.RASTERSIZE*5){
+		if (getLocation().x < Ressources.RASTERSIZE*5){
 			
 			//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
 			if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
 				
 				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if (((getLocation().x + (Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
+				if ((getLocation().x % Ressources.RASTERSIZE) - runConstant < 0){
 					queCounter++;
 					return true;
 				}
@@ -240,8 +241,7 @@ public class Hero extends JLabel{
 			 else{
 				 
 				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE) + 
-						(Ressources.CHARACTERWIDTH / 2)) % Ressources.RASTERSIZE) - runConstant < 0){
+				if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0){
 					queCounter++;
 					return true;
 				}
@@ -263,7 +263,7 @@ public class Hero extends JLabel{
 			queCounter++;
 			this.highscore += Ressources.SCOREPOINTSFORRUNNING;
 			if (!isInAJump()){
-				setLocation(getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+				setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 			}
 		}
 	}
@@ -318,6 +318,14 @@ public class Hero extends JLabel{
 			return true;
 		}
 	}
+	
+	@Override
+	public Point getLocation(){
+		Point pnt = super.getLocation();
+		pnt.setLocation(pnt.x+(Ressources.CHARACTERWIDTH/2), pnt.y);
+		return pnt;
+	}
+	
 	
 	public void setTileQue(LinkedList<TileResult> tileQue) {
 		this.tileQue = tileQue;

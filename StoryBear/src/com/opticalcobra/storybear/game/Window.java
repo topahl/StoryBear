@@ -44,7 +44,6 @@ public class Window extends JFrame {
 	
 //	private boolean inAJump = false; //shows that jump is executed currently
 //	private boolean inADoubleJump = false;
-	
 
 	DummyRenderer renderer;
 	RendererFG2 rendererfg2;
