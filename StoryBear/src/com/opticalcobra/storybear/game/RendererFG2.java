@@ -56,7 +56,18 @@ public class RendererFG2 extends Renderer implements IRenderer {
 		
 		lastTileType = next;
 		currentTileIds.add(lastTileType);
-		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, null);
+		
+		for (int i = 0 ; i < storyInfo.getElements().size(); i++){
+			if (storyInfo.getElements().get(i) instanceof RenderHint && storyInfo.getElements().get(i).getBlock() == currentBlock + (panelnum-1)*Ressources.TILESPERPANEL){
+				if (((RenderHint)(storyInfo.getElements().get(i))).getRenderHint() == RenderHint.RENDERHINT_FOREST){
+					return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, "FORREST");
+				} else{
+					return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, "MEADOEW");
+				}
+			}
+		}
+		
+		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, "MEADOEW");
 		
 		
 		

@@ -295,13 +295,18 @@ public class Imagelib {
 		}
 		try {
 			Integer[] ids;
-			if(queryType != QUERY_CLOUDS){
+			if(queryType != QUERY_CLOUDS && queryType != QUERY_FOREGROUNDTWO){
 				ids = db.queryNumberResultOnly("SELECT i.id from images i JOIN "+dbName+" b ON i.id = b.images_id WHERE b.type_id = "+type+";");
-				return db.queryImagedata(ids[realRand.nextInt(ids.length)]);
+				return db.queryImagedata(ids[rand.nextInt(ids.length)]);
 			}
 			else{
-				ids = db.queryNumberResultOnly("SELECT id from images where url = 'images\\layer_slice_clouds.png'");
-				return db.queryImagedata(ids[rand.nextInt(ids.length)]);
+				if (queryType == QUERY_CLOUDS){
+					ids = db.queryNumberResultOnly("SELECT id from images where url = 'images\\layer_slice_clouds.png'");
+					return db.queryImagedata(ids[realRand.nextInt(ids.length)]);
+				} else {
+					ids = db.queryNumberResultOnly("SELECT i.id from images i JOIN "+dbName+" b ON i.id = b.images_id WHERE b.type_id = "+type+" and b.setting_name = '"+ settingNameForFG +"';");
+					return db.queryImagedata(ids[rand.nextInt(ids.length)]);
+				}
 			}
 				
 			
