@@ -49,7 +49,7 @@ public class Menu extends JFrame {
 		
 		// Inner Panels
 		manu = createNewInnerPanel(new Manual());
-		highscore = createNewInnerPanel();
+		highscore = createNewInnerPanel(new HighscoreList());
 		user = createNewInnerPanel(new UserPanel(this));
 		editor = createNewInnerPanel(new Editor());
 		credits = createNewInnerPanel(new Credits());
