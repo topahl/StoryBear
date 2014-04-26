@@ -60,6 +60,7 @@ public class Window extends JFrame {
 	
 	public Window(int level_num, char heroType){
 		this.level = new Database().getStoryInfoFromDatabase(level_num);
+		this.level.setId(level_num);
 		this.heroType = heroType;
 		this.timer = new Timer();
 		

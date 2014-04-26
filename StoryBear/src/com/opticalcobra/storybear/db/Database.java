@@ -482,6 +482,29 @@ public class Database {
 		return conn.createStatement().execute("INSERT INTO user(name) VALUES ('" + user.getName() + "')");
 	}
 	
+	
+	/*
+	 * @author Miriam
+	 * inserts the highscore data in the highscore table
+	 */
+	public void addHighscore(int user_id, int level_id, int score) throws SQLException{
+		ResultSet rs = query("INSERT INTO highscore (user_id,level_id,score) values ("+ user_id +", "+ level_id +", " + score +");"); 
+	}
+	
+	
+	public ArrayList<HighscoreResult> getHighscoreForUser(int user) throws SQLException{
+		ArrayList<HighscoreResult> hr = new ArrayList();
+		ResultSet rs = query("SELECT * FROM highscore WHERE user_id = " + user + ";");
+		
+		while(rs.next()){
+			hr.add(new HighscoreResult(user, (int)(rs.getObject("level_id")), (int)(rs.getObject("score"))));
+		}
+		rs.close();
+		
+		return hr;
+	}
+	
+	
 	public void dump(ResultSet rs) throws SQLException {
 //        ResultSetMetaData meta   = rs.getMetaData(); // TODO print metadata
 //        int colmax = meta.getColumnCount();

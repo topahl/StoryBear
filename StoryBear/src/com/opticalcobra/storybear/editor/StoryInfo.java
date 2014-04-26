@@ -21,6 +21,7 @@ public class StoryInfo implements Serializable{
 	private Story story;
 	private int hash;
 	private ArrayList<ILevelAppearance> elements;
+	private transient int id;
 	
 	
 	public StoryInfo(){
@@ -60,6 +61,16 @@ public class StoryInfo implements Serializable{
 
 	public void setElements(ArrayList<ILevelAppearance> elements) {
 		this.elements = elements;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
