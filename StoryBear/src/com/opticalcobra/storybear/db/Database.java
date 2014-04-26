@@ -394,6 +394,10 @@ public class Database {
 		String flexinom = "";
 		ArrayList[] arrayRS; //needed for the ArrayList of the ResultSet rsFexione
 		
+		if (word.equals("Opa")){
+			System.out.println("Opa");
+		}
+		
 		rsFexione = query("SELECT DISTINCT t2.word FROM term t "
 				+ "LEFT JOIN synset s ON t.synset_id =s.id "
 				+ "LEFT JOIN term t2 ON t2.synset_id = s.id "
