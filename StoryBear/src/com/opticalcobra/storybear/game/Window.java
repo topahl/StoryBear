@@ -20,6 +20,7 @@ import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
+import com.opticalcobra.storybear.res.StoryBearRandom;
 
 public class Window extends JFrame {
 	
@@ -64,6 +65,10 @@ public class Window extends JFrame {
 		this.level.setId(level_num);
 		this.heroType = heroType;
 		this.timer = new Timer();
+		
+		//init Randoom
+//		StoryBearRandom.getInstance().setSeed(level.getHash());
+		StoryBearRandom.getInstance().setSeed(StoryBearRandom.hash(level.getStory().getText()));
 		
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);

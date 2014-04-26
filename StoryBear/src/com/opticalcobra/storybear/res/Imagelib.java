@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -34,6 +35,7 @@ public class Imagelib {
 	private HashMap<String,BufferedImage> images;   //Hashmap für alle Bilder
 	private Database db; //Datenbankverbindung
 	private StoryBearRandom rand = StoryBearRandom.getInstance(); //Zufall mit seed
+	private Random realRand = new Random();
 	
 	//Constants
 	public static final char QUERY_FOREGROUND = 'f';
@@ -295,12 +297,14 @@ public class Imagelib {
 			Integer[] ids;
 			if(queryType != QUERY_CLOUDS){
 				ids = db.queryNumberResultOnly("SELECT i.id from images i JOIN "+dbName+" b ON i.id = b.images_id WHERE b.type_id = "+type+";");
+				return db.queryImagedata(ids[realRand.nextInt(ids.length)]);
 			}
 			else{
 				ids = db.queryNumberResultOnly("SELECT id from images where url = 'images\\layer_slice_clouds.png'");
+				return db.queryImagedata(ids[rand.nextInt(ids.length)]);
 			}
 				
-			return db.queryImagedata(ids[rand.nextInt(ids.length)]);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null; //TODO richtiges fehlerhandlich einbauen
