@@ -166,6 +166,27 @@ public class Database {
 		return result;
 	}
 	
+	
+	
+	public ArrayList<StoryInfo> getAllStorysFromDatabaseWithIds(){
+		ArrayList<StoryInfo> result = new ArrayList<StoryInfo>();
+		try {
+			ResultSet rs = query("Select * from levels");
+			while(rs.next()){			
+				java.sql.Blob obj = rs.getBlob("OBJECT");
+				byte[] ba = obj.getBytes(1, rs.getInt("LENGTH"));
+				StoryInfo si = (StoryInfo)(Blob.read(ba));
+				si.setId(rs.getInt("ID"));
+				result.add(si);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
 	/**
 	 * @Martika
 	 * @param currentStory
