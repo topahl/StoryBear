@@ -53,7 +53,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		lastTileType = next;
 		tileQue.add(db.getTileInfo(lastTileType));
 		
-		currentTileIds.add(lastTileType);
+		currentTileIds.add(next);
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND, null);
 	}
 
@@ -83,7 +83,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 			
 		}
-		for(int i=0;i<=Ressources.TILESPERPANEL;i++){
+		for(int i=0;i<Ressources.TILESPERPANEL;i++){
 			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
 							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
 			
@@ -105,7 +105,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
 				
 				//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
-				if (elementPointer+1 < storyInfo.getElements().size() && storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
+				if (elementPointer+1 < storyInfo.getElements().size() && 
+						storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
 					i--;
 				} else{
 					currentTileIds.remove(0);

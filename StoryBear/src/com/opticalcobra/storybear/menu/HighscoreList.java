@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.opticalcobra.storybear.db.Database;
+import com.opticalcobra.storybear.db.HighscoreResult;
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.User;
@@ -33,21 +34,25 @@ import com.opticalcobra.storybear.res.Ressources;
 
 public class HighscoreList extends JLayeredPane {
 	
-	private ArrayList<StoryInfo> list;
 	private JList level;
 	private TextButton selectLevel;
 	private Database db = new Database();
-	private DefaultListModel<StoryInfo> model = new DefaultListModel<StoryInfo>();
-	
+	private DefaultListModel<StoryInfo> modelSI = new DefaultListModel<StoryInfo>();
+	private DefaultListModel<HighscoreResult> modelHR = new DefaultListModel<HighscoreResult>();
+	private JList scores;
 	
 	/*
 	 * @author Miriam
 	 * on the left book page it shows the levels and on the right the corresponding highscores
 	 */
 	public HighscoreList(){
+		JTextField headline;
+		JScrollPane scrollpane;
+		JScrollBar sb;
 
 		//right Book Page
-		JTextField headline = new JTextField();
+		//header
+		headline = new JTextField();
 		headline.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
 		headline.setFont(Menu.fontHeadline[0]);
 		headline.setOpaque(false);
@@ -56,11 +61,33 @@ public class HighscoreList extends JLayeredPane {
 		headline.setEditable(false);
 		headline.setFocusable(false);
 		headline.setText("Bestenliste");
-		add(headline, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		add(headline, javax.swing.JLayeredPane.DEFAULT_LAYER);		
 		
-        
+		//Highscores
+		this.scores = new JList<HighscoreResult>();
+		this.scores.setCellRenderer(new ScoreListCellRenderer());
+		this.scores.setOpaque(false);
+		this.scores.setBackground(new Color(0,0,0,0));
+		this.scores.setFont(Menu.fontText[0]);
+		this.scores.setForeground(Color.black);
+		
+		scrollpane = new Scrollbar(Ressources.SHELFCOLOR);
+		scrollpane = new Scrollbar(Ressources.SHELFCOLOR);
+		scrollpane.setViewportView(this.scores);
+		scrollpane.getViewport().setOpaque(false);
+		scrollpane.getViewport().setBackground(new Color(0,0,0,0));
+		scrollpane.setOpaque(false);
+		scrollpane.setBackground(new Color(0,0,0,0));
+		scrollpane.setBorder(null);
+		sb = scrollpane.getVerticalScrollBar();
+		sb.setPreferredSize(new Dimension(30,0));
+        sb.setBackground(Ressources.SHELFCOLOR);
+        scrollpane.setBounds((int)(781/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(315/Ressources.SCALE));
+        add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
+     
         
         //left Book Page
+		//header
         headline = new JTextField();
 		headline.setBounds((int)(40/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
 		headline.setFont(Menu.fontHeadline[0]);
@@ -72,7 +99,7 @@ public class HighscoreList extends JLayeredPane {
 		headline.setText("Levelauswahl");
 		add(headline, javax.swing.JLayeredPane.DEFAULT_LAYER);
 		
-		
+		//Choose a level
 		this.level = new JList<StoryInfo>();
 		this.level.setCellRenderer(new LevelListCellRenderer());
 		this.level.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -88,14 +115,14 @@ public class HighscoreList extends JLayeredPane {
         });
 		this.loadStories();
         
-		JScrollPane scrollpane = new Scrollbar(Ressources.SHELFCOLOR);
+		scrollpane = new Scrollbar(Ressources.SHELFCOLOR);
 		scrollpane.setViewportView(this.level);
 		scrollpane.getViewport().setOpaque(false);
 		scrollpane.getViewport().setBackground(new Color(0,0,0,0));
 		scrollpane.setOpaque(false);
 		scrollpane.setBackground(new Color(0,0,0,0));
 		scrollpane.setBorder(null);
-		JScrollBar sb = scrollpane.getVerticalScrollBar();
+		sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(Ressources.SHELFCOLOR);
         scrollpane.setBounds((int)(31/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(315/Ressources.SCALE));
@@ -108,7 +135,12 @@ public class HighscoreList extends JLayeredPane {
         this.selectLevel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				loadHighscore();
+				try {
+					loadHighscore();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
         add(this.selectLevel, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -117,18 +149,29 @@ public class HighscoreList extends JLayeredPane {
 	}
 	
 	
-	private void loadHighscore(){
+	/* 
+	 * @author Miriam
+	 * loads the Highscore table of the corresponding story
+	 */
+	private void loadHighscore() throws SQLException{	
+		int level_id = ((StoryInfo)(this.level.getSelectedValue())).getId();
+		ArrayList<HighscoreResult> hr = db.getHighscoreForLevel(level_id);
 		
+		modelHR.clear();
+		for(int i=0 ; i<hr.size();i++){
+			modelHR.addElement(hr.get(i));
+		}      
+        //this.scores.setModel(modelHR);
 	}
 	
 	private void loadStories() {
 		ArrayList<StoryInfo> story = db.getAllLevelssFromDatabase();
-		model.clear();
+		modelSI.clear();
 		for(int i=0 ; i<story.size();i++){
-			model.addElement(story.get(i));
+			modelSI.addElement(story.get(i));
 		}
         
-        this.level.setModel(model);		
+        this.level.setModel(modelSI);		
 	}
 	
 
@@ -169,5 +212,40 @@ public class HighscoreList extends JLayeredPane {
 	     }
 	}
 	
+	
+	/*
+	 * @author Miriam
+	 * renders the Story Name and Author in the list of levels
+	 */
+	private class ScoreListCellRenderer extends DefaultListCellRenderer {
+		private JLabel score;
+		private JLabel user;
+	     @Override
+	     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+	         JPanel c = new JPanel();
+	    	 c.setBackground(new Color(0,0,0,0));
+	         c.setBorder(null);
+	         c.setCursor(Ressources.CURSORCLICKABLE);
+	         if (isSelected) {
+	             c.setForeground(Ressources.MENUCOLORSELECTED);
+	         }
+	         
+	         Story story = ((StoryInfo) value).getStory();
+	         user = new JLabel();
+	         user.setForeground(new Color(92, 90, 90));
+	 		 score = new JLabel();
+	 		 score.setText(story.getTitle());
+	 		 user.setText(""+story.getAuthor().getName());
+	 		 c.add(user);
+	 		 c.add(score);
+	 		 
+	 		 if(isSelected){
+	 			score.setForeground(new Color(186, 15, 15));
+				user.setForeground(new Color(186, 15, 15));
+	 		 }
+	         
+	         return c;
+	     }
+	}
 
 }

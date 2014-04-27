@@ -57,13 +57,13 @@ public class TextAnalyzer {
 		//if word in db then return type of word, e.g. collectable, character, ...
 		//else return null
 		for(String word : words){
-			String word_short = word.replaceAll("[^a-zA-Z δόφί]", "");
+			String word_short = word.replaceAll("[^a-zA-Z δόφί0-9]", "");
 			//get the length of the word in pixels
 			stringLength = this.numberOfPixelsOfString(word);
 			
 			//Math.ceil rundet immer auf: 0.1 wird zu 1.0
 			numberOfBlocks = (int) Math.ceil((double)stringLength / (double)Ressources.RASTERSIZE);
-			
+			System.out.println(word);
 			try {
 				WordResult wr =db.queryWordType(word_short); 
 				switch (wr.getType()){

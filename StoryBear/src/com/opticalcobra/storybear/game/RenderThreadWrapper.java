@@ -30,6 +30,8 @@ public class RenderThreadWrapper extends Thread{
 		while(true){
 			if(!que.isEmpty()){
 				Element el = que.removeFirst();
+//				Debigging 
+//				System.out.println(el.renderer.toString());
 				el.renderer.getNextViewPart(el.comp);
 			}
 			this.yield();

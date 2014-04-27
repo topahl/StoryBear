@@ -48,10 +48,10 @@ public class RendererFG2 extends Renderer implements IRenderer {
 		
 		int next = 0;
 		
-		if (panelnum>=3){
+		if (panelnum>3){
 			next = tileQue.get(2*Ressources.TILESPERPANEL + currentBlock).getTileType();
 		} else{
-			next = tileQue.get(panelnum * currentBlock).getTileType();
+			next = tileQue.get(((panelnum-1) *Ressources.TILESPERPANEL)+ currentBlock).getTileType();
 		}
 		
 		lastTileType = next;
@@ -105,7 +105,7 @@ public class RendererFG2 extends Renderer implements IRenderer {
 			g.drawImage(getNextMapElement(i),i*Ressources.RASTERSIZE,0,null);
 		}
 
-		for(int i=0;i<=Ressources.TILESPERPANEL;i++){
+		for(int i=0;i<Ressources.TILESPERPANEL;i++){
 			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
 							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
 			
