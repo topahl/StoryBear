@@ -9,15 +9,24 @@ import com.opticalcobra.storybear.main.Semaphore;
 
 public class RenderThreadWrapper extends Thread{
 	
+	private static RenderThreadWrapper renderThreadWrapper = null;
+	
 	private JLabel jl;
 	private IRenderer ir;
 	private static LinkedList<Element> que = new LinkedList<Element>();
 	
-	
-	public RenderThreadWrapper(){
+	private RenderThreadWrapper(){
 		this.setPriority(Thread.MIN_PRIORITY);
 	}
 	
+	public static RenderThreadWrapper getInstance(){
+		if (renderThreadWrapper == null){
+			renderThreadWrapper = new RenderThreadWrapper();
+		}
+		return renderThreadWrapper;
+	}
+	
+
 	public static void addRenderTask(IRenderer renderer, JLabel label){
 		Element el = new Element();
 		el.comp = label;
