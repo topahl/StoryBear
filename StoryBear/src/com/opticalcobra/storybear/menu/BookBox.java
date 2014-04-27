@@ -132,12 +132,12 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
 	}
 	
 	public void hoverIn() {
-		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setCursor(Ressources.CURSORCLICKABLE);
 		setLocation(((available) ? postionAvailable+(int)(15/Ressources.SCALE) : postionNormal-(int)(15/Ressources.SCALE)),0);
 	}
 	
 	public void hoverOut() {
-		setCursor(Cursor.getDefaultCursor());
+		setCursor(Ressources.CURSORNORMAL);
 		setLocation(((available) ? postionAvailable : postionNormal),0);
 	}
 

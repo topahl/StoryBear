@@ -131,12 +131,16 @@ public class Menu extends JFrame {
 	}
 	
 	private void initializeUser() {
-		//TODO: add graphic
+		JLabel text = new JLabel();
+		text.setText("Du spielst als:");
+		text.setBounds((int)(17/Ressources.SCALE), (int)(17/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		text.setFont(FontCache.getInstance().getFont("Fontin_SC", 25f));
+		getContentPane().add(text);
 		currentUser = new JLabel();
-		currentUser.setBounds((int)(0/Ressources.SCALE), (int)(0/Ressources.SCALE), (int)(100/Ressources.SCALE), (int)(100/Ressources.SCALE));
+		currentUser.setBounds((int)(17/Ressources.SCALE), (int)(45/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(60/Ressources.SCALE));
 		currentUser.setFont(Menu.fontText[0]);
 		currentUser.setText(User.isCurrentUserSet() ? User.getCurrentUser().getName() : "");
-		currentUser.setForeground(Color.red);
+		currentUser.setFont(FontCache.getInstance().getFont("Fontin_SC", 40f));
 		getContentPane().add(currentUser);
 	}
 	
