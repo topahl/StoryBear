@@ -433,8 +433,8 @@ public class Database {
 		arrayRS = this.toArrayList(query(query));
 		
 		rsCollectable = query("SELECT DISTINCT IMAGE_ID FROM Collectable_Object WHERE word IN ("+query+") OR word = '"+word+"';");
-		rsIllustrationBig = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'true') OR word = '"+word+"';");
-		rsIllustrationSmall = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'false') OR word = '"+word+"';");
+		rsIllustrationBig = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'true') OR (word = '"+word+"' AND big = 'true');");
+		rsIllustrationSmall = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'false') OR (word = '"+word+"' AND big = 'false');");
 		rsCharacter = query("SELECT DISTINCT IMAGE_ID FROM Character_Object WHERE word IN ("+query+") OR word = '"+word+"';");
 		rsMiddleground= query("SELECT DISTINCT IMAGE_ID FROM Middleground_Object WHERE word IN ("+query+") OR word = '"+word+"';");
 		
