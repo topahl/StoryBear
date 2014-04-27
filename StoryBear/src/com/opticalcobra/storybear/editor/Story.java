@@ -13,8 +13,12 @@ public class Story implements Serializable{
 	private User author;		
 	private Date changeDate;	
 	private int version;
+	private int id;
 	
 	
+
+
+
 	public Story(){
 		
 	}
@@ -68,5 +72,13 @@ public class Story implements Serializable{
 	public void setVersion(int version) {
 		this.version = version;
 	}
+	
+	public int getId() {
+		return id;
+	}
 
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

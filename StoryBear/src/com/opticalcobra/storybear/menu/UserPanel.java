@@ -63,26 +63,22 @@ public class UserPanel extends JLayeredPane {
         benutzerliste = new JList(new UserList());
         benutzerliste.setCellRenderer(new UserListCellRenderer());
         benutzerliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        benutzerliste.setOpaque(false);
-        benutzerliste.setBackground(new Color(0,0,0,0));
         benutzerliste.setFont(Menu.fontText[0]);
         benutzerliste.setForeground(Color.black);
+        benutzerliste.setBackground(Ressources.PAGECOLOR);
         benutzerliste.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				selectUser.setEnabled(true);
 			}
         });
-        JScrollPane scrollpane = new Scrollbar(Ressources.SHELFCOLOR); 
-        scrollpane.setViewportView(benutzerliste);
-        scrollpane.getViewport().setOpaque(false);
-        scrollpane.setOpaque(false);
-        scrollpane.setBackground(new Color(0,0,0,0));
+        
+        JScrollPane scrollpane = new Scrollbar(Ressources.PAGECOLOR);
+        scrollpane.setBounds((int)(30/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(350/Ressources.SCALE), (int)(315/Ressources.SCALE));
+        scrollpane.setBackground(Ressources.PAGECOLOR);
+        scrollpane.setForeground(Ressources.PAGECOLOR);
         scrollpane.setBorder(null);
-        JScrollBar sb = scrollpane.getVerticalScrollBar();
-        sb.setPreferredSize(new Dimension(30,0));
-        sb.setBackground(new Color(0,0,0,0));
-        scrollpane.setBounds((int)(31/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(315/Ressources.SCALE), (int)(315/Ressources.SCALE));
+        scrollpane.setViewportView(benutzerliste);
         add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
         textField = new JTextField();

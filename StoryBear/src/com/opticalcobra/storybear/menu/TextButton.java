@@ -15,7 +15,7 @@ import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 
 
-public class TextButton extends JButton implements ActionListener, MouseListener{
+public class TextButton extends JButton implements MouseListener{
 	private final static int borderThick = 2;
 	private final static float fontSize = (float)(28f/Ressources.SCALE);
 	private final static Font font = FontCache.getInstance().getFont("Fontin_R", fontSize);
@@ -43,7 +43,6 @@ public class TextButton extends JButton implements ActionListener, MouseListener
 		hoverBorder	= BorderFactory.createLineBorder(hoverColor, borderThick);
 		
 		addMouseListener(this);
-		addActionListener(this);
 		
 		setOpaque(false);
 		setContentAreaFilled(false);
@@ -64,9 +63,6 @@ public class TextButton extends JButton implements ActionListener, MouseListener
 		setBorder(border);
 		setForeground(color);
 	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

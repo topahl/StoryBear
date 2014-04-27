@@ -3,6 +3,8 @@ package com.opticalcobra.storybear.editor;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
@@ -55,79 +57,87 @@ import javax.swing.text.DateFormatter;
  *
  */
 public class Editor extends JLayeredPane {
-	private JLayeredPane baseLayerEdit, baseLayerStart;
-	
-	private JTextArea editor;
-	private WordSuggestor wordSugg;
-	private JTextField headline;
-	private JLabel date, author;
-	private JScrollPane scrollpane;
-	private TextButton export, save, start;
-
-	private Database db;
-	
 	public static final String EMPTY_TITLE = "<Titel steht hier>";
 	public static final String EMPTY_STORY = "<Hier Geschichte schreiben>";
+	public static final FileFilter filter = new FileNameExtensionFilter("StoryBear (.bear)", "bear");
 	
+	private JLayeredPane baseLayerEditMode, baseLayerStart;
+	
+	private JTextArea editorEditMode;
+	private WordSuggestor wordSuggEditMode;
+	private JTextField headlineEditMode;
+	private JLabel authorEditMode;
+	private JLabel dateEditMode;
+	private JScrollPane scrollpaneEditMode;
+
+	private JLabel authorStart, dateStart, titleStart;
 	private JList<Story> storyList;
+	
+	private Database db;
 	private DefaultListModel<Story> storyListModel = new DefaultListModel<Story>();
-
-	private JLabel title;
-
-	private JLabel authorStart;
-
-	private JLabel dateStart;
-
-	private JLabel titleStart;
-
-	protected FileFilter filter = new FileNameExtensionFilter("StoryBear (.bear)", "bear");;
+	private Story currentStory;
+	
+	
 	
 	/**
-	 * 
+	 * start editor
 	 */
 	public Editor(){
 		db = new Database();
-		initializePanel();
+		
+		initializeEditMode();
 		initializeStart();
-//		loadStory(1);
+		
+		showStart();
+		
+		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
 	}
 	
 	/**
-	 * load Story in Editor
-	 * @param story
+	 * show StartPanel
 	 */
-	public void loadStory(int id) {
-		Story story = db.getStoryFromDatabase(id);
-		loadStory(story);
-	}
-	public void loadStory(Story story) {
-		editor.setText(story.getText());
-		headline.setText(story.getTitle());
-		author.setText(author.getText() + story.getAuthor().getName());
-		date.setText(date.getText() + DateFormat.getDateInstance().format(story.getChangeDate()));
+	private void showStart() {
+		loadStories();
 		
-		editor.setForeground(Color.black);
-		headline.setForeground(Color.black);
-		
-		scrollpane.setViewportView(editor);
+		baseLayerEditMode.setVisible(false);
+		baseLayerStart.setVisible(true);
 	}
 	
 	/**
-	 * save Story to DB
+	 * show editor
 	 */
-	public void save() {
-		db.insertStoryToDatabase(generateStory());
+	private void showEditMode() {
+		// set values
+		editorEditMode.setText(currentStory.getText());
+		headlineEditMode.setText(currentStory.getTitle());
+		authorEditMode.setText("Autor: " + currentStory.getAuthor().getName());
+		dateEditMode.setText("Datum: " + DateFormat.getDateInstance().format(currentStory.getChangeDate()));
+		
+		editorEditMode.setForeground(Color.black);
+		headlineEditMode.setForeground(Color.black);
+		
+		scrollpaneEditMode.setViewportView(editorEditMode);
+		
+		// switch panels
+		baseLayerStart.setVisible(false);
+		baseLayerEditMode.setVisible(true);
 	}
 	
-	private Story generateStory() {
-		Story newStory = new Story();
-		newStory.setText(editor.getText());
-		newStory.setText(headline.getText());
-		newStory.setChangeDate(new Date());
-		//newStory.setAuthor();		//TODO: set author
-		return newStory;
+	/**
+	 * update current story
+	 */
+	private Story updateCurrentStory() {
+		currentStory.setTitle(headlineEditMode.getText());
+		currentStory.setText(editorEditMode.getText());
+		
+		currentStory.setChangeDate(new Date());
+		currentStory.setVersion(1); // TODO: ?
+		return currentStory;
 	}
 	
+	/**
+	 * load stories from database in list model
+	 */
 	private void loadStories() {
 		storyListModel.clear();
 		List<Story> stories = db.getAllStoriesFromDatabase();
@@ -137,9 +147,13 @@ public class Editor extends JLayeredPane {
 		storyList.setModel(storyListModel);
 	}
 	
+	/**
+	 * initialize StartScreen
+	 */
 	private void initializeStart() {
 		baseLayerStart = new JLayeredPane();
-		baseLayerStart.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		baseLayerStart.setBounds(0, 0 ,Menu.innerPanel.width, Menu.innerPanel.height);
+		add(baseLayerStart);
 		
 		// Headline
 		JTextField headline = new JTextField();
@@ -155,13 +169,12 @@ public class Editor extends JLayeredPane {
 		
 		// Story-List
 		storyList = new JList<Story>(storyListModel);
-        storyList.setCellRenderer(new StoryListCellRenderer());
         storyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        storyList.setOpaque(false);
-        storyList.setBackground(new Color(0,0,0,0));
+        storyList.setBackground(Ressources.PAGECOLOR);
+        storyList.setForeground(Ressources.PAGECOLOR);
         storyList.setFont(Menu.fontText[0]);
-        storyList.setForeground(Color.black);
         storyList.setSelectedIndex(storyList.getFirstVisibleIndex());
+        storyList.setCellRenderer(new StoryListCellRenderer());
         storyList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -173,16 +186,12 @@ public class Editor extends JLayeredPane {
 				}
 			}
 		});
-        JScrollPane scrollpane = new Scrollbar(Ressources.SHELFCOLOR); 
-        scrollpane.setViewportView(storyList);
-        scrollpane.getViewport().setOpaque(false);
-        scrollpane.setOpaque(false);
-        scrollpane.setBackground(new Color(0,0,0,0));
+        JScrollPane scrollpane = new Scrollbar(Ressources.PAGECOLOR);
+        scrollpane.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(300/Ressources.SCALE));
+        scrollpane.setBackground(Ressources.PAGECOLOR);
+        scrollpane.setForeground(Ressources.PAGECOLOR);
         scrollpane.setBorder(null);
-        JScrollBar sb = scrollpane.getVerticalScrollBar();
-        sb.setPreferredSize(new Dimension(30,0));
-        sb.setBackground(new Color(0,0,0,0));
-        scrollpane.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(300/Ressources.SCALE));
+        scrollpane.setViewportView(storyList);
         baseLayerStart.add(scrollpane);
 		
         // Author
@@ -210,40 +219,21 @@ public class Editor extends JLayeredPane {
 		baseLayerStart.add(titleStart);
         
         // Edit-Button
-        TextButton editButton = new TextButton("Bearbeiten", 40, 255, 195, 60);
-        editButton.setLocation(816, 453);
-        editButton.addMouseListener(new MouseListener() {
+        TextButton editButton = new TextButton("Bearbeiten", 750, 400, 250, 60);
+        editButton.addActionListener(new ActionListener() {
 			@Override
-			public void mouseReleased(MouseEvent e) {}
-			@Override
-			public void mousePressed(MouseEvent e) {}
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				loadStory(storyList.getSelectedValue());
-				baseLayerStart.setVisible(false);
-				baseLayerEdit.setVisible(true);
+			public void actionPerformed(ActionEvent arg0) {
+				currentStory = storyList.getSelectedValue();
+				showEditMode();
 			}
 		});
         baseLayerStart.add(editButton);
         
         // Import-Button
-		TextButton importButton = new TextButton("Importieren", 40+195+10, 255, 195, 60);
-		importButton.setLocation(40, 379);
-		importButton.addMouseListener(new MouseListener() {
+		TextButton importButton = new TextButton("Importieren", 40, 400, 250, 60);
+		importButton.addActionListener(new ActionListener() {
 			@Override
-			public void mouseReleased(MouseEvent e) {}
-			@Override
-			public void mousePressed(MouseEvent e) {}
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				JFileChooser choose = new JFileChooser();
 				choose.addChoosableFileFilter(filter);
 				choose.setFileFilter(filter);
@@ -253,87 +243,102 @@ public class Editor extends JLayeredPane {
 						ObjectInputStream o = new ObjectInputStream(f);
 						Story s = (Story) o.readObject();
 						db.insertStoryToDatabase(s);
+						f.close();
+						o.close();
 					} catch (IOException | ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-			} 
+				
+				showStart();
+			}
 		});
 		baseLayerStart.add(importButton);
-        
-				
-		loadStories();
 		
-        // Frame
-		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
-		add(baseLayerStart);
-		baseLayerStart.setVisible(true);
+		// new Story
+		TextButton newButton = new TextButton("Neue Geschichte", 40+40+250, 400, 250, 60);
+		newButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Story s = new Story();
+				s.setTitle("Unbenannte Geschichte");
+				s.setAuthor(User.getCurrentUser());
+				s.setChangeDate(new Date());
+				s.setText("");
+				s.setVersion(1);
+				
+				db.insertStoryToDatabase(s);
+				
+				showStart();
+			}
+		});
+		baseLayerStart.add(newButton);
 	}
 	
 	
 	/**
-	 * initialize all elements
+	 * initialize edit mode
 	 */
-	private void initializePanel() {		
+	private void initializeEditMode() {		
+		baseLayerEditMode = new JLayeredPane();
+		baseLayerEditMode.setBounds(0, 0 ,Menu.innerPanel.width, Menu.innerPanel.height);
+		add(baseLayerEditMode);
+		
 		// WordSuggestor
-		wordSugg = new WordSuggestor();
-		wordSugg.setBounds((int)(40/Ressources.SCALE), (int)(335/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(520/Ressources.SCALE));
-		wordSugg.setVisible(true);
+		wordSuggEditMode = new WordSuggestor();
+		wordSuggEditMode.setBounds((int)(40/Ressources.SCALE), (int)(335/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(520/Ressources.SCALE));
+		wordSuggEditMode.setVisible(true);
 		
 		// Headline
-		headline = new JTextField();
-		headline.setBounds((int)(40/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
-		headline.setFont(FontCache.getInstance().getFont("Standard", (float)(60f/Ressources.SCALE)));
-		headline.setOpaque(false);
-		headline.setBorder(null);
-		headline.setVisible(true);
-		headline.addFocusListener(new EmptyTextFieldListener(EMPTY_TITLE, Color.GRAY, Color.BLACK).initializeCallerTextComponent(headline));
+		headlineEditMode = new JTextField();
+		headlineEditMode.setBounds((int)(40/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
+		headlineEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(60f/Ressources.SCALE)));
+		headlineEditMode.setOpaque(false);
+		headlineEditMode.setBorder(null);
+		headlineEditMode.setVisible(true);
+		headlineEditMode.addFocusListener(new EmptyTextFieldListener(EMPTY_TITLE, Color.GRAY, Color.BLACK).initializeCallerTextComponent(headlineEditMode));
 		
 		JLabel headlineUnderscore = new JLabel(new ImageIcon(Imagelib.getInstance().loadDesignImage("menu_headline_underscore")));
 		headlineUnderscore.setBounds((int)(40/Ressources.SCALE), (int)(140/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(70/Ressources.SCALE));
 		
 		// Scrollpane
-		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
-		scrollpane.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE)+30, (int)(800/Ressources.SCALE));
-		scrollpane.setBackground(Ressources.PAGECOLOR);
-		scrollpane.setForeground(Ressources.PAGECOLOR);
-		scrollpane.setBorder(null);
+		scrollpaneEditMode = new Scrollbar(Ressources.PAGECOLOR);
+		scrollpaneEditMode.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE)+30, (int)(800/Ressources.SCALE));
+		scrollpaneEditMode.setBackground(Ressources.PAGECOLOR);
+		scrollpaneEditMode.setForeground(Ressources.PAGECOLOR);
+		scrollpaneEditMode.setBorder(null);
 		
 		// Editor
-		editor = new JTextArea();
-		editor.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(800/Ressources.SCALE));
-		editor.setBackground(Ressources.PAGECOLOR);
-		editor.setBorder(null);
-		editor.setLineWrap(true);
-		editor.setWrapStyleWord(true);
-		editor.setForeground(Color.black);
-		editor.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		editorEditMode = new JTextArea();
+		editorEditMode.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(800/Ressources.SCALE));
+		editorEditMode.setBackground(Ressources.PAGECOLOR);
+		editorEditMode.setBorder(null);
+		editorEditMode.setLineWrap(true);
+		editorEditMode.setWrapStyleWord(true);
+		editorEditMode.setForeground(Color.black);
+		editorEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
 		
 		
 		// Author
-		author = new JLabel();
-		author.setText("Autor: ");
-		author.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
-		author.setBounds((int)(40/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
-		author.setVisible(true);
+		authorEditMode = new JLabel();
+		authorEditMode.setText("Autor: ");
+		authorEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		authorEditMode.setBounds((int)(40/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
+		authorEditMode.setVisible(true);
 		
 		// Date
-		date = new JLabel();
-		date.setText("Datum: ");
-		date.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
-		date.setBounds((int)(440/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
-		date.setHorizontalAlignment(SwingConstants.RIGHT);
-		date.setVisible(true);
-		
-		// baseLayerEdit
-		baseLayerEdit = new JLayeredPane();
-		baseLayerEdit.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
+		dateEditMode = new JLabel();
+		dateEditMode.setText("Datum: ");
+		dateEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		dateEditMode.setBounds((int)(440/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
+		dateEditMode.setHorizontalAlignment(SwingConstants.RIGHT);
+		dateEditMode.setVisible(true);
 		
 		
-		// Buttons
-		start = new TextButton("zurück", 40, 265, 195, 60);
-		baseLayerEdit.add(start);
+		
+		// Start
+		TextButton start = new TextButton("zurück", 40, 265, 195, 60);
+		baseLayerEditMode.add(start);
 		start.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseReleased(MouseEvent e) {}
@@ -345,85 +350,66 @@ public class Editor extends JLayeredPane {
 			public void mouseEntered(MouseEvent e) {}
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				loadStories();
-				baseLayerEdit.setVisible(false);
-				baseLayerStart.setVisible(true);
+				showStart();
 			}
 		});
 		
-		export = new TextButton("Exportieren", 40+195+10, 265, 195, 60);
-		baseLayerEdit.add(export);
-		export.addMouseListener(new MouseListener() {
+		// Export/ Share
+		TextButton export = new TextButton("Exportieren", 40+195+10, 265, 195, 60);
+		export.addActionListener(new ActionListener() {
 			@Override
-			public void mouseReleased(MouseEvent e) {}
-			@Override
-			public void mousePressed(MouseEvent e) {}
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
+				updateCurrentStory();
+				
 				JFileChooser choose = new JFileChooser();
 				choose.addChoosableFileFilter(filter);
 				choose.setFileFilter(filter);
 				if (choose.showSaveDialog(Editor.this) == JFileChooser.APPROVE_OPTION) {
-					Story s = new Story();
-					s.setAuthor(User.getCurrentUser());
-					s.setTitle(title.getText());
-					s.setChangeDate(new Date());
-					s.setVersion(1);
-					s.setText(editor.getText());
 					try {
 						FileOutputStream fos = new FileOutputStream(choose.getSelectedFile()+".bear");
 						ObjectOutputStream o = new ObjectOutputStream(fos);
-						o.writeObject(s);
+						o.writeObject(currentStory);
 						o.close();
 						fos.close();
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				}
-			} 
+			}
 		});
-		
-		save = new TextButton("Speichern", 40+2*(195+10), 265, 195, 60);
-		save.addMouseListener(new MouseListener() {
+
+		// Save
+		TextButton save = new TextButton("Speichern", 40+2*(195+10), 265, 195, 60);
+		save.addActionListener(new ActionListener() {
 			@Override
-			public void mouseReleased(MouseEvent e) {}
-			@Override
-			public void mousePressed(MouseEvent e) {}
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				save();
+			public void actionPerformed(ActionEvent e) {
+				updateCurrentStory();
+				
+				db.updateStory(currentStory);
+				showEditMode();
 			}
 		});
 		
-		baseLayerEdit.add(headlineUnderscore);
-		baseLayerEdit.add(save);
-		baseLayerEdit.add(headline);
-		baseLayerEdit.add(scrollpane);
-		baseLayerEdit.add(wordSugg);
-		baseLayerEdit.add(date);
-		baseLayerEdit.add(author);
-		baseLayerEdit.setVisible(true);
-		
-		// Frame
-		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
-		add(baseLayerEdit);
-		baseLayerEdit.setVisible(false);
+		baseLayerEditMode.add(headlineUnderscore);
+		baseLayerEditMode.add(save);
+		baseLayerEditMode.add(headlineEditMode);
+		baseLayerEditMode.add(scrollpaneEditMode);
+		baseLayerEditMode.add(wordSuggEditMode);
+		baseLayerEditMode.add(dateEditMode);
+		baseLayerEditMode.add(authorEditMode);
+		baseLayerEditMode.add(export);
 	}
 	
+	/**
+	 * Cell Renderer for list of stories
+	 */
 	private class StoryListCellRenderer extends DefaultListCellRenderer {
 	     @Override
 	     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 	         JLabel c = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 	         c.setText(((Story)value).getTitle());
 	         c.setBackground(new Color(0,0,0,0));
+	         c.setForeground(Color.black);
 	         c.setBorder(null);
 	         c.setCursor(Ressources.CURSORCLICKABLE);
 	         if (isSelected) {

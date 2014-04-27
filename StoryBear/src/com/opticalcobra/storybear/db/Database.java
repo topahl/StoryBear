@@ -121,6 +121,15 @@ public class Database {
 	}
 	
 	
+	public void updateStory(Story currentStory) {
+		try {
+			conn.createStatement().execute("DELETE FROM story WHERE id=" + currentStory.getId() + ";");
+			insertStoryToDatabase(currentStory);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public ArrayList<StoryInfo> getAllLevelssFromDatabase(){
 		ArrayList<StoryInfo> result = new ArrayList<StoryInfo>();
 		try {
