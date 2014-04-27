@@ -199,7 +199,7 @@ public class Editor extends JLayeredPane {
         // Author
         authorStart = new JLabel();
  		authorStart.setText("Autor: ");
- 		authorStart.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+ 		authorStart.setFont(Menu.fontText[0]);
  		authorStart.setBounds((int)(40/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
  		authorStart.setVisible(true);
  		baseLayerStart.add(authorStart);
@@ -207,7 +207,7 @@ public class Editor extends JLayeredPane {
  		// Date
  		dateStart = new JLabel();
  		dateStart.setText("Datum: ");
- 		dateStart.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+ 		dateStart.setFont(Menu.fontText[0]);
  		dateStart.setBounds(40, 260,(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
  		dateStart.setVisible(true);
  		baseLayerStart.add(dateStart);
@@ -215,7 +215,7 @@ public class Editor extends JLayeredPane {
 	 	// Title
 		titleStart = new JLabel();
 		titleStart.setText("Titel: ");
-		titleStart.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		titleStart.setFont(Menu.fontText[0]);
 		titleStart.setBounds(40, 174,(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
 		titleStart.setVisible(true);
 		baseLayerStart.add(titleStart);
@@ -294,7 +294,7 @@ public class Editor extends JLayeredPane {
 		// Headline
 		headlineEditMode = new JTextField();
 		headlineEditMode.setBounds((int)(40/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
-		headlineEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(60f/Ressources.SCALE)));
+		headlineEditMode.setFont(Menu.fontHeadline[0]);
 		headlineEditMode.setOpaque(false);
 		headlineEditMode.setBorder(null);
 		headlineEditMode.setVisible(true);
@@ -318,24 +318,22 @@ public class Editor extends JLayeredPane {
 		editorEditMode.setLineWrap(true);
 		editorEditMode.setWrapStyleWord(true);
 		editorEditMode.setForeground(Color.black);
-		editorEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
-		
+		editorEditMode.setFont(Menu.fontText[0]);
 		
 		// Author
 		authorEditMode = new JLabel();
 		authorEditMode.setText("Autor: ");
-		authorEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		authorEditMode.setFont(Menu.fontText[0]);
 		authorEditMode.setBounds((int)(40/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
 		authorEditMode.setVisible(true);
 		
 		// Date
 		dateEditMode = new JLabel();
 		dateEditMode.setText("Datum: ");
-		dateEditMode.setFont(FontCache.getInstance().getFont("Standard", (float)(28f/Ressources.SCALE)));
+		dateEditMode.setFont(Menu.fontText[0]);
 		dateEditMode.setBounds((int)(440/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
 		dateEditMode.setHorizontalAlignment(SwingConstants.RIGHT);
 		dateEditMode.setVisible(true);
-		
 		
 		
 		// Start
