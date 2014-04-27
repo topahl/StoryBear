@@ -521,6 +521,20 @@ public class Database {
 	
 	/*
 	 * @author Miriam
+	 */
+	public String getUserName(int id) throws SQLException{
+		ResultSet rs = query("SELECT NAME FROM user WHERE id = " + id + ";");
+		String result = "";
+		while(rs.next())
+			result = rs.getString("NAME");
+		rs.close();
+		//return rs.getString("NAME");
+		return result;
+	}
+	
+	
+	/*
+	 * @author Miriam
 	 * inserts the highscore data in the highscore table
 	 */
 	public void addHighscore(int user_id, int level_id, int score) throws SQLException{

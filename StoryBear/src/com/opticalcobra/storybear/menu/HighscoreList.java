@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -156,12 +158,19 @@ public class HighscoreList extends JLayeredPane {
 	private void loadHighscore() throws SQLException{	
 		int level_id = ((StoryInfo)(this.level.getSelectedValue())).getId();
 		ArrayList<HighscoreResult> hr = db.getHighscoreForLevel(level_id);
+		Collections.sort(hr, new Comparator<HighscoreResult>() { //sort the arraylist descending
+	        @Override
+	        public int compare(HighscoreResult  hr1, HighscoreResult  hr2)
+	        {
+	            return  ((Integer)(hr2.getScore())).compareTo((Integer)(hr1.getScore()));
+	        }
+	    });
 		
 		modelHR.clear();
 		for(int i=0 ; i<hr.size();i++){
 			modelHR.addElement(hr.get(i));
 		}      
-        //this.scores.setModel(modelHR);
+        this.scores.setModel(modelHR);
 	}
 	
 	private void loadStories() {
@@ -222,20 +231,27 @@ public class HighscoreList extends JLayeredPane {
 		private JLabel user;
 	     @Override
 	     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-	         JPanel c = new JPanel();
+	         Database db = new Database();
+	    	 JPanel c = new JPanel();
 	    	 c.setBackground(new Color(0,0,0,0));
 	         c.setBorder(null);
 	         c.setCursor(Ressources.CURSORCLICKABLE);
+	         c.setBounds((int)(600/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
 	         if (isSelected) {
 	             c.setForeground(Ressources.MENUCOLORSELECTED);
 	         }
 	         
-	         Story story = ((StoryInfo) value).getStory();
+	         HighscoreResult hr = ((HighscoreResult) value);
 	         user = new JLabel();
 	         user.setForeground(new Color(92, 90, 90));
 	 		 score = new JLabel();
-	 		 score.setText(story.getTitle());
-	 		 user.setText(""+story.getAuthor().getName());
+	 		 score.setText(String.valueOf(hr.getScore()));
+	 		 try {
+				user.setText(db.getUserName(hr.getUser_id()));
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	 		 c.add(user);
 	 		 c.add(score);
 	 		 
