@@ -1,7 +1,15 @@
 package com.opticalcobra.storybear.game;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Loadingscreen;
@@ -10,11 +18,21 @@ import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.editor.TextAnalyzer;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.menu.Menu;
+import com.opticalcobra.storybear.res.Ressources;
 
 
 public class Main {
 	public static void main(String args[]){
+		// Play sound
+		try {
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(Ressources.RESPATH+"music\\StoryBear_Menu.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {}
+		
 		Loadingscreen ls = new Loadingscreen();
+		
 //		Menu menu = new Menu();
 //		Window gui = new Window();
 //		

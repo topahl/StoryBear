@@ -87,17 +87,6 @@ public class Menu extends JFrame {
 		} else {
 			enableAllMenuButtons();
 		}
-		
-		// Play sound
-		try {
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(Ressources.RESPATH+"music\\StoryBear_Menu.wav").getAbsoluteFile());
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
-			clip.start();
-		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		}
-		
 	}
 
 	public Menu(Loadingscreen ls) {
