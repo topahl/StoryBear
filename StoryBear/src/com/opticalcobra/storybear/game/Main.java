@@ -29,6 +29,7 @@ public class Main {
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {}
 		
 		Loadingscreen ls = new Loadingscreen();
