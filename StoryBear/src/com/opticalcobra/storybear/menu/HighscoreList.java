@@ -174,7 +174,7 @@ public class HighscoreList extends JLayeredPane {
 	}
 	
 	private void loadStories() {
-		ArrayList<StoryInfo> story = db.getAllLevelssFromDatabase();
+		ArrayList<StoryInfo> story = db.getAllStorysFromDatabaseWithIds();
 		modelSI.clear();
 		for(int i=0 ; i<story.size();i++){
 			modelSI.addElement(story.get(i));
