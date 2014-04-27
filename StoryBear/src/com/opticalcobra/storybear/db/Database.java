@@ -414,10 +414,16 @@ public class Database {
 		int typeId = DBConstants.WORD_OBJECT_TYPE_NO_IMAGE;
 		ResultSet rsFexione;
 		ResultSet rsCollectable;
+		ResultSet rsIllustrationBig;
+		ResultSet rsIllustrationSmall;
 		ResultSet rsCharacter;
 		ResultSet rsMiddleground;
 		String flexinom = "";
 		ArrayList[] arrayRS; //needed for the ArrayList of the ResultSet rsFexione
+		
+		if (word.equals("Opa")){
+			System.out.println("Opa");
+		}
 		
 		rsFexione = query("SELECT DISTINCT t2.word FROM term t "
 				+ "LEFT JOIN synset s ON t.synset_id =s.id "
@@ -436,7 +442,9 @@ public class Database {
 			flexinom= (String) arrayRS[0].get(i);
 			flexinom.replaceAll("[^a-zA-Z δόφί]", "");
 			
-			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");		
+			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");
+			rsIllustrationBig = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'true';");
+			rsIllustrationSmall = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'false';");
 			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+flexinom+"';");
 			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+flexinom+"';");
 			
@@ -449,9 +457,17 @@ public class Database {
 			else if (rsMiddleground.next()){
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
 			}
+			else if (rsIllustrationBig.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationSmall.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+			}
 		}
 		if (result==null) {
-			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+word+"';");		
+			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+word+"';");	
+			rsIllustrationBig = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'true';");
+			rsIllustrationSmall = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'false';");
 			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+word+"';");
 			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+word+"';");
 			
@@ -463,6 +479,12 @@ public class Database {
 			}
 			else if (rsMiddleground.next()){
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationBig.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationSmall.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
 			}
 			
 			if (result == null){
@@ -519,12 +541,12 @@ public class Database {
 	}
 	
 	
-	public ArrayList<HighscoreResult> getHighscoreForUser(int user) throws SQLException{
+	public ArrayList<HighscoreResult> getHighscoreForLevel(int level) throws SQLException{
 		ArrayList<HighscoreResult> hr = new ArrayList();
-		ResultSet rs = query("SELECT * FROM highscore WHERE user_id = " + user + ";");
+		ResultSet rs = query("SELECT * FROM highscore WHERE level_id = " + level + ";");
 		
 		while(rs.next()){
-			hr.add(new HighscoreResult(user, (int)(rs.getObject("level_id")), (int)(rs.getObject("score"))));
+			hr.add(new HighscoreResult((int)(rs.getObject("user_id")), level, (int)(rs.getObject("score"))));
 		}
 		rs.close();
 		

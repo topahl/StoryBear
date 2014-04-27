@@ -30,6 +30,8 @@ public class Imagelib {
 	 * 		cha-	Character Object
 	 * 		menu-	Images for Menu
 	 * 		col-    Collectable
+	 * 		ils-    Illustration Small (Animals, things)
+	 * 		ilb-	Illustration Big (Vehicle, building)
 	 */
 	
 	private HashMap<String,BufferedImage> images;   //Hashmap für alle Bilder
