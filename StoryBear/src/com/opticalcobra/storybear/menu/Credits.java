@@ -78,18 +78,19 @@ public class Credits extends JLayeredPane {
         
         beschreibung = new JTextArea();
         beschreibung.setLineWrap(true);
-        beschreibung.setText("Die Handlung und alle handelnden Personen sowie deren Namen sind frei erfunden. Jegliche Ähnlichkeiten mit lebenden oder realen Personen wären rein zufällig.");
+        beschreibung.setText("Die Handlung und alle handelnden Personen sowie deren Namen sind frei erfunden. Jegliche Ähnlichkeiten mit lebenden oder realen Personen wären rein zufällig.\nDas Entwicklerteam haftet nicht für eventuelle Schäden an Hard- und Software von mit StoryBear bespielten Computern.");
         beschreibung.setWrapStyleWord(true);
         beschreibung.setFocusable(false);
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontText[0]);
         beschreibung.setForeground(Color.black);
-        beschreibung.setBounds((int)(10/Ressources.SCALE), (int)(390/Ressources.SCALE), (int)(632/Ressources.SCALE), (int)(143/Ressources.SCALE));
+        beschreibung.setBounds((int)(10/Ressources.SCALE), (int)(390/Ressources.SCALE), (int)(632/Ressources.SCALE), (int)(180/Ressources.SCALE));
         add(beschreibung, javax.swing.JLayeredPane.DEFAULT_LAYER);
 		
 		
 		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
-		
+
+		//TODO entfernen?
 //		JLabel lblNewLabel = new JLabel("New label");
 //		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Nicolas\\Dropbox\\Software Engineering Teil 2\\Grafiken\\Fertig\\menu_storybook_opened.png"));
 //		lblNewLabel.setBounds(-376, -57, 1920, 1080);
