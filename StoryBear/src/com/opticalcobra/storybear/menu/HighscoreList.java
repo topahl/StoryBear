@@ -73,8 +73,8 @@ public class HighscoreList extends JLayeredPane {
 		this.scores.setFont(Menu.fontText[0]);
 		this.scores.setForeground(Color.black);
 		
-		scrollpane = new Scrollbar(Ressources.SHELFCOLOR);
-		scrollpane = new Scrollbar(Ressources.SHELFCOLOR);
+		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
+		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
 		scrollpane.setViewportView(this.scores);
 		scrollpane.getViewport().setOpaque(false);
 		scrollpane.getViewport().setBackground(new Color(0,0,0,0));
@@ -83,8 +83,8 @@ public class HighscoreList extends JLayeredPane {
 		scrollpane.setBorder(null);
 		sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
-        sb.setBackground(Ressources.SHELFCOLOR);
-        scrollpane.setBounds((int)(781/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(315/Ressources.SCALE));
+        sb.setBackground(Ressources.PAGECOLOR);
+        scrollpane.setBounds((int)(781/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(515/Ressources.SCALE));
         add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
      
         
@@ -117,7 +117,7 @@ public class HighscoreList extends JLayeredPane {
         });
 		this.loadStories();
         
-		scrollpane = new Scrollbar(Ressources.SHELFCOLOR);
+		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
 		scrollpane.setViewportView(this.level);
 		scrollpane.getViewport().setOpaque(false);
 		scrollpane.getViewport().setBackground(new Color(0,0,0,0));
@@ -126,13 +126,13 @@ public class HighscoreList extends JLayeredPane {
 		scrollpane.setBorder(null);
 		sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
-        sb.setBackground(Ressources.SHELFCOLOR);
-        scrollpane.setBounds((int)(31/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(315/Ressources.SCALE));
+        sb.setBackground(Ressources.PAGECOLOR);
+        scrollpane.setBounds((int)(31/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(515/Ressources.SCALE));
         add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
-        this.selectLevel = new TextButton("Level wählen", 45, 150, 250, 50);
+        this.selectLevel = new TextButton("Level wählen", 45,150, 250, 50);
         this.selectLevel.setSize(315, 50);
-        this.selectLevel.setLocation(31, 470);
+        this.selectLevel.setLocation((int)(105/Ressources.SCALE), (int)(770/Ressources.SCALE));
         this.selectLevel.setEnabled(false);
         this.selectLevel.addActionListener(new ActionListener() {
 			@Override
