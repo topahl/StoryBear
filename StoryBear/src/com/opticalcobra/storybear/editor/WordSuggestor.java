@@ -1,6 +1,7 @@
 package com.opticalcobra.storybear.editor;
 
 import java.awt.Color;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -8,7 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import com.opticalcobra.storybear.db.Database;
+import com.opticalcobra.storybear.db.SuggestionWord;
 import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
+import com.opticalcobra.storybear.menu.Menu;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
@@ -20,13 +24,32 @@ import java.sql.SQLException;
 
 
 public class WordSuggestor extends JPanel {
-
+	private Database db = new Database();
+	private JPanel base;
+	
 	public WordSuggestor() {
 		setOpaque(false);
 		setLayout(null);
-	
-		JLabel strike;
 		
+		base = new JPanel();
+		base.setOpaque(false);
+		base.setSize((int)(600/Ressources.SCALE), (int)(520/Ressources.SCALE));
+		base.setLayout(null);
+		add(base);
+
+	}
+	
+	public void startSuggestions() {
+		new Thread(new Relaoder()).start();
+	}
+	
+	private void loadWords() {
+		base.setVisible(false);
+		base.removeAll();
+		
+		List<SuggestionWord> words = db.getRandomSuggestioWord(8);
+		
+		JLabel strike;
 		for(int i=0; i<2; i++)
 			for (int j=0; j<4; j++) {
 				JLabel sugg;
@@ -34,18 +57,17 @@ public class WordSuggestor extends JPanel {
 					if (j > 0) {
 						strike = new JLabel(new ImageIcon(Imagelib.getInstance().loadDesignImage("menu_wordsuggestion_strike")));
 						strike.setBounds((int)((j*(120+40)-40)/Ressources.SCALE),(int)(i*250/Ressources.SCALE),(int)(40/Ressources.SCALE),(int)(240/Ressources.SCALE));
-						add(strike);
+						base.add(strike);
 					}
-					//TODO: load random image instead of hero pic (#22)
-					sugg = new Suggestion(Imagelib.getInstance().loadHeroPic('n', 'b'), "Bär");
+					SuggestionWord word = words.get(j+i*4);
+					sugg = new Suggestion(Imagelib.getInstance().loadObjectPic(word.getImageId(), "ilb"), word.getWord());
 					sugg.setBounds((int)(j*(120+40)/Ressources.SCALE), (int)(i*250/Ressources.SCALE), (int)(120/Ressources.SCALE), (int)(240/Ressources.SCALE));
-					add(sugg);
-				} catch (ImageNotFoundException | SQLException e) {
-					// TODO Auto-generated catch block
+					base.add(sugg);
+				} catch (ImageNotFoundException e) {
 					e.printStackTrace();
 				}
 			}
-				
+		base.setVisible(true);
 	}
 	
 	private class Suggestion extends JLabel implements MouseListener {
@@ -80,4 +102,19 @@ public class WordSuggestor extends JPanel {
 		@Override
 		public void mouseReleased(MouseEvent e) {}
 	}
+	
+	private class Relaoder implements Runnable {
+		@Override
+		public void run() {
+			while (isVisible()) {
+				loadWords();
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 }

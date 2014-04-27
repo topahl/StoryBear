@@ -118,6 +118,8 @@ public class Editor extends JLayeredPane {
 		
 		scrollpaneEditMode.setViewportView(editorEditMode);
 		
+		wordSuggEditMode.startSuggestions();
+		
 		// switch panels
 		baseLayerStart.setVisible(false);
 		baseLayerEditMode.setVisible(true);
