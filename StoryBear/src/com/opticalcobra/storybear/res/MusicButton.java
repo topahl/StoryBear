@@ -17,23 +17,36 @@ public class MusicButton extends JButton implements ActionListener {
 			next[i] = new ImageIcon(mute[i]);
 		}
 		
+		if(!MusicPlayer.getInstance().isRunning())
+			switchLists();
+		
 		setCursor(Ressources.CURSORCLICKABLE);
+		setBorder(null);
+        setBorderPainted(false);
+        setContentAreaFilled(false);
 		setIcon(now[0]);
 		setRolloverIcon(now[1]);
 		setPressedIcon(now[2]);
 		setFocusable(false);
 		setBounds(x, y, now[0].getIconWidth(), now[0].getIconHeight());
+		
+		addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		MusicPlayer.getInstance().toggle();
-		ImageIcon[] temp = now;
-		now = next;
-		next = temp;
+		
+		switchLists();
 		
 		setIcon(now[0]);
 		setRolloverIcon(now[1]);
 		setPressedIcon(now[2]);
+	}
+	
+	private void switchLists() {
+		ImageIcon[] temp = now;
+		now = next;
+		next = temp;
 	}
 }

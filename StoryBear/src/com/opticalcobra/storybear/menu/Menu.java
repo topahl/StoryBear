@@ -197,9 +197,13 @@ public class Menu extends JFrame {
 	}
 	
 	private void initializeMusicButton() {
-		BufferedImage[] normal = {};
-		BufferedImage[] mute = {};
-		MusicButton musicButton = new MusicButton(normal, mute, 645, 725);
+		BufferedImage[] normal = {imagelib.loadDesignImage("menu_sound_normal_on"),
+				imagelib.loadDesignImage("menu_sound_hover_on"),
+				imagelib.loadDesignImage("menu_sound_click_on")};
+		BufferedImage[] mute = {imagelib.loadDesignImage("menu_sound_normal_mute"),
+				imagelib.loadDesignImage("menu_sound_hover_mute"),
+				imagelib.loadDesignImage("menu_sound_click_mute")};
+		MusicButton musicButton = new MusicButton(mute, normal, 125, 1000);
 		getContentPane().add(musicButton);
 	}
 	

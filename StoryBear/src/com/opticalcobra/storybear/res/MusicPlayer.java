@@ -61,9 +61,16 @@ public class MusicPlayer {
 	public boolean toggle()  {
 		if (disabled) return disabled;
 		if(running)
-			clip.stop();
+			pause();
 		else
-			clip.start();
+			start();
+		return running;
+	}
+	
+	/**
+	 * 
+	 */
+	public boolean isRunning() {
 		return running;
 	}
 	

@@ -128,8 +128,12 @@ public class Window extends JFrame {
 		
 		
 		//initialize Buttons
-		BufferedImage[] normal = {};
-		BufferedImage[] mute = {};
+		BufferedImage[] normal = {Imagelib.getInstance().loadDesignImage("game_sound_normal_on"),
+				Imagelib.getInstance().loadDesignImage("game_sound_hover_on"),
+				Imagelib.getInstance().loadDesignImage("game_sound_click_on")};
+		BufferedImage[] mute = {Imagelib.getInstance().loadDesignImage("game_sound_normal_mute"),
+				Imagelib.getInstance().loadDesignImage("game_sound_hover_mute"),
+				Imagelib.getInstance().loadDesignImage("game_sound_click_mute")};
 		this.buttonMenu = new MusicButton(normal, mute, Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE);
 		this.baseLayer.add(this.buttonMenu);
 		
