@@ -224,15 +224,13 @@ public class Database {
 	public TileResult getTileInfo(int tileType){
 		ResultSet rs;
 		int height = 0;
-		boolean walkableLeft = false;
-		boolean walkableRight = false;
+		boolean walkable = false;
 
 		try {
-			rs = query("SELECT height_level, walkable_left, walkable_right from foreground_type where id = '" + tileType + "';");
+			rs = query("SELECT height_level, walkable from foreground_type where id = '" + tileType + "';");
 			rs.next();
 			height = (int) rs.getObject("HEIGHT_LEVEL");
-			walkableLeft = rs.getBoolean("WALKABLE_LEFT");
-			walkableRight = rs.getBoolean("WALKABLE_RIGHT");
+			walkable = rs.getBoolean("WALKABLE");
 			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -264,7 +262,7 @@ public class Database {
 			height = DBConstants.LEVELHEIGHTPLUSTWO;
 			break;
 		}
-		return new TileResult(tileType, height, walkableLeft, walkableRight);
+		return new TileResult(tileType, height, walkable);
 	}
 	
 	
