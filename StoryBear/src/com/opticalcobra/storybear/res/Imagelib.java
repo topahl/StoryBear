@@ -116,19 +116,22 @@ public class Imagelib {
 		BufferedImage result;
 		BufferedImage full;
 		String sql = "SELECT IMAGEID FROM HEROS WHERE RUNDIRECTION = '" + rundirection + "' AND TYPE = '" + type + "'";
-		ImageResult image = db.queryImagedata(db.queryNumberResultOnly(sql)[0]);
+		Integer[] ids = db.queryNumberResultOnly(sql);
+		if(ids.length > 0){
+			ImageResult image = db.queryImagedata(ids[0]);
 		
-		result = images.get("hero-"+image.getId());
-		if(result != null){
+			result = images.get("hero-"+image.getId());
+			if(result != null){
+				return result;
+			}
+			
+			//cut images to fit
+			full=loadRessourcesImage(image.getUrl());
+			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+			images.put("hero-"+image.getId(), result);
 			return result;
-		}
-		
-		//cut images to fit
-		full=loadRessourcesImage(image.getUrl());
-		result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
-		images.put("hero-"+image.getId(), result);
-		
-		return result;
+		}  
+		return null;
 	}
 	
 	

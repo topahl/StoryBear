@@ -62,6 +62,9 @@ public class Hero extends JLabel{
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
 
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
