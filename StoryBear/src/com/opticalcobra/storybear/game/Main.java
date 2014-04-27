@@ -23,15 +23,6 @@ import com.opticalcobra.storybear.res.Ressources;
 
 public class Main {
 	public static void main(String args[]){
-		// Play sound
-		try {
-			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(Ressources.RESPATH+"music\\StoryBear_Menu.wav").getAbsoluteFile());
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioInputStream);
-			clip.start();
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {}
-		
 		Loadingscreen ls = new Loadingscreen();
 		
 //		Menu menu = new Menu();

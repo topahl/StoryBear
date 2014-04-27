@@ -8,8 +8,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javafx.geometry.Rectangle2D;
-
 import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
@@ -23,7 +21,6 @@ import com.opticalcobra.storybear.game.IllustrationSmall;
 import com.opticalcobra.storybear.game.Landscape;
 import com.opticalcobra.storybear.game.RenderHint;
 import com.opticalcobra.storybear.game.Word;
-import com.sun.javafx.tk.quantum.PathIteratorHelper.Struct;
 
 public class TextAnalyzer {
 

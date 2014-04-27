@@ -1,0 +1,58 @@
+package com.opticalcobra.storybear.res;
+
+import java.io.File;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+/**
+ * 
+ * @author Nicolas
+ *
+ */
+public class MusicPlayer {
+	public static final String musicFile = "music\\StoryBear_Menu.wav";
+	
+	private static MusicPlayer instance;
+	
+	private Clip clip;
+	private AudioInputStream audio;
+	
+	/**
+	 * 
+	 */
+	private MusicPlayer() {
+		try {
+			audio = AudioSystem.getAudioInputStream(new File(Ressources.RESPATH+musicFile).getAbsoluteFile());
+			clip = AudioSystem.getClip();
+			clip.open(audio);
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {}
+	}
+	
+	/**
+	 * play sound in loop
+	 */
+	public void start() {
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
+	}
+	
+	/**
+	 * pause
+	 */
+	public void pause() {
+		clip.stop();
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static MusicPlayer getInstance() {
+		return (instance == null) ? instance = new MusicPlayer() : instance;
+	}
+}

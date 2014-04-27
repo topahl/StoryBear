@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import com.opticalcobra.storybear.menu.Menu;
+import com.opticalcobra.storybear.res.MusicPlayer;
 import com.opticalcobra.storybear.res.Ressources;
 
 public class Loadingscreen extends JFrame{
@@ -25,6 +26,8 @@ public class Loadingscreen extends JFrame{
 	private JLabel image;
 
 	public Loadingscreen(){
+		MusicPlayer.getInstance().start();	// play music
+		
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		this.setCursor(Ressources.CURSORNORMAL);

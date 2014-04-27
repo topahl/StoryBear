@@ -2,13 +2,6 @@ package com.opticalcobra.storybear.menu;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
