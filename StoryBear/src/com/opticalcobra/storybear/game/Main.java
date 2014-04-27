@@ -14,21 +14,21 @@ import com.opticalcobra.storybear.menu.Menu;
 
 public class Main {
 	public static void main(String args[]){
-//		Loadingscreen ls = new Loadingscreen();
+		Loadingscreen ls = new Loadingscreen();
 //		Menu menu = new Menu();
 //		Window gui = new Window();
-		
-		TextAnalyzer ta = new TextAnalyzer();
-		Database db = new Database();
-		StoryInfo storyInfo = new StoryInfo();
-		Story currentStory = new Story();
-
-		String story = "";
-		User a = new User("Tiki");
-		currentStory.setAuthor(a);
+//		
+//		TextAnalyzer ta = new TextAnalyzer();
+//		Database db = new Database();
+//		StoryInfo storyInfo = new StoryInfo();
+//		Story currentStory = new Story();
+//
+//		String story = "";
+//		User a = new User("Tiki");
+//		currentStory.setAuthor(a);
 //		currentStory.setTitle("Character Story");
-		currentStory.setChangeDate(new Date());
-		currentStory.setVersion(1);
+//		currentStory.setChangeDate(new Date());
+//		currentStory.setVersion(1);
 //		story = "Fee Frau Geist Hexe Jäger Junge Sohn Kaufmann Händler König Herrscher Königin Herrscherin Kind Mädchen Jungfrau Mann Oma Großmutter, Opa Großvater, Prinz Königssohn, Prinzessin, Räuber Dieb Teufel Zauberer Zauberin Zwerg Sandmann Vater Mutter Agent Spion ";
 //		for (int i=1; i<4; i++){
 //			story = story + story;
@@ -40,17 +40,17 @@ public class Main {
 //		
 //		System.out.print("feddisch!1");
 //		
-		currentStory.setTitle("Things Story");
-		story = "Baum Blume Stein Sternschnuppe Teich Brot Feuer Lagerfeuer Gold Münze Perle Edelstein Silber Grab Sarg Kraut Kräuter Leiter Schatztruhe Schlüssel Süßigkeiten Stuhl Tisch Tuch Krone 3 7 100 Teddybär ";
-		for (int i=1; i<5; i++){
-			story = story + story;
-		}
-		currentStory.setText(story);
+//		currentStory.setTitle("Things Story");
+//		story = "Baum Blume Stein Sternschnuppe Teich Brot Feuer Lagerfeuer Gold Münze Perle Edelstein Silber Grab Sarg Kraut Kräuter Leiter Schatztruhe Schlüssel Süßigkeiten Stuhl Tisch Tuch Krone 3 7 100 Teddybär ";
+//		for (int i=1; i<5; i++){
+//			story = story + story;
+//		}
+//		currentStory.setText(story);
 //		db.insertStoryToDatabase(currentStory);
-		storyInfo = ta.analyzeText(currentStory);
-		db.insertStoryInfoToDatabase(storyInfo);
-		
-		System.out.print("feddisch!1");
+//		storyInfo = ta.analyzeText(currentStory);
+//		db.insertStoryInfoToDatabase(storyInfo);
+//		
+//		System.out.print("feddisch!1");
 //		currentStory.setTitle("Animals Story");
 //		story = "Bär Ente Frosch Froschkönig Fuchs Gans Hund Rabe Schlange Känguru Katze Vogel ";
 //		for (int i=1; i<6; i++){
@@ -146,6 +146,6 @@ public class Main {
 //		db.insertStoryToDatabase(currentStory);
 //		storyInfo = ta.analyzeText(currentStory);
 //		db.insertStoryInfoToDatabase(storyInfo);
-		System.out.print("feddisch!!!");
+//		System.out.print("feddisch!!!");
 	}
 }
