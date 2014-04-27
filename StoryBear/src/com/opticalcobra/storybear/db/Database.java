@@ -514,12 +514,12 @@ public class Database {
 	}
 	
 	
-	public ArrayList<HighscoreResult> getHighscoreForUser(int user) throws SQLException{
+	public ArrayList<HighscoreResult> getHighscoreForLevel(int level) throws SQLException{
 		ArrayList<HighscoreResult> hr = new ArrayList();
-		ResultSet rs = query("SELECT * FROM highscore WHERE user_id = " + user + ";");
+		ResultSet rs = query("SELECT * FROM highscore WHERE level_id = " + level + ";");
 		
 		while(rs.next()){
-			hr.add(new HighscoreResult(user, (int)(rs.getObject("level_id")), (int)(rs.getObject("score"))));
+			hr.add(new HighscoreResult((int)(rs.getObject("user_id")), level, (int)(rs.getObject("score"))));
 		}
 		rs.close();
 		

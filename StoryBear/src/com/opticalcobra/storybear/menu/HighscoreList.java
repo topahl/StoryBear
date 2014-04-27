@@ -29,8 +29,6 @@ import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Story;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.User;
-//import com.opticalcobra.storybear.menu.UserPanel.UserList;
-//import com.opticalcobra.storybear.menu.UserPanel.UserListCellRenderer;
 import com.opticalcobra.storybear.res.Ressources;
 
 public class HighscoreList extends JLayeredPane {
@@ -41,12 +39,16 @@ public class HighscoreList extends JLayeredPane {
 	private Database db = new Database();
 	private DefaultListModel<StoryInfo> model = new DefaultListModel<StoryInfo>();
 	
+	
+	/*
+	 * @author Miriam
+	 * on the left book page it shows the levels and on the right the corresponding highscores
+	 */
 	public HighscoreList(){
 
 		//right Book Page
 		JTextField headline = new JTextField();
 		headline.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
-		//headline.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(Ressources.WINDOW.width-750/Ressources.SCALE), (int)(80/Ressources.SCALE));
 		headline.setFont(Menu.fontHeadline[0]);
 		headline.setOpaque(false);
 		headline.setBorder(null);
@@ -56,20 +58,6 @@ public class HighscoreList extends JLayeredPane {
 		headline.setText("Bestenliste");
 		add(headline, javax.swing.JLayeredPane.DEFAULT_LAYER);
 		
-		
-		
-		/*JTextArea text = new JTextArea();
-        text.setLocation((int)(40/Ressources.SCALE), (int)(125/Ressources.SCALE));
-        text.setSize((int)(600/Ressources.SCALE), (int)(800/Ressources.SCALE));
-        text.setLineWrap(true);
-        //text.setText("");
-        text.setWrapStyleWord(true);
-        text.setCursor(Ressources.CURSORNORMAL);
-        text.setFocusable(false);
-        text.setOpaque(false);
-        text.setFont(Menu.fontHeadline[2]);
-        text.setForeground(Color.black);
-        add(text, javax.swing.JLayeredPane.DEFAULT_LAYER);*/
         
         
         //left Book Page
@@ -117,30 +105,21 @@ public class HighscoreList extends JLayeredPane {
         this.selectLevel.setSize(315, 50);
         this.selectLevel.setLocation(31, 470);
         this.selectLevel.setEnabled(false);
-        /*this.selectLevel.addActionListener(new ActionListener() {
+        this.selectLevel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				selectLevel();
+				loadHighscore();
 			}
-		});*/
+		});
         add(this.selectLevel, javax.swing.JLayeredPane.DEFAULT_LAYER);
-		
-		/*text = new JTextArea();
-        text.setLocation((int)(40/Ressources.SCALE), (int)(125/Ressources.SCALE));
-        text.setSize((int)(600/Ressources.SCALE), (int)(800/Ressources.SCALE));
-        text.setLineWrap(true);
-        //text.setText("");
-        text.setWrapStyleWord(true);
-        text.setCursor(Ressources.CURSORNORMAL);
-        text.setFocusable(false);
-        text.setOpaque(false);
-        text.setFont(Menu.fontHeadline[2]);
-        text.setForeground(Color.black);
-        add(text, javax.swing.JLayeredPane.DEFAULT_LAYER);*/
-		
+
 		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
 	}
 	
+	
+	private void loadHighscore(){
+		
+	}
 	
 	private void loadStories() {
 		ArrayList<StoryInfo> story = db.getAllStorysFromDatabase();
@@ -154,7 +133,10 @@ public class HighscoreList extends JLayeredPane {
 	
 
 	
-	
+	/*
+	 * @author Miriam
+	 * renders the Story Name and Author in the list of levels
+	 */
 	private class LevelListCellRenderer extends DefaultListCellRenderer {
 		private JLabel title;
 		private JLabel user;
