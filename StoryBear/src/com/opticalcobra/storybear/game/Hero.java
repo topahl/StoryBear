@@ -107,12 +107,32 @@ public class Hero extends JLabel{
 				run(stepCounterLayer);
 			}
 		} else{
-			if(runDirection == 'r' && tileQue.get(queCounter).isWalkableRight()  ||  runDirection == 'l' && tileQue.get(queCounter).isWalkableLeft()){
+			if(runDirection == 'r' && tileQue.get(queCounter).isWalkable()  ||  runDirection == 'l' && tileQue.get(queCounter).isWalkable()){
 				run(stepCounterLayer);
 			}
 		}
+		
+		if (!tileQue.get(queCounter).isWalkable() && !isInAJump()){
+			spawnBack();
+		}
+		
 	}
 	
+	/**
+	 * @author Martika
+	 */
+	private void spawnBack() {
+		
+		int counter = 0;
+		
+		while (!tileQue.get(queCounter).isWalkable()){
+			queCounter--;
+			counter ++;
+		}
+		
+		setLocation(getLocation().x - counter * Ressources.RASTERSIZE, tileQue.get(queCounter).getTileHeight());
+		
+	}
 
 	/**
 	 * starts the jump of hero by pressing keys
@@ -172,7 +192,7 @@ public class Hero extends JLabel{
 				posX -= (int) runConstant;
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant) && !isInAJump()){
-				if(tileQue.get(queCounter).isWalkableLeft()){
+				if(tileQue.get(queCounter).isWalkable()){
 					setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 				}
 			}
@@ -183,7 +203,7 @@ public class Hero extends JLabel{
 				posX += (int) runConstant;	
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant) && !isInAJump()){
-				if(tileQue.get(queCounter).isWalkableRight()){
+				if(tileQue.get(queCounter).isWalkable()){
 					setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
 				}
 			}
@@ -294,8 +314,8 @@ public class Hero extends JLabel{
 		}
 		
 		//Nur rechts notwendig?
-		if (!isInAJump() && (runDirection == 'r' && tileQue.get(queCounter).isWalkableRight() || 
-				runDirection == 'l' && tileQue.get(queCounter).isWalkableLeft())){
+		if (!isInAJump() && (runDirection == 'r' && tileQue.get(queCounter).isWalkable() || 
+				runDirection == 'l' && tileQue.get(queCounter).isWalkable())){
 			this.walkedAtSomething = false;
 			return true;
 		}
