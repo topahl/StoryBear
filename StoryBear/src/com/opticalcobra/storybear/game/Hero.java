@@ -129,9 +129,18 @@ public class Hero extends JLabel{
 			queCounter--;
 			counter ++;
 		}
-		
-		setLocation(getLocation().x - counter * Ressources.RASTERSIZE, tileQue.get(queCounter).getTileHeight());
-		
+		if (super.getLocation().x - counter * Ressources.RASTERSIZE < 0){
+			queCounter = queCounter + counter;
+			counter = 0;		
+			while (!tileQue.get(queCounter).isWalkable()){
+				queCounter++;
+				counter ++;
+			}
+			setLocation(super.getLocation().x + counter * Ressources.RASTERSIZE, tileQue.get(queCounter).getTileHeight());
+			
+		} else{
+			setLocation(super.getLocation().x - counter * Ressources.RASTERSIZE, tileQue.get(queCounter).getTileHeight());
+		}
 	}
 
 	/**
