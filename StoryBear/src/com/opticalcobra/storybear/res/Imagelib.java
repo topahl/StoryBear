@@ -112,7 +112,7 @@ public class Imagelib {
 	 * @author Miriam
 	 * @throws SQLException 
 	 */
-	public BufferedImage loadHeroPic(char rundirection, char type) throws ImageNotFoundException, SQLException{
+	public BufferedImage loadHeroPic(String rundirection, char type) throws ImageNotFoundException, SQLException{
 		BufferedImage result;
 		BufferedImage full;
 		String sql = "SELECT IMAGEID FROM HEROS WHERE RUNDIRECTION = '" + rundirection + "' AND TYPE = '" + type + "'";
