@@ -55,11 +55,14 @@ public class Hero extends JLabel{
 	public void initHero(char type){
 		this.type = type;
 		try {
-			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic('n', this.type)));
+			this.setIcon(new ImageIcon(this.imageLib.loadHeroPic("n", this.type)));
 		} catch (ImageNotFoundException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		} catch (NullPointerException e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
@@ -80,18 +83,19 @@ public class Hero extends JLabel{
 		
 		//bear looks in a direction
 		try {
-			if(runDirection == 'r'){
-				image = new ImageIcon(this.imageLib.loadHeroPic(annimation<5?'r':'s', this.type));
+			if(!isInAJump()&&runDirection != 'n'){
+				image = new ImageIcon(this.imageLib.loadHeroPic(runDirection+(Math.abs(annimation)+""), this.type));
 			}
-			else if(runDirection == 'l'){
-				image = new ImageIcon(this.imageLib.loadHeroPic(annimation<5?'l':'m', this.type));
+			else if(runDirection == 'n'){
+				image = new ImageIcon(this.imageLib.loadHeroPic(isInAJump()?"j":"n", this.type));
 			}
-			else{
-				image = new ImageIcon(this.imageLib.loadHeroPic(runDirection, this.type));
+			else {
+				image = new ImageIcon(this.imageLib.loadHeroPic("j"+runDirection, this.type));
 			}
 			
 			this.setIcon(image);
-			annimation=(annimation+1)%10;
+			annimation=annimation>=4?-3:annimation+1;
+			
 			
 		} catch (ImageNotFoundException e) {
 			System.err.println(e.getMessage());

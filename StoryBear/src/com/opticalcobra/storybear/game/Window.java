@@ -95,7 +95,7 @@ public class Window extends JFrame {
 	 */
 	private void initComponents() {
 		
-		rtw= new RenderThreadWrapper();
+		rtw= RenderThreadWrapper.getInstance();
 		rtw.start();
 		//create remderer
 		renderer = new DummyRenderer(level);

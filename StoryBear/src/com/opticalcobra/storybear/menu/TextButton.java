@@ -18,7 +18,7 @@ import com.opticalcobra.storybear.res.Ressources;
 public class TextButton extends JButton implements MouseListener{
 	private final static int borderThick = 2;
 	private final static float fontSize = (float)(28f/Ressources.SCALE);
-	private final static Font font = FontCache.getInstance().getFont("Fontin_R", fontSize);
+	private final static Font font = FontCache.getInstance().getFont("Fontin_SC", fontSize);
 	
 	private Border standardBorder;
 	private Border hoverBorder;
@@ -46,7 +46,7 @@ public class TextButton extends JButton implements MouseListener{
 		
 		setOpaque(false);
 		setContentAreaFilled(false);
-		setText(text.toUpperCase());
+		setText(text);//.toUpperCase()); TODO weg
 		setFont(font);
 		setCursor(Ressources.CURSORCLICKABLE);
 		setBounds((int)(x/Ressources.SCALE), (int)(y/Ressources.SCALE), (int)(width/Ressources.SCALE), (int)(height/Ressources.SCALE));
