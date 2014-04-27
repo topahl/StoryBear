@@ -3,7 +3,12 @@ package com.opticalcobra.storybear.res;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 import com.opticalcobra.storybear.game.Window;
 
@@ -73,8 +78,8 @@ public class Ressources {
 	
 	
 	// Cursor
-	public static final Cursor CURSORNORMAL = Cursor.getDefaultCursor();
-	public static final Cursor CURSORCLICKABLE = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
+	public static final Cursor CURSORNORMAL;
+	public static final Cursor CURSORCLICKABLE;
 	
 	// Menü-Farben
 	public static final Color MENUCOLORSELECTED = new Color(178,22,22);
@@ -107,6 +112,9 @@ public class Ressources {
 		SCORETEXTSIZE = (int)(37 / SCALE);
 		SCOREDISTANCERIGHT = (int)(40 / SCALE);
 		SCOREDISTANCEUP = (int)(37 /SCALE);
+		
+		CURSORNORMAL = Toolkit.getDefaultToolkit().createCustomCursor((Image)Imagelib.getInstance().loadRessourcesImage("images\\pointer_slice.png").getSubimage(0, 0, 55, 65), new Point(0,0), "normal");
+		CURSORCLICKABLE = Toolkit.getDefaultToolkit().createCustomCursor((Image)Imagelib.getInstance().loadRessourcesImage("images\\pointer_slice.png").getSubimage(0, 65, 55, 65), new Point(0,0), "click");
 	}
 	
 }

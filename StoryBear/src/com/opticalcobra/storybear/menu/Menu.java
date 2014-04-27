@@ -5,6 +5,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Editor;
@@ -34,6 +35,7 @@ public class Menu extends JFrame {
 	public BookBox bookBox;
 	public Container me;
 	public MenuButton navManu,navUser,navEditor,navHigh, navCredits, navExit;
+	public JPanel loading;
 	
 	private Imagelib imagelib;
 	private Database db = new Database();
@@ -44,6 +46,9 @@ public class Menu extends JFrame {
 		// Frame-Settings
 		initializeFrame();
 		
+		// Loading
+		initializeLoadingBox();
+		
 		// BookBox
 		initializeBookBox();
 		
@@ -51,7 +56,7 @@ public class Menu extends JFrame {
 		manu = createNewInnerPanel(new Manual());
 		highscore = createNewInnerPanel(new HighscoreList());
 		user = createNewInnerPanel(new UserPanel(this));
-		editor = createNewInnerPanel(new Editor());
+		editor = createNewInnerPanel(new Editor(this));
 		credits = createNewInnerPanel(new Credits());
 		
 		// Set start screen
@@ -72,9 +77,11 @@ public class Menu extends JFrame {
 			navHigh.disable();
 			navCredits.disable();
 			bookBox.disable();
+		} else {
+			enableAllMenuButtons();
 		}
 	}
-	
+
 	public Menu(Loadingscreen ls) {
 		this(true);
 		ls.dispose(); //Diable Loading Screen
@@ -138,12 +145,12 @@ public class Menu extends JFrame {
 		navigation.setBounds((int)(15/Ressources.SCALE), 0, (int)(315/Ressources.SCALE), (int)(1080/Ressources.SCALE));
 		getContentPane().add(navigation);
 		
-		navManu = new MenuButton(0, 110, imagelib.loadDesignImage("label_anleitung_n"), imagelib.loadDesignImage("label_anleitung_h"), imagelib.loadDesignImage("label_anleitung_d"), this, manu);
-		navUser = new MenuButton(0, 235, imagelib.loadDesignImage("label_user_n"), imagelib.loadDesignImage("label_user_h"), imagelib.loadDesignImage("label_user_d"), this, user);
-		navEditor = new MenuButton(0, 370, imagelib.loadDesignImage("label_editor_n"), imagelib.loadDesignImage("label_editor_h"), imagelib.loadDesignImage("label_editor_d"), this, editor);
-		navHigh = new MenuButton(0, 485, imagelib.loadDesignImage("label_highscore_n"), imagelib.loadDesignImage("label_highscore_h"), imagelib.loadDesignImage("label_highscore_d"), this, highscore);
-		navCredits = new MenuButton(0, 685, imagelib.loadDesignImage("label_credits_n"), imagelib.loadDesignImage("label_credits_h"), imagelib.loadDesignImage("label_credits_d"), this, credits);
-		navExit = new MenuButton(0, 810, imagelib.loadDesignImage("label_exit_n"), imagelib.loadDesignImage("label_exit_h"), imagelib.loadDesignImage("label_exit_d"), this, "close");
+		navManu = new MenuButton(0, 140, imagelib.loadDesignImage("label_anleitung_n"), imagelib.loadDesignImage("label_anleitung_h"), imagelib.loadDesignImage("label_anleitung_d"), this, manu);
+		navUser = new MenuButton(0, 265, imagelib.loadDesignImage("label_user_n"), imagelib.loadDesignImage("label_user_h"), imagelib.loadDesignImage("label_user_d"), this, user);
+		navEditor = new MenuButton(0, 400, imagelib.loadDesignImage("label_editor_n"), imagelib.loadDesignImage("label_editor_h"), imagelib.loadDesignImage("label_editor_d"), this, editor);
+		navHigh = new MenuButton(0, 515, imagelib.loadDesignImage("label_highscore_n"), imagelib.loadDesignImage("label_highscore_h"), imagelib.loadDesignImage("label_highscore_d"), this, highscore);
+		navCredits = new MenuButton(0, 715, imagelib.loadDesignImage("label_credits_n"), imagelib.loadDesignImage("label_credits_h"), imagelib.loadDesignImage("label_credits_d"), this, credits);
+		navExit = new MenuButton(0, 840, imagelib.loadDesignImage("label_exit_n"), imagelib.loadDesignImage("label_exit_h"), imagelib.loadDesignImage("label_exit_d"), this, "close");
 		
 		navigation.add(navManu);
 		navigation.add(navUser);
@@ -163,6 +170,19 @@ public class Menu extends JFrame {
 		background.setBounds(0, 0, (int)(1920/Ressources.SCALE), (int)(1080/Ressources.SCALE));
 		getContentPane().add(background);
 		background.setIcon(new ImageIcon(imagelib.loadDesignImage("menu_bg")));
+	}
+	
+	private void initializeLoadingBox() {
+		loading = new JPanel();
+//		loading.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
+//		JLabel loadingText = new JLabel("Lade...");
+//		loadingText.setAlignmentX(CENTER_ALIGNMENT);
+//		loadingText.setBounds((Ressources.WINDOW.width/2)-200,(Ressources.WINDOW.height/2)-200,400,400);
+//		loadingText.setBackground(Color.black);
+//		loadingText.setFont(fontHeadline[0]);
+//		loading.add(loadingText);
+//		loading.setVisible(true);
+		getContentPane().add(loading);
 	}
 	
 	private void initializeFrame() {

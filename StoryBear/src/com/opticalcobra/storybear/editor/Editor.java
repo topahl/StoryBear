@@ -2,6 +2,7 @@ package com.opticalcobra.storybear.editor;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,10 +24,13 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -76,13 +80,14 @@ public class Editor extends JLayeredPane {
 	private Database db;
 	private DefaultListModel<Story> storyListModel = new DefaultListModel<Story>();
 	private Story currentStory;
-	
+	private Menu menu;
 	
 	
 	/**
 	 * start editor
 	 */
-	public Editor(){
+	public Editor(Menu menu){
+		this.menu = menu;
 		db = new Database();
 		
 		initializeEditMode();
@@ -275,6 +280,27 @@ public class Editor extends JLayeredPane {
 			}
 		});
 		baseLayerStart.add(newButton);
+		
+		// new Story
+		TextButton renderButton = new TextButton("Rendern", 40, 480, 250, 60);
+		renderButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				currentStory = storyList.getSelectedValue();
+				
+				if (currentStory != null) {
+					menu.loading.setVisible(true);
+					
+					TextAnalyzer analyzer = new TextAnalyzer();
+					analyzer.analyzeText(currentStory);
+					
+					menu.loading.setVisible(false);
+				}
+				
+				showStart();
+			}
+		});
+		baseLayerStart.add(renderButton);
 	}
 	
 	

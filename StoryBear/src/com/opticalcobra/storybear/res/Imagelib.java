@@ -139,7 +139,7 @@ public class Imagelib {
 	 * @throws ImageNotFoundException The sprite was not on the file System
 	 * @author Tobias
 	 */
-	private BufferedImage loadRessourcesImage(String graphicName) throws ImageNotFoundException{
+	public BufferedImage loadRessourcesImage(String graphicName) throws ImageNotFoundException{
 		BufferedImage result;
 		//Check whether image is already cached
 		result = images.get("img-"+graphicName);
