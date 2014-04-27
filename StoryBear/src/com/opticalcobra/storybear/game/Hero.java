@@ -81,7 +81,7 @@ public class Hero extends JLabel{
 		//bear looks in a direction
 		try {
 			if(!isInAJump()&&runDirection != 'n'){
-				image = new ImageIcon(this.imageLib.loadHeroPic(runDirection+annimation+"", this.type));
+				image = new ImageIcon(this.imageLib.loadHeroPic(runDirection+(Math.abs(annimation)+""), this.type));
 			}
 			else if(runDirection == 'n'){
 				image = new ImageIcon(this.imageLib.loadHeroPic(isInAJump()?"j":"n", this.type));
@@ -91,7 +91,7 @@ public class Hero extends JLabel{
 			}
 			
 			this.setIcon(image);
-			annimation=annimation==4?-4:annimation-1;
+			annimation=annimation>=4?-3:annimation+1;
 			
 			
 		} catch (ImageNotFoundException e) {
