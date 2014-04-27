@@ -412,20 +412,14 @@ public class Database {
 
 		WordResult result = null;
 		int typeId = DBConstants.WORD_OBJECT_TYPE_NO_IMAGE;
-		ResultSet rsFexione;
 		ResultSet rsCollectable;
 		ResultSet rsIllustrationBig;
 		ResultSet rsIllustrationSmall;
 		ResultSet rsCharacter;
 		ResultSet rsMiddleground;
-		String flexinom = "";
 		ArrayList[] arrayRS; //needed for the ArrayList of the ResultSet rsFexione
 		
-		if (word.equals("Opa")){
-			System.out.println("Opa");
-		}
-		
-		rsFexione = query("SELECT DISTINCT t2.word FROM term t "
+		String query = "SELECT DISTINCT t2.word FROM term t "
 				+ "LEFT JOIN synset s ON t.synset_id =s.id "
 				+ "LEFT JOIN term t2 ON t2.synset_id = s.id "
 				+ "LEFT JOIN category_link cl ON t2.synset_id = cl.synset_id "
@@ -433,65 +427,37 @@ public class Database {
 				+ "LEFT JOIN term_level tl ON t2.level_id = tl.id "
 				+ "WHERE t.word in (SELECT basic FROM morph where reflexive= '" +word+ "' ) "
 				+ "OR t.word like '" +word+ "' OR t.normalized_word like '" +word+ "' "
-				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= '" +word+ "' );");
+				+ "OR t.normalized_word in (SELECT basic FROM morph where reflexive= '" +word+ "' )";
 		
-		arrayRS = this.toArrayList(rsFexione);
 		
-		for (int i = 0; i<arrayRS[0].size(); i++){
-
-			flexinom= (String) arrayRS[0].get(i);
-			flexinom.replaceAll("[^a-zA-Z δόφί]", "");
-			
-			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+flexinom+"';");
-			rsIllustrationBig = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'true';");
-			rsIllustrationSmall = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'false';");
-			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+flexinom+"';");
-			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+flexinom+"';");
-			
-			if (rsCharacter.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER,rsCharacter.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsCollectable.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsCollectable.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsMiddleground.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsIllustrationBig.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsIllustrationSmall.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
-			}
+		arrayRS = this.toArrayList(query(query));
+		
+		rsCollectable = query("SELECT DISTINCT IMAGE_ID FROM Collectable_Object WHERE word IN ("+query+") OR word = '"+word+"';");
+		rsIllustrationBig = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'true') OR word = '"+word+"';");
+		rsIllustrationSmall = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'false') OR word = '"+word+"';");
+		rsCharacter = query("SELECT DISTINCT IMAGE_ID FROM Character_Object WHERE word IN ("+query+") OR word = '"+word+"';");
+		rsMiddleground= query("SELECT DISTINCT IMAGE_ID FROM Middleground_Object WHERE word IN ("+query+") OR word = '"+word+"';");
+		
+		if (rsCharacter.next()){
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER,rsCharacter.getInt("IMAGE_ID"),arrayRS);
 		}
-		if (result==null) {
-			rsCollectable = query("SELECT IMAGE_ID FROM Collectable_Object WHERE word = '"+word+"';");	
-			rsIllustrationBig = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'true';");
-			rsIllustrationSmall = query("SELECT IMAGE_ID FROM Illustration_Object WHERE word = '"+flexinom+"' AND big = 'false';");
-			rsCharacter = query("SELECT IMAGE_ID FROM Character_Object WHERE word = '"+word+"';");
-			rsMiddleground= query("SELECT IMAGE_ID FROM Middleground_Object WHERE word = '"+word+"';");
-			
-			if (rsCharacter.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER,rsCharacter.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsCollectable.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsCollectable.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsMiddleground.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsIllustrationBig.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
-			}
-			else if (rsIllustrationSmall.next()){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
-			}
-			
-			if (result == null){
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, -1, arrayRS);
-			}
+		else if (rsCollectable.next()){
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsCollectable.getInt("IMAGE_ID"),arrayRS);
 		}
-		rsFexione.close();
+		else if (rsMiddleground.next()){
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
+		}
+		else if (rsIllustrationBig.next()){
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+		}
+		else if (rsIllustrationSmall.next()){
+			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+		}
+		rsCollectable.close();;
+		rsIllustrationBig.close();;
+		rsIllustrationSmall.close();;
+		rsCharacter.close();;
+		rsMiddleground.close();;
 		return result;
 	}
 	
