@@ -21,6 +21,8 @@ public class MusicPlayer {
 	
 	private Clip clip;
 	private AudioInputStream audio;
+	private boolean running;
+	private boolean disabled = false;
 	
 	/**
 	 * 
@@ -30,13 +32,17 @@ public class MusicPlayer {
 			audio = AudioSystem.getAudioInputStream(new File(Ressources.RESPATH+musicFile).getAbsoluteFile());
 			clip = AudioSystem.getClip();
 			clip.open(audio);
-		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {}
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			disabled = true;
+		}
 	}
 	
 	/**
 	 * play sound in loop
 	 */
 	public void start() {
+		if (disabled) return;
+		running = true;
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
@@ -44,7 +50,21 @@ public class MusicPlayer {
 	 * pause
 	 */
 	public void pause() {
+		if (disabled) return;
+		running = false;
 		clip.stop();
+	}
+	
+	/**
+	 * toggle
+	 */
+	public boolean toggle()  {
+		if (disabled) return disabled;
+		if(running)
+			clip.stop();
+		else
+			clip.start();
+		return running;
 	}
 	
 	

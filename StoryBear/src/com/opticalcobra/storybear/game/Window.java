@@ -2,6 +2,7 @@ package com.opticalcobra.storybear.game;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.util.Timer;
 
@@ -19,6 +20,7 @@ import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.Imagelib;
+import com.opticalcobra.storybear.res.MusicButton;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.res.StoryBearRandom;
 
@@ -37,7 +39,7 @@ public class Window extends JFrame {
 	private int stepCounterLayer = 0;
 	private Control controle;
 	
-	private Button buttonMenu;
+	private MusicButton buttonMenu;
 	private Button buttonBreak;
 	private Button buttonExit;
 	private JLabel labelScore = new JLabel();
@@ -126,34 +128,17 @@ public class Window extends JFrame {
 		
 		
 		//initialize Buttons
-		this.buttonMenu = new Button("menu",
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_WHITE),
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_GREY),
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_MENU_BLACK),
-				Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE
-				);
-		this.buttonMenu.setFocusable(false);
-		this.buttonMenu.addActionListener(controle);
+		BufferedImage[] normal = {};
+		BufferedImage[] mute = {};
+		this.buttonMenu = new MusicButton(normal, mute, Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE);
 		this.baseLayer.add(this.buttonMenu);
-		
-		this.buttonBreak = new Button("pause",
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_WHITE),
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_GREY),
-				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_BREAK_BLACK),
-				2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
-				);	
-		this.buttonBreak.setFocusable(false);
-		this.buttonBreak.addActionListener(controle);
-		this.baseLayer.add(this.buttonBreak);
 		
 		this.buttonExit = new Button("close",
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_WHITE),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_GREY),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
-				3*Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
+				2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);
 		this.buttonExit.setFocusable(false);
 		this.buttonExit.addActionListener(controle);

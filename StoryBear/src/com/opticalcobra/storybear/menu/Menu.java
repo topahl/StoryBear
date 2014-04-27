@@ -6,6 +6,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -15,8 +16,11 @@ import javax.swing.JPanel;
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Editor;
 import com.opticalcobra.storybear.editor.Loadingscreen;
+import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
+import com.opticalcobra.storybear.res.MusicButton;
+import com.opticalcobra.storybear.res.MusicPlayer;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.menu.MenuButton;
 import com.opticalcobra.storybear.res.Ressources;
@@ -26,6 +30,9 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -42,6 +49,7 @@ public class Menu extends JFrame {
 	public BookBox bookBox;
 	public Container me;
 	public MenuButton navManu,navUser,navEditor,navHigh, navCredits, navExit;
+	public JButton musicButton;
 	public JPanel loading;
 	
 	private Imagelib imagelib;
@@ -55,6 +63,9 @@ public class Menu extends JFrame {
 		
 		// Loading
 		initializeLoadingBox();
+		
+		// MusicButton
+		initializeMusicButton();
 		
 		// BookBox
 		initializeBookBox();
@@ -183,6 +194,13 @@ public class Menu extends JFrame {
 		background.setBounds(0, 0, (int)(1920/Ressources.SCALE), (int)(1080/Ressources.SCALE));
 		getContentPane().add(background);
 		background.setIcon(new ImageIcon(imagelib.loadDesignImage("menu_bg")));
+	}
+	
+	private void initializeMusicButton() {
+		BufferedImage[] normal = {};
+		BufferedImage[] mute = {};
+		MusicButton musicButton = new MusicButton(normal, mute, 645, 725);
+		getContentPane().add(musicButton);
 	}
 	
 	private void initializeLoadingBox() {
