@@ -1,5 +1,10 @@
 package com.opticalcobra.storybear.menu;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -21,6 +26,8 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.swing.JLabel;
@@ -80,6 +87,17 @@ public class Menu extends JFrame {
 		} else {
 			enableAllMenuButtons();
 		}
+		
+		// Play sound
+		try {
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(Ressources.RESPATH+"music\\StoryBear_Menu.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public Menu(Loadingscreen ls) {
@@ -133,13 +151,15 @@ public class Menu extends JFrame {
 	private void initializeUser() {
 		JLabel text = new JLabel();
 		text.setText("Du spielst als:");
-		text.setBounds((int)(17/Ressources.SCALE), (int)(17/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		text.setBounds((int)(17/Ressources.SCALE), (int)(12/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(60/Ressources.SCALE));
 		text.setFont(FontCache.getInstance().getFont("Fontin_SC", 25f));
+		text.setForeground(Color.black);
 		getContentPane().add(text);
 		currentUser = new JLabel();
-		currentUser.setBounds((int)(17/Ressources.SCALE), (int)(45/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(60/Ressources.SCALE));
+		currentUser.setBounds((int)(17/Ressources.SCALE), (int)(40/Ressources.SCALE), (int)(250/Ressources.SCALE), (int)(60/Ressources.SCALE));
 		currentUser.setFont(Menu.fontText[0]);
 		currentUser.setText(User.isCurrentUserSet() ? User.getCurrentUser().getName() : "");
+		currentUser.setForeground(Color.black);
 		currentUser.setFont(FontCache.getInstance().getFont("Fontin_SC", 40f));
 		getContentPane().add(currentUser);
 	}
