@@ -30,7 +30,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	private int panelnum = 0;
 	private StoryInfo storyInfo;
 	private int elementPointer = 0;
-	//private Ringbuffer<TileResult> ringbuffer = new Ringbuffer<TileResult>(3*16); 
 	private static LinkedList<TileResult> tileQue = new SBLinkedList<TileResult>();
 	private Database db;
 	private ArrayList<Integer> currentTileIds;
@@ -41,13 +40,135 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		storyInfo = si;
 	}
 	
-	private BufferedImage getNextMapElement(){
+	private BufferedImage getNextMapElement(int currentBlock){
 		int next = 0;
+		int nextSecondStep = 0;
+		int nextThirdStep = 0;
+		//int currentBlock = storyInfo.getElements().get(elementPointerCurrentTile).getBlock();
+		int elementPointerCurrentTile=0;
+		int nextCurrentElementPointer = storyInfo.getElements().get(elementPointerCurrentTile).getBlock();
+		boolean walkableTile = true;
+		boolean needNewTile= true;
+		boolean needNewTileSecond= true;
+		boolean newTileFound = false;
+		boolean freeRide = true;
 		
-		//The first tile has to be 0, otherwise it can be random rendered
-		if (tileQue.size()>0){
-			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
-			next = following[rand.nextInt(following.length)];
+		//ermittle aktuellen elementPointer
+		
+		if (currentBlock == 8){
+			System.out.print("8");
+		}
+		
+		while (currentBlock > storyInfo.getElements().get(elementPointerCurrentTile).getBlock()){
+			elementPointerCurrentTile++;
+			if (currentBlock == storyInfo.getElements().get(elementPointerCurrentTile).getBlock()){
+				freeRide = false;
+			}
+		}
+		
+		
+		
+		//The first tile has to be 0
+		if (currentBlock>0){
+			if (storyInfo.getElements().size() > elementPointerCurrentTile){
+			
+				while (currentBlock == storyInfo.getElements().get(elementPointerCurrentTile).getBlock() || freeRide){
+					
+					if (storyInfo.getElements().get(elementPointerCurrentTile) instanceof Character && !freeRide){
+						Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+						next = following[rand.nextInt(following.length)];
+						
+						//Solange suchen, bis eine begehbare Fläche entsteht
+						while (!(walkableTile = db.getTileInfo(next).isWalkable())){
+							next = following[rand.nextInt(following.length)];
+						}
+						//Danach ist next begehbar
+						newTileFound = true;
+						
+					}
+					
+					if (newTileFound){
+						break;
+					}
+					
+					
+					while (storyInfo.getElements().get(nextCurrentElementPointer).getBlock() == storyInfo.getElements().get(nextCurrentElementPointer+1).getBlock() && !freeRide ){
+						nextCurrentElementPointer++;
+					}
+						
+						
+					//Nächste Kachel kommt ein Character -> Auf begehbare Fläche vorbereiten
+					if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character){
+						Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+						
+						while (needNewTile){
+							next = following[rand.nextInt(following.length)];
+							Integer[] followingSecond = il.getFollowingTiles(next, Imagelib.QUERY_FOREGROUND);
+							
+							for (int i=0; i<15; i++){
+								nextSecondStep = followingSecond[rand.nextInt(followingSecond.length)];
+								if (walkableTile = db.getTileInfo(nextSecondStep).isWalkable()){
+									needNewTile = false;
+									break; //Kachel ist begehbar für next
+								}
+							}
+						}
+						
+						newTileFound = true;
+					}
+					
+					if (newTileFound){
+						break;
+					}
+					
+					while (storyInfo.getElements().get(nextCurrentElementPointer).getBlock() == storyInfo.getElements().get(nextCurrentElementPointer+1).getBlock() ){
+						nextCurrentElementPointer++;
+					}
+					
+					//Übernächste Kachel kommt ein Character -> Auf begehbare Fläche vorbereiten
+					if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character){
+						Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+						
+						while (needNewTile){
+							for (int i=0; i<15; i++){
+								next = following[rand.nextInt(following.length)];
+								Integer[] followingSecond = il.getFollowingTiles(next, Imagelib.QUERY_FOREGROUND);
+								
+								for (int j=0; j<15; j++){
+									nextSecondStep = followingSecond[rand.nextInt(followingSecond.length)];
+									Integer[] followingThird = il.getFollowingTiles(nextSecondStep, Imagelib.QUERY_FOREGROUND);
+									
+									for (int k=0; k<15; k++){
+										nextThirdStep = followingSecond[rand.nextInt(followingThird.length)];
+										if (walkableTile = db.getTileInfo(nextThirdStep).isWalkable()){
+											needNewTile = false;
+											break; //Kachel ist begehbar für next
+										}
+									}
+									if (!needNewTile){
+										break;
+									}
+								
+								}
+								if (!needNewTile){
+									break;
+								}
+							}
+						}
+						newTileFound = true;
+					}
+					
+					elementPointerCurrentTile++;
+					if (storyInfo.getElements().size() == elementPointerCurrentTile){
+						break;
+					}
+				}
+				
+				if (!newTileFound){
+					Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+					next = following[rand.nextInt(following.length)];
+				}
+			}
 		}
 		
 		lastTileType = next;
@@ -70,13 +191,13 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			}
 			Hero.getInstance().setQueCounter(Hero.getInstance().getQueCounter()- Ressources.TILESPERPANEL);
 		}
-		
+
 		
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
 		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
-			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE,0,null);
+			g.drawImage(getNextMapElement(storyInfo.getElements().get(elementPointer).getBlock()+i),i*Ressources.RASTERSIZE,0,null);
 			if(DebugSettings.fg1tilenum)
 				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTileType+"", (i*Ressources.RASTERSIZE)+20,100);
 			if(DebugSettings.fg1panelborder)
