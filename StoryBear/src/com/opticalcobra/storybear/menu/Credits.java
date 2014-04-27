@@ -30,7 +30,6 @@ public class Credits extends JLayeredPane {
         beschreibung.setLineWrap(true);
         beschreibung.setText("Teamleitung\n\nProjektmanagement\n\nSimulation &\nAlgorithmus\n\nFrontend & GUI\n\n\nDesign");
         beschreibung.setWrapStyleWord(true);
-        beschreibung.setCursor(Ressources.CURSORNORMAL);
         beschreibung.setFocusable(false);
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontHeadline[2]);
@@ -43,7 +42,6 @@ public class Credits extends JLayeredPane {
         beschreibung_2.setLineWrap(true);
         beschreibung_2.setText("Tobias Pahlings\n\nSven Wessiepe\n\nMiriam Marx\nMartika Schwan\n\nStephan Giesau\nNicolas Marin\n\nStephan Giesau\n");
         beschreibung_2.setWrapStyleWord(true);
-        beschreibung_2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         beschreibung_2.setFocusable(false);
         beschreibung_2.setOpaque(false);
         beschreibung_2.setFont(Menu.fontHeadline[2]);
@@ -64,7 +62,6 @@ public class Credits extends JLayeredPane {
         beschreibung_1.setLineWrap(true);
         beschreibung_1.setText("StoryBear ist entstanden als Projekt im Modul Software Engineering bei Eckhard Kruse an der DHBW Mannheim.\n(TINF12AI-BC)");
         beschreibung_1.setWrapStyleWord(true);
-        beschreibung_1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         beschreibung_1.setFocusable(false);
         beschreibung_1.setOpaque(false);
         beschreibung_1.setFont(Menu.fontText[0]);
@@ -83,7 +80,6 @@ public class Credits extends JLayeredPane {
         beschreibung.setLineWrap(true);
         beschreibung.setText("Die Handlung und alle handelnden Personen sowie deren Namen sind frei erfunden. Jegliche Ähnlichkeiten mit lebenden oder realen Personen wären rein zufällig.");
         beschreibung.setWrapStyleWord(true);
-        beschreibung.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         beschreibung.setFocusable(false);
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontText[0]);

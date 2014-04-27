@@ -51,14 +51,14 @@ public class MenuButton extends JButton implements MouseListener {
 		removeActionListener(action);
 		setRolloverIcon(null);
 		setIcon(iconDisabled);
-		setCursor(Cursor.getDefaultCursor());
+		setCursor(Ressources.CURSORNORMAL);
 	}
 	
 	public void enable() {
 		addActionListener(action);
 		setRolloverIcon(iconHover);
 		setIcon(iconNormal);
-		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setCursor(Ressources.CURSORCLICKABLE);
 	}
 
 	@Override

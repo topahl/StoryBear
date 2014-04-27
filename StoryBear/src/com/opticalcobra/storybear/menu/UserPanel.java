@@ -108,7 +108,6 @@ public class UserPanel extends JLayeredPane {
         beschreibung.setText("Du hast noch keinen Nutzernamen? Leg dir hier einen neuen an.");
         beschreibung.setWrapStyleWord(true);
         beschreibung.setFocusCycleRoot(true);
-        beschreibung.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         beschreibung.setFocusable(false);
         beschreibung.setOpaque(false);
         beschreibung.setFont(Menu.fontHeadline[1]);
