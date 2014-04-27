@@ -105,7 +105,7 @@ public class RendererFG2 extends Renderer implements IRenderer {
 			g.drawImage(getNextMapElement(i),i*Ressources.RASTERSIZE,0,null);
 		}
 
-		for(int i=0;i<=Ressources.TILESPERPANEL;i++){
+		for(int i=0;i<Ressources.TILESPERPANEL;i++){
 			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
 							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
 			
