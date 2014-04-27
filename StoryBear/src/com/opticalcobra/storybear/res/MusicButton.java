@@ -28,7 +28,7 @@ public class MusicButton extends JButton implements ActionListener {
 		setRolloverIcon(now[1]);
 		setPressedIcon(now[2]);
 		setFocusable(false);
-		setBounds(x, y, now[0].getIconWidth(), now[0].getIconHeight());
+		setBounds((int)(x/Ressources.SCALE), (int)(y/Ressources.SCALE), now[0].getIconWidth(), now[0].getIconHeight());
 		
 		addActionListener(this);
 	}

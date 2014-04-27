@@ -50,7 +50,7 @@ public class Menu extends JFrame {
 	public Container me;
 	public MenuButton navManu,navUser,navEditor,navHigh, navCredits, navExit;
 	public JButton musicButton;
-	public JPanel loading;
+	public LoadingPanel loading;
 	
 	private Imagelib imagelib;
 	private Database db = new Database();
@@ -208,16 +208,7 @@ public class Menu extends JFrame {
 	}
 	
 	private void initializeLoadingBox() {
-		loading = new JPanel();
-//		loading.setBounds(0, 0, Ressources.WINDOW.width, Ressources.WINDOW.height);
-//		JLabel loadingText = new JLabel("Lade...");
-//		loadingText.setAlignmentX(CENTER_ALIGNMENT);
-//		loadingText.setBounds((Ressources.WINDOW.width/2)-200,(Ressources.WINDOW.height/2)-200,400,400);
-//		loadingText.setBackground(Color.black);
-//		loadingText.setFont(fontHeadline[0]);
-//		loading.add(loadingText);
-//		loading.setVisible(true);
-		getContentPane().add(loading);
+//		loading = new LoadingPanel();
 	}
 	
 	private void initializeFrame() {
