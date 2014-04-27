@@ -436,7 +436,7 @@ public class Database {
 		ResultSet rsIllustrationSmall;
 		ResultSet rsCharacter;
 		ResultSet rsMiddleground;
-		ArrayList[] arrayRS; //needed for the ArrayList of the ResultSet rsFexione
+		ArrayList<String>[] arrayRS; //needed for the ArrayList of the ResultSet rsFexione
 		
 		String query = "SELECT DISTINCT t2.word FROM term t "
 				+ "LEFT JOIN synset s ON t.synset_id =s.id "
@@ -450,35 +450,40 @@ public class Database {
 		
 		
 		arrayRS = this.toArrayList(query(query));
+		arrayRS[0].add(0, word);
+		for(String flexiom:arrayRS[0]){
+			rsCollectable = query("SELECT DISTINCT IMAGE_ID FROM Collectable_Object WHERE word = '"+word+"';");
+			rsIllustrationBig = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE word = '"+word+"' AND big = 'true';");
+			rsIllustrationSmall = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE word = '"+word+"' AND big = 'false';");
+			rsCharacter = query("SELECT DISTINCT IMAGE_ID FROM Character_Object WHERE word = '"+word+"';");
+			rsMiddleground= query("SELECT DISTINCT IMAGE_ID FROM Middleground_Object WHERE word = '"+word+"';");
 		
-		rsCollectable = query("SELECT DISTINCT IMAGE_ID FROM Collectable_Object WHERE word IN ("+query+") OR word = '"+word+"';");
-		rsIllustrationBig = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'true') OR (word = '"+word+"' AND big = 'true');");
-		rsIllustrationSmall = query("SELECT DISTINCT IMAGE_ID FROM Illustration_Object WHERE (word IN ("+query+") AND big = 'false') OR (word = '"+word+"' AND big = 'false');");
-		rsCharacter = query("SELECT DISTINCT IMAGE_ID FROM Character_Object WHERE word IN ("+query+") OR word = '"+word+"';");
-		rsMiddleground= query("SELECT DISTINCT IMAGE_ID FROM Middleground_Object WHERE word IN ("+query+") OR word = '"+word+"';");
-		
-		if (rsCharacter.next()){
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER,rsCharacter.getInt("IMAGE_ID"),arrayRS);
+			if (rsCharacter.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_CHARACTER,rsCharacter.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsCollectable.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsCollectable.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsMiddleground.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationBig.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
+			}
+			else if (rsIllustrationSmall.next()){
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+			} else{
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+			}
+			rsCollectable.close();
+			rsIllustrationBig.close();
+			rsIllustrationSmall.close();
+			rsCharacter.close();
+			rsMiddleground.close();
+			if(result.getType() != DBConstants.WORD_OBJECT_TYPE_NO_IMAGE){
+				return result;
+			}
 		}
-		else if (rsCollectable.next()){
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_COLLECTABLE, rsCollectable.getInt("IMAGE_ID"),arrayRS);
-		}
-		else if (rsMiddleground.next()){
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND, rsMiddleground.getInt("IMAGE_ID"),arrayRS);
-		}
-		else if (rsIllustrationBig.next()){
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG, rsIllustrationBig.getInt("IMAGE_ID"),arrayRS);
-		}
-		else if (rsIllustrationSmall.next()){
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
-		} else{
-			result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
-		}
-		rsCollectable.close();;
-		rsIllustrationBig.close();;
-		rsIllustrationSmall.close();;
-		rsCharacter.close();;
-		rsMiddleground.close();;
 		return result;
 	}
 	
