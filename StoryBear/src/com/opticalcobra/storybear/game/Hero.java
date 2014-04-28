@@ -205,7 +205,9 @@ public class Hero extends JLabel{
 				posX -= (int) runConstant;
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant)){
-				this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
+					this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				}
 				//this.highscore
 				
 				if(!isInAJump()){
@@ -221,7 +223,9 @@ public class Hero extends JLabel{
 				posX += (int) runConstant;	
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant)){
-				this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
+					this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				}
 				if(!isInAJump()){
 					if(tileQue.get(queCounter).isWalkable()){
 						setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
