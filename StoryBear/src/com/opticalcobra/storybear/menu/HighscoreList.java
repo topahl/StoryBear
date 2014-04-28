@@ -111,8 +111,16 @@ public class HighscoreList extends JLayeredPane {
 		this.level.setForeground(Color.black);
 		this.level.addListSelectionListener(new ListSelectionListener() {
 			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				selectLevel.setEnabled(true);
+			public void valueChanged(ListSelectionEvent s) {
+				//selectLevel.setEnabled(true);
+				
+				try {
+					loadHighscore();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
         });
 		this.loadStories();
@@ -130,7 +138,7 @@ public class HighscoreList extends JLayeredPane {
         scrollpane.setBounds((int)(31/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(515/Ressources.SCALE));
         add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
-        this.selectLevel = new TextButton("Level wählen", 45,150, 250, 50);
+       /* this.selectLevel = new TextButton("Level wählen", 45,150, 250, 50);
         this.selectLevel.setSize(315, 50);
         this.selectLevel.setLocation((int)(105/Ressources.SCALE), (int)(770/Ressources.SCALE));
         this.selectLevel.setEnabled(false);
@@ -145,7 +153,7 @@ public class HighscoreList extends JLayeredPane {
 				}
 			}
 		});
-        add(this.selectLevel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        add(this.selectLevel, javax.swing.JLayeredPane.DEFAULT_LAYER);*/
 
 		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
 	}
