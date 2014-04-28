@@ -22,8 +22,10 @@ public class TextButton extends JButton implements MouseListener{
 	
 	private Border standardBorder;
 	private Border hoverBorder;
+	private Border disabledBorder;
 	private Color standardColor = Color.black;
 	private Color hoverColor = Ressources.MENUCOLORSELECTED;
+	private Color disabledColor = Color.gray;
 	
 	public TextButton(String text, int x, int y, int width, int height, float size, Color standard) {
 		this(text, x, y, width, height, size);
@@ -41,12 +43,13 @@ public class TextButton extends JButton implements MouseListener{
 	public TextButton(String text, int x, int y, int width, int height) {
 		standardBorder = BorderFactory.createLineBorder(standardColor, borderThick);
 		hoverBorder	= BorderFactory.createLineBorder(hoverColor, borderThick);
+		disabledBorder	= BorderFactory.createLineBorder(disabledColor, borderThick);
 		
 		addMouseListener(this);
 		
 		setOpaque(false);
 		setContentAreaFilled(false);
-		setText(text);//.toUpperCase()); TODO weg
+		setText(text);
 		setFont(font);
 		setCursor(Ressources.CURSORCLICKABLE);
 		setBounds((int)(x/Ressources.SCALE), (int)(y/Ressources.SCALE), (int)(width/Ressources.SCALE), (int)(height/Ressources.SCALE));
@@ -64,6 +67,16 @@ public class TextButton extends JButton implements MouseListener{
 		setForeground(color);
 	}
 
+	@Override
+	public void setEnabled(boolean enable) {
+		if(enable)
+			setStyle(standardColor, standardBorder);
+		else
+			setStyle(disabledColor,disabledBorder);
+		
+		super.setEnabled(enable);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(isEnabled())

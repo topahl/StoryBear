@@ -36,6 +36,7 @@ public class Ressources {
 	public static final Color SHELFCOLOR = new Color(170,128,86);
 	public static final Color PAGECOLOR = new Color(252,254,196);
 	public static final Color TEXTBROWNCOLOR = new Color(50,20,6);
+	public static final Color TRANSPARENTCOLOR = new Color(0,0,0,0);
 	
 	//Game Character
 	public static final int CHARACTERHEIGHT;

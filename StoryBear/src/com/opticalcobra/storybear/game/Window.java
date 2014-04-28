@@ -19,6 +19,7 @@ import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.res.Button;
+import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.MusicButton;
 import com.opticalcobra.storybear.res.Ressources;
@@ -141,7 +142,7 @@ public class Window extends JFrame {
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_WHITE),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_GREY),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
-				2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
+				Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
 				);
 		this.buttonExit.setFocusable(false);
 		this.buttonExit.addActionListener(controle);
@@ -150,7 +151,7 @@ public class Window extends JFrame {
 		//initialize Label for Highscore
 		this.labelScore.setBounds(Ressources.WINDOW.width - Ressources.SCOREDISTANCERIGHT - 200,
 				Ressources.SCOREDISTANCEUP, 200, Ressources.SCORETEXTSIZE);
-		this.labelScore.setFont(new Font("Fontin Sans RG",Font.PLAIN,Ressources.SCORETEXTSIZE));
+		this.labelScore.setFont(FontCache.getInstance().getFont("Fontin_R",Ressources.SCORETEXTSIZE));
 		this.labelScore.setText(((Integer)(Hero.getInstance().getHighscore())).toString());
 		this.labelScore.setHorizontalAlignment(SwingConstants.RIGHT);
 		this.labelScore.setVisible(true);

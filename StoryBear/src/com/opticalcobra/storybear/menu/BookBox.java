@@ -32,12 +32,11 @@ import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
-public class BookBox extends JLayeredPane implements ListSelectionListener {
+public class BookBox extends JLayeredPane {
 	public static final int postionNormal = (int)((1920-80)/Ressources.SCALE);
 	public static final int postionAvailable = (int)((1920-1600)/Ressources.SCALE);
 	
 	private boolean available = false;
-	private boolean hover = false;
 	
 	private JLayeredPane baseLayer;
 	private JLayeredPane buecherRegal;
@@ -200,7 +199,6 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
         levelBuecher.setCellRenderer(new BookRenderer());
         levelBuecher.setOpaque(false);
         levelBuecher.setBackground(new Color(0,0,0,0));
-        levelBuecher.addListSelectionListener(this);
         baseLayer.add(buecherRegal);
         loadStories();
         
@@ -226,18 +224,5 @@ public class BookBox extends JLayeredPane implements ListSelectionListener {
         
         levelBuecher.setModel(model);
 		
-	}
-	
-	/**
-	 * @author Tobias
-	 */
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-//		@SuppressWarnings("unused")
-//		Window gui = new Window(e.getFirstIndex());
-//		JList list =(JList) e.getSource();
-//		((BookRenderer) list.getSelectedValue()).title.setForeground(Color.red);
-		
-//		menu.dispose();
 	}
 }

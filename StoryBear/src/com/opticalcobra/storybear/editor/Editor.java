@@ -41,6 +41,7 @@ import javax.swing.SwingConstants;
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.menu.Menu;
+import com.opticalcobra.storybear.menu.MenuInnerPanel;
 import com.opticalcobra.storybear.menu.Scrollbar;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -60,7 +61,7 @@ import javax.swing.text.DateFormatter;
  * @author Nicolas
  *
  */
-public class Editor extends JLayeredPane {
+public class Editor extends MenuInnerPanel {
 	public static final String EMPTY_TITLE = "<Titel steht hier>";
 	public static final String EMPTY_STORY = "<Hier Geschichte schreiben>";
 	public static final FileFilter filter = new FileNameExtensionFilter("StoryBear (.bear)", "bear");
@@ -81,6 +82,8 @@ public class Editor extends JLayeredPane {
 	private DefaultListModel<Story> storyListModel = new DefaultListModel<Story>();
 	private Story currentStory;
 	private Menu menu;
+	private TextButton renderButton;
+	private TextButton editButton;
 	
 	
 	/**
@@ -103,6 +106,12 @@ public class Editor extends JLayeredPane {
 	 */
 	private void showStart() {
 		loadStories();
+		
+		authorStart.setText("");
+		titleStart.setText("");
+		dateStart.setText("");
+		editButton.setEnabled(false);
+		renderButton.setEnabled(false);
 		
 		baseLayerEditMode.setVisible(false);
 		baseLayerStart.setVisible(true);
@@ -162,17 +171,8 @@ public class Editor extends JLayeredPane {
 		baseLayerStart.setBounds(0, 0 ,Menu.innerPanel.width, Menu.innerPanel.height);
 		add(baseLayerStart);
 		
-		// Headline
-		JTextField headline = new JTextField();
-		headline.setBounds((int)(40/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
-		headline.setFont(Menu.fontHeadline[0]);
-		headline.setOpaque(false);
-		headline.setBorder(null);
-		headline.setVisible(true);
-		headline.setEditable(false);
-		headline.setFocusable(false);
-		headline.setText("Editor");
-		baseLayerStart.add(headline);
+		baseLayerStart.add(addMenuHeadline("Editor", false));
+		baseLayerStart.add(addMenuHeadlineUnderlining(), false);
 		
 		// Story-List
 		storyList = new JList<Story>(storyListModel);
@@ -180,7 +180,6 @@ public class Editor extends JLayeredPane {
         storyList.setBackground(Ressources.PAGECOLOR);
         storyList.setForeground(Ressources.PAGECOLOR);
         storyList.setFont(Menu.fontText[0]);
-        storyList.setSelectedIndex(storyList.getFirstVisibleIndex());
         storyList.setCellRenderer(new StoryListCellRenderer());
         storyList.addListSelectionListener(new ListSelectionListener() {
 			@Override
@@ -188,13 +187,15 @@ public class Editor extends JLayeredPane {
 				Story s = storyList.getSelectedValue();
 				if(s != null) {
 					authorStart.setText("Autor: "+s.getAuthor());
-					titleStart.setText("Titel: "+s.getAuthor());
+					titleStart.setText(s.getTitle());
 					dateStart.setText("Datum: "+DateFormat.getDateInstance().format(s.getChangeDate()));
+					editButton.setEnabled(true);
+					renderButton.setEnabled(true);
 				}
 			}
 		});
         JScrollPane scrollpane = new Scrollbar(Ressources.PAGECOLOR);
-        scrollpane.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(300/Ressources.SCALE));
+        scrollpane.setBounds(Menu.leftPageX, (int)(140/Ressources.SCALE), Menu.pageWidth, (int)(300/Ressources.SCALE));
         scrollpane.setBackground(Ressources.PAGECOLOR);
         scrollpane.setForeground(Ressources.PAGECOLOR);
         scrollpane.setBorder(null);
@@ -202,31 +203,25 @@ public class Editor extends JLayeredPane {
         baseLayerStart.add(scrollpane);
 		
         // Author
-        authorStart = new JLabel();
- 		authorStart.setText("Autor: ");
- 		authorStart.setFont(Menu.fontText[0]);
- 		authorStart.setBounds((int)(40/Ressources.SCALE),(int)(215/Ressources.SCALE),(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
- 		authorStart.setVisible(true);
+        authorStart = generateStandardLabel();
+ 		authorStart.setFont(Menu.fontHeadline[3]);
+ 		authorStart.setBounds(Menu.rightPageX,(int)(180/Ressources.SCALE),Menu.pageWidth,(int)(40/Ressources.SCALE));
  		baseLayerStart.add(authorStart);
  		
  		// Date
- 		dateStart = new JLabel();
- 		dateStart.setText("Datum: ");
- 		dateStart.setFont(Menu.fontText[0]);
- 		dateStart.setBounds(40, 260,(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
- 		dateStart.setVisible(true);
+ 		dateStart = generateStandardLabel();
+ 		dateStart.setFont(Menu.fontHeadline[3]);
+ 		dateStart.setBounds(Menu.rightPageX, (int)(210/Ressources.SCALE),Menu.pageWidth,(int)(40/Ressources.SCALE));
  		baseLayerStart.add(dateStart);
  		
 	 	// Title
-		titleStart = new JLabel();
-		titleStart.setText("Titel: ");
-		titleStart.setFont(Menu.fontText[0]);
-		titleStart.setBounds(40, 174,(int)(200/Ressources.SCALE),(int)(30/Ressources.SCALE));
-		titleStart.setVisible(true);
+		titleStart = generateStandardLabel();
+		titleStart.setFont(Menu.fontHeadline[1]);
+		titleStart.setBounds(Menu.rightPageX, (int)(140/Ressources.SCALE),Menu.pageWidth,(int)(40/Ressources.SCALE));
 		baseLayerStart.add(titleStart);
         
         // Edit-Button
-        TextButton editButton = new TextButton("Bearbeiten", 750, 400, 250, 60);
+        editButton = new TextButton("Bearbeiten", Menu.rightPageXUnscaled, 300, 250, 60);
         editButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -236,8 +231,29 @@ public class Editor extends JLayeredPane {
 		});
         baseLayerStart.add(editButton);
         
+        // new Story
+ 		renderButton = new TextButton("Rendern", Menu.rightPageXUnscaled + 250 + 50, 300, 250, 60);
+ 		renderButton.addActionListener(new ActionListener() {
+ 			@Override
+ 			public void actionPerformed(ActionEvent arg0) {
+ 				currentStory = storyList.getSelectedValue();
+ 				
+ 				if (currentStory != null) {
+ 					menu.loading.setVisible(true);
+ 					
+ 					TextAnalyzer analyzer = new TextAnalyzer();
+ 					analyzer.analyzeText(currentStory);
+ 					
+ 					menu.loading.setVisible(false);
+ 				}
+ 				
+ 				showStart();
+ 			}
+ 		});
+ 		baseLayerStart.add(renderButton);
+        
         // Import-Button
-		TextButton importButton = new TextButton("Importieren", 40, 400, 250, 60);
+		TextButton importButton = new TextButton("Importieren", Menu.leftPageXUnscaled, 450, 250, 60);
 		importButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -263,7 +279,7 @@ public class Editor extends JLayeredPane {
 		baseLayerStart.add(importButton);
 		
 		// new Story
-		TextButton newButton = new TextButton("Neue Geschichte", 40+40+250, 400, 250, 60);
+		TextButton newButton = new TextButton("Neue Geschichte", Menu.leftPageXUnscaled + 250 + 50, 450, 250, 60);
 		newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -280,27 +296,6 @@ public class Editor extends JLayeredPane {
 			}
 		});
 		baseLayerStart.add(newButton);
-		
-		// new Story
-		TextButton renderButton = new TextButton("Rendern", 40, 480, 250, 60);
-		renderButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				currentStory = storyList.getSelectedValue();
-				
-				if (currentStory != null) {
-					menu.loading.setVisible(true);
-					
-					TextAnalyzer analyzer = new TextAnalyzer();
-					analyzer.analyzeText(currentStory);
-					
-					menu.loading.setVisible(false);
-				}
-				
-				showStart();
-			}
-		});
-		baseLayerStart.add(renderButton);
 	}
 	
 	

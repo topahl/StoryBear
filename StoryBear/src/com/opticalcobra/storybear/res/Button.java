@@ -21,7 +21,7 @@ public class Button extends JButton {
         setPreferredSize(new Dimension(normal.getWidth(),normal.getHeight()));
         setCursor(Ressources.CURSORCLICKABLE);
         
-        setBounds(x, y, normal.getWidth(),normal.getHeight());
+        setBounds((int) (x/Ressources.SCALE), (int) (y/Ressources.SCALE), (int) (normal.getWidth()/Ressources.SCALE), (int) (normal.getHeight()/Ressources.SCALE));
 	}
 	
 	public Button(String method, int width, int height, int x, int y){
@@ -31,7 +31,7 @@ public class Button extends JButton {
         setContentAreaFilled(false);
         setPreferredSize(new Dimension(width,height));
         setCursor(Ressources.CURSORCLICKABLE);
-        setBounds(x, y, width,height);
+        setBounds((int) (x/Ressources.SCALE), (int) (y/Ressources.SCALE), (int) (width/Ressources.SCALE), (int) (height/Ressources.SCALE));
 	}
 
 	public Button(String method, BufferedImage normal, BufferedImage hover, BufferedImage clicked, BufferedImage disabled, int x, int y){
@@ -47,7 +47,7 @@ public class Button extends JButton {
         setPreferredSize(new Dimension(normal.getWidth(),normal.getHeight()));
         setCursor(Ressources.CURSORCLICKABLE);
         
-        setBounds(x, y, normal.getWidth(),normal.getHeight());
+        setBounds((int) (x/Ressources.SCALE), (int) (y/Ressources.SCALE), (int) (normal.getWidth()/Ressources.SCALE), (int) (normal.getHeight()/Ressources.SCALE));
 	}
 
 	public String getMethod() {

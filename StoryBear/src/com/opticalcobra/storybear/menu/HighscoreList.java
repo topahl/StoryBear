@@ -34,36 +34,27 @@ import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.res.Ressources;
 
-public class HighscoreList extends JLayeredPane {
+public class HighscoreList extends MenuInnerPanel {
 	
 	private JList level;
+	private JList scores;
 	private TextButton selectLevel;
-	private Database db = new Database();
 	private DefaultListModel<StoryInfo> modelSI = new DefaultListModel<StoryInfo>();
 	private DefaultListModel<HighscoreResult> modelHR = new DefaultListModel<HighscoreResult>();
-	private JList scores;
 	
-	/*
+	/**
 	 * @author Miriam
 	 * on the left book page it shows the levels and on the right the corresponding highscores
 	 */
 	public HighscoreList(){
-		JTextField headline;
-		JScrollPane scrollpane;
-		JScrollBar sb;
-
-		//right Book Page
-		//header
-		headline = new JTextField();
-		headline.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
-		headline.setFont(Menu.fontHeadline[0]);
-		headline.setOpaque(false);
-		headline.setBorder(null);
-		headline.setVisible(true);
-		headline.setEditable(false);
-		headline.setFocusable(false);
-		headline.setText("Bestenliste");
-		add(headline, javax.swing.JLayeredPane.DEFAULT_LAYER);		
+		addMenuHeadline("Bestenliste");
+		addMenuHeadlineUnderlining();
+		
+		//right Book Page	
+		JLabel head = generateStandardLabel();
+		head.setBounds(Menu.rightPageX, (int)(120/Ressources.SCALE), Menu.pageWidth, (int)(80/Ressources.SCALE));
+		head.setText("Bestenliste");
+		add(head);
 		
 		//Highscores
 		this.scores = new JList<HighscoreResult>();
@@ -73,33 +64,26 @@ public class HighscoreList extends JLayeredPane {
 		this.scores.setFont(Menu.fontText[0]);
 		this.scores.setForeground(Color.black);
 		
-		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
-		scrollpane = new Scrollbar(Ressources.PAGECOLOR);
+		JScrollPane scrollpane = new Scrollbar(Ressources.PAGECOLOR);
 		scrollpane.setViewportView(this.scores);
 		scrollpane.getViewport().setOpaque(false);
 		scrollpane.getViewport().setBackground(new Color(0,0,0,0));
 		scrollpane.setOpaque(false);
 		scrollpane.setBackground(new Color(0,0,0,0));
 		scrollpane.setBorder(null);
-		sb = scrollpane.getVerticalScrollBar();
+		JScrollBar sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(Ressources.PAGECOLOR);
-        scrollpane.setBounds((int)(781/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(515/Ressources.SCALE));
+        scrollpane.setBounds(Menu.rightPageX, (int)(190/Ressources.SCALE), Menu.pageWidth, (int)(500/Ressources.SCALE));
         add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
      
         
         //left Book Page
 		//header
-        headline = new JTextField();
-		headline.setBounds((int)(40/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
-		headline.setFont(Menu.fontHeadline[0]);
-		headline.setOpaque(false);
-		headline.setBorder(null);
-		headline.setVisible(true);
-		headline.setEditable(false);
-		headline.setFocusable(false);
+        JLabel headline = generateStandardLabel();
+		headline.setBounds(Menu.leftPageX, (int)(120/Ressources.SCALE), Menu.pageWidth, (int)(80/Ressources.SCALE));
 		headline.setText("Levelauswahl");
-		add(headline, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		add(headline);
 		
 		//Choose a level
 		this.level = new JList<StoryInfo>();
@@ -112,12 +96,9 @@ public class HighscoreList extends JLayeredPane {
 		this.level.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent s) {
-				//selectLevel.setEnabled(true);
-				
 				try {
 					loadHighscore();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -135,31 +116,12 @@ public class HighscoreList extends JLayeredPane {
 		sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(Ressources.PAGECOLOR);
-        scrollpane.setBounds((int)(31/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(515/Ressources.SCALE));
-        add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        
-       /* this.selectLevel = new TextButton("Level wählen", 45,150, 250, 50);
-        this.selectLevel.setSize(315, 50);
-        this.selectLevel.setLocation((int)(105/Ressources.SCALE), (int)(770/Ressources.SCALE));
-        this.selectLevel.setEnabled(false);
-        this.selectLevel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					loadHighscore();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-        add(this.selectLevel, javax.swing.JLayeredPane.DEFAULT_LAYER);*/
-
-		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
+        scrollpane.setBounds(Menu.leftPageX, (int)(190/Ressources.SCALE), Menu.pageWidth, (int)(500/Ressources.SCALE));
+        add(scrollpane);
 	}
 	
 	
-	/* 
+	/** 
 	 * @author Miriam
 	 * loads the Highscore table of the corresponding story
 	 */
@@ -193,80 +155,44 @@ public class HighscoreList extends JLayeredPane {
 	
 
 	
-	/*
+	/**
 	 * @author Miriam
 	 * renders the Story Name and Author in the list of levels
 	 */
 	private class LevelListCellRenderer extends DefaultListCellRenderer {
-		private JLabel title;
-		private JLabel user;
 	     @Override
 	     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-	         //JComponent c = (JComponent) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-	         JPanel c = new JPanel();
-	    	 c.setBackground(new Color(0,0,0,0));
+	    	 JLabel c = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);	    	 
+	    	 Story story = ((StoryInfo) value).getStory();
+	         c.setText(story.getTitle() + " (" + story.getAuthor().getName() + ")");
+	         c.setForeground(new Color(0, 0, 0));
+	         c.setBackground(Ressources.TRANSPARENTCOLOR);
 	         c.setBorder(null);
-	         c.setCursor(Ressources.CURSORCLICKABLE);
-	         if (isSelected) {
-	             c.setForeground(Ressources.MENUCOLORSELECTED);
+	         if(isSelected){
+	        	 c.setForeground(new Color(186, 15, 15));
 	         }
-	         
-	         Story story = ((StoryInfo) value).getStory();
-	         user = new JLabel();
-	         user.setForeground(new Color(92, 90, 90));
-	 		 title = new JLabel();
-	 		 title.setText(story.getTitle());
-	 		 user.setText("   von "+story.getAuthor().getName());
-	 		 c.add(title);
-	 		 c.add(user);
-	 		 
-	 		 if(isSelected){
-	 			title.setForeground(new Color(186, 15, 15));
-				user.setForeground(new Color(186, 15, 15));
-	 		 }
 	         
 	         return c;
 	     }
 	}
 	
 	
-	/*
+	/**
 	 * @author Miriam
 	 * renders the Story Name and Author in the list of levels
 	 */
 	private class ScoreListCellRenderer extends DefaultListCellRenderer {
-		private JLabel score;
-		private JLabel user;
 	     @Override
 	     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-	         Database db = new Database();
-	    	 JPanel c = new JPanel();
-	    	 c.setBackground(new Color(0,0,0,0));
-	         c.setBorder(null);
-	         c.setCursor(Ressources.CURSORCLICKABLE);
-	         c.setBounds((int)(600/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(80/Ressources.SCALE));
-	         if (isSelected) {
-	             c.setForeground(Ressources.MENUCOLORSELECTED);
-	         }
-	         
-	         HighscoreResult hr = ((HighscoreResult) value);
-	         user = new JLabel();
-	         user.setForeground(new Color(92, 90, 90));
-	 		 score = new JLabel();
-	 		 score.setText(String.valueOf(hr.getScore()));
-	 		 try {
-				user.setText(db.getUserName(hr.getUser_id()));
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	 		 c.add(user);
-	 		 c.add(score);
-	 		 
-	 		 if(isSelected){
-	 			score.setForeground(new Color(186, 15, 15));
-				user.setForeground(new Color(186, 15, 15));
-	 		 }
+	    	 JLabel c = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+	    	 try {
+	    		HighscoreResult hr = ((HighscoreResult) value);
+				c.setText((index+1) + ") " + db.getUserName(hr.getUser_id()) + " ("+ String.valueOf(hr.getScore()) + ")");
+				c.setForeground(Color.black);
+				c.setBackground(Ressources.TRANSPARENTCOLOR);
+				c.setBorder(null);
+				c.setFocusable(false);
+			} catch (SQLException e) {}
 	         
 	         return c;
 	     }

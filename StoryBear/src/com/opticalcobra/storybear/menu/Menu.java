@@ -41,8 +41,18 @@ import javax.swing.JLabel;
 
 public class Menu extends JFrame {
 	public static final Rectangle innerPanel = new Rectangle(0, 0, (int)(1440/Ressources.SCALE), (int)(880/Ressources.SCALE));
-	public static final Font fontHeadline[] = { FontCache.getInstance().getFont("Standard", 50f), FontCache.getInstance().getFont("Standard", 40f), FontCache.getInstance().getFont("Standard", 35f) };
+	public static final Font fontMenuHeadline =  FontCache.getInstance().getFont("Standard", 60f);
+	public static final Font fontHeadline[] = { FontCache.getInstance().getFont("Standard", 50f), FontCache.getInstance().getFont("Standard", 40f), FontCache.getInstance().getFont("Standard", 35f), FontCache.getInstance().getFont("Standard", 30f) };
 	public static final Font fontText[] = { FontCache.getInstance().getFont("Standard", 28f) };
+
+	public static final int leftPageXUnscaled = 390-350;
+	public static final int rightPageXUnscaled = 1100-350;
+	public static final int leftPageX = (int)(leftPageXUnscaled/Ressources.SCALE);
+	public static final int rightPageX = (int)(rightPageXUnscaled/Ressources.SCALE);
+	
+	public static final int pageWidthUnscaled = 600;
+	public static final int pageWidth = (int)(pageWidthUnscaled/Ressources.SCALE);
+	
 	
 	public JLabel currentUser;
 	public JLayeredPane main, editor, welcome, credits, user, manu, highscore;

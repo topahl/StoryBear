@@ -2,30 +2,20 @@ package com.opticalcobra.storybear.menu;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JList;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.main.User;
-import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 
 import javax.swing.JTextField;
@@ -33,40 +23,34 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class UserPanel extends JLayeredPane {
+public class UserPanel extends MenuInnerPanel {
+	public static int startY = 140;
+	
 	protected List<User> list;
-	
-	private JTextField textField;
-	private JList benutzerliste;
+	private JList userlist;
 	private TextButton selectUser;
+	private JTextField usernameField;
 	
-	private Menu menu;
-	
-	private Database db = new Database();
 	
 	public UserPanel(Menu menu) {
-		this.menu = menu;
+		super(menu);
 		
-		JTextArea beschreibung = new JTextArea();
-        beschreibung.setLineWrap(true);
-        beschreibung.setText("Melde dich mit deinem Nutzernamen an.");
-        beschreibung.setWrapStyleWord(true);
-        beschreibung.setFocusCycleRoot(true);
-        beschreibung.setCursor(Ressources.CURSORNORMAL);
-        beschreibung.setFocusable(false);
-        beschreibung.setOpaque(false);
-        beschreibung.setFont(Menu.fontHeadline[1]);
-        beschreibung.setForeground(Color.black);
-        beschreibung.setBounds((int)(30/Ressources.SCALE),(int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(89/Ressources.SCALE));
-        add(beschreibung, javax.swing.JLayeredPane.DEFAULT_LAYER);
+		addMenuHeadline("Benutzer");
+		addMenuHeadlineUnderlining();
+		
+		JTextArea textUsername = generateStandardTextArea();
+		textUsername.setBounds(Menu.leftPageX, (int)(startY/Ressources.SCALE), Menu.pageWidth, (int)(100/Ressources.SCALE));
+		textUsername.setText("Melde dich mit deinem Nutzernamen an.");
+        add(textUsername);
         
-        benutzerliste = new JList(new UserList());
-        benutzerliste.setCellRenderer(new UserListCellRenderer());
-        benutzerliste.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        benutzerliste.setFont(Menu.fontText[0]);
-        benutzerliste.setForeground(Color.black);
-        benutzerliste.setBackground(Ressources.PAGECOLOR);
-        benutzerliste.addListSelectionListener(new ListSelectionListener() {
+        userlist = new JList(new UserList());
+        userlist.setCellRenderer(new UserListCellRenderer());
+        userlist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        userlist.setFont(Menu.fontText[0]);
+        userlist.setForeground(Color.black);
+        userlist.setBackground(Ressources.PAGECOLOR);
+        userlist.setCursor(Ressources.CURSORCLICKABLE);
+        userlist.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				selectUser.setEnabled(true);
@@ -74,26 +58,14 @@ public class UserPanel extends JLayeredPane {
         });
         
         JScrollPane scrollpane = new Scrollbar(Ressources.PAGECOLOR);
-        scrollpane.setBounds((int)(30/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(350/Ressources.SCALE), (int)(315/Ressources.SCALE));
+        scrollpane.setBounds(Menu.leftPageX, (int)((startY+80)/Ressources.SCALE), (int)(350/Ressources.SCALE), (int)(200/Ressources.SCALE));
         scrollpane.setBackground(Ressources.PAGECOLOR);
         scrollpane.setForeground(Ressources.PAGECOLOR);
         scrollpane.setBorder(null);
-        scrollpane.setViewportView(benutzerliste);
-        add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        
-        textField = new JTextField();
-        textField.setFont(Menu.fontText[0]);
-        textField.setForeground(Color.black);
-        textField.setOpaque(false);
-        textField.setForeground(Color.black);
-        textField.setBounds((int)(747/Ressources.SCALE), (int)(125/Ressources.SCALE), (int)(318/Ressources.SCALE), (int)(60/Ressources.SCALE));
-        textField.setCaretColor(Color.black);
-        textField.setBorder(BorderFactory.createLineBorder(Color.black, 2));
-        add(textField);
+        scrollpane.setViewportView(userlist);
+        add(scrollpane);
                 
-        selectUser = new TextButton("Benutzer wählen", 45, 150, 250, 50);
-        selectUser.setSize(315, 50);
-        selectUser.setLocation(31, 470);
+        selectUser = new TextButton("Benutzer wählen", Menu.leftPageXUnscaled, startY+300, 300, 60);
         selectUser.setEnabled(false);
         selectUser.addActionListener(new ActionListener() {
 			@Override
@@ -101,39 +73,32 @@ public class UserPanel extends JLayeredPane {
 				selectUser();
 			}
 		});
-        add(selectUser, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        add(selectUser);
         
-        beschreibung = new JTextArea();
-        beschreibung.setLineWrap(true);
-        beschreibung.setText("Du hast noch keinen Nutzernamen? Leg dir hier einen neuen an.");
-        beschreibung.setWrapStyleWord(true);
-        beschreibung.setFocusCycleRoot(true);
-        beschreibung.setFocusable(false);
-        beschreibung.setOpaque(false);
-        beschreibung.setFont(Menu.fontHeadline[1]);
-        beschreibung.setForeground(Color.black);
-        beschreibung.setBounds((int)(750/Ressources.SCALE), (int)(25/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(89/Ressources.SCALE));
-        add(beschreibung, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        textUsername = generateStandardTextArea();
+        textUsername.setText("Du hast noch keinen Nutzernamen? Leg dir hier einen neuen an.");
+        textUsername.setBounds(Menu.rightPageX, startY, Menu.pageWidth, (int)(100/Ressources.SCALE));
+        add(textUsername);
         
-        TextButton anlegen = new TextButton("Benutzer anlegen", 450, 150, 250, 50);
-	    anlegen.setSize((int)(318/Ressources.SCALE), (int)(50/Ressources.SCALE));
-	    anlegen.setLocation((int)(747/Ressources.SCALE), (int)(196/Ressources.SCALE));
-	    anlegen.addActionListener(new ActionListener() {
+        usernameField = generateStandardTextField();
+        usernameField.setBounds(Menu.rightPageX, (int)((startY+100)/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(60/Ressources.SCALE));
+        add(usernameField);
+        
+        TextButton addUser = new TextButton("Benutzer anlegen", Menu.rightPageXUnscaled+320, (int)((startY+100)/Ressources.SCALE), 300, 60);
+	    addUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				addUser();
 			}
 		});
-        add(anlegen, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        add(addUser);
         
         
 		loadUser();
-		
-		setBounds(0, 0, Menu.innerPanel.width, Menu.innerPanel.height);
 	}
 	
 	private void selectUser() {
-		User.setCurrentUser((User) benutzerliste.getSelectedValue());
+		User.setCurrentUser((User) userlist.getSelectedValue());
 		menu.currentUser.setText(User.isCurrentUserSet() ? User.getCurrentUser().getName() : "");
 		menu.enableAllMenuButtons();
 		menu.getMain().setVisible(false);
@@ -147,12 +112,12 @@ public class UserPanel extends JLayeredPane {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		benutzerliste.setModel(new UserList());
+		userlist.setModel(new UserList());
 	}
 	
 	private void addUser() {
 		try {
-			db.addUser(new User(textField.getText()));
+			db.addUser(new User(usernameField.getText()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -183,9 +148,10 @@ public class UserPanel extends JLayeredPane {
 	     @Override
 	     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 	         JComponent c = (JComponent) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-	         c.setBackground(new Color(0,0,0,0));
+	         c.setBackground(Ressources.TRANSPARENTCOLOR);
 	         c.setBorder(null);
-	         c.setCursor(Ressources.CURSORCLICKABLE);
+	         c.setVisible(true);
+	         
 	         if (isSelected) {
 	             c.setForeground(Ressources.MENUCOLORSELECTED);
 	         }
