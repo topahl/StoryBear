@@ -8,11 +8,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.ToolTipManager;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.plaf.ColorUIResource;
 
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.db.SuggestionWord;
 import com.opticalcobra.storybear.exceptions.ImageNotFoundException;
 import com.opticalcobra.storybear.menu.Menu;
+import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.Ressources;
 
@@ -31,12 +36,17 @@ public class WordSuggestor extends JPanel {
 		setOpaque(false);
 		setLayout(null);
 		
+		UIManager.put("ToolTip.background", Ressources.TRANSPARENTCOLOR);
+		UIManager.put("ToolTip.background", Ressources.TRANSPARENTCOLOR);
+		UIManager.put("ToolTip.border", null);
+		UIManager.put("ToolTip.font", FontCache.getInstance().getFont("Fotin_R", 15));
+		ToolTipManager.sharedInstance().setInitialDelay(5);
+		
 		base = new JPanel();
 		base.setOpaque(false);
 		base.setSize((int)(600/Ressources.SCALE), (int)(520/Ressources.SCALE));
 		base.setLayout(null);
 		add(base);
-
 	}
 	
 	public void startSuggestions() {
@@ -62,6 +72,7 @@ public class WordSuggestor extends JPanel {
 					SuggestionWord word = words.get(j+i*4);
 					sugg = new Suggestion(Imagelib.getInstance().loadObjectPic(word.getImageId(), "ilb"), word.getWord());
 					sugg.setBounds((int)(j*(120+40)/Ressources.SCALE), (int)(i*250/Ressources.SCALE), (int)(120/Ressources.SCALE), (int)(240/Ressources.SCALE));
+					sugg.setToolTipText(word.getWord());
 					base.add(sugg);
 				} catch (ImageNotFoundException e) {
 					e.printStackTrace();
@@ -86,14 +97,14 @@ public class WordSuggestor extends JPanel {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			setIcon(null);
-			setText(text);
+//			setIcon(null);
+//			setText(text);
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			setIcon(image);
-			setText(null);
+//			setIcon(image);
+//			setText(null);
 		}
 
 		@Override
@@ -109,7 +120,7 @@ public class WordSuggestor extends JPanel {
 			while (isVisible()) {
 				loadWords();
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(20000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
