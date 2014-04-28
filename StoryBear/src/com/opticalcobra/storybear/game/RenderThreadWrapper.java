@@ -22,6 +22,7 @@ public class RenderThreadWrapper extends Thread{
 	public static RenderThreadWrapper getInstance(){
 		if (renderThreadWrapper == null){
 			renderThreadWrapper = new RenderThreadWrapper();
+			renderThreadWrapper.start();
 		}
 		return renderThreadWrapper;
 	}

@@ -96,7 +96,6 @@ public class Window extends JFrame {
 	private void initComponents() {
 		
 		rtw= RenderThreadWrapper.getInstance();
-		rtw.start();
 		//create remderer
 		renderer = new DummyRenderer(level);
 		rendererfg2 = new RendererFG2(renderer.getTileQue(), level); //renderer.getRingbuffer(), 

@@ -106,13 +106,6 @@ public class Control implements KeyListener, ActionListener {
 		window.dispose();
 	}
 	
-	public void menu() {
-		
-	}
-	
-	public void pause() {
-		
-	}
 
 //	public char getRunDirection() {
 //		return runDirection;
