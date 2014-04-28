@@ -215,6 +215,7 @@ public class Hero extends JLabel{
 		double runConstant = Ressources.RUNCONSTANT;
 		ImageIcon image; 
 		
+		//Collision with collectables
 		if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
 			if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x <= this.getLocation().x) &&
 					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
@@ -222,6 +223,7 @@ public class Hero extends JLabel{
 					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y + this.getHeight()/2)){
 				this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
 				this.tileQue.get(queCounter).setInteractionObjectLabel(null);
+				this.highscore += Ressources.SCOREPERCOLLECTABLE;
 			}
 		}
 		
@@ -336,9 +338,8 @@ public class Hero extends JLabel{
 		if((currentCounterStep + (width/2)) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
 			
 			queCounter++;
-			
-			//System.out.println(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x);
-			
+
+			//Collision with collectables
 			if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
 				if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x <= this.getLocation().x) &&
 						(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
@@ -346,6 +347,7 @@ public class Hero extends JLabel{
 						(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y + this.getHeight()/2)){
 					this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
 					this.tileQue.get(queCounter).setInteractionObjectLabel(null);
+					this.highscore += Ressources.SCOREPERCOLLECTABLE;
 				}
 			}
 			
