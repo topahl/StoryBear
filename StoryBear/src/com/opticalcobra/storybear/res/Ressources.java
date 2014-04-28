@@ -26,7 +26,7 @@ public class Ressources {
 	public static final Dimension WINDOW;
 	public static final double SCALE;
 	public static final int GAMESPEED = 5;
-	public static final String RESPATH = "res\\";
+	public static final String RESPATH;
 	public static final int RASTERSIZEORG = 120;
 	public static final int RASTERSIZE;
 	public static final int STORYTEXTSIZE = 40;
@@ -89,7 +89,7 @@ public class Ressources {
 	public static final Color MENUCOLORSELECTED = new Color(178,22,22);
 	
 	static {
-		
+		RESPATH = defaultDirectory();
 		SCREEN=Toolkit.getDefaultToolkit().getScreenSize();
 		FULLHD=new Dimension(1920,1080);
 		double x = (double)FULLHD.height/(double)SCREEN.height;
@@ -124,6 +124,23 @@ public class Ressources {
 			CURSORNORMAL = Cursor.getDefaultCursor();
 			CURSORCLICKABLE = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
 		}
+	}
+	
+	
+	private static String defaultDirectory()
+	{
+		if(System.getenv("development")== null){
+		    String OS = System.getProperty("os.name").toUpperCase();
+		    if (OS.contains("WIN"))
+		        return System.getenv("APPDATA")+"\\StoryBear\\";
+		    else if (OS.contains("MAC"))
+		        return System.getProperty("user.home") + "/Library/Application/StoryBear/ "
+		                + "Support";
+		    else if (OS.contains("NUX"))
+		        return System.getProperty("user.home")+"\\StoryBear\\";
+		    return System.getProperty("user.dir")+"\\StoryBear\\";
+		}
+		return "res\\";
 	}
 	
 }
