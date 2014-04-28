@@ -229,38 +229,14 @@ public class Database {
 		try {
 			rs = query("SELECT height_level, walkable from foreground_type where id = '" + tileType + "';");
 			rs.next();
-			height = (int) rs.getObject("HEIGHT_LEVEL");
+			height = (int) (rs.getObject("HEIGHT_LEVEL"));
+			height = (int) (height / Ressources.SCALE);
 			walkable = rs.getBoolean("WALKABLE");
+			
 			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		switch (height){
-		case -5:
-			height = DBConstants.LEVELHEIGHTMINUSFIVE;
-			break;
-		case -4:
-			height = DBConstants.LEVELHEIGHTMINUSFORE;
-			break;
-		case -3:
-			height = DBConstants.LEVELHEIGHTMINUSTHREE;
-			break;
-		case -2:
-			height = DBConstants.LEVELHEIGHTMINUSTWO;
-			break;
-		case -1:
-			height = DBConstants.LEVELHEIGHTMINUSONE;
-			break;
-		case 0:
-			height = DBConstants.LEVELHEIGHTZERO;
-			break;
-		case 1:
-			height = DBConstants.LEVELHEIGHTPLUSONE;
-			break;
-		case 2:
-			height = DBConstants.LEVELHEIGHTPLUSTWO;
-			break;
 		}
 		return new TileResult(tileType, height, walkable, null);
 	}
