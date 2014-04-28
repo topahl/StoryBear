@@ -30,11 +30,6 @@ public class RendererFG2 extends Renderer implements IRenderer {
 	private Database db;
 	private ArrayList<Integer> currentTileIds;
 	
-//	public RendererFG2(StoryInfo si){
-//		this.storyInfo = si;
-//		this.db = new Database();
-//	}
-	
 	
 	public RendererFG2(LinkedList<TileResult> tileQue, StoryInfo level) {
 		this.storyInfo = level;
@@ -68,26 +63,6 @@ public class RendererFG2 extends Renderer implements IRenderer {
 		}
 		
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO, "MEADOEW");
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		if (!tileQue.isEmpty()){
-//			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUNDTWO);
-//			next = following[rand.nextInt(following.length)];
-//			
-//		}else{
-//			lastTileType = next;
-//		}
-//		
-//		lastTileType = next;
-//		currentTileIds.add(lastTileType);
-//		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUNDTWO);
 	}
 
 	
@@ -120,7 +95,7 @@ public class RendererFG2 extends Renderer implements IRenderer {
 			
 			//Wörter und Bilder werden gerendert
 			if(elementPointer < storyInfo.getElements().size() && 
-							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+							storyInfo.getElements().get(elementPointer).getBlock() <= (i + (panelnum-1)*16)){
 				
 				(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDTWO, pane);
 				

@@ -55,7 +55,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		//ermittle aktuellen elementPointer
 		
-		if (currentBlock == 8){
+		if (currentBlock == 30){
 			System.out.print("8");
 		}
 		
@@ -66,6 +66,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			}
 		}
 		
+		
+			
 		
 		
 		//The first tile has to be 0
@@ -171,8 +173,14 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			}
 		}
 		
+		//System.out.println("Aktueller Block = "+ currentBlock + "mit tileId" + next);
 		lastTileType = next;
 		tileQue.add(db.getTileInfo(lastTileType));
+//		
+//		System.out.print("\nCurrentBlock" + currentBlock + "tileQue sieht so aus: ");
+//		for (int y = 0; y < tileQue.size(); y++){
+//			System.out.print(tileQue.get(y).getTileType());
+//		}
 		
 		currentTileIds.add(next);
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND, null);
@@ -181,7 +189,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	
 	@Override
 	public void getNextViewPart(JLabel pane) {
-		int pointerCounter=1;
+		
 		ArrayList<ILevelAppearance> elements = this.storyInfo.getElements();
 		currentTileIds = new ArrayList<Integer>();
 		
@@ -196,7 +204,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
-		for(int i=0;i*Ressources.RASTERSIZE<Ressources.WINDOW.width;i++){
+		for(int i=0;i<Ressources.TILESPERPANEL;i++){
 			g.drawImage(getNextMapElement(storyInfo.getElements().get(elementPointer).getBlock()+i),i*Ressources.RASTERSIZE,0,null);
 			if(DebugSettings.fg1tilenum)
 				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTileType+"", (i*Ressources.RASTERSIZE)+20,100);
@@ -205,20 +213,20 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			
 		}
 		for(int i=0;i<Ressources.TILESPERPANEL;i++){
-			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
-							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
+//			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
+//							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
+//			
+//				//Wortübertrag auf ein neues Panel
+//				if (storyInfo.getElements().get(elementPointer) instanceof Word){
+//					while (!(storyInfo.getElements().get(elementPointer - pointerCounter) instanceof Word)){
+//						pointerCounter++;
+//					}
+//					((Word)elements.get(elementPointer-pointerCounter)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer-1).getBlock()%16)))*-1);
+//				}	
+//			}
 			
-				//Wortübertrag auf ein neues Panel
-				if (storyInfo.getElements().get(elementPointer) instanceof Word){
-					while (!(storyInfo.getElements().get(elementPointer - pointerCounter) instanceof Word)){
-						pointerCounter++;
-					}
-					((Word)elements.get(elementPointer-pointerCounter)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer-1).getBlock()%16)))*-1);
-				}	
-			}
 			
-			
-			//Wörter und Bilder werden geredert
+			//Bilder werden geredert
 			if(elementPointer < storyInfo.getElements().size() && 
 							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
 				
