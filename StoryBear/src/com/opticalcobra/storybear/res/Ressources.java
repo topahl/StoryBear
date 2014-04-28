@@ -64,7 +64,7 @@ public class Ressources {
 	public static final int SCOREDISTANCERIGHT;
 	public static final int SCOREDISTANCEUP;
 	public static final int SCOREPOINTSFORRUNNING = 2;
-	public static final int SCOREDECREASEAFTERMISTAKE = 3;
+	public static final int SCOREDECREASEAFTERMISTAKE = 15;
 	
 	
 	//Layer Konstanten

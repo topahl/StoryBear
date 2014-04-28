@@ -41,8 +41,7 @@ public class Hero extends JLabel{
 	private int queCounter = 0;    //Es sind auf dem Screen immer 5-6 Kacheln zur freien Bewegung verfügbar
 	private int annimation=0;
 
-	private int highscore = 0;
-	private boolean walkedAtSomething = false;  
+	private int highscore = 0; 
 	
 	private Hero(){
 	}
@@ -135,6 +134,12 @@ public class Hero extends JLabel{
 	 */
 	private void spawnBack() {
 		
+		//decrese the score when you make a mistake
+		this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
+		if(this.highscore < 0)
+			this.highscore = 0;
+
+		
 		int counter = 0;
 		
 		while (!tileQue.get(queCounter).isWalkable()){
@@ -223,17 +228,6 @@ public class Hero extends JLabel{
 				posX -= (int) runConstant;
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant)){
-				//delete Collectable 
-//				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
-//					if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x <= this.getLocation().x) &&
-//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
-//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y <= this.getLocation().y) &&
-//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y)){
-//						this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
-//					}
-//				}
-				//this.highscore
-				
 				if(!isInAJump()){
 					if(tileQue.get(queCounter).isWalkable()){
 						setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
@@ -247,15 +241,6 @@ public class Hero extends JLabel{
 				posX += (int) runConstant;	
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant)){
-				//delete Collectable
-//				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
-//					if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x <= this.getLocation().x) &&
-//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
-//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y <= this.getLocation().y) &&
-//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y)){
-//						this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
-//					}
-//				}
 				if(!isInAJump()){
 					if(tileQue.get(queCounter).isWalkable()){
 						setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
@@ -377,24 +362,15 @@ public class Hero extends JLabel{
 	public boolean isHeroAllowedToWalk(){
 		
 		if (isInAJump() && runDirection != 'n'){
-			this.walkedAtSomething = false;
 			return true;
 		}
 		
 		//Nur rechts notwendig?
 		if (!isInAJump() && (runDirection == 'r' && tileQue.get(queCounter).isWalkable() || 
 				runDirection == 'l' && tileQue.get(queCounter).isWalkable())){
-			this.walkedAtSomething = false;
 			return true;
 		}
 		
-		//don't decrease score just because you are permanently running against a wall :-D
-		if(this.walkedAtSomething == false){
-			this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
-			if(this.highscore < 0)
-				this.highscore = 0;
-			this.walkedAtSomething = true;
-		}
 		return false;
 	}
 
