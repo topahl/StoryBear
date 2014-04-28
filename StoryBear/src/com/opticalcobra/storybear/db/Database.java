@@ -577,6 +577,22 @@ public class Database {
 		return null;
 	}
 	
+	
+	/*
+	 * @author Miriam
+	 * gets the points of a chosen collectable with the mentioned id from the input
+	 */
+	public int getPointsOfCollectable(int id) throws SQLException{
+		int result = 0;
+		ResultSet rs = query("SELECT POINTS FROM collectable_object WHERE id = " + id + ";");
+		while(rs.next()){
+			result = rs.getInt("POINTS");
+		}
+		rs.close();
+		return result;
+	}
+	
+	
 	public void dump(ResultSet rs) throws SQLException {
 //        ResultSetMetaData meta   = rs.getMetaData(); // TODO print metadata
 //        int colmax = meta.getColumnCount();
