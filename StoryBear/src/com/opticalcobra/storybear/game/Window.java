@@ -254,8 +254,9 @@ public class Window extends JFrame {
 			this.labelScore.setText(((Integer)(Hero.getInstance().getHighscore())).toString());
 		}
 		
+		Hero.getInstance();
 		//Hero klebt an der unsichtbaren Wand an Kachel 5
-		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + Hero.getInstance().WIDTH >= Ressources.RASTERSIZE*5){
+		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + (Hero.getInstance().getWidth()/2) >= Ressources.RASTERSIZE*5){
 			if (Hero.getInstance().isHeroAllowedToWalk()){
 				layerStep();
 			}
