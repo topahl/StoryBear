@@ -3,6 +3,7 @@ package com.opticalcobra.storybear.game;
 import java.awt.Point;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.awt.Component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -207,14 +208,30 @@ public class Hero extends JLabel{
 		double runConstant = Ressources.RUNCONSTANT;
 		ImageIcon image; 
 		
+		if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
+			if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x <= this.getLocation().x) &&
+					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
+					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y <= this.getLocation().y + this.getHeight()/2) &&
+					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y + this.getHeight()/2)){
+				this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				this.tileQue.get(queCounter).setInteractionObjectLabel(null);
+			}
+		}
+		
 		if(runDirection == 'l'){
 			if (posX > 0){
 				posX -= (int) runConstant;
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant)){
-				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
-					this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
-				}
+				//delete Collectable 
+//				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
+//					if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x <= this.getLocation().x) &&
+//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
+//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y <= this.getLocation().y) &&
+//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y)){
+//						this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+//					}
+//				}
 				//this.highscore
 				
 				if(!isInAJump()){
@@ -230,9 +247,15 @@ public class Hero extends JLabel{
 				posX += (int) runConstant;	
 			}
 			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant)){
-				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
-					this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
-				}
+				//delete Collectable
+//				if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
+//					if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x <= this.getLocation().x) &&
+//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
+//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y <= this.getLocation().y) &&
+//							(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y)){
+//						this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+//					}
+//				}
 				if(!isInAJump()){
 					if(tileQue.get(queCounter).isWalkable()){
 						setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
@@ -326,6 +349,19 @@ public class Hero extends JLabel{
 		if((currentCounterStep + width) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
 			
 			queCounter++;
+			
+			//System.out.println(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocation().x);
+			
+			if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
+				if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x <= this.getLocation().x) &&
+						(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
+						(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y <= this.getLocation().y + this.getHeight()/2) &&
+						(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y + this.getHeight()/2)){
+					this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+					this.tileQue.get(queCounter).setInteractionObjectLabel(null);
+				}
+			}
+			
 			this.highscore += Ressources.SCOREPOINTSFORRUNNING;
 			if (!isInAJump()){
 				setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);

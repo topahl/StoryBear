@@ -40,7 +40,7 @@ public class Collectable implements ILevelAppearance {
 			
 			//g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
 			//TODO: generisch machen
-			toBeNamed.setBounds((((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, 90, 90);
+			toBeNamed.setBounds((((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, Ressources.CONTAINERCOLLECTABLE, Ressources.CONTAINERCOLLECTABLE);
 		}
 	}
 

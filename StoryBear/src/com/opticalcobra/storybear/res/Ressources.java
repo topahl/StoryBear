@@ -81,6 +81,8 @@ public class Ressources {
 	public static final int CONTAINERCHARACTERID = 3;
 	public static final int CONTAINERLANDSCAPEID = 4;
 	
+	public static final int CONTAINERCOLLECTABLE;
+	
 	
 	// Cursor
 	public static Cursor CURSORNORMAL;
@@ -118,6 +120,8 @@ public class Ressources {
 		SCORETEXTSIZE = (int)(37 / SCALE);
 		SCOREDISTANCERIGHT = (int)(40 / SCALE);
 		SCOREDISTANCEUP = (int)(37 /SCALE);
+		
+		CONTAINERCOLLECTABLE = (int)(50/SCALE);
 		
 		try {
 			CURSORNORMAL = Toolkit.getDefaultToolkit().createCustomCursor(ImageIO.read(new File(Ressources.RESPATH+"images\\pointer_slice.png")).getSubimage(0, 0, 55, 65), new Point(0,0), "normal");
