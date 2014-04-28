@@ -204,9 +204,14 @@ public class Hero extends JLabel{
 			if (posX > 0){
 				posX -= (int) runConstant;
 			}
-			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant) && !isInAJump()){
-				if(tileQue.get(queCounter).isWalkable()){
-					setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant)){
+				this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				//this.highscore
+				
+				if(!isInAJump()){
+					if(tileQue.get(queCounter).isWalkable()){
+						setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					}
 				}
 			}
 		}
@@ -215,9 +220,12 @@ public class Hero extends JLabel{
 			if (posX < Ressources.RASTERSIZE*5){
 				posX += (int) runConstant;	
 			}
-			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant) && !isInAJump()){
-				if(tileQue.get(queCounter).isWalkable()){
-					setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant)){
+				this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				if(!isInAJump()){
+					if(tileQue.get(queCounter).isWalkable()){
+						setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+					}
 				}
 			}
 		}

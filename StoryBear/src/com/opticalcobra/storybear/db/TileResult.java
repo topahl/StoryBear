@@ -1,5 +1,7 @@
 package com.opticalcobra.storybear.db;
 
+import javax.swing.JLabel;
+
 
 /**
  * 
@@ -11,16 +13,20 @@ public class TileResult {
 	private int tileType;
 	private int tileHeight;
 	private boolean walkable;
+	private transient JLabel interactionObjectLabel;
 	
 	/**
 	 * 
 	 * @param tileType
 	 * @param tileHeight
 	 */
-	public TileResult(int tileType, int tileHeight, boolean walkable){
+	public TileResult(int tileType, int tileHeight, boolean walkable, JLabel label){
 		this.tileType = tileType;
 		this.tileHeight = tileHeight;
 		this.walkable = walkable;
+		if(label != null){
+			this.interactionObjectLabel = label;
+		}
 	}
 
 
@@ -51,5 +57,15 @@ public class TileResult {
 
 	public void setWalkable(boolean walkable) {
 		this.walkable = walkable;
+	}
+
+
+	public JLabel getInteractionObjectLabel() {
+		return interactionObjectLabel;
+	}
+
+
+	public void setInteractionObjectLabel(JLabel interactionObjectLabel) {
+		this.interactionObjectLabel = interactionObjectLabel;
 	}
 }

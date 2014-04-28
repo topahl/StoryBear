@@ -36,7 +36,7 @@ public class InteractionRenderer extends Renderer implements IRenderer{
 	
 	
 	public void getNextViewPart(JLabel pane) {
-		
+		JLabel currentLabel;
 		
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
@@ -52,12 +52,16 @@ public class InteractionRenderer extends Renderer implements IRenderer{
 			if (elementPointer < storyInfoElements.size() && storyInfoElements.get(elementPointer).getBlock()%Ressources.TILESPERPANEL == i){
 				if (storyInfoElements.get(elementPointer) instanceof Collectable ||
 						storyInfoElements.get(elementPointer) instanceof Character){
-					
+					currentLabel = new JLabel();
 					if (panelnum < 3){
-						storyInfoElements.get(elementPointer).render(g, tileQue.get((panelnum)*Ressources.TILESPERPANEL + i).getTileType(), Ressources.LAYERINTERACTION, pane);
+						tileQue.get((panelnum)*Ressources.TILESPERPANEL + i).setInteractionObjectLabel(currentLabel);
+						storyInfoElements.get(elementPointer).render(g, tileQue.get((panelnum)*Ressources.TILESPERPANEL + i).getTileType(), Ressources.LAYERINTERACTION, currentLabel);
 					} else{
-						storyInfoElements.get(elementPointer).render(g, tileQue.get(2*Ressources.TILESPERPANEL +i).getTileType(), Ressources.LAYERINTERACTION, pane);
+						tileQue.get(2*Ressources.TILESPERPANEL +i).setInteractionObjectLabel(currentLabel);
+						storyInfoElements.get(elementPointer).render(g, tileQue.get(2*Ressources.TILESPERPANEL +i).getTileType(), Ressources.LAYERINTERACTION, currentLabel);
 					}
+					pane.add(currentLabel);
+					pane.revalidate();
 				}
 				
 				//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden

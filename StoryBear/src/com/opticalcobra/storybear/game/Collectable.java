@@ -5,6 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.main.ILevelAppearance;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -33,7 +36,11 @@ public class Collectable implements ILevelAppearance {
 			Point position = db.getObjectPos(tileTypeId, Ressources.CONTAINERCOLLECTABLEID);
 			
 			BufferedImage image = il.loadObjectPic(image_id, "col");
-			g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+			((JLabel)(toBeNamed)).setIcon(new ImageIcon(image));
+			
+			//g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+			//TODO: generisch machen
+			toBeNamed.setBounds((((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, 90, 90);
 		}
 	}
 

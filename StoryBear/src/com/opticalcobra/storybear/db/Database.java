@@ -262,7 +262,7 @@ public class Database {
 			height = DBConstants.LEVELHEIGHTPLUSTWO;
 			break;
 		}
-		return new TileResult(tileType, height, walkable);
+		return new TileResult(tileType, height, walkable, null);
 	}
 	
 	
