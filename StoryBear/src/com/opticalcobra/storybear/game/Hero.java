@@ -323,7 +323,7 @@ public class Hero extends JLabel{
 	 * @param direction 
 	 */
 	public void runFreazing(int currentCounterStep){
-		if((currentCounterStep + (Ressources.CHARACTERWIDTH/2)) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
+		if((currentCounterStep + width) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
 			
 			queCounter++;
 			this.highscore += Ressources.SCOREPOINTSFORRUNNING;
@@ -387,7 +387,7 @@ public class Hero extends JLabel{
 	@Override
 	public Point getLocation(){
 		Point pnt = super.getLocation();
-		pnt.setLocation(pnt.x+(Ressources.CHARACTERWIDTH/2), pnt.y);
+		pnt.setLocation(pnt.x+width, pnt.y);
 		return pnt;
 	}
 	
