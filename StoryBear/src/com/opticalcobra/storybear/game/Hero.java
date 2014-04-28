@@ -22,6 +22,7 @@ import com.opticalcobra.storybear.res.Ressources;
 public class Hero extends JLabel{
 
 	private static Hero hero = null;
+	private int width = 0;
 	
 	private LinkedList<TileResult> tileQue;
 	private Imagelib imageLib = Imagelib.getInstance();
@@ -66,10 +67,16 @@ public class Hero extends JLabel{
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
-
+		
+		if (type == 'f'){
+			width = Ressources.CHARACTERWIDTHFAIRY;
+		} else{
+			width = Ressources.CHARACTERWIDTH;
+		}
+		
 		this.setBounds(Ressources.CHARACTERSPAWNPOSITIONX,
 				DBConstants.LEVELHEIGHTZERO - Ressources.CHARACTERHEIGHT,
-				Ressources.CHARACTERWIDTH,
+				width,
 				Ressources.CHARACTERHEIGHT);
 	}
 	

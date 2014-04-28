@@ -40,6 +40,7 @@ public class Ressources {
 	//Game Character
 	public static final int CHARACTERHEIGHT;
 	public static final int CHARACTERWIDTH;
+	public static final int CHARACTERWIDTHFAIRY;
 	public static final int CHARACTERSPAWNPOSITIONX = 0;
 	//public static final int CHARACTERSPAWNPOSITIONY = 400;
 	
@@ -105,6 +106,7 @@ public class Ressources {
 		WINDOW.width = 16* RASTERSIZE;
 		CHARACTERHEIGHT=(int)(90/SCALE);
 		CHARACTERWIDTH=(int)(55/SCALE);
+		CHARACTERWIDTHFAIRY = (int)(65/SCALE);
 		
 		JUMPCONSTANTY = 1.0 / SCALE;
 		SPEEDCONSTANT = (int) (20 / SCALE);
