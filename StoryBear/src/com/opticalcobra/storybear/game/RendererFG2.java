@@ -44,9 +44,13 @@ public class RendererFG2 extends Renderer implements IRenderer {
 		int next = 0;
 		
 		if (panelnum>3){
-			next = tileQue.get(2*Ressources.TILESPERPANEL + currentBlock).getTileType();
+			if(tileQue.size() > 2*Ressources.TILESPERPANEL + currentBlock){
+				next = tileQue.get(2*Ressources.TILESPERPANEL + currentBlock).getTileType();
+			}
 		} else{
-			next = tileQue.get(((panelnum-1) *Ressources.TILESPERPANEL)+ currentBlock).getTileType();
+			if(tileQue.size() > ((panelnum-1) *Ressources.TILESPERPANEL)+ currentBlock){
+				next = tileQue.get(((panelnum-1) *Ressources.TILESPERPANEL)+ currentBlock).getTileType();
+			}
 		}
 		
 		lastTileType = next;

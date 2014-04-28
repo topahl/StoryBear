@@ -208,31 +208,33 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
-		for(int i=0;i<Ressources.TILESPERPANEL;i++){
-			g.drawImage(getNextMapElement(storyInfo.getElements().get(elementPointer).getBlock()+i),i*Ressources.RASTERSIZE,0,null);
-			if(DebugSettings.fg1tilenum)
-				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTileType+"", (i*Ressources.RASTERSIZE)+20,100);
-			if(DebugSettings.fg1panelborder)
-				g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
-			
-		}
-		for(int i=0;i<Ressources.TILESPERPANEL;i++){
+		if(storyInfo.getElements().size() > elementPointer){
+			for(int i=0;i<Ressources.TILESPERPANEL;i++){
+				g.drawImage(getNextMapElement(storyInfo.getElements().get(elementPointer).getBlock()+i),i*Ressources.RASTERSIZE,0,null);
+				if(DebugSettings.fg1tilenum)
+					renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTileType+"", (i*Ressources.RASTERSIZE)+20,100);
+				if(DebugSettings.fg1panelborder)
+					g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
+				
+			}
+			for(int i=0;i<Ressources.TILESPERPANEL;i++){
 
-			//Bilder werden geredert
-			if(elementPointer < storyInfo.getElements().size() && 
-							storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
-				
-				
-				(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
-				
-				//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
-				if (elementPointer+1 < storyInfo.getElements().size() && 
-						storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
-					i--;
-				} else{
-					currentTileIds.remove(0);
+				//Bilder werden geredert
+				if(elementPointer < storyInfo.getElements().size() && 
+								storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+					
+					
+					(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+					
+					//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
+					if (elementPointer+1 < storyInfo.getElements().size() && 
+							storyInfo.getElements().get(elementPointer).getBlock() == storyInfo.getElements().get(elementPointer+1).getBlock()){
+						i--;
+					} else{
+						currentTileIds.remove(0);
+					}
+					elementPointer++;
 				}
-				elementPointer++;
 			}
 		}
 	
