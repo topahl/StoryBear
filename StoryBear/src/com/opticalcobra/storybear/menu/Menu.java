@@ -195,11 +195,6 @@ public class Menu extends JFrame {
 	}
 	
 	private void initializeBackground() {
-		JLabel book = new JLabel();
-		book.setBounds(0, 0, (int)(1920/Ressources.SCALE), (int)(1080/Ressources.SCALE));
-		getContentPane().add(book);
-		book.setIcon(new ImageIcon(imagelib.loadDesignImage("menu_book_opened")));
-		
 		JLabel background = new JLabel();
 		background.setBounds(0, 0, (int)(1920/Ressources.SCALE), (int)(1080/Ressources.SCALE));
 		getContentPane().add(background);
@@ -218,7 +213,9 @@ public class Menu extends JFrame {
 	}
 	
 	private void initializeLoadingBox() {
-//		loading = new LoadingPanel();
+		loading = new LoadingPanel();
+//		loading.setVisible(false);
+//		getContentPane().add(loading);
 	}
 	
 	private void initializeFrame() {

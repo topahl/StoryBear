@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.opticalcobra.storybear.main.ILevelAppearance;
+import com.opticalcobra.storybear.menu.LoadingPanel;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.db.DBConstants;
@@ -29,10 +30,10 @@ public class TextAnalyzer {
 
 	private Font storyTextFont = FontCache.getInstance().getFont("Standard", ((float) (Ressources.STORYTEXTSIZE)));
 	private Database db= new Database();
+	private LoadingPanel loadingPanel;
 	
-	
-	public TextAnalyzer(){
-		
+	public TextAnalyzer(LoadingPanel lp){
+		loadingPanel = lp;
 	}
 	
 	//TODO: Methode vervollständigen
@@ -56,6 +57,9 @@ public class TextAnalyzer {
 		//--> check if word of the story is in our db
 		//if word in db then return type of word, e.g. collectable, character, ...
 		//else return null
+		
+		loadingPanel.setMaximum(words.length);
+		
 		for(String word : words){
 			String word_short = word.replaceAll("[^a-zA-Z äüöß0-9]", "");
 			//get the length of the word in pixels
@@ -93,7 +97,8 @@ public class TextAnalyzer {
 			
 			elements.add(new Word(word,blockPosition));
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new word
-
+			
+			loadingPanel.update();
 		}
 		
 		blockPosition++;

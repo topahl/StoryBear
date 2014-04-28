@@ -239,12 +239,23 @@ public class Editor extends MenuInnerPanel {
  				currentStory = storyList.getSelectedValue();
  				
  				if (currentStory != null) {
- 					menu.loading.setVisible(true);
+ 					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							menu.loading.setVisible(true);
+						}
+ 					}).start();
  					
- 					TextAnalyzer analyzer = new TextAnalyzer();
- 					analyzer.analyzeText(currentStory);
+ 					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							TextAnalyzer analyzer = new TextAnalyzer(menu.loading);
+		 					analyzer.analyzeText(currentStory);
+		 					
+		 					menu.loading.setVisible(false);
+						}
+					}).start();
  					
- 					menu.loading.setVisible(false);
  				}
  				
  				showStart();
