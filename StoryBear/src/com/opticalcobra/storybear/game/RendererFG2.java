@@ -82,15 +82,16 @@ public class RendererFG2 extends Renderer implements IRenderer {
 
 		for(int i=0;i<Ressources.TILESPERPANEL;i++){
 			if (elementPointer < storyInfo.getElements().size() && elementPointer > 0 &&
-							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0){
+							storyInfo.getElements().get(elementPointer).getBlock() % 16 != 0 && i == 0 &&
+							storyInfo.getElements().get(elementPointer-1) instanceof Word){
 			
 				//Wortübertrag auf ein neues Panel
-				if (storyInfo.getElements().get(elementPointer) instanceof Word){
+				//if (storyInfo.getElements().get(elementPointer) instanceof Word){
 					while (!(storyInfo.getElements().get(elementPointer - pointerCounter) instanceof Word)){
 						pointerCounter++;
 					}
 					((Word)elements.get(elementPointer-pointerCounter)).renderPreviousLostWord(g, ((16 - (elements.get(elementPointer-1).getBlock()%16)))*-1);
-				}	
+				//}	
 			}	
 			
 			//Wörter und Bilder werden gerendert
