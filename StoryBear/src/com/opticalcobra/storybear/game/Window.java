@@ -255,7 +255,7 @@ public class Window extends JFrame {
 		}
 		
 		//Hero klebt an der unsichtbaren Wand an Kachel 5
-		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + (Ressources.CHARACTERWIDTH / 2) >= Ressources.RASTERSIZE*5){
+		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + Hero.getInstance().WIDTH >= Ressources.RASTERSIZE*5){
 			if (Hero.getInstance().isHeroAllowedToWalk()){
 				layerStep();
 			}
