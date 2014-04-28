@@ -25,6 +25,8 @@ public class Hero extends JLabel{
 	private static Hero hero = null;
 	private int width = 0;
 	
+	
+
 	private LinkedList<TileResult> tileQue;
 	private Imagelib imageLib = Imagelib.getInstance();
 	
@@ -146,6 +148,7 @@ public class Hero extends JLabel{
 			queCounter--;
 			counter ++;
 		}
+		
 		if (super.getLocation().x - counter * Ressources.RASTERSIZE < 0){
 			queCounter = queCounter + counter;
 			counter = 0;		
@@ -153,10 +156,9 @@ public class Hero extends JLabel{
 				queCounter++;
 				counter ++;
 			}
-			setLocation(super.getLocation().x + counter * Ressources.RASTERSIZE, tileQue.get(queCounter).getTileHeight());
-			
+			setLocation(super.getLocation().x + (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
 		} else{
-			setLocation(super.getLocation().x - counter * Ressources.RASTERSIZE, tileQue.get(queCounter).getTileHeight());
+			setLocation(super.getLocation().x - (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
 		}
 	}
 
@@ -331,7 +333,7 @@ public class Hero extends JLabel{
 	 * @param direction 
 	 */
 	public void runFreazing(int currentCounterStep){
-		if((currentCounterStep + width) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
+		if((currentCounterStep + (width/2)) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
 			
 			queCounter++;
 			
@@ -348,9 +350,9 @@ public class Hero extends JLabel{
 			}
 			
 			this.highscore += Ressources.SCOREPOINTSFORRUNNING;
-			if (!isInAJump()){
-				setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-			}
+//			if (!isInAJump()){
+//				setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+//			}
 		}
 	}
 	
@@ -399,7 +401,7 @@ public class Hero extends JLabel{
 	@Override
 	public Point getLocation(){
 		Point pnt = super.getLocation();
-		pnt.setLocation(pnt.x+width, pnt.y);
+		pnt.setLocation(pnt.x+(width/2), pnt.y);
 		return pnt;
 	}
 	
@@ -430,5 +432,9 @@ public class Hero extends JLabel{
 
 	public void setQueCounter(int queCounter) {
 		this.queCounter = queCounter;
+	}
+	
+	public int getWidth() {
+		return width;
 	}
 }
