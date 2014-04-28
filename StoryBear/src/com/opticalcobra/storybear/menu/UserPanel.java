@@ -84,7 +84,7 @@ public class UserPanel extends MenuInnerPanel {
         usernameField.setBounds(Menu.rightPageX, (int)((startY+100)/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(60/Ressources.SCALE));
         add(usernameField);
         
-        TextButton addUser = new TextButton("Benutzer anlegen", Menu.rightPageXUnscaled+320, (int)((startY+100)/Ressources.SCALE), 300, 60);
+        TextButton addUser = new TextButton("Benutzer anlegen", Menu.rightPageXUnscaled+(int)(320/Ressources.SCALE), (int)((startY+100)/Ressources.SCALE), 300, 60);
 	    addUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
