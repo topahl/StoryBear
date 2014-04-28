@@ -3,6 +3,8 @@ package com.opticalcobra.storybear.editor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -13,6 +15,7 @@ import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Ressources;
 import com.opticalcobra.storybear.db.DBConstants;
 import com.opticalcobra.storybear.db.Database;
+import com.opticalcobra.storybear.db.HighscoreResult;
 import com.opticalcobra.storybear.db.WordResult;
 import com.opticalcobra.storybear.game.Character;
 import com.opticalcobra.storybear.game.Collectable;
@@ -93,7 +96,11 @@ public class TextAnalyzer {
 
 		}
 		
+		blockPosition++;
 		storyInfo.setNumberOfBlocks(blockPosition);
+		
+		//add Fahnen for the End of the game
+		elements.add(new IllustrationBig(blockPosition,Ressources.ENDINGID));
 		
 		//analyze RenderHint --> are the blocks ok? or are the schemes coming to close in some parts of the story
 		//one Scheme has a minimum size of 16 kacheln
@@ -108,6 +115,15 @@ public class TextAnalyzer {
 		
 		storyInfo.setElements(elements);
 //		db.insertStoryInfoToDatabase(storyInfo);
+		
+		Collections.sort(storyInfo.getElements(), new Comparator<ILevelAppearance>() { //sort the arraylist descending
+	        @Override
+	        public int compare(ILevelAppearance  la1, ILevelAppearance  la2)
+	        {
+	            return  ((Integer)(la1.getBlock())).compareTo((Integer)(la2.getBlock()));
+	        }
+	    });
+		
 		return storyInfo;
 	}
 	

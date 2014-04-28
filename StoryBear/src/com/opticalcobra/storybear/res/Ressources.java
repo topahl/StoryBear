@@ -85,6 +85,7 @@ public class Ressources {
 	
 	public static final int CONTAINERCOLLECTABLE;
 	
+	public static final int ENDINGID = 568;
 	
 	// Cursor
 	public static Cursor CURSORNORMAL;

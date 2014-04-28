@@ -65,6 +65,9 @@ public class DummyRenderer extends Renderer implements IRenderer{
 					currentBlock == storyInfo.getElements().get(elementPointerCurrentTile).getBlock()){
 				freeRide = false;
 			}
+			else if(elementPointerCurrentTile >= storyInfo.getElements().size()){
+				break;
+			}
 		}
 		
 		
