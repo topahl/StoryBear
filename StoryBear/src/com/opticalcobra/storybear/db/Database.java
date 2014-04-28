@@ -539,11 +539,12 @@ public class Database {
 	public List<SuggestionWord> getRandomSuggestioWord(int numberOfWords) {
 		ArrayList<SuggestionWord> words = new ArrayList<SuggestionWord>();
 		try {
-			ResultSet res = query("SELECT IMAGE_ID, WORD FROM Illustration_Object WHERE big = 'true' ORDER BY RAND() LIMIT "+numberOfWords+";");
+			ResultSet res = query("SELECT IMAGE_ID, WORD, BIG FROM Illustration_Object ORDER BY RAND() LIMIT "+numberOfWords+";");
 			while(res.next()) {
 				SuggestionWord s = new SuggestionWord();
 				s.setImageId((Integer) res.getObject("IMAGE_ID"));
 				s.setWord((String) res.getObject("WORD"));
+				s.setBig((Boolean) res.getObject("BIG"));
 				words.add(s);
 			}
 			return words;

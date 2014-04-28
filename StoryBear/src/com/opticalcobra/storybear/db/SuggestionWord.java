@@ -3,7 +3,14 @@ package com.opticalcobra.storybear.db;
 public class SuggestionWord {
 	private int imageId;
 	private String word;
+	private boolean big;
 	
+	public boolean isBig() {
+		return big;
+	}
+	public void setBig(boolean big) {
+		this.big = big;
+	}
 	public int getImageId() {
 		return imageId;
 	}

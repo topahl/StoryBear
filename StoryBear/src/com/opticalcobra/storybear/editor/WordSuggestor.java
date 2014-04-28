@@ -70,7 +70,8 @@ public class WordSuggestor extends JPanel {
 						base.add(strike);
 					}
 					SuggestionWord word = words.get(j+i*4);
-					sugg = new Suggestion(Imagelib.getInstance().loadObjectPic(word.getImageId(), "ilb"), word.getWord());
+					sugg = new Suggestion(Imagelib.getInstance().loadObjectPic(word.getImageId(), (word.isBig()) ? "ilb" : "ils"));
+					sugg.setHorizontalAlignment(JLabel.CENTER);
 					sugg.setBounds((int)(j*(120+40)/Ressources.SCALE), (int)(i*250/Ressources.SCALE), (int)(120/Ressources.SCALE), (int)(240/Ressources.SCALE));
 					sugg.setToolTipText(word.getWord());
 					base.add(sugg);
@@ -81,37 +82,13 @@ public class WordSuggestor extends JPanel {
 		base.setVisible(true);
 	}
 	
-	private class Suggestion extends JLabel implements MouseListener {
+	private class Suggestion extends JLabel {
 		ImageIcon image;
-		String text;
 		
-		public Suggestion(BufferedImage image, String text) {
+		public Suggestion(BufferedImage image) {
 			this.image = new ImageIcon(image);
-			this.text = text;
 			setIcon(this.image);
-			addMouseListener(this);
 		}
-		
-		@Override
-		public void mouseClicked(MouseEvent e) {}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-//			setIcon(null);
-//			setText(text);
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-//			setIcon(image);
-//			setText(null);
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {}
 	}
 	
 	private class Relaoder implements Runnable {
