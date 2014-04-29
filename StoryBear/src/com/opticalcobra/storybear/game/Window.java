@@ -273,7 +273,7 @@ public class Window extends JFrame {
 		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + (Hero.getInstance().getWidth()/2) >= Ressources.RASTERSIZE*5){
 			if (Hero.getInstance().getX()+ (Hero.getInstance().getWidth()/2) == Ressources.RASTERSIZE*5 && !Hero.getInstance().isInRunFreazing()
 					&& stepCounterLayer%Ressources.RASTERSIZE < Ressources.RUNCONSTANT){
-				Hero.getInstance().setQueCounter(Hero.getInstance().getQueCounter()+1);
+//				Hero.getInstance().setQueCounter(Hero.getInstance().getQueCounter()+1);
 			}
 			layerStep();
 		}
