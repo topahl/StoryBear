@@ -48,4 +48,9 @@ public class LoadingPanel extends JDialog {
 	public void update() {
 		bar.setValue(bar.getValue()+1);
 	}
+	
+	public void setVisible(boolean b) {
+		bar.setValue(0);
+		super.setVisible(b);
+	}
 }
