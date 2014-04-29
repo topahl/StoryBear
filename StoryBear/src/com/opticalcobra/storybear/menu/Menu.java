@@ -65,7 +65,7 @@ public class Menu extends JFrame {
 	private Imagelib imagelib;
 	private Database db = new Database();
 	
-	public Menu(boolean firstStart) {
+	public Menu() {
 		imagelib = Imagelib.getInstance(); //database Loading starts
 		
 		// Frame-Settings
@@ -88,7 +88,7 @@ public class Menu extends JFrame {
 		credits = createNewInnerPanel(new Credits());
 		
 		// Set start screen
-		main = (firstStart) ? user : credits;
+		main = (!User.isCurrentUserSet()) ? user : manu;
 		
 		// Navigation
 		initializeUser();
@@ -99,7 +99,7 @@ public class Menu extends JFrame {
 		
 		main.setVisible(true);
 		
-		if(firstStart) {
+		if(!User.isCurrentUserSet()) {
 			navManu.disable();
 			navEditor.disable();
 			navHigh.disable();
@@ -110,8 +110,13 @@ public class Menu extends JFrame {
 		}
 	}
 
+	public Menu(int levelId) {
+		this();
+		((HighscoreList) highscore).showStory(levelId);
+	}
+	
 	public Menu(Loadingscreen ls) {
-		this(true);
+		this();
 		ls.dispose(); //Diable Loading Screen
 	}
 	

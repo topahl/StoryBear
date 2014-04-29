@@ -187,8 +187,8 @@ public class Window extends JFrame {
 		clouds=new GameLayer(rendererCloud);
 		clouds.setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		clouds.setLocation(0, 0); //TODO: -100 entfernen
-		
-				
+
+		Thread.yield();
 		Hero.getInstance().setTileQue(renderer.getTileQue());
 		Hero.getInstance().initHero(heroType);
 		

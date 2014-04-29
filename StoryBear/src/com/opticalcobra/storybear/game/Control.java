@@ -95,17 +95,15 @@ public class Control implements KeyListener, ActionListener {
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
 				| SecurityException | ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
 	
 	public void close(){
-		Menu m = new Menu(false);
+		Menu m = new Menu(window.level.getId());
 		try {
 			window.saveHighscore();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		window.dispose();

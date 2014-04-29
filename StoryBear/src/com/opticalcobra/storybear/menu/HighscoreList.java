@@ -200,4 +200,10 @@ public class HighscoreList extends MenuInnerPanel {
 	     }
 	}
 
+
+	public void showStory(int levelId) {
+		for(int i=0; i<modelSI.size(); i++) 
+			if(modelSI.get(i).getId() == levelId)
+				level.setSelectedIndex(i);
+	}
 }
