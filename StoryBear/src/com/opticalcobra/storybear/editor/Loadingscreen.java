@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 
 import com.opticalcobra.storybear.menu.Menu;
+import com.opticalcobra.storybear.res.Imagelib;
 import com.opticalcobra.storybear.res.MusicPlayer;
 import com.opticalcobra.storybear.res.Ressources;
 
@@ -53,8 +54,9 @@ public class Loadingscreen extends JFrame{
 		BufferedImage temp;
 		try {
 			temp = ImageIO.read(new File(Ressources.RESPATH+Ressources.LOADINGPICTURE));
-			BufferedImage icon = new BufferedImage((int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),BufferedImage.TYPE_INT_ARGB);
-			icon.getGraphics().drawImage(temp, 0, 0, (int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),null);
+//			BufferedImage icon = new BufferedImage((int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),BufferedImage.TYPE_INT_ARGB);
+//			icon.getGraphics().drawImage(temp, 0, 0, (int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),null);
+			BufferedImage icon = Imagelib.getScaledImage(temp, (int)(temp.getWidth()/Ressources.SCALE), (int)(temp.getHeight()/Ressources.SCALE));
 			image.setIcon(new ImageIcon(icon));
 		} catch (IOException e) {
 			e.printStackTrace();

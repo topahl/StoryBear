@@ -1,5 +1,7 @@
 package com.opticalcobra.storybear.res;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -153,8 +155,12 @@ public class Imagelib {
 		try {
 			//load images from file system
 			BufferedImage temp = ImageIO.read(new File(Ressources.RESPATH+graphicName));
-			result = new BufferedImage((int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),BufferedImage.TYPE_INT_ARGB);
-			result.getGraphics().drawImage(temp, 0, 0, (int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),null);
+//			result = new BufferedImage((int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),BufferedImage.TYPE_INT_ARGB);
+//			result.getGraphics().drawImage(temp, 0, 0, (int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE),null);
+//			images.put("img-"+graphicName, result);
+			
+//			return result;
+			result = getScaledImage(temp,(int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE));
 			images.put("img-"+graphicName, result);
 			return result;
 		} catch (IOException e) {
@@ -348,4 +354,25 @@ public class Imagelib {
 		
 	}
 	
+	/**
+	 * scale image
+	 * @param image
+	 * @param width
+	 * @param height
+	 * @return
+	 * @throws IOException
+	 */
+	public static BufferedImage getScaledImage(BufferedImage image, int width, int height) throws IOException {
+	    int imageWidth  = image.getWidth();
+	    int imageHeight = image.getHeight();
+
+	    double scaleX = (double)width/imageWidth;
+	    double scaleY = (double)height/imageHeight;
+	    AffineTransform scaleTransform = AffineTransform.getScaleInstance(scaleX, scaleY);
+	    AffineTransformOp bilinearScaleOp = new AffineTransformOp(scaleTransform, AffineTransformOp.TYPE_BILINEAR);
+
+	    return bilinearScaleOp.filter(
+	        image,
+	        new BufferedImage(width, height, image.getType()));
+	}
 }
