@@ -228,15 +228,18 @@ public class DummyRenderer extends Renderer implements IRenderer{
 
 				//Bilder werden geredert
 				if(elementPointer < storyInfo.getElements().size() && 
-								storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+								storyInfo.getElements().get(elementPointer).getBlock() <= (i + (panelnum-1)*Ressources.TILESPERPANEL)){
 					
 					ILevelAppearance element = (elements.get(elementPointer));
-					if(element instanceof IllustrationBig){
-						element.render(bg, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
-					} 
-					else{
-						element.render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+					if (element.getBlock() == i +(panelnum-1)*Ressources.TILESPERPANEL){
+						if(element instanceof IllustrationBig){
+							element.render(bg, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+						} 
+						else{
+							element.render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+						}
 					}
+					
 					
 					//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
 					if (elementPointer+1 < storyInfo.getElements().size() && 
@@ -246,6 +249,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 						currentTileIds.remove(0);
 					}
 					elementPointer++;
+				} else{
+					currentTileIds.remove(0);
 				}
 			}
 		}

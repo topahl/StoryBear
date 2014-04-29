@@ -31,10 +31,13 @@ public class IllustrationBig implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERFOREGROUNDONE){
-			Point position = db.getObjectPosForeground(tileTypeId, Ressources.CONTAINERILLUSTRATIONBIGID);
-			
-			BufferedImage image = il.loadObjectPic(image_id, "ilb");
-			g.drawImage(image,(((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+			System.out.println(tileTypeId);
+			if ((tileTypeId!=5 && tileTypeId < 23) || tileTypeId == 27){
+				Point position = db.getObjectPosForeground(tileTypeId, Ressources.CONTAINERILLUSTRATIONBIGID);
+				
+				BufferedImage image = il.loadObjectPic(image_id, "ilb");
+				g.drawImage(image,(((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+			}
 		}	
 	}
 
