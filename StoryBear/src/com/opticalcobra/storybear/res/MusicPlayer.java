@@ -32,7 +32,7 @@ public class MusicPlayer {
 			audio = AudioSystem.getAudioInputStream(new File(Ressources.RESPATH+musicFile).getAbsoluteFile());
 			clip = AudioSystem.getClip();
 			clip.open(audio);
-		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+		} catch (IllegalArgumentException | LineUnavailableException | IOException | UnsupportedAudioFileException e) {
 			disabled = true;
 		}
 	}

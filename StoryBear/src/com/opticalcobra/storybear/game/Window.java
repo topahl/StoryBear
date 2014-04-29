@@ -134,7 +134,7 @@ public class Window extends JFrame {
 		BufferedImage[] mute = {Imagelib.getInstance().loadDesignImage("game_sound_normal_mute"),
 				Imagelib.getInstance().loadDesignImage("game_sound_hover_mute"),
 				Imagelib.getInstance().loadDesignImage("game_sound_click_mute")};
-		this.buttonMenu = new MusicButton(normal, mute, Ressources.BUTTONDISTANCE, Ressources.BUTTONDISTANCE);
+		this.buttonMenu = new MusicButton(normal, mute, (int)(Ressources.BUTTONDISTANCE*Ressources.SCALE), (int)(Ressources.BUTTONDISTANCE*Ressources.SCALE));
 		this.baseLayer.add(this.buttonMenu);
 		
 		this.buttonExit = new Button("close",
@@ -142,7 +142,7 @@ public class Window extends JFrame {
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_WHITE),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_GREY),
 				Imagelib.getInstance().menuImage(Imagelib.GAME_BUTTON_EXIT_BLACK),
-				Ressources.BUTTONDISTANCE+2*Ressources.BUTTONSIZE, Ressources.BUTTONDISTANCE
+				(int)((2*Ressources.BUTTONDISTANCE+Ressources.BUTTONSIZE)*Ressources.SCALE), (int)(Ressources.BUTTONDISTANCE*Ressources.SCALE)
 				);
 		this.buttonExit.setFocusable(false);
 		this.buttonExit.addActionListener(controle);

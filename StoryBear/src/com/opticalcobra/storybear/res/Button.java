@@ -47,7 +47,7 @@ public class Button extends JButton {
         setPreferredSize(new Dimension(normal.getWidth(),normal.getHeight()));
         setCursor(Ressources.CURSORCLICKABLE);
         
-        setBounds((int) (x/Ressources.SCALE), (int) (y/Ressources.SCALE), (int) (normal.getWidth()/Ressources.SCALE), (int) (normal.getHeight()/Ressources.SCALE));
+        setBounds((int) (x/Ressources.SCALE), (int) (y/Ressources.SCALE), (int) normal.getWidth(), (int) normal.getHeight());
 	}
 
 	public String getMethod() {
