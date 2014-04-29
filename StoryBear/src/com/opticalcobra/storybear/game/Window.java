@@ -240,7 +240,18 @@ public class Window extends JFrame {
 	}
 	
 	
+	/*
+	 * @author Miriam
+	 */
+	public void checkEnding(){
+		if(Hero.getInstance().checkIfHeroReachedEnding(this.level.getNumberOfBlocks())){
+			controle.close();
+		}
+	}
+	
+	
 	/**
+	 * @throws SQLException 
 	 * 
 	 */
 	public synchronized void step(){
@@ -264,6 +275,7 @@ public class Window extends JFrame {
 			}
 			layerStep();
 		}
+		this.checkEnding();
 		
 		stepCounter++;
 		repaint();

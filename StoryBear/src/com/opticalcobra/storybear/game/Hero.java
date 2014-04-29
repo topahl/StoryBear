@@ -50,6 +50,8 @@ public class Hero extends JLabel{
 
 	private int highscore = 0; 
 	
+	private int currentBlock = 0;
+	
 	private Hero(){
 	}
 
@@ -154,6 +156,7 @@ public class Hero extends JLabel{
 		
 		while (!tileQue.get(queCounter).isWalkable()){
 			queCounter--;
+			this.currentBlock--;
 			counter ++;
 		}
 		
@@ -162,6 +165,7 @@ public class Hero extends JLabel{
 			counter = 0;		
 			while (!tileQue.get(queCounter).isWalkable()){
 				queCounter++;
+				this.currentBlock++;
 				counter ++;
 			}
 			setLocation(super.getLocation().x + (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
@@ -282,6 +286,7 @@ public class Hero extends JLabel{
 			//Befindet sich Hero genau auf einer Kachelgrenze?
 			if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  <= 0){
 					queCounter--;
+					this.currentBlock--;
 					return true;
 			}
 //			if ((((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0 ||
@@ -314,6 +319,7 @@ public class Hero extends JLabel{
 					justSpawned == false){ 
 				
 					queCounter++;
+					this.currentBlock++;
 				return true;
 			}
 		}
@@ -331,6 +337,7 @@ public class Hero extends JLabel{
 		if((currentCounterStep) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
 			
 			queCounter++;
+			this.currentBlock++;
 
 			//Collision with collectables
 			if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
@@ -393,6 +400,17 @@ public class Hero extends JLabel{
 		}
 	}
 	
+	
+	public boolean checkIfHeroReachedEnding(int endingBlock){
+		if(this.currentBlock > endingBlock){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	
+	
 	@Override
 	public Point getLocation(){
 		Point pnt = super.getLocationOnScreen();
@@ -440,4 +458,5 @@ public class Hero extends JLabel{
 	public void setInRunFreazing(boolean inRunFreazing) {
 		this.inRunFreazing = inRunFreazing;
 	}
+
 }
