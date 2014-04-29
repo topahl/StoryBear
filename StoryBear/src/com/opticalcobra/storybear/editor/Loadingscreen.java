@@ -65,7 +65,7 @@ public class Loadingscreen extends JFrame{
 		baseLayer.add(image);
 		this.pack();
 		this.setVisible(true);
-		setAlwaysOnTop(true);
+//		setAlwaysOnTop(true);
 		
 		Menu menu = new Menu(this);
 	}

@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.DefaultListCellRenderer;
@@ -58,14 +59,14 @@ public class UserPanel extends MenuInnerPanel {
         });
         
         JScrollPane scrollpane = new Scrollbar(Ressources.PAGECOLOR);
-        scrollpane.setBounds(Menu.leftPageX, (int)((startY+80)/Ressources.SCALE), (int)(350/Ressources.SCALE), (int)(200/Ressources.SCALE));
+        scrollpane.setBounds(Menu.leftPageX, (int)((startY+60)/Ressources.SCALE), Menu.pageWidth, (int)(540/Ressources.SCALE));
         scrollpane.setBackground(Ressources.PAGECOLOR);
         scrollpane.setForeground(Ressources.PAGECOLOR);
         scrollpane.setBorder(null);
         scrollpane.setViewportView(userlist);
         add(scrollpane);
                 
-        selectUser = new TextButton("Benutzer wählen", Menu.leftPageXUnscaled, startY+300, 300, 60);
+        selectUser = new TextButton("Benutzer wählen", Menu.leftPageXUnscaled, startY+80+530, 300, 60);
         selectUser.setEnabled(false);
         selectUser.addActionListener(new ActionListener() {
 			@Override
@@ -84,7 +85,7 @@ public class UserPanel extends MenuInnerPanel {
         usernameField.setBounds(Menu.rightPageX, (int)((startY+100)/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(60/Ressources.SCALE));
         add(usernameField);
         
-        TextButton addUser = new TextButton("Benutzer anlegen", Menu.rightPageXUnscaled+(int)(320/Ressources.SCALE), (int)((startY+100)/Ressources.SCALE), 300, 60);
+        TextButton addUser = new TextButton("Benutzer anlegen", Menu.rightPageXUnscaled+(int)(320/Ressources.SCALE), (int)((startY+100)/Ressources.SCALE), 280, 60);
 	    addUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -109,6 +110,7 @@ public class UserPanel extends MenuInnerPanel {
 	private void loadUser() {
 		try {
 			list = db.queryUserList();
+			Collections.sort(list);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

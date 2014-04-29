@@ -2,7 +2,7 @@ package com.opticalcobra.storybear.main;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User implements Serializable, Comparable<User>{
 	private static User currentUser;
 	
 	/**
@@ -73,5 +73,10 @@ public class User implements Serializable{
 	
 	public static boolean isCurrentUserSet() {
 		return currentUser != null;
+	}
+
+	@Override
+	public int compareTo(User u) {
+		return getName().compareTo(u.getName());
 	}
 }

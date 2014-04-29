@@ -151,12 +151,13 @@ public class Database {
 	public ArrayList<Story> getAllStoriesFromDatabase(){
 		ArrayList<Story> result = new ArrayList<Story>();
 		try {
-			ResultSet rs = query("Select Object, length from story");
+			ResultSet rs = query("Select Object, length, ID from story");
 			while(rs.next()){
 				
 				java.sql.Blob obj = rs.getBlob("OBJECT");
 				byte[] ba = obj.getBytes(1, rs.getInt("LENGTH"));
 				Story si = (Story)(Blob.read(ba));
+				si.setId(rs.getInt("ID"));
 				result.add(si);
 			}
 		} catch (SQLException e) {

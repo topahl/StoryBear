@@ -113,6 +113,7 @@ public class HighscoreList extends MenuInnerPanel {
 		scrollpane.setOpaque(false);
 		scrollpane.setBackground(new Color(0,0,0,0));
 		scrollpane.setBorder(null);
+		scrollpane.setCursor(Ressources.CURSORCLICKABLE);
 		sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(Ressources.PAGECOLOR);
@@ -145,6 +146,7 @@ public class HighscoreList extends MenuInnerPanel {
 	
 	private void loadStories() {
 		ArrayList<StoryInfo> story = db.getAllStorysFromDatabaseWithIds();
+		Collections.sort(story);
 		modelSI.clear();
 		for(int i=0 ; i<story.size();i++){
 			modelSI.addElement(story.get(i));

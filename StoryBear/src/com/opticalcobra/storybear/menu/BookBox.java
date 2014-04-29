@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -191,10 +192,11 @@ public class BookBox extends JLayeredPane {
 		scrollpane.setOpaque(false);
 		scrollpane.setBackground(new Color(0,0,0,0));
 		scrollpane.setBorder(null);
+		scrollpane.setCursor(Ressources.CURSORCLICKABLE);
 		JScrollBar sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(Ressources.SHELFCOLOR);
-        scrollpane.setBounds((int)(96/Ressources.SCALE),(int)(60/Ressources.SCALE), (int)(1152/Ressources.SCALE), (int)(959/Ressources.SCALE));
+        scrollpane.setBounds((int)(96/Ressources.SCALE),(int)(60/Ressources.SCALE), (int)(1138/Ressources.SCALE), (int)(959/Ressources.SCALE));
         buecherRegal.add(scrollpane);
         levelBuecher.setCellRenderer(new BookRenderer());
         levelBuecher.setOpaque(false);
@@ -217,6 +219,7 @@ public class BookBox extends JLayeredPane {
 	 */
 	private void loadStories() {
 		ArrayList<StoryInfo> story = db.getAllLevelssFromDatabase();
+		Collections.sort(story);
 		model.clear();
 		for(int i=0 ; i<story.size();i++){
 			model.addElement(story.get(i));

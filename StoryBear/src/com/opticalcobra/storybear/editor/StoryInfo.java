@@ -10,7 +10,7 @@ import com.opticalcobra.storybear.main.ILevelAppearance;
  * @author Tobias
  *
  */
-public class StoryInfo implements Serializable{
+public class StoryInfo implements Serializable, Comparable<StoryInfo>{
 	
 	/**
 	 * 
@@ -74,4 +74,8 @@ public class StoryInfo implements Serializable{
 	}
 
 
+	@Override
+	public int compareTo(StoryInfo o) {
+		return getStory().getTitle().compareTo(o.getStory().getTitle());
+	}
 }

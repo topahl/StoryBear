@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.DateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -157,6 +158,7 @@ public class Editor extends MenuInnerPanel {
 	private void loadStories() {
 		storyListModel.clear();
 		List<Story> stories = db.getAllStoriesFromDatabase();
+		Collections.sort(stories);
 		for(Story s : stories) {
 			storyListModel.addElement(s);
 		}

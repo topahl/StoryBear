@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.opticalcobra.storybear.main.User;
 
-public class Story implements Serializable{
+public class Story implements Serializable, Comparable<Story>{
 	
 	private static final long serialVersionUID = 4223589285497566422L;
 	private String title;
@@ -80,5 +80,11 @@ public class Story implements Serializable{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	@Override
+	public int compareTo(Story o) {
+		return getTitle().compareTo(o.getTitle());
 	}
 }

@@ -214,8 +214,6 @@ public class Menu extends JFrame {
 	
 	private void initializeLoadingBox() {
 		loading = new LoadingPanel();
-//		loading.setVisible(false);
-//		getContentPane().add(loading);
 	}
 	
 	private void initializeFrame() {

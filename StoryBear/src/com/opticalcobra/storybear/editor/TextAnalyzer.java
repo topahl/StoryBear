@@ -119,7 +119,7 @@ public class TextAnalyzer {
 		//end of analyzing RenderHint
 		
 		storyInfo.setElements(elements);
-//		db.insertStoryInfoToDatabase(storyInfo);
+//		db.insertStoryInfoToDatabase(storyInfo);	//TODO: einkommentieren
 		
 		Collections.sort(storyInfo.getElements(), new Comparator<ILevelAppearance>() { //sort the arraylist descending
 	        @Override
