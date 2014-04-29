@@ -55,7 +55,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		blockInPanel = blockInPanel + ((panelnum-1)*Ressources.TILESPERPANEL);
 		
-		if (!(storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character) && blockInPanel != 0){
+		if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&!(storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character) && blockInPanel != 0){
 			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 			next = following[rand.nextInt(following.length)];
 			lastTileType = next;
@@ -66,7 +66,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		
 		
-		if (storyInfo.getElements().get(nextCurrentElementPointer).getBlock() > blockInPanel){
+		if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer).getBlock() > blockInPanel){
 			freeRideCounterStep = storyInfo.getElements().get(nextCurrentElementPointer).getBlock() - blockInPanel +1;
 			if ((blockInPanel+1) % Ressources.TILESPERPANEL == 0){
 				freeRideCounterStep--;
@@ -76,7 +76,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 	//The first tile has to be 0
 		if (blockInPanel>0){
-			if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && freeRideCounterStep==0){
+			if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && freeRideCounterStep==0){
 				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 				next = following[rand.nextInt(following.length)];
 				
@@ -204,6 +204,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				g.drawImage(getNextMapElement(elementPointer+currentElementCounter, i),i*Ressources.RASTERSIZE,0,null);
 
 				while (storyInfo.getElements().size() > (elementPointer+currentElementCounter)&&
+						(storyInfo.getElements().size() > (elementPointer+currentElementCounter+1))&&  
 						storyInfo.getElements().get(elementPointer+currentElementCounter).getBlock() == storyInfo.getElements().get(elementPointer+currentElementCounter+1).getBlock()){
 					currentElementCounter++;
 				}
