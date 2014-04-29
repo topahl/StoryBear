@@ -100,9 +100,14 @@ public class Control implements KeyListener, ActionListener {
 		}
 	}
 	
-	public void close() throws SQLException {
+	public void close(){
 		Menu m = new Menu(false);
-		window.saveHighscore();
+		try {
+			window.saveHighscore();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		window.dispose();
 	}
 	
