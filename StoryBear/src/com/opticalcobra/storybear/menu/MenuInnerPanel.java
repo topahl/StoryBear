@@ -80,7 +80,7 @@ public class MenuInnerPanel extends JLayeredPane {
 		text.setFocusable(false);
 		text.setOpaque(false);
 		text.setEditable(false);
-		text.setFont(Menu.fontHeadline[2]);
+		text.setFont(Menu.fontHeadline[3]);
 		text.setForeground(Color.black);
 		return text;
 	}
@@ -91,7 +91,7 @@ public class MenuInnerPanel extends JLayeredPane {
 	 */
 	protected JLabel generateStandardLabel() {
 		JLabel label = new JLabel();
-		label.setFont(Menu.fontHeadline[0]);
+		label.setFont(Menu.fontHeadline[1]);
 		label.setForeground(Color.black);
 		return label;
 	}

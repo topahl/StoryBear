@@ -74,7 +74,7 @@ public class HighscoreList extends MenuInnerPanel {
 		JScrollBar sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(Ressources.PAGECOLOR);
-        scrollpane.setBounds(Menu.rightPageX, (int)(190/Ressources.SCALE), Menu.pageWidth, (int)(500/Ressources.SCALE));
+        scrollpane.setBounds(Menu.rightPageX, (int)(190/Ressources.SCALE), Menu.pageWidth, (int)(600/Ressources.SCALE));
         add(scrollpane, javax.swing.JLayeredPane.DEFAULT_LAYER);
      
         
@@ -117,7 +117,7 @@ public class HighscoreList extends MenuInnerPanel {
 		sb = scrollpane.getVerticalScrollBar();
 		sb.setPreferredSize(new Dimension(30,0));
         sb.setBackground(Ressources.PAGECOLOR);
-        scrollpane.setBounds(Menu.leftPageX, (int)(190/Ressources.SCALE), Menu.pageWidth, (int)(500/Ressources.SCALE));
+        scrollpane.setBounds(Menu.leftPageX, (int)(190/Ressources.SCALE), Menu.pageWidth, (int)(600/Ressources.SCALE));
         add(scrollpane);
 	}
 	

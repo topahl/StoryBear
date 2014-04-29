@@ -197,7 +197,7 @@ public class Editor extends MenuInnerPanel {
 			}
 		});
         JScrollPane scrollpane = new Scrollbar(Ressources.PAGECOLOR);
-        scrollpane.setBounds(Menu.leftPageX, (int)(140/Ressources.SCALE), Menu.pageWidth, (int)(300/Ressources.SCALE));
+        scrollpane.setBounds(Menu.leftPageX, (int)(140/Ressources.SCALE), Menu.pageWidth, (int)(590/Ressources.SCALE));
         scrollpane.setBackground(Ressources.PAGECOLOR);
         scrollpane.setForeground(Ressources.PAGECOLOR);
         scrollpane.setBorder(null);
@@ -223,7 +223,7 @@ public class Editor extends MenuInnerPanel {
 		baseLayerStart.add(titleStart);
         
         // Edit-Button
-        editButton = new TextButton("Bearbeiten", Menu.rightPageXUnscaled, 300, 250, 60);
+        editButton = new TextButton("Bearbeiten", Menu.rightPageXUnscaled, 300, 290, 60);
         editButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -234,7 +234,7 @@ public class Editor extends MenuInnerPanel {
         baseLayerStart.add(editButton);
         
         // new Story
- 		renderButton = new TextButton("Rendern", Menu.rightPageXUnscaled + 250 + 50, 300, 250, 60);
+ 		renderButton = new TextButton("Rendern", Menu.rightPageXUnscaled + 290 + 20, 300, 290, 60);
  		renderButton.addActionListener(new ActionListener() {
  			@Override
  			public void actionPerformed(ActionEvent arg0) {
@@ -266,7 +266,7 @@ public class Editor extends MenuInnerPanel {
  		baseLayerStart.add(renderButton);
         
         // Import-Button
-		TextButton importButton = new TextButton("Importieren", Menu.leftPageXUnscaled, 450, 250, 60);
+		TextButton importButton = new TextButton("Importieren", Menu.leftPageXUnscaled, 760, 290, 60);
 		importButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -292,7 +292,7 @@ public class Editor extends MenuInnerPanel {
 		baseLayerStart.add(importButton);
 		
 		// new Story
-		TextButton newButton = new TextButton("Neue Geschichte", Menu.leftPageXUnscaled + 250 + 50, 450, 250, 60);
+		TextButton newButton = new TextButton("Neue Geschichte", Menu.leftPageXUnscaled + 290 + 20, 760, 290, 60);
 		newButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -339,7 +339,7 @@ public class Editor extends MenuInnerPanel {
 		
 		// Scrollpane
 		scrollpaneEditMode = new Scrollbar(Ressources.PAGECOLOR);
-		scrollpaneEditMode.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE)+30, (int)(800/Ressources.SCALE));
+		scrollpaneEditMode.setBounds((int)((1100-350)/Ressources.SCALE), (int)(10/Ressources.SCALE), (int)(600/Ressources.SCALE), (int)(820/Ressources.SCALE));
 		scrollpaneEditMode.setBackground(Ressources.PAGECOLOR);
 		scrollpaneEditMode.setForeground(Ressources.PAGECOLOR);
 		scrollpaneEditMode.setBorder(null);
@@ -352,7 +352,7 @@ public class Editor extends MenuInnerPanel {
 		editorEditMode.setLineWrap(true);
 		editorEditMode.setWrapStyleWord(true);
 		editorEditMode.setForeground(Color.black);
-		editorEditMode.setFont(Menu.fontText[0]);
+		editorEditMode.setFont(Menu.fontHeadline[3]);
 		
 		// Author
 		authorEditMode = new JLabel();

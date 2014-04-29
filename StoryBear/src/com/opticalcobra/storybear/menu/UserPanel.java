@@ -40,7 +40,7 @@ public class UserPanel extends MenuInnerPanel {
 		addMenuHeadlineUnderlining();
 		
 		JTextArea textUsername = generateStandardTextArea();
-		textUsername.setBounds(Menu.leftPageX, (int)(startY/Ressources.SCALE), Menu.pageWidth, (int)(100/Ressources.SCALE));
+		textUsername.setBounds(Menu.leftPageX, (int)(startY/Ressources.SCALE), Menu.pageWidth, (int)(65/Ressources.SCALE));
 		textUsername.setText("Melde dich mit deinem Nutzernamen an.");
         add(textUsername);
         
@@ -66,7 +66,7 @@ public class UserPanel extends MenuInnerPanel {
         scrollpane.setViewportView(userlist);
         add(scrollpane);
                 
-        selectUser = new TextButton("Benutzer wählen", Menu.leftPageXUnscaled, startY+80+530, 300, 60);
+        selectUser = new TextButton("Benutzer wählen", Menu.leftPageXUnscaled, 760, 300, 60);
         selectUser.setEnabled(false);
         selectUser.addActionListener(new ActionListener() {
 			@Override
