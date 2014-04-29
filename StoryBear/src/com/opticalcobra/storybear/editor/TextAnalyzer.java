@@ -118,16 +118,18 @@ public class TextAnalyzer {
 		}
 		//end of analyzing RenderHint
 		
-		storyInfo.setElements(elements);
-//		db.insertStoryInfoToDatabase(storyInfo);	//TODO: einkommentieren
 		
-		Collections.sort(storyInfo.getElements(), new Comparator<ILevelAppearance>() { //sort the arraylist descending
+		
+		Collections.sort(elements, new Comparator<ILevelAppearance>() { //sort the arraylist descending
 	        @Override
 	        public int compare(ILevelAppearance  la1, ILevelAppearance  la2)
 	        {
 	            return  ((Integer)(la1.getBlock())).compareTo((Integer)(la2.getBlock()));
 	        }
 	    });
+		
+		storyInfo.setElements(elements);
+		db.insertStoryInfoToDatabase(storyInfo);	//TODO: einkommentieren
 		
 		return storyInfo;
 	}
