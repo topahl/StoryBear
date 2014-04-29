@@ -111,6 +111,8 @@ public class RendererFG2 extends Renderer implements IRenderer {
 					currentTileIds.remove(0);
 				}
 				elementPointer++;
+			} else{
+				currentTileIds.remove(0);
 			}
 		}
 	
