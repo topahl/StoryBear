@@ -220,6 +220,7 @@ public class Window extends JFrame {
 	 * @author Martika
 	 */
 	private void layerStep(){
+
 		fg1.step();
 		fg2.step();
 		ia.step();
@@ -231,7 +232,7 @@ public class Window extends JFrame {
 		if(stepCounterLayer % 6 == 0){
 			clouds.step();
 		}
-		
+		Hero.getInstance().setInRunFreazing(true);
 		Hero.getInstance().runFreazing(stepCounterLayer);
 		this.labelScore.setText(((Integer)(Hero.getInstance().getHighscore())).toString());
 		
@@ -257,9 +258,11 @@ public class Window extends JFrame {
 		Hero.getInstance();
 		//Hero klebt an der unsichtbaren Wand an Kachel 5
 		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + (Hero.getInstance().getWidth()/2) >= Ressources.RASTERSIZE*5){
-			if (Hero.getInstance().isHeroAllowedToWalk()){
-				layerStep();
+			if (Hero.getInstance().getX()+ (Hero.getInstance().getWidth()/2) == Ressources.RASTERSIZE*5 && !Hero.getInstance().isInRunFreazing()
+					&& stepCounterLayer%Ressources.RASTERSIZE < Ressources.RUNCONSTANT){
+				Hero.getInstance().setQueCounter(Hero.getInstance().getQueCounter()+1);
 			}
+			layerStep();
 		}
 		
 		stepCounter++;

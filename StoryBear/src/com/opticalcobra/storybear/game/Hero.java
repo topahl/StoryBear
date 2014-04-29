@@ -28,6 +28,10 @@ public class Hero extends JLabel{
 	
 
 	private LinkedList<TileResult> tileQue;
+	public LinkedList<TileResult> getTileQue() {
+		return tileQue;
+	}
+
 	private Imagelib imageLib = Imagelib.getInstance();
 	
 	private char type; 		//shows which kind of hero it is, eg. bear, ...
@@ -35,7 +39,8 @@ public class Hero extends JLabel{
 	//Jump Attributes
 	private boolean inADoubleJump = false;
 	private double jumpSpeed = 0;
-	
+	private boolean inRunFreazing = false;
+	private boolean justSpawned = false;
 	
 	
 	//Run attributes
@@ -117,11 +122,13 @@ public class Hero extends JLabel{
 		if (isInAJump()){
 			jump();
 			if(runDirection != 'n'){
+				justSpawned = false;
 				run(stepCounterLayer);
 			}
 		} else{
 			if(runDirection == 'r' && tileQue.get(queCounter).isWalkable()  ||  runDirection == 'l' && tileQue.get(queCounter).isWalkable()){
 				run(stepCounterLayer);
+				justSpawned = false;
 			}
 		}
 		
@@ -140,7 +147,8 @@ public class Hero extends JLabel{
 		this.highscore -= Ressources.SCOREDECREASEAFTERMISTAKE;
 		if(this.highscore < 0)
 			this.highscore = 0;
-
+		
+		inRunFreazing = false;
 		
 		int counter = 0;
 		
@@ -160,6 +168,7 @@ public class Hero extends JLabel{
 		} else{
 			setLocation(super.getLocation().x - (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
 		}
+		justSpawned = true;
 	}
 
 	/**
@@ -228,7 +237,8 @@ public class Hero extends JLabel{
 		}
 		
 		if(runDirection == 'l'){
-			if (posX > 0){
+			setInRunFreazing(false);
+			if (posX  > 0){
 				posX -= (int) runConstant;
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant)){
@@ -241,13 +251,15 @@ public class Hero extends JLabel{
 		}
 
 		else if(runDirection == 'r'){
-			if (posX < Ressources.RASTERSIZE*5){
+			if (posX + (width/2) < Ressources.RASTERSIZE*5){
 				posX += (int) runConstant;	
 			}
-			if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant)){
-				if(!isInAJump()){
-					if(tileQue.get(queCounter).isWalkable()){
-						setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+			if (!inRunFreazing){
+				if (checkIfHeroReachsANewTileByWalkingRight(stepCounterLayer, runConstant)){
+					if(!isInAJump()){
+						if(tileQue.get(queCounter).isWalkable()){
+							setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
+						}
 					}
 				}
 			}
@@ -266,27 +278,11 @@ public class Hero extends JLabel{
 	public boolean checkIfHeroReachsANewTileByWalkingLeft(int stepCounterLayer, double runConstant){
 		//Ringbuffer für die Tiles aktuallisieren   
 		if (getLocation().x < Ressources.RASTERSIZE*5  ){
-			
-			//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
-			if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
-				
-				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if ((Ressources.RASTERSIZE - (getLocation().x % Ressources.RASTERSIZE)) - runConstant  <= 0 ){
-					if (queCounter>0){
-						queCounter--;
-					}
-					return true;
-				}
-			}
-			
-			//Der Foreground hat sich um keine ganze Kachel verschoben
-			 else{ 
 				 
-				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
-						queCounter--;
-						return true;
-				}
+			//Befindet sich Hero genau auf einer Kachelgrenze?
+			if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
+					queCounter--;
+					return true;
 			}
 		} 
 		return false;
@@ -301,29 +297,18 @@ public class Hero extends JLabel{
 	 * @param runConstant
 	 */
 	public boolean checkIfHeroReachsANewTileByWalkingRight(int stepCounterLayer, double runConstant){
-		//Ringbuffer für die Tiles aktuallisieren    
+
 		if (getLocation().x < Ressources.RASTERSIZE*5){
-			
-			//Wenn sich der Foreground um eine ganze Kachel oder noch gar nicht verschoben hat
-			if ((stepCounterLayer % Ressources.RASTERSIZE) == 0){
+	
+			if ((((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0 ||
+					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && 
+							stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0)) &&
+					justSpawned == false){ 
 				
-				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if ((getLocation().x % Ressources.RASTERSIZE) - runConstant < 0){
 					queCounter++;
-					return true;
-				}
-			}	
-			
-			//Der Foreground hat sich um keine ganze Kachel verschoben
-			 else{
-				 
-				//Befindet sich Hero genau auf einer Kachelgrenze?
-				if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0){
-					queCounter++;
-					return true;
-				}
+				return true;
 			}
-		} 
+		}
 		return false;
 	}
 	
@@ -335,7 +320,7 @@ public class Hero extends JLabel{
 	 * @param direction 
 	 */
 	public void runFreazing(int currentCounterStep){
-		if((currentCounterStep + (width/2)) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
+		if((currentCounterStep) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
 			
 			queCounter++;
 
@@ -352,9 +337,6 @@ public class Hero extends JLabel{
 			}
 			
 			this.highscore += Ressources.SCOREPOINTSFORRUNNING;
-//			if (!isInAJump()){
-//				setLocation(super.getLocation().x, tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT);
-//			}
 		}
 	}
 	
@@ -395,6 +377,9 @@ public class Hero extends JLabel{
 			return false;
 		}
 		else {
+			if (jumpSpeed == 0 && getLocation().y == tileQue.get(queCounter-1).getTileHeight() - Ressources.CHARACTERHEIGHT){
+				return false;
+			}
 			//falling down
 			return true;
 		}
@@ -402,7 +387,7 @@ public class Hero extends JLabel{
 	
 	@Override
 	public Point getLocation(){
-		Point pnt = super.getLocation();
+		Point pnt = super.getLocationOnScreen();
 		pnt.setLocation(pnt.x+(width/2), pnt.y);
 		return pnt;
 	}
@@ -438,5 +423,13 @@ public class Hero extends JLabel{
 	
 	public int getWidth() {
 		return width;
+	}
+
+	public boolean isInRunFreazing() {
+		return inRunFreazing;
+	}
+
+	public void setInRunFreazing(boolean inRunFreazing) {
+		this.inRunFreazing = inRunFreazing;
 	}
 }
