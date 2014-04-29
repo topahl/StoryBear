@@ -203,10 +203,12 @@ public class DummyRenderer extends Renderer implements IRenderer{
 			for(int i=0;i<Ressources.TILESPERPANEL;i++){
 				g.drawImage(getNextMapElement(elementPointer+currentElementCounter, i),i*Ressources.RASTERSIZE,0,null);
 
-				while (storyInfo.getElements().get(elementPointer+currentElementCounter).getBlock() == storyInfo.getElements().get(elementPointer+currentElementCounter+1).getBlock()){
+				while (storyInfo.getElements().size() > (elementPointer+currentElementCounter)&&
+						storyInfo.getElements().get(elementPointer+currentElementCounter).getBlock() == storyInfo.getElements().get(elementPointer+currentElementCounter+1).getBlock()){
 					currentElementCounter++;
 				}
-				while (i+ ((panelnum-1)*Ressources.TILESPERPANEL) <storyInfo.getElements().get(elementPointer+currentElementCounter).getBlock()){
+				while (storyInfo.getElements().size() > (elementPointer+currentElementCounter)&&
+						i+ ((panelnum-1)*Ressources.TILESPERPANEL) <storyInfo.getElements().get(elementPointer+currentElementCounter).getBlock()){
 					currentElementCounter--;
 				}
 				
