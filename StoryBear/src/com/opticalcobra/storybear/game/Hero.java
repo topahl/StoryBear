@@ -156,6 +156,7 @@ public class Hero extends JLabel{
 		
 		while (!tileQue.get(queCounter).isWalkable()){
 			queCounter--;
+			this.currentBlock--;
 			counter ++;
 		}
 		
