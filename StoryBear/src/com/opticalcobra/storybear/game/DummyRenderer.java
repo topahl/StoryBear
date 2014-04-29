@@ -207,7 +207,9 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bgimage = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
+		Graphics2D bg = (Graphics2D) bgimage.getGraphics();
 		if(storyInfo.getElements().size() > elementPointer){
 			for(int i=0;i<Ressources.TILESPERPANEL;i++){
 				g.drawImage(getNextMapElement(storyInfo.getElements().get(elementPointer).getBlock()+i),i*Ressources.RASTERSIZE,0,null);
@@ -223,8 +225,13 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				if(elementPointer < storyInfo.getElements().size() && 
 								storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
 					
-					
-					(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+					ILevelAppearance element = (elements.get(elementPointer));
+					if(element instanceof IllustrationBig){
+						element.render(bg, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+					} 
+					else{
+						element.render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+					}
 					
 					//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
 					if (elementPointer+1 < storyInfo.getElements().size() && 
@@ -240,9 +247,9 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	
 		if(DebugSettings.fg1panelnum)
 			renderText(g,50, panelnum+"", 20, 40);
-
 		
-		pane.setIcon(new ImageIcon(image));
+		bg.drawImage(image, 0, 0, null);
+		pane.setIcon(new ImageIcon(bgimage));
 	}
 	
 	public LinkedList<TileResult> getTileQue() {
