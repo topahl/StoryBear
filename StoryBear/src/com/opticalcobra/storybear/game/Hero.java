@@ -280,10 +280,18 @@ public class Hero extends JLabel{
 		if (getLocation().x < Ressources.RASTERSIZE*5  ){
 				 
 			//Befindet sich Hero genau auf einer Kachelgrenze?
-			if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  <= 0 ){
+			if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  <= 0){
 					queCounter--;
 					return true;
 			}
+//			if ((((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0 ||
+//					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && 
+//							stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0)) &&
+//					justSpawned == false){ 
+//				
+//					queCounter++;
+//				return true;
+//			}
 		} 
 		return false;
 	}

@@ -1,7 +1,7 @@
 package com.opticalcobra.storybear.debug;
 
 public class DebugSettings {
-	static boolean vg1 = true;
+	static boolean vg1 = false;
 	public static boolean fg1panelnum = vg1;
     public static boolean fg1panelborder = vg1;
     public static boolean fg1tilenum = vg1;
