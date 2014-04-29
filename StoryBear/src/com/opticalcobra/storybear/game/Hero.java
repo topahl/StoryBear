@@ -301,7 +301,8 @@ public class Hero extends JLabel{
 		if (getLocation().x < Ressources.RASTERSIZE*5){
 	
 			if ((((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0 ||
-					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && stepCounterLayer% Ressources.RASTERSIZE != 0)) &&
+					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && 
+							stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0)) &&
 					justSpawned == false){ 
 				
 					queCounter++;
