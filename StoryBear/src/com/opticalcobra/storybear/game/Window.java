@@ -18,6 +18,7 @@ import com.opticalcobra.storybear.debug.Debugger;
 import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.main.User;
+import com.opticalcobra.storybear.menu.LoadingPanel;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -64,6 +65,7 @@ public class Window extends JFrame {
 	}
 	
 	public Window(int level_num, char heroType){
+	
 		this.level = new Database().getStoryInfoFromDatabase(level_num);
 		this.level.setId(level_num);
 		this.heroType = heroType;
@@ -96,7 +98,7 @@ public class Window extends JFrame {
 	 */
 	private void initComponents() {
 		
-		rtw= RenderThreadWrapper.getInstance();
+		rtw= RenderThreadWrapper.getInstance(new LoadingPanel("Laden..."));
 		//create remderer
 		renderer = new DummyRenderer(level);
 		rendererfg2 = new RendererFG2(renderer.getTileQue(), level); //renderer.getRingbuffer(), 
@@ -279,5 +281,11 @@ public class Window extends JFrame {
 		
 		stepCounter++;
 		repaint();
+	}
+	
+	public void dispose() {
+		Hero.getInstance().cleanup();
+		rtw.cleanup();
+		super.dispose();
 	}
 }

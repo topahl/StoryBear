@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 public class LoadingPanel extends JDialog {
 	JProgressBar bar;
 	
-	public LoadingPanel() {
+	public LoadingPanel(String text) {
 		setUndecorated(true);
 		setBackground(new Color(0, 0, 0, 0.6f));
 		getContentPane().setLayout(null);
@@ -24,7 +24,7 @@ public class LoadingPanel extends JDialog {
 //		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setModal(true);
 		
-		JLabel textLade = new JLabel("Rendern...");
+		JLabel textLade = new JLabel(text);
 		textLade.setHorizontalAlignment(SwingConstants.CENTER);
 		textLade.setFont(FontCache.getInstance().getFont("Fontin_R", 45f));
 		textLade.setForeground(Color.white);
@@ -40,6 +40,9 @@ public class LoadingPanel extends JDialog {
 	
 	public void setMaximum(int max) {
 		bar.setMaximum(max);
+	}
+	public void setValue(int v) {
+		bar.setValue(v);
 	}
 	
 	public void update() {

@@ -213,7 +213,7 @@ public class Menu extends JFrame {
 	}
 	
 	private void initializeLoadingBox() {
-		loading = new LoadingPanel();
+		loading = new LoadingPanel("Rendern...");
 	}
 	
 	private void initializeFrame() {

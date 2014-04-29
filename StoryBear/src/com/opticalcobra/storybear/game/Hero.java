@@ -459,4 +459,8 @@ public class Hero extends JLabel{
 		this.inRunFreazing = inRunFreazing;
 	}
 
+	public void cleanup() {
+		hero = null;
+	}
+
 }
