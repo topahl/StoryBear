@@ -100,7 +100,8 @@ public class Imagelib {
 		
 		//cut images to fit
 		full=loadRessourcesImage(image.getUrl());
-		result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+//		result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+		result = cutAndScaleImage(full, image);
 		images.put("map-"+image.getId(), result);
 		return result;
 	}
@@ -129,7 +130,8 @@ public class Imagelib {
 			
 			//cut images to fit
 			full=loadRessourcesImage(image.getUrl());
-			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+//			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+			result = cutAndScaleImage(full, image);
 			images.put("hero-"+image.getId(), result);
 			return result;
 		}  
@@ -160,9 +162,9 @@ public class Imagelib {
 //			images.put("img-"+graphicName, result);
 			
 //			return result;
-			result = getScaledImage(temp,(int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE));
-			images.put("img-"+graphicName, result);
-			return result;
+//			result = getScaledImage(temp,(int)(temp.getWidth()/Ressources.SCALE),(int)(temp.getHeight()/Ressources.SCALE));
+			images.put("img-"+graphicName, temp);
+			return temp;
 		} catch (IOException e) {
 			//images nicht gefunden
 			throw new ImageNotFoundException("Could not find an Image for:'"+graphicName+"' on file System", e);
@@ -189,7 +191,8 @@ public class Imagelib {
 		try {
 			image = db.queryImagedata(image_id);
 			full=loadRessourcesImage(image.getUrl());
-			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+//			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+			result = cutAndScaleImage(full, image);
 			images.put(prefix+"-"+image_id, result);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -221,7 +224,8 @@ public class Imagelib {
 			
 			//cut images to fit
 			full = loadRessourcesImage(image.getUrl());
-			result = full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+//			result = getScaledImage(full.g/etSubimage(image.getX(),image.getY(),image.getWidth(), image.getHeight()), (int) (image.getWidth()/Ressources.SCALE),(int)(image.getHeight()/Ressources.SCALE));
+			result = cutAndScaleImage(full, image);
 			images.put("design-"+image.getId(), result);
 			
 			return result;
@@ -344,7 +348,8 @@ public class Imagelib {
 		try {
 			image = db.queryImagedata(type);
 			full=loadRessourcesImage(image.getUrl());
-			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+//			result=full.getSubimage((int)(image.getX()/Ressources.SCALE),(int) (image.getY()/Ressources.SCALE),(int) (image.getWidth()/Ressources.SCALE),(int) (image.getHeight()/Ressources.SCALE));
+			result = cutAndScaleImage(full, image);
 			images.put("menu-"+type, result);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -354,6 +359,13 @@ public class Imagelib {
 		
 	}
 	
+	
+	private BufferedImage cutAndScaleImage(BufferedImage img, ImageResult image){
+		BufferedImage result = getScaledImage(img.getSubimage(image.getX(),image.getY(),image.getWidth(), image.getHeight()), (int) (image.getWidth()/Ressources.SCALE),(int)(image.getHeight()/Ressources.SCALE));
+		return result;
+	}
+	
+	
 	/**
 	 * scale image
 	 * @param image
@@ -362,7 +374,7 @@ public class Imagelib {
 	 * @return
 	 * @throws IOException
 	 */
-	public static BufferedImage getScaledImage(BufferedImage image, int width, int height) throws IOException {
+	public static BufferedImage getScaledImage(BufferedImage image, int width, int height){
 	    int imageWidth  = image.getWidth();
 	    int imageHeight = image.getHeight();
 
