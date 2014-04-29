@@ -165,6 +165,7 @@ public class Hero extends JLabel{
 			counter = 0;		
 			while (!tileQue.get(queCounter).isWalkable()){
 				queCounter++;
+				this.currentBlock++;
 				counter ++;
 			}
 			setLocation(super.getLocation().x + (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
