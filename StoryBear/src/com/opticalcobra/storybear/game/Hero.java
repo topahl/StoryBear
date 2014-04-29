@@ -41,6 +41,7 @@ public class Hero extends JLabel{
 	private double jumpSpeed = 0;
 	private boolean inRunFreazing = false;
 	private boolean justSpawned = false;
+	private boolean walkinLeft = false;
 	
 	
 	//Run attributes
@@ -252,6 +253,7 @@ public class Hero extends JLabel{
 					}
 				}
 			}
+			walkinLeft = true;
 		}
 
 		else if(runDirection == 'r'){
@@ -267,6 +269,7 @@ public class Hero extends JLabel{
 					}
 				}
 			}
+			walkinLeft = false;
 		}
 		this.setLocation(posX, this.getLocation().y);
 	}
@@ -281,22 +284,19 @@ public class Hero extends JLabel{
 	 */
 	public boolean checkIfHeroReachsANewTileByWalkingLeft(int stepCounterLayer, double runConstant){
 		//Ringbuffer für die Tiles aktuallisieren   
-		if (getLocation().x < Ressources.RASTERSIZE*5  ){
+		if (getLocation().x < Ressources.RASTERSIZE*5 && walkinLeft){
 				 
 			//Befindet sich Hero genau auf einer Kachelgrenze?
 			if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  <= 0){
+//					&& Ressources.RASTERSIZE*5 - getLocation().x > Ressources.RASTERSIZE - 2 *runConstant){
+//				&& Ressources.RASTERSIZE*5 - getLocation().x < stepCounterLayer% Ressources.RASTERSIZE){
+//				if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  == 0 &&
+//						stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0){
 					queCounter--;
 					this.currentBlock--;
 					return true;
+//				}
 			}
-//			if ((((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0 ||
-//					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && 
-//							stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0)) &&
-//					justSpawned == false){ 
-//				
-//					queCounter++;
-//				return true;
-//			}
 		} 
 		return false;
 	}

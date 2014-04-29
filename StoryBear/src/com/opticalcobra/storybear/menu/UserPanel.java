@@ -42,7 +42,7 @@ public class UserPanel extends MenuInnerPanel {
 		JTextArea textUsername = generateStandardTextArea();
 		textUsername.setBounds(Menu.leftPageX, (int)(startY/Ressources.SCALE), Menu.pageWidth, (int)(65/Ressources.SCALE));
 		textUsername.setText("Melde dich mit deinem Nutzernamen an.");
-        add(textUsername);
+        //add(textUsername);
         
         userlist = new JList(new UserList());
         userlist.setCellRenderer(new UserListCellRenderer());
@@ -65,6 +65,7 @@ public class UserPanel extends MenuInnerPanel {
         scrollpane.setBorder(null);
         scrollpane.setViewportView(userlist);
         add(scrollpane);
+        add(textUsername);
                 
         selectUser = new TextButton("Benutzer wählen", Menu.leftPageXUnscaled, 760, 300, 60);
         selectUser.setEnabled(false);
@@ -78,14 +79,14 @@ public class UserPanel extends MenuInnerPanel {
         
         textUsername = generateStandardTextArea();
         textUsername.setText("Du hast noch keinen Nutzernamen? Leg dir hier einen neuen an.");
-        textUsername.setBounds(Menu.rightPageX, startY, Menu.pageWidth, (int)(100/Ressources.SCALE));
+        textUsername.setBounds(Menu.rightPageX, (int)(startY/Ressources.SCALE), Menu.pageWidth, (int)(100/Ressources.SCALE));
         add(textUsername);
         
         usernameField = generateStandardTextField();
         usernameField.setBounds(Menu.rightPageX, (int)((startY+100)/Ressources.SCALE), (int)(300/Ressources.SCALE), (int)(60/Ressources.SCALE));
         add(usernameField);
         
-        TextButton addUser = new TextButton("Benutzer anlegen", Menu.rightPageXUnscaled+(int)(320/Ressources.SCALE), (int)((startY+100)/Ressources.SCALE), 280, 60);
+        TextButton addUser = new TextButton("Benutzer anlegen", Menu.rightPageXUnscaled+320, startY+100, 280, 60);
 	    addUser.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
