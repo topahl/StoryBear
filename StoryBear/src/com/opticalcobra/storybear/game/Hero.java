@@ -40,6 +40,7 @@ public class Hero extends JLabel{
 	private boolean inADoubleJump = false;
 	private double jumpSpeed = 0;
 	private boolean inRunFreazing = false;
+	private boolean justSpawned = false;
 	
 	
 	//Run attributes
@@ -121,11 +122,13 @@ public class Hero extends JLabel{
 		if (isInAJump()){
 			jump();
 			if(runDirection != 'n'){
+				justSpawned = false;
 				run(stepCounterLayer);
 			}
 		} else{
 			if(runDirection == 'r' && tileQue.get(queCounter).isWalkable()  ||  runDirection == 'l' && tileQue.get(queCounter).isWalkable()){
 				run(stepCounterLayer);
+				justSpawned = false;
 			}
 		}
 		
@@ -161,10 +164,11 @@ public class Hero extends JLabel{
 				queCounter++;
 				counter ++;
 			}
-			setLocation(super.getLocation().x + (counter * Ressources.RASTERSIZE)-(Ressources.RUNCONSTANT), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
+			setLocation(super.getLocation().x + (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
 		} else{
-			setLocation(super.getLocation().x - (counter * Ressources.RASTERSIZE)+(Ressources.RUNCONSTANT), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
+			setLocation(super.getLocation().x - (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
 		}
+		justSpawned = true;
 	}
 
 	/**
@@ -234,7 +238,7 @@ public class Hero extends JLabel{
 		
 		if(runDirection == 'l'){
 			setInRunFreazing(false);
-			if (posX + (width/2) > 0){
+			if (posX  > 0){
 				posX -= (int) runConstant;
 			}
 			if (checkIfHeroReachsANewTileByWalkingLeft(stepCounterLayer, runConstant)){
@@ -295,34 +299,14 @@ public class Hero extends JLabel{
 	public boolean checkIfHeroReachsANewTileByWalkingRight(int stepCounterLayer, double runConstant){
 
 		if (getLocation().x < Ressources.RASTERSIZE*5){
-
-			
-			//||(Ressources.RASTERSIZE*5-runConstant - getLocation().x <3 && stepCounterLayer% Ressources.RASTERSIZE != 0 && Ressources.RASTERSIZE*5 != getLocation().x)){
-				
-			if (((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0 ||
-					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && stepCounterLayer% Ressources.RASTERSIZE != 0)){ 
+	
+			if ((((getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE) - runConstant < 0 ||
+					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && stepCounterLayer% Ressources.RASTERSIZE != 0)) &&
+					justSpawned == false){ 
 				
 					queCounter++;
 				return true;
 			}
-			if (getLocation().x + runConstant == Ressources.RASTERSIZE*5){
-				runFreazing(stepCounterLayer);
-			}
-			
-//			if (Ressources.RASTERSIZE - (getLocation().x % Ressources.RASTERSIZE) < 4 && 
-//					Ressources.RASTERSIZE - (getLocation().x % Ressources.RASTERSIZE) >1 && 
-//					getLocation().x > Ressources.RASTERSIZE * 4 &&
-//					stepCounterLayer != 0){
-//				queCounter++;
-//				return true;
-//			}
-			
-//			if (stepCounterLayer % Ressources.RASTERSIZE <4 && stepCounterLayer % Ressources.RASTERSIZE >0 &&
-//					(int)((getLocation().x -(Ressources.RASTERSIZE-(stepCounterLayer % Ressources.RASTERSIZE)))/Ressources.RASTERSIZE) !=
-//					(int)((getLocation().x -(Ressources.RASTERSIZE-(stepCounterLayer % Ressources.RASTERSIZE))-runConstant)/Ressources.RASTERSIZE)){
-//				
-//				return true;
-//			}
 		}
 		return false;
 	}
