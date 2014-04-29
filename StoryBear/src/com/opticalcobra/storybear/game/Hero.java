@@ -101,6 +101,7 @@ public class Hero extends JLabel{
 	public void heroStep(int stepCounterLayer){
 		ImageIcon image;
 		this.queCounter = (stepCounterLayer/Ressources.RASTERSIZE) + (this.getLocation().x/Ressources.RASTERSIZE) + ((this.getLocation().x%Ressources.RASTERSIZE)+(stepCounterLayer%Ressources.RASTERSIZE))/Ressources.RASTERSIZE + this.queCounterReduce;
+		this.currentBlock = (stepCounterLayer/Ressources.RASTERSIZE) + (this.getLocation().x/Ressources.RASTERSIZE) + ((this.getLocation().x%Ressources.RASTERSIZE)+(stepCounterLayer%Ressources.RASTERSIZE))/Ressources.RASTERSIZE;
 		//bear looks in a direction
 		try {
 			if(!isInAJump()&&runDirection != 'n'){
@@ -160,7 +161,6 @@ public class Hero extends JLabel{
 		
 		while (!tileQue.get(queCounter).isWalkable()){
 			queCounter--;
-			this.currentBlock--;
 			counter ++;
 		}
 		
@@ -169,7 +169,6 @@ public class Hero extends JLabel{
 			counter = 0;		
 			while (!tileQue.get(queCounter).isWalkable()){
 				queCounter++;
-				this.currentBlock++;
 				counter ++;
 			}
 			setLocation(super.getLocation().x + (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
@@ -296,7 +295,6 @@ public class Hero extends JLabel{
 //				if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  == 0 &&
 //						stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0){
 //					queCounter--;
-					this.currentBlock--;
 					return true;
 //				}
 			}
@@ -323,7 +321,6 @@ public class Hero extends JLabel{
 				if(normalWalk)
 //					queCounter++;
 				
-					this.currentBlock++;
 				return true;
 			}
 		}
@@ -344,8 +341,6 @@ public class Hero extends JLabel{
 //				queCounter++;
 //			}
 			
-			
-			this.currentBlock++;
 
 			//Collision with collectables
 			if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
