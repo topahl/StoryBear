@@ -122,6 +122,7 @@ public class BookBox extends JLayeredPane {
 		available = true;
 		menu.getMain().setVisible(false);
 		arrow.setIcon(new ImageIcon(imagelib.loadDesignImage("menu_arrow_right")));
+		loadStories();
 	}
 	
 	public void hide() {
