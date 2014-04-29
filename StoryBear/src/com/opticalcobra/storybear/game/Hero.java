@@ -200,6 +200,18 @@ public class Hero extends JLabel{
 		int posX = super.getLocation().x;
 		int posY = super.getLocation().y;
 		
+		//Collision with collectables
+		if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
+			if((this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x <= this.getLocation().x) &&
+					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().x + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().x) && 
+					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y <= this.getLocation().y + this.getHeight()/2) &&
+					(this.tileQue.get(queCounter).getInteractionObjectLabel().getLocationOnScreen().y + Ressources.CONTAINERCOLLECTABLE >= this.getLocation().y + this.getHeight()/2)){
+				this.tileQue.get(queCounter).getInteractionObjectLabel().setVisible(false);
+				this.tileQue.get(queCounter).setInteractionObjectLabel(null);
+				this.highscore += Ressources.SCOREPERCOLLECTABLE;
+			}
+		}
+		
 		jumpSpeed = jumpSpeed - Ressources.JUMPCONSTANTY;
 		posY = (int) (posY - jumpSpeed);
 		
