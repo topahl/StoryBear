@@ -133,12 +133,13 @@ public class Database {
 	public ArrayList<StoryInfo> getAllLevelssFromDatabase(){
 		ArrayList<StoryInfo> result = new ArrayList<StoryInfo>();
 		try {
-			ResultSet rs = query("Select Object, length from levels");
+			ResultSet rs = query("Select Object, length, ID from levels");
 			while(rs.next()){
 				
 				java.sql.Blob obj = rs.getBlob("OBJECT");
 				byte[] ba = obj.getBytes(1, rs.getInt("LENGTH"));
 				StoryInfo si = (StoryInfo)(Blob.read(ba));
+				si.setId(rs.getInt("ID"));
 				result.add(si);
 			}
 		} catch (SQLException e) {

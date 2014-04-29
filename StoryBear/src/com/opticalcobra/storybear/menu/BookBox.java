@@ -103,7 +103,7 @@ public class BookBox extends JLayeredPane {
 	
 	public void startGame() {
 		@SuppressWarnings("unused")
-		Window gui = new Window(levelBuecher.getSelectedIndex(), HeroButton.getType());
+		Window gui = new Window(levelBuecher.getSelectedValue().getId(), HeroButton.getType());
 		menu.dispose();
 	}
 
