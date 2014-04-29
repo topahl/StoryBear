@@ -102,7 +102,7 @@ public class Window extends JFrame {
 		//create remderer
 		renderer = new DummyRenderer(level);
 		rendererfg2 = new RendererFG2(renderer.getTileQue(), level); //renderer.getRingbuffer(), 
-		rendererMG = new DummyRendererMG();
+		rendererMG = new DummyRendererMG(this.level);
 		rendererBG = new BackgroundRenderer();
 		rendererCloud = new CloudRenderer();
 		rendererInteraction = new InteractionRenderer(renderer.getTileQue(), level.getElements());
@@ -273,7 +273,7 @@ public class Window extends JFrame {
 		if(Hero.getInstance().getRunDirection() == 'r' && Hero.getInstance().getX() + (Hero.getInstance().getWidth()/2) >= Ressources.RASTERSIZE*5){
 			if (Hero.getInstance().getX()+ (Hero.getInstance().getWidth()/2) == Ressources.RASTERSIZE*5 && !Hero.getInstance().isInRunFreazing()
 					&& stepCounterLayer%Ressources.RASTERSIZE < Ressources.RUNCONSTANT){
-				Hero.getInstance().setQueCounter(Hero.getInstance().getQueCounter()+1);
+//				Hero.getInstance().setQueCounter(Hero.getInstance().getQueCounter()+1);
 			}
 			layerStep();
 		}

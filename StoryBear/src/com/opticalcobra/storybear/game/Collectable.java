@@ -33,7 +33,7 @@ public class Collectable implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERINTERACTION){
-			Point position = db.getObjectPos(tileTypeId, Ressources.CONTAINERCOLLECTABLEID);
+			Point position = db.getObjectPosForeground(tileTypeId, Ressources.CONTAINERCOLLECTABLEID);
 			
 			BufferedImage image = il.loadObjectPic(image_id, "col");
 			((JLabel)(toBeNamed)).setIcon(new ImageIcon(image));

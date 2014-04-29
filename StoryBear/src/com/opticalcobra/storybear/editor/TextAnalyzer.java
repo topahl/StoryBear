@@ -109,7 +109,7 @@ public class TextAnalyzer {
 		
 		//analyze RenderHint --> are the blocks ok? or are the schemes coming to close in some parts of the story
 		//one Scheme has a minimum size of 16 kacheln
-		renderHint = this.calculateImportanceOfSchemes(renderHint);
+		//renderHint = this.calculateImportanceOfSchemes(renderHint);
 		renderHint = this.calcNewBlockPositions(renderHint,blockPosition);
 		
 		//insert renderHints in elements
@@ -148,7 +148,10 @@ public class TextAnalyzer {
 				renderHint.get(0).setBlock(renderHint.get(0).getBlock() - Ressources.TILESPERPANEL/2);
 			
 			for(int i=1;i<renderHint.size();i++){
-				//if the distance of 2 schemes is between 24 and 160
+				if(renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() < 5)
+					renderHint.get(i).setBlock(renderHint.get(i).getBlock() + 5);
+				
+				/*//if the distance of 2 schemes is between 24 and 160
 				if((renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() > 3*Ressources.TILESPERPANEL/2) && (renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() <= Ressources.MAXLENGTHOFSCHEME))
 					renderHint.get(i).setBlock(renderHint.get(i).getBlock() - Ressources.TILESPERPANEL/2);
 				//if the distance of 2 schemes is between 16 and 24 --> new block position can't be less 8 like in the case above 
@@ -164,8 +167,8 @@ public class TextAnalyzer {
 					i++;
 					renderHint.get(i).setBlock(renderHint.get(i).getBlock() - Ressources.TILESPERPANEL/2);
 				}		
-				else
-					renderHint.remove(i);
+				//else
+					//renderHint.remove(i);*/
 			}	
 		}
 		

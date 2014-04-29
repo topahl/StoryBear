@@ -250,12 +250,12 @@ public class Database {
 	 * @param containerTypeId
 	 * @return
 	 */
-	public Point getObjectPos(int tileTypeId, int containerTypeId){
+	public Point getObjectPosForeground(int tileTypeId, int containerTypeId){
 		ResultSet rs;
 		Point position = new Point(0, 0);
 		try {
-			rs = query("SELECT x, y FROM foreground_container WHERE type_id = '" +tileTypeId+ "' AND "
-					+ "container_type = '" + containerTypeId + "';");
+			rs = query("SELECT x, y FROM foreground_container WHERE type_id = " +tileTypeId+ " AND "
+					+ "container_type = " + containerTypeId + ";");
 			rs.next();
 			position.x = (int) rs.getObject("X");
 			position.y = (int) rs.getObject("Y");
@@ -271,6 +271,32 @@ public class Database {
 		
 		return position;
 	}
+	
+	
+	
+	public Point getObjectPosMiddleground(int tileTypeId, int containerTypeId){
+		ResultSet rs;
+		Point position = new Point(0, 0);
+		try {
+			rs = query("SELECT x, y FROM middleground_container WHERE type_id = " +tileTypeId+ " AND "
+					+ "container_id = " + containerTypeId + ";");
+			while(rs.next()){
+				position.x = (int) rs.getObject("X");
+				position.y = (int) rs.getObject("Y");
+				
+				position.x = (int) (position.x / Ressources.SCALE);
+				position.y = (int) (position.y / Ressources.SCALE);
+			}		
+			
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return position;
+	}
+	
 	
 	
 	public synchronized ResultSet query(String expression) throws SQLException {

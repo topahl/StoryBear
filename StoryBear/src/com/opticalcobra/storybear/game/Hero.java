@@ -43,6 +43,8 @@ public class Hero extends JLabel{
 	private boolean justSpawned = false;
 	private boolean walkinLeft = false;
 	
+	private boolean normalWalk = true;
+	
 	
 	//Run attributes
 	private char runDirection = 'n';
@@ -52,6 +54,7 @@ public class Hero extends JLabel{
 	private int highscore = 0; 
 	
 	private int currentBlock = 0;
+	private int queCounterReduce = 0;
 	
 	private Hero(){
 	}
@@ -97,7 +100,8 @@ public class Hero extends JLabel{
 	 */
 	public void heroStep(int stepCounterLayer){
 		ImageIcon image;
-		
+		this.queCounter = (stepCounterLayer/Ressources.RASTERSIZE) + (this.getLocation().x/Ressources.RASTERSIZE) + ((this.getLocation().x%Ressources.RASTERSIZE)+(stepCounterLayer%Ressources.RASTERSIZE))/Ressources.RASTERSIZE + this.queCounterReduce;
+		this.currentBlock = (stepCounterLayer/Ressources.RASTERSIZE) + (this.getLocation().x/Ressources.RASTERSIZE) + ((this.getLocation().x%Ressources.RASTERSIZE)+(stepCounterLayer%Ressources.RASTERSIZE))/Ressources.RASTERSIZE;
 		//bear looks in a direction
 		try {
 			if(!isInAJump()&&runDirection != 'n'){
@@ -157,7 +161,6 @@ public class Hero extends JLabel{
 		
 		while (!tileQue.get(queCounter).isWalkable()){
 			queCounter--;
-			this.currentBlock--;
 			counter ++;
 		}
 		
@@ -166,7 +169,6 @@ public class Hero extends JLabel{
 			counter = 0;		
 			while (!tileQue.get(queCounter).isWalkable()){
 				queCounter++;
-				this.currentBlock++;
 				counter ++;
 			}
 			setLocation(super.getLocation().x + (counter * Ressources.RASTERSIZE), tileQue.get(queCounter).getTileHeight()-Ressources.CHARACTERHEIGHT);
@@ -292,8 +294,7 @@ public class Hero extends JLabel{
 //				&& Ressources.RASTERSIZE*5 - getLocation().x < stepCounterLayer% Ressources.RASTERSIZE){
 //				if (((Ressources.RASTERSIZE - (getLocation().x + (stepCounterLayer % Ressources.RASTERSIZE)) % Ressources.RASTERSIZE))  - runConstant  == 0 &&
 //						stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0){
-					queCounter--;
-					this.currentBlock--;
+//					queCounter--;
 					return true;
 //				}
 			}
@@ -317,12 +318,13 @@ public class Hero extends JLabel{
 					(Ressources.RASTERSIZE*5 - getLocation().x < runConstant && 
 							stepCounterLayer% Ressources.RASTERSIZE <4 && stepCounterLayer% Ressources.RASTERSIZE > 0)) &&
 					justSpawned == false){ 
+				if(normalWalk)
+//					queCounter++;
 				
-					queCounter++;
-					this.currentBlock++;
 				return true;
 			}
 		}
+		normalWalk=true;
 		return false;
 	}
 	
@@ -335,9 +337,10 @@ public class Hero extends JLabel{
 	 */
 	public void runFreazing(int currentCounterStep){
 		if((currentCounterStep) % Ressources.RASTERSIZE == 0 || currentCounterStep ==0){
+//			if(!normalWalk){
+//				queCounter++;
+//			}
 			
-			queCounter++;
-			this.currentBlock++;
 
 			//Collision with collectables
 			if(this.tileQue.get(queCounter).getInteractionObjectLabel() != null){
@@ -353,6 +356,7 @@ public class Hero extends JLabel{
 			
 			this.highscore += Ressources.SCOREPOINTSFORRUNNING;
 		}
+		normalWalk = false;
 	}
 	
 	/**
@@ -440,11 +444,11 @@ public class Hero extends JLabel{
 	}	
 	
 	public int getQueCounter() {
-		return queCounter;
+		return queCounterReduce;
 	}
 
 	public void setQueCounter(int queCounter) {
-		this.queCounter = queCounter;
+		this.queCounterReduce = queCounter;
 	}
 	
 	public int getWidth() {
