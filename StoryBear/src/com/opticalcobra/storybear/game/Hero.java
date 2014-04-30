@@ -408,7 +408,7 @@ public class Hero extends JLabel{
 			return false;
 		}
 		else {
-			if (jumpSpeed == 0 && getLocation().y == tileQue.get(queCounter-1).getTileHeight() - Ressources.CHARACTERHEIGHT){
+			if (jumpSpeed == 0 && getLocation().y == tileQue.get(queCounter).getTileHeight() - Ressources.CHARACTERHEIGHT){
 				return false;
 			}
 			//falling down
