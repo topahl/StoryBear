@@ -46,12 +46,12 @@ public class Credits extends MenuInnerPanel {
 		
         JTextArea textTeam = generateStandardTextArea();
         textTeam.setBounds(Menu.rightPageX, (int)((startY+distanceY)/Ressources.SCALE), (int)(350/Ressources.SCALE), (int)(600/Ressources.SCALE));
-        textTeam.setText("Teamleitung\n\nProjektmanagement\n\nSimulation &\nAlgorithmus\n\nFrontend & GUI\n\n\nDesign");
+        textTeam.setText("Teamleitung\n\nProjektmanagement\n\nSpiellogik &\nAlgorithmus\n\nFrontend & GUI\n\n\nDesign & Grafik\n\n\n\nMusik\n");
         add(textTeam);
 
         JTextArea textMembers = generateStandardTextArea();
         textMembers.setBounds(Menu.rightPageX+(int)(320/Ressources.SCALE), (int)((startY+distanceY)/Ressources.SCALE), (int)(330/Ressources.SCALE), (int)(600/Ressources.SCALE));
-        textMembers.setText("Tobias Pahlings\n\nSven Wessiepe\n\nMiriam Marx\nMartika Schwan\n\nStephan Giesau\nNicolas Marin\n\nStephan Giesau\n");
+        textMembers.setText("Tobias Pahlings\n\nSven Wessiepe\n\nMiriam Marx\nMartika Schwan\n\nNicolas Marin\nStephan Giesau\n\nStephan Giesau\nNicolas Marin\nSven Wessiepe\n\nStephan Giesau\nSven Wessiepe");
         add(textMembers);
 	}
 }
