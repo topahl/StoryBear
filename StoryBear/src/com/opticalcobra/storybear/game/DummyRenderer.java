@@ -42,41 +42,82 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		storyInfo = si;
 	}
 	
-	private BufferedImage getNextMapElement(int nextCurrentElementPointer, int blockInPanel){
+	private BufferedImage getNextMapElement(int nextCurrentElementPointer, int currentBlockId){
 		int next = 0;
 		int nextSecondStep = 0;
 		int nextThirdStep = 0;
+		int followingBlockId = 0;
+		int followingFollowingBlockId= 0;
+		int randomUsedCounter = 0;
+		int characterPointerCurrent = nextCurrentElementPointer;
+		int characterPointerFollowing = nextCurrentElementPointer;
+		int characterPointerFollowingFollowing = nextCurrentElementPointer;
+		
 		
 		boolean walkableTile = true;
 		boolean needNewTile= true;
 		boolean needNewTileSecond= true;
 		boolean newTileFound = false;
+		boolean characterOnCurrentPanel = false;
+		boolean characterOnFollowingPanel = false;
+		boolean characterOnFollowingFollowingPanel = false;
 		int freeRideCounterStep = 0;
 		
-		blockInPanel = blockInPanel + ((panelnum-1)*Ressources.TILESPERPANEL);
-		
-		if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&!(storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character) && blockInPanel != 0){
-			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
-			next = following[rand.nextInt(following.length)];
-			lastTileType = next;
-			tileQue.add(db.getTileInfo(lastTileType));
-			currentTileIds.add(next);
-			return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND, null);
-		}
+		currentBlockId = currentBlockId + ((panelnum-1)*Ressources.TILESPERPANEL);
+		followingBlockId = currentBlockId+1;
+		followingFollowingBlockId = followingBlockId +1;
 		
 		
+		if (currentBlockId>0){
 		
-		if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer).getBlock() > blockInPanel){
-			freeRideCounterStep = storyInfo.getElements().get(nextCurrentElementPointer).getBlock() - blockInPanel +1;
-			if ((blockInPanel+1) % Ressources.TILESPERPANEL == 0){
-				freeRideCounterStep--;
+			while (storyInfo.getElements().size() > nextCurrentElementPointer + randomUsedCounter && 
+					storyInfo.getElements().get(nextCurrentElementPointer + randomUsedCounter).getBlock() == currentBlockId){
+				
+				if (storyInfo.getElements().get(nextCurrentElementPointer+randomUsedCounter) instanceof Character){
+					characterOnCurrentPanel = true;
+					characterPointerCurrent = nextCurrentElementPointer+randomUsedCounter;
+				}
+				randomUsedCounter ++;
 			}
-		}
-		
-		
-	//The first tile has to be 0
-		if (blockInPanel>0){
-			if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && freeRideCounterStep==0){
+			
+			randomUsedCounter = 0;
+			
+			
+			while (storyInfo.getElements().size() > characterPointerCurrent + randomUsedCounter && 
+					storyInfo.getElements().get(characterPointerCurrent + randomUsedCounter).getBlock() < followingBlockId){
+				randomUsedCounter++;
+			}
+			
+			while (storyInfo.getElements().size() > characterPointerCurrent + randomUsedCounter && 
+					storyInfo.getElements().get(characterPointerCurrent + randomUsedCounter).getBlock() == followingBlockId){
+				
+				if (storyInfo.getElements().get(characterPointerCurrent + randomUsedCounter) instanceof Character){
+					characterOnFollowingPanel = true;
+					characterPointerFollowing = nextCurrentElementPointer+randomUsedCounter;
+				}
+				randomUsedCounter ++;
+			}
+			randomUsedCounter = 0;
+			
+			while (storyInfo.getElements().size() > characterPointerFollowing + randomUsedCounter && 
+					storyInfo.getElements().get(characterPointerFollowing + randomUsedCounter).getBlock() < followingFollowingBlockId){
+				randomUsedCounter++;
+			}
+			
+			while (storyInfo.getElements().size() > characterPointerFollowing + randomUsedCounter && 
+					storyInfo.getElements().get(characterPointerFollowing + randomUsedCounter).getBlock() == followingFollowingBlockId){
+				
+				if (storyInfo.getElements().get(characterPointerFollowing + randomUsedCounter) instanceof Character){
+					characterOnFollowingFollowingPanel = true;
+					characterPointerFollowingFollowing = nextCurrentElementPointer+randomUsedCounter;
+				}
+				randomUsedCounter ++;
+			}
+			randomUsedCounter = 0;
+			
+			
+			
+			if (characterOnCurrentPanel){
 				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 				next = following[rand.nextInt(following.length)];
 				
@@ -86,96 +127,172 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				}
 				//Danach ist next begehbar
 				newTileFound = true;
-				
-			}
-			
-			
-			
-			while (storyInfo.getElements().size() > nextCurrentElementPointer+1 && !newTileFound &&
-					blockInPanel <= storyInfo.getElements().get(nextCurrentElementPointer+1).getBlock()){
-				if (freeRideCounterStep == 0){
-					nextCurrentElementPointer++;
-				}
-				
-				freeRideCounterStep--;
-				//Nächste Kachel kommt ein Character -> Auf begehbare Fläche vorbereiten
-				if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && !newTileFound){
-					Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+			} else if (characterOnFollowingPanel){
+				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+				while (needNewTile){
+					next = following[rand.nextInt(following.length)];
+					Integer[] followingSecond = il.getFollowingTiles(next, Imagelib.QUERY_FOREGROUND);
 					
-					while (needNewTile){
+					for (int i=0; i<15; i++){
+						nextSecondStep = followingSecond[rand.nextInt(followingSecond.length)];
+						if (walkableTile = db.getTileInfo(nextSecondStep).isWalkable()){
+							needNewTile = false;
+							break; //Kachel ist begehbar für next
+						}
+					}
+				}
+				newTileFound = true;
+			} else if (characterOnFollowingFollowingPanel){
+				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+				while (needNewTile){
+					for (int i=0; i<15; i++){
 						next = following[rand.nextInt(following.length)];
 						Integer[] followingSecond = il.getFollowingTiles(next, Imagelib.QUERY_FOREGROUND);
 						
-						for (int i=0; i<15; i++){
+						for (int j=0; j<15; j++){
 							nextSecondStep = followingSecond[rand.nextInt(followingSecond.length)];
-							if (walkableTile = db.getTileInfo(nextSecondStep).isWalkable()){
-								needNewTile = false;
-								break; //Kachel ist begehbar für next
-							}
-						}
-					}
-					
-					newTileFound = true;
-				}
-			}
-
-				
-			while (storyInfo.getElements().size() > nextCurrentElementPointer+1 && !newTileFound &&
-					blockInPanel == storyInfo.getElements().get(nextCurrentElementPointer+1).getBlock()){
-				nextCurrentElementPointer++;
-			
-				//Übernächste Kachel kommt ein Character -> Auf begehbare Fläche vorbereiten
-				if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && !newTileFound){
-					Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
-					
-					while (needNewTile){
-						for (int i=0; i<15; i++){
-							next = following[rand.nextInt(following.length)];
-							Integer[] followingSecond = il.getFollowingTiles(next, Imagelib.QUERY_FOREGROUND);
+							Integer[] followingThird = il.getFollowingTiles(nextSecondStep, Imagelib.QUERY_FOREGROUND);
 							
-							for (int j=0; j<15; j++){
-								nextSecondStep = followingSecond[rand.nextInt(followingSecond.length)];
-								Integer[] followingThird = il.getFollowingTiles(nextSecondStep, Imagelib.QUERY_FOREGROUND);
-								
-								for (int k=0; k<15; k++){
-									nextThirdStep = followingSecond[rand.nextInt(followingThird.length)];
-									if (walkableTile = db.getTileInfo(nextThirdStep).isWalkable()){
-										needNewTile = false;
-										break; //Kachel ist begehbar für next
-									}
+							for (int k=0; k<15; k++){
+								nextThirdStep = followingThird[rand.nextInt(followingThird.length)];
+								if (walkableTile = db.getTileInfo(nextThirdStep).isWalkable()){
+									needNewTile = false;
+									break; //Kachel ist begehbar für next
 								}
-								if (!needNewTile){
-									break;
-								}
-							
 							}
 							if (!needNewTile){
 								break;
 							}
+						
+						}
+						if (!needNewTile){
+							break;
 						}
 					}
-					newTileFound = true;
 				}
-			}
-					
-			if (!newTileFound){
+				newTileFound = true;
+			} else{
 				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 				next = following[rand.nextInt(following.length)];
 			}
-
 		}
-		
-		//System.out.println("Aktueller Block = "+ currentBlock + "mit tileId" + next);
 		lastTileType = next;
 		tileQue.add(db.getTileInfo(lastTileType));
-		
-//		System.out.print("\nCurrentBlock" + currentBlock + "tileQue sieht so aus: ");
-//		for (int y = 0; y < tileQue.size(); y++){
-//			System.out.print(tileQue.get(y).getTileType());
-//		}
-		
 		currentTileIds.add(next);
 		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND, null);
+		
+		
+		
+//		if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer).getBlock() > currentBlockId){
+//			freeRideCounterStep = storyInfo.getElements().get(nextCurrentElementPointer).getBlock() - currentBlockId +1;
+//			if ((currentBlockId+1) % Ressources.TILESPERPANEL == 0){
+//				freeRideCounterStep--;
+//			}
+//		}
+//		
+//		
+//	//The first tile has to be 0
+//		if (currentBlockId>0){
+//			if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && freeRideCounterStep==0){
+//				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+//				next = following[rand.nextInt(following.length)];
+//				
+//				//Solange suchen, bis eine begehbare Fläche entsteht
+//				while (!(walkableTile = db.getTileInfo(next).isWalkable())){
+//					next = following[rand.nextInt(following.length)];
+//				}
+//				//Danach ist next begehbar
+//				newTileFound = true;
+//				
+//			}
+//			
+//			
+//			
+//			while (storyInfo.getElements().size() > nextCurrentElementPointer+1 && !newTileFound &&
+//					currentBlockId <= storyInfo.getElements().get(nextCurrentElementPointer+1).getBlock()){
+//				if (freeRideCounterStep == 0){
+//					nextCurrentElementPointer++;
+//				}
+//				
+//				freeRideCounterStep--;
+//				//Nächste Kachel kommt ein Character -> Auf begehbare Fläche vorbereiten
+//				if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && !newTileFound){
+//					Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+//					
+//					while (needNewTile){
+//						next = following[rand.nextInt(following.length)];
+//						Integer[] followingSecond = il.getFollowingTiles(next, Imagelib.QUERY_FOREGROUND);
+//						
+//						for (int i=0; i<15; i++){
+//							nextSecondStep = followingSecond[rand.nextInt(followingSecond.length)];
+//							if (walkableTile = db.getTileInfo(nextSecondStep).isWalkable()){
+//								needNewTile = false;
+//								break; //Kachel ist begehbar für next
+//							}
+//						}
+//					}
+//					
+//					newTileFound = true;
+//				}
+//			}
+//
+//				
+//			while (storyInfo.getElements().size() > nextCurrentElementPointer+1 && !newTileFound &&
+//					currentBlockId == storyInfo.getElements().get(nextCurrentElementPointer+1).getBlock()){
+//				nextCurrentElementPointer++;
+//			
+//				//Übernächste Kachel kommt ein Character -> Auf begehbare Fläche vorbereiten
+//				if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && !newTileFound){
+//					Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+//					
+//					while (needNewTile){
+//						for (int i=0; i<15; i++){
+//							next = following[rand.nextInt(following.length)];
+//							Integer[] followingSecond = il.getFollowingTiles(next, Imagelib.QUERY_FOREGROUND);
+//							
+//							for (int j=0; j<15; j++){
+//								nextSecondStep = followingSecond[rand.nextInt(followingSecond.length)];
+//								Integer[] followingThird = il.getFollowingTiles(nextSecondStep, Imagelib.QUERY_FOREGROUND);
+//								
+//								for (int k=0; k<15; k++){
+//									nextThirdStep = followingSecond[rand.nextInt(followingThird.length)];
+//									if (walkableTile = db.getTileInfo(nextThirdStep).isWalkable()){
+//										needNewTile = false;
+//										break; //Kachel ist begehbar für next
+//									}
+//								}
+//								if (!needNewTile){
+//									break;
+//								}
+//							
+//							}
+//							if (!needNewTile){
+//								break;
+//							}
+//						}
+//					}
+//					newTileFound = true;
+//				}
+//			}
+//					
+//			if (!newTileFound){
+//				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
+//				next = following[rand.nextInt(following.length)];
+//			}
+//
+//		}
+//		
+//		//System.out.println("Aktueller Block = "+ currentBlock + "mit tileId" + next);
+//		lastTileType = next;
+//		tileQue.add(db.getTileInfo(lastTileType));
+//		
+////		System.out.print("\nCurrentBlock" + currentBlock + "tileQue sieht so aus: ");
+////		for (int y = 0; y < tileQue.size(); y++){
+////			System.out.print(tileQue.get(y).getTileType());
+////		}
+//		
+//		currentTileIds.add(next);
+//		return il.loadLandscapeTile(next, Imagelib.QUERY_FOREGROUND, null);
 	}
 
 	

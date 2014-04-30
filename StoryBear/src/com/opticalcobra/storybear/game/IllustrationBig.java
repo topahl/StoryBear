@@ -31,7 +31,6 @@ public class IllustrationBig implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERFOREGROUNDONE){
-			System.out.println(tileTypeId);
 			if ((tileTypeId!=5 && tileTypeId < 23) || tileTypeId == 27){
 				Point position = db.getObjectPosForeground(tileTypeId, Ressources.CONTAINERILLUSTRATIONBIGID);
 				
