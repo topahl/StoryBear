@@ -100,12 +100,6 @@ public class Control implements KeyListener, ActionListener {
 	}
 	
 	public void close(){
-		Menu m = new Menu(window.level.getId());
-		try {
-			window.saveHighscore();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		window.dispose();
 	}
 	

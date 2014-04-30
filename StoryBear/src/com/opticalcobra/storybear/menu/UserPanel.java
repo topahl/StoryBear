@@ -104,7 +104,7 @@ public class UserPanel extends MenuInnerPanel {
 		menu.currentUser.setText(User.isCurrentUserSet() ? User.getCurrentUser().getName() : "");
 		menu.enableAllMenuButtons();
 		menu.getMain().setVisible(false);
-		menu.setMain(menu.highscore);
+		menu.setMain(menu.manu);
 		menu.getMain().setVisible(true);
 	}
 	

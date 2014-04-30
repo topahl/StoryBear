@@ -233,4 +233,9 @@ public class Menu extends JFrame {
 		setSize(Ressources.WINDOW.width, Ressources.WINDOW.height);
 		setVisible(true);
 	}
+	
+	public void dispose() {
+		HeroButton.cleanup();
+		super.dispose();
+	}
 }

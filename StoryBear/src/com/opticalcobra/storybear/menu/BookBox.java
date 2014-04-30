@@ -96,9 +96,6 @@ public class BookBox extends JLayeredPane {
 		mouseArea = new JLabel();
 		mouseArea.setBounds(0,0,(int)(100/Ressources.SCALE),(int)(1080/Ressources.SCALE));
 		add(mouseArea);
-		
-		// set standards
-		levelBuecher.setSelectedIndex(0);
 	}
 	
 	public void startGame() {
@@ -204,6 +201,7 @@ public class BookBox extends JLayeredPane {
         levelBuecher.setBackground(new Color(0,0,0,0));
         baseLayer.add(buecherRegal);
         loadStories();
+        levelBuecher.setSelectedIndex(0);
         
         JLabel shelf = new JLabel();
 		shelf.setIcon(new ImageIcon(imagelib.menuImage(Imagelib.MENU_SHELF)));

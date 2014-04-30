@@ -19,6 +19,7 @@ import com.opticalcobra.storybear.editor.StoryInfo;
 import com.opticalcobra.storybear.main.OSTimer;
 import com.opticalcobra.storybear.main.User;
 import com.opticalcobra.storybear.menu.LoadingPanel;
+import com.opticalcobra.storybear.menu.Menu;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -284,8 +285,22 @@ public class Window extends JFrame {
 	}
 	
 	public void dispose() {
+		// cleanup
+		this.timer.cancel();
 		Hero.getInstance().cleanup();
 		rtw.cleanup();
+		
+		// save highscore
+		try {
+			saveHighscore();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		// start Menu
+		@SuppressWarnings("unused")
+		Menu m = new Menu(level.getId());
+
 		super.dispose();
 	}
 }

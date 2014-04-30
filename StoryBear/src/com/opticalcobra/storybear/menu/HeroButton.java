@@ -55,4 +55,9 @@ public class HeroButton extends JButton implements ActionListener {
 	public static char getType() {
 		return (active == null) ? 'b' : active.type;
 	}
+	
+	public static void cleanup() {
+		heroButtons = new ArrayList<HeroButton>();
+		active = null;
+	}
 }
