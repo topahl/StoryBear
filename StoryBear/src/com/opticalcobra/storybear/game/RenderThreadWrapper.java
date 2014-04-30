@@ -14,7 +14,7 @@ public class RenderThreadWrapper extends Thread{
 	
 	private JLabel jl;
 	private IRenderer ir;
-	private static LinkedList<Element> que = new LinkedList<Element>();
+	private LinkedList<Element> que = new LinkedList<Element>();
 	private LoadingPanel loading;
 	private boolean enableRenderEnd = false;
 	
@@ -35,7 +35,7 @@ public class RenderThreadWrapper extends Thread{
 		Element el = new Element();
 		el.comp = label;
 		el.renderer = renderer;
-		que.add(el);
+		renderThreadWrapper.que.add(el);
 	}
 	
 	public void setLoadingPanel(LoadingPanel lp) {

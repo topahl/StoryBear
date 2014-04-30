@@ -340,7 +340,6 @@ public class DummyRenderer extends Renderer implements IRenderer{
 					g.drawRect(i*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE, Ressources.WINDOW.height);
 				
 			}
-			System.out.println();
 			for(int i=0;i<Ressources.TILESPERPANEL;i++){
 
 				//Bilder werden geredert
