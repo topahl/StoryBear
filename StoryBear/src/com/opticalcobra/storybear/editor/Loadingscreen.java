@@ -27,7 +27,7 @@ public class Loadingscreen extends JFrame{
 	private JLabel image;
 
 	public Loadingscreen(){
-//		MusicPlayer.getInstance().start();	// play music //TODO wieder anschalten
+		MusicPlayer.getInstance().start();
 		
 		this.baseLayer = new JLayeredPane();
 		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);

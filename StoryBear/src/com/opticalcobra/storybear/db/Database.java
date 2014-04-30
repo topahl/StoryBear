@@ -509,7 +509,7 @@ public class Database {
 			else if (rsIllustrationSmall.next()){
 				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
 			} else{
-				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, rsIllustrationSmall.getInt("IMAGE_ID"),arrayRS);
+				result = new WordResult(DBConstants.WORD_OBJECT_TYPE_NO_IMAGE, getRandomCollectableNumber(),arrayRS);
 			}
 			rsCollectable.close();
 			rsIllustrationBig.close();
