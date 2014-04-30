@@ -115,6 +115,9 @@ public class Menu extends JFrame {
 
 	public Menu(int levelId) {
 		this();
+		main.setVisible(false);
+		setMain(highscore);
+		main.setVisible(true);
 		((HighscoreList) highscore).showStory(levelId);
 	}
 	
