@@ -265,4 +265,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 	public LinkedList<TileResult> getTileQue() {
 		return this.tileQue;
 	}
+	
+	public static void cleanup() {
+		tileQue = new SBLinkedList<TileResult>();
+	}
 }

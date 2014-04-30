@@ -60,6 +60,7 @@ public class Window extends JFrame {
 	CloudRenderer rendererCloud;
 	InteractionRenderer rendererInteraction;
 	RenderThreadWrapper rtw;
+	private boolean over = false;
 	
 	public Window(){
 		this(7, 'b'); //Change here default Level
@@ -248,7 +249,10 @@ public class Window extends JFrame {
 	 */
 	public void checkEnding(){
 		if(Hero.getInstance().checkIfHeroReachedEnding(this.level.getNumberOfBlocks())){
-			controle.close();
+			if(!over) {
+				over = true;
+				dispose();
+			}
 		}
 	}
 	
@@ -278,18 +282,15 @@ public class Window extends JFrame {
 			}
 			layerStep();
 		}
-		this.checkEnding();
 		
 		stepCounter++;
 		repaint();
+		
+		this.checkEnding();
 	}
 	
-	public void dispose() {
-		// cleanup
-		this.timer.cancel();
-		Hero.getInstance().cleanup();
-		rtw.cleanup();
-		
+	public synchronized void  dispose() {
+		// start Menu
 		// save highscore
 		try {
 			saveHighscore();
@@ -297,10 +298,17 @@ public class Window extends JFrame {
 			e.printStackTrace();
 		}
 		
-		// start Menu
 		@SuppressWarnings("unused")
 		Menu m = new Menu(level.getId());
-
-		super.dispose();
+		
+		// cleanup
+		this.timer.cancel();
+		Hero.getInstance().cleanup();
+		rtw.cleanup();
+		DummyRenderer.cleanup();
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				Window.super.dispose();
+			}});
 	}
 }

@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import com.opticalcobra.storybear.db.Database;
 import com.opticalcobra.storybear.editor.Editor;
 import com.opticalcobra.storybear.editor.Loadingscreen;
+import com.opticalcobra.storybear.game.Hero;
 import com.opticalcobra.storybear.res.Button;
 import com.opticalcobra.storybear.res.FontCache;
 import com.opticalcobra.storybear.res.Imagelib;
@@ -66,6 +67,8 @@ public class Menu extends JFrame {
 	private Database db = new Database();
 	
 	public Menu() {
+		Hero.getInstance().cleanup();
+		
 		imagelib = Imagelib.getInstance(); //database Loading starts
 		
 		// Frame-Settings

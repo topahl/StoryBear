@@ -59,6 +59,7 @@ public class RenderThreadWrapper extends Thread{
 		}).start();
 	}
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public void run(){
 		while(true){
@@ -83,6 +84,8 @@ public class RenderThreadWrapper extends Thread{
 	}
 	
 	public void cleanup() {
+		stop();
 		renderThreadWrapper = null;
+		que = new LinkedList<Element>();
 	}
 }
