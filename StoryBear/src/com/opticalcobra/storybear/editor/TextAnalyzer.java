@@ -73,18 +73,40 @@ public class TextAnalyzer {
 				switch (wr.getType()){
 				case DBConstants.WORD_OBJECT_TYPE_CHARACTER:
 					elements.add(new Character(blockPosition,wr.getImage_id()));
+					//Generiere random Collectables
+					if ((int)(Math.random()*4) == 0){
+						elements.add(new Collectable(blockPosition,db.getRandomCollectableNumber()));
+					}
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_COLLECTABLE:
 					elements.add(new Collectable(blockPosition,wr.getImage_id()));
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_MIDDLEGROUND:
 					elements.add(new Landscape(blockPosition));
+					//Generiere random Collectables
+					if ((int)(Math.random()*4) == 0){
+						elements.add(new Collectable(blockPosition,db.getRandomCollectableNumber()));
+					}
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_SMALL:
 					elements.add(new IllustrationSmall(blockPosition,wr.getImage_id()));
+					//Generiere random Collectables
+					if ((int)(Math.random()*4) == 0){
+						elements.add(new Collectable(blockPosition,db.getRandomCollectableNumber()));
+					}
 					break;
 				case DBConstants.WORD_OBJECT_TYPE_ILLUSTRATION_BIG:
 					elements.add(new IllustrationBig(blockPosition,wr.getImage_id()));
+					//Generiere random Collectables
+					if ((int)(Math.random()*4) == 0){
+						elements.add(new Collectable(blockPosition,db.getRandomCollectableNumber()));
+					}
+					break;
+				case DBConstants.WORD_OBJECT_TYPE_NO_IMAGE:
+					//Generiere random Collectables
+					if ((int)(Math.random()*4) == 0){
+						elements.add(new Collectable(blockPosition,db.getRandomCollectableNumber()));
+					}
 					break;
 				}
 				rh = this.getScheme(word,blockPosition,wr);
@@ -94,6 +116,8 @@ public class TextAnalyzer {
 				// TODO Auto-generated catch block
 				System.out.println(word_short);
 			}
+			
+			
 			
 			elements.add(new Word(word,blockPosition));
 			blockPosition += numberOfBlocks;	//calculates the beginning of each new word

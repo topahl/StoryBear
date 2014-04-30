@@ -273,6 +273,38 @@ public class Database {
 	}
 	
 	
+	/**
+	 * @author Martika
+	 * @param tileTypeId
+	 * @param containerTypeId
+	 * @return
+	 */
+	public int getRandomCollectableNumber(){
+		ResultSet rs;
+		ResultSet rsCounter;
+		int range=0;
+		int returnImageID = 0;
+		
+		try {
+			rsCounter = query("SELECT COUNT(*) FROM collectable_object");
+			rsCounter.next();
+			range = (int) rsCounter.getInt(1);
+			range = (int) (Math.random()*range);
+			rsCounter.close();
+			
+			rs = query("SELECT image_id FROM collectable_object where id = "+range+";");
+			rs.next();
+			returnImageID = range = (int) rs.getObject(1);
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return returnImageID;
+	}
+	
+	
 	
 	public Point getObjectPosMiddleground(int tileTypeId, int containerTypeId){
 		ResultSet rs;

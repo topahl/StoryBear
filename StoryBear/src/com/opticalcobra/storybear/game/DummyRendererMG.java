@@ -45,7 +45,7 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 		panelnum++;
 		BufferedImage image = new BufferedImage(Ressources.WINDOW.width, Ressources.WINDOW.height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = (Graphics2D) image.getGraphics();
-		for(int i=0;i*Ressources.RASTERSIZE*4<Ressources.WINDOW.width;i++){
+		for(int i=0;i<4;i++){
 			g.drawImage(getNextMapElement(),i*Ressources.RASTERSIZE*4,0,null);
 			if(DebugSettings.mgtilenum)
 				renderText(g,((float) (Ressources.STORYTEXTSIZE/Ressources.SCALE)), lastTile+"", (i*4*Ressources.RASTERSIZE)+20,100);
@@ -53,10 +53,10 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 				g.drawRect(i*4*Ressources.RASTERSIZE, 0, Ressources.RASTERSIZE*4, Ressources.WINDOW.height);
 		}
 		
-		for(int i=0;i*Ressources.RASTERSIZE*4<Ressources.WINDOW.width;i++){
+		for(int i=0;i<4;i++){
 			//Bilder werden gerendert
 			if(elementPointer < elements.size() && 
-							elements.get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+							elements.get(elementPointer).getBlock() < (i + (panelnum-1)*4)){
 				
 				(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERMIDDLEGROUND, pane);
 				
