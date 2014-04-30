@@ -32,10 +32,12 @@ public class IllustrationSmall implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERFOREGROUNDTWO){
-			Point position = db.getObjectPosForeground(tileTypeId, Ressources.CONTAINERILLUSTRATIONSMALLID);
-			
-			BufferedImage image = il.loadObjectPic(image_id, "ils");
-			g.drawImage(image,(((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+			if ((tileTypeId!=5 && tileTypeId < 18) || tileTypeId == 27){
+				Point position = db.getObjectPosForeground(tileTypeId, Ressources.CONTAINERILLUSTRATIONSMALLID);
+				
+				BufferedImage image = il.loadObjectPic(image_id, "ils");
+				g.drawImage(image,(((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+			}
 		}	
 	}
 

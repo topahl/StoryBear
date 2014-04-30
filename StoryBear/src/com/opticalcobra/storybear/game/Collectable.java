@@ -33,6 +33,7 @@ public class Collectable implements ILevelAppearance {
 	@Override
 	public void render(Graphics2D g, int tileTypeId, int layerID, Component toBeNamed) {
 		if (layerID == Ressources.LAYERINTERACTION){
+			if (tileTypeId <18 || tileTypeId >22){
 			Point position = db.getObjectPosForeground(tileTypeId, Ressources.CONTAINERCOLLECTABLEID);
 			
 			BufferedImage image = il.loadObjectPic(image_id, "col");
@@ -41,18 +42,8 @@ public class Collectable implements ILevelAppearance {
 			//g.drawImage(image, (((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
 			//TODO: generisch machen
 			toBeNamed.setBounds((((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, Ressources.CONTAINERCOLLECTABLE, Ressources.CONTAINERCOLLECTABLE);
+			}
 		}
 	}
-
-//	public void setX(int x) {
-//		this.x = x;
-//	}
-//
-//	public void setY(int y) {
-//		this.y = y;
-//	}
-//
-//
-//
 
 }

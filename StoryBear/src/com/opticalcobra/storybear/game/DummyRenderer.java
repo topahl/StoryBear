@@ -55,7 +55,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		blockInPanel = blockInPanel + ((panelnum-1)*Ressources.TILESPERPANEL);
 		
-		if (!(storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character) && blockInPanel != 0){
+		if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&!(storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character) && blockInPanel != 0){
 			Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 			next = following[rand.nextInt(following.length)];
 			lastTileType = next;
@@ -66,7 +66,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 		
 		
-		if (storyInfo.getElements().get(nextCurrentElementPointer).getBlock() > blockInPanel){
+		if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer).getBlock() > blockInPanel){
 			freeRideCounterStep = storyInfo.getElements().get(nextCurrentElementPointer).getBlock() - blockInPanel +1;
 			if ((blockInPanel+1) % Ressources.TILESPERPANEL == 0){
 				freeRideCounterStep--;
@@ -76,7 +76,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 		
 	//The first tile has to be 0
 		if (blockInPanel>0){
-			if (storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && freeRideCounterStep==0){
+			if ((storyInfo.getElements().size() > nextCurrentElementPointer)&&storyInfo.getElements().get(nextCurrentElementPointer) instanceof Character && freeRideCounterStep==0){
 				Integer[] following = il.getFollowingTiles(lastTileType, Imagelib.QUERY_FOREGROUND);
 				next = following[rand.nextInt(following.length)];
 				
@@ -204,6 +204,7 @@ public class DummyRenderer extends Renderer implements IRenderer{
 				g.drawImage(getNextMapElement(elementPointer+currentElementCounter, i),i*Ressources.RASTERSIZE,0,null);
 
 				while (storyInfo.getElements().size() > (elementPointer+currentElementCounter)&&
+						(storyInfo.getElements().size() > (elementPointer+currentElementCounter+1))&&  
 						storyInfo.getElements().get(elementPointer+currentElementCounter).getBlock() == storyInfo.getElements().get(elementPointer+currentElementCounter+1).getBlock()){
 					currentElementCounter++;
 				}
@@ -227,15 +228,18 @@ public class DummyRenderer extends Renderer implements IRenderer{
 
 				//Bilder werden geredert
 				if(elementPointer < storyInfo.getElements().size() && 
-								storyInfo.getElements().get(elementPointer).getBlock() < (i + (panelnum-1)*16)){
+								storyInfo.getElements().get(elementPointer).getBlock() <= (i + (panelnum-1)*Ressources.TILESPERPANEL)){
 					
 					ILevelAppearance element = (elements.get(elementPointer));
-					if(element instanceof IllustrationBig){
-						element.render(bg, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
-					} 
-					else{
-						element.render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+					if (element.getBlock() == i +(panelnum-1)*Ressources.TILESPERPANEL){
+						if(element instanceof IllustrationBig){
+							element.render(bg, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+						} 
+						else{
+							element.render(g, currentTileIds.get(0), Ressources.LAYERFOREGROUNDONE, pane);
+						}
 					}
+					
 					
 					//Wenn mehrere Elemente auf eine Kachel gerendert werden, darf i nicht hochgezählt werden
 					if (elementPointer+1 < storyInfo.getElements().size() && 
@@ -245,6 +249,8 @@ public class DummyRenderer extends Renderer implements IRenderer{
 						currentTileIds.remove(0);
 					}
 					elementPointer++;
+				} else{
+					currentTileIds.remove(0);
 				}
 			}
 		}
