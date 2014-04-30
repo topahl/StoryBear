@@ -89,7 +89,7 @@ public class RenderHint implements ILevelAppearance {
 			try {
 				image_id = db.queryNumberResultOnly("SELECT IMAGE_ID FROM MIDDLEGROUND_OBJECT WHERE WORD = '" + searchWord + "';")[0];
 				BufferedImage image = il.loadObjectPic(image_id, "lmg");
-				g.drawImage(image,(((block*Ressources.RASTERSIZE))% Ressources.WINDOW.width)+position.x,position.y, null);
+				g.drawImage(image,(((block*Ressources.RASTERSIZE*4))% Ressources.WINDOW.width)+position.x,position.y, null);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

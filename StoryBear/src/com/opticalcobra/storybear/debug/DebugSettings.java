@@ -1,16 +1,16 @@
 package com.opticalcobra.storybear.debug;
 
 public class DebugSettings {
-	static boolean vg1 = true;
+	static boolean vg1 = false;
 	public static boolean fg1panelnum = vg1;
     public static boolean fg1panelborder = vg1;
     public static boolean fg1tilenum = vg1;
     public static boolean vg1tileborder = vg1;
     
-    public static boolean mgpanelnum = false;
-    public static boolean mgpanelborder = false;
-    public static boolean mgtilenum = false;
-    public static boolean mgtileborder = false;
+    public static boolean mgpanelnum = true;
+    public static boolean mgpanelborder = true;
+    public static boolean mgtilenum = true;
+    public static boolean mgtileborder = true;
     
     public static boolean bgpanelnum = false;
     public static boolean bgpanelborder = false;

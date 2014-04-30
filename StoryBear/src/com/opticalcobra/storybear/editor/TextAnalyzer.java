@@ -166,14 +166,24 @@ public class TextAnalyzer {
 	private ArrayList<RenderHint> calcNewBlockPositions(ArrayList<RenderHint> renderHint, int numberOfBlocks){
 		if(renderHint.size() > 0){
 			//the startpoint of the first scheme is always fix
-			if(renderHint.get(0).getBlock() < Ressources.TILESPERPANEL/2)
+			/*if(renderHint.get(0).getBlock() < Ressources.TILESPERPANEL/2)
 				renderHint.get(0).setBlock(0);
 			else
-				renderHint.get(0).setBlock(renderHint.get(0).getBlock() - Ressources.TILESPERPANEL/2);
+				renderHint.get(0).setBlock(renderHint.get(0).getBlock() - Ressources.TILESPERPANEL/2);*/
 			
+			if(renderHint.get(0).getBlock() % 4 != 0){
+				renderHint.get(0).setBlock(renderHint.get(0).getBlock()/4);
+			}
 			for(int i=1;i<renderHint.size();i++){
-				if(renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() < 5)
-					renderHint.get(i).setBlock(renderHint.get(i).getBlock() + 5);
+				renderHint.get(i).setBlock(renderHint.get(i).getBlock()/4);
+				if(renderHint.get(i).getBlock() <= renderHint.get(i-1).getBlock()){
+					renderHint.remove(i);
+					i--;
+				}
+				
+				
+//				if(renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() < 5)
+//					renderHint.get(i).setBlock(renderHint.get(i).getBlock() + 5);
 				
 				/*//if the distance of 2 schemes is between 24 and 160
 				if((renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() > 3*Ressources.TILESPERPANEL/2) && (renderHint.get(i).getBlock() - renderHint.get(i-1).getBlock() <= Ressources.MAXLENGTHOFSCHEME))

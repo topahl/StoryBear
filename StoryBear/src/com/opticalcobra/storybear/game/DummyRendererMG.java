@@ -56,7 +56,7 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 		for(int i=0;i<4;i++){
 			//Bilder werden gerendert
 			if(elementPointer < elements.size() && 
-							elements.get(elementPointer).getBlock() < (i + (panelnum-1)*4)){
+							elements.get(elementPointer).getBlock() <= (i + (panelnum-1)*4)){
 				
 				(elements.get(elementPointer)).render(g, currentTileIds.get(0), Ressources.LAYERMIDDLEGROUND, pane);
 				
@@ -68,6 +68,9 @@ public class DummyRendererMG extends Renderer implements IRenderer {
 					currentTileIds.remove(0);
 				}
 				elementPointer++;
+			}
+			else{
+				currentTileIds.remove(0);
 			}
 		}
 		
